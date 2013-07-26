@@ -29,13 +29,13 @@ package org.spout.vanilla.material.block.component;
 import org.spout.api.component.BlockComponentOwner;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;
+import org.spout.api.event.ProtocolEvent;
 import org.spout.api.event.cause.EntityCause;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-import org.spout.api.protocol.event.ProtocolEvent;
 
 import org.spout.vanilla.component.block.material.Sign;
 import org.spout.vanilla.data.MoveReaction;

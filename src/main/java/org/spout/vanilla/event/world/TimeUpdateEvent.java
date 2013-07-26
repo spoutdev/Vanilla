@@ -27,21 +27,30 @@
 package org.spout.vanilla.event.world;
 
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.world.WorldEvent;
+import org.spout.api.event.ProtocolEvent;
 import org.spout.api.geo.World;
-import org.spout.api.protocol.event.ProtocolEvent;
 
-public class TimeUpdateEvent extends WorldEvent implements ProtocolEvent {
+public class TimeUpdateEvent extends ProtocolEvent {
 	private static final HandlerList handlers = new HandlerList();
 	private final long newTime;
+	private final World world;
 
 	public TimeUpdateEvent(World world, long newTime) {
-		super(world);
+		this.world = world;
 		this.newTime = newTime;
 	}
 
 	public long getNewTime() {
 		return this.newTime;
+	}
+
+	/**
+	 * Gets the world associated with this event.
+	 *
+	 * @return The world associated with the event.
+	 */
+	public World getWorld() {
+		return world;
 	}
 
 	@Override

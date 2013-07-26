@@ -29,14 +29,13 @@ package org.spout.vanilla.event.player.network;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.player.PlayerEvent;
+import org.spout.api.event.ProtocolEvent;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.protocol.event.ProtocolEvent;
 
 /**
  * Event which is called when a player enters or leaves a bed
  */
-public class PlayerBedEvent extends PlayerEvent implements Cancellable, ProtocolEvent {
+public class PlayerBedEvent extends ProtocolEvent implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private final Block bed;
 	private boolean entered;

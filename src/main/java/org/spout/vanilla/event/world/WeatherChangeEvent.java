@@ -28,19 +28,19 @@ package org.spout.vanilla.event.world;
 
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.world.WorldEvent;
+import org.spout.api.event.ProtocolEvent;
 import org.spout.api.geo.World;
-import org.spout.api.protocol.event.ProtocolEvent;
 
 import org.spout.vanilla.data.Weather;
 
-public class WeatherChangeEvent extends WorldEvent implements Cancellable, ProtocolEvent {
+public class WeatherChangeEvent extends ProtocolEvent implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private final Weather current;
 	private Weather weather;
+	private final World world;
 
 	public WeatherChangeEvent(World world, Weather current, Weather weather) {
-		super(world);
+		this.world = world;
 		this.current = current;
 		this.weather = weather;
 	}
@@ -67,6 +67,15 @@ public class WeatherChangeEvent extends WorldEvent implements Cancellable, Proto
 	 */
 	public void setNewWeather(Weather weather) {
 		this.weather = weather;
+	}
+
+	/**
+	 * Gets the world associated with this event.
+	 *
+	 * @return The world associated with the event.
+	 */
+	public World getWorld() {
+		return world;
 	}
 
 	@Override

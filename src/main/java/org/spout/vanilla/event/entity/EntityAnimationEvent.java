@@ -28,17 +28,17 @@ package org.spout.vanilla.event.entity;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.entity.EntityEvent;
-import org.spout.api.protocol.event.ProtocolEvent;
+import org.spout.api.event.ProtocolEvent;
 
 import org.spout.vanilla.data.Animation;
 
-public class EntityAnimationEvent extends EntityEvent implements ProtocolEvent {
+public class EntityAnimationEvent extends ProtocolEvent {
 	private static final HandlerList handlers = new HandlerList();
 	private Animation animation;
+	private final Entity entity;
 
 	public EntityAnimationEvent(Entity e, Animation animation) {
-		super(e);
+		this.entity = e;
 		this.animation = animation;
 	}
 
@@ -48,6 +48,15 @@ public class EntityAnimationEvent extends EntityEvent implements ProtocolEvent {
 
 	public void setAnimation(Animation animation) {
 		this.animation = animation;
+	}
+
+	/**
+	 * Gets the entity associated with this event.
+	 *
+	 * @return The entity associated with the event.
+	 */
+	public Entity getEntity() {
+		return entity;
 	}
 
 	@Override

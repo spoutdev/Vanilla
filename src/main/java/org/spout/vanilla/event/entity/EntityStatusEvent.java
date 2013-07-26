@@ -28,23 +28,32 @@ package org.spout.vanilla.event.entity;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.entity.EntityEvent;
-import org.spout.api.protocol.event.ProtocolEvent;
+import org.spout.api.event.ProtocolEvent;
 
 /**
  * Event which is called when an Entity changes its status
  */
-public class EntityStatusEvent extends EntityEvent implements ProtocolEvent {
+public class EntityStatusEvent extends ProtocolEvent {
 	private static final HandlerList handlers = new HandlerList();
 	private final byte status;
+	private final Entity entity;
 
 	public EntityStatusEvent(Entity e, byte status) {
-		super(e);
+		this.entity = e;
 		this.status = status;
 	}
 
 	public byte getStatus() {
 		return this.status;
+	}
+
+	/**
+	 * Gets the entity associated with this event.
+	 *
+	 * @return The entity associated with the event.
+	 */
+	public Entity getEntity() {
+		return entity;
 	}
 
 	@Override

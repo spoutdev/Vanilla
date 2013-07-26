@@ -27,10 +27,12 @@
 package org.spout.vanilla.event.block.network;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.event.HandlerList;
+import org.spout.api.event.ProtocolEvent;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.protocol.event.ProtocolEvent;
 
-public class BlockBreakAnimationEvent implements ProtocolEvent {
+public class BlockBreakAnimationEvent extends ProtocolEvent {
+	private static final HandlerList handlers = new HandlerList();
 	private final Point point;
 	private final byte level;
 	private final Entity entity;
@@ -51,5 +53,14 @@ public class BlockBreakAnimationEvent implements ProtocolEvent {
 
 	public Entity getEntity() {
 		return entity;
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
+	}
+
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
 	}
 }

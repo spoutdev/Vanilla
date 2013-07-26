@@ -28,13 +28,12 @@ package org.spout.vanilla.event.player.network;
 
 import org.spout.api.entity.Player;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.player.PlayerEvent;
-import org.spout.api.protocol.event.ProtocolEvent;
+import org.spout.api.event.ProtocolEvent;
 
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.data.GameMode;
 
-public class PlayerAbilityUpdateEvent extends PlayerEvent implements ProtocolEvent {
+public class PlayerAbilityUpdateEvent extends ProtocolEvent {
 	private static final HandlerList handlers = new HandlerList();
 	private final byte flyingSpeed;
 	private final byte walkingSpeed;

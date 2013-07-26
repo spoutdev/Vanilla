@@ -28,16 +28,16 @@ package org.spout.vanilla.protocol.entity.player;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.entity.EntityEvent;
-import org.spout.api.protocol.event.ProtocolEvent;
+import org.spout.api.event.ProtocolEvent;
 
-public class ExperienceChangeEvent extends EntityEvent implements ProtocolEvent {
+public class ExperienceChangeEvent extends ProtocolEvent {
 	private static final HandlerList handlers = new HandlerList();
 	private final short oldExp;
 	private short newExp;
+	private final Entity entity;
 
 	public ExperienceChangeEvent(Entity e, short oldExp, short newExp) {
-		super(e);
+		this.entity = e;
 		this.oldExp = oldExp;
 		this.newExp = newExp;
 	}
@@ -52,6 +52,15 @@ public class ExperienceChangeEvent extends EntityEvent implements ProtocolEvent 
 
 	public void setNewExp(short exp) {
 		this.newExp = exp;
+	}
+
+	/**
+	 * Gets the entity associated with this event.
+	 *
+	 * @return The entity associated with the event.
+	 */
+	public Entity getEntity() {
+		return entity;
 	}
 
 	@Override

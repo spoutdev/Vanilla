@@ -26,9 +26,11 @@
  */
 package org.spout.vanilla.event.scoreboard;
 
-import org.spout.api.protocol.event.ProtocolEvent;
+import org.spout.api.event.HandlerList;
+import org.spout.api.event.ProtocolEvent;
 
-public class ScoreUpdateEvent implements ProtocolEvent {
+public class ScoreUpdateEvent extends ProtocolEvent {
+	private static final HandlerList handlers = new HandlerList();
 	private final String key;
 	private final int value;
 	private final String objName;
@@ -55,5 +57,14 @@ public class ScoreUpdateEvent implements ProtocolEvent {
 
 	public boolean isRemove() {
 		return remove;
+	}
+
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 }

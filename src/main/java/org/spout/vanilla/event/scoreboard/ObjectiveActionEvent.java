@@ -26,11 +26,13 @@
  */
 package org.spout.vanilla.event.scoreboard;
 
-import org.spout.api.protocol.event.ProtocolEvent;
+import org.spout.api.event.HandlerList;
+import org.spout.api.event.ProtocolEvent;
 
 import org.spout.vanilla.scoreboard.Objective;
 
-public class ObjectiveActionEvent implements ProtocolEvent {
+public class ObjectiveActionEvent extends ProtocolEvent {
+	private static final HandlerList handlers = new HandlerList();
 	private final Objective obj;
 	private final byte action;
 
@@ -45,5 +47,14 @@ public class ObjectiveActionEvent implements ProtocolEvent {
 
 	public byte getAction() {
 		return action;
+	}
+
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 }

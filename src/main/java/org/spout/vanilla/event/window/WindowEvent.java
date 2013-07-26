@@ -26,12 +26,13 @@
  */
 package org.spout.vanilla.event.window;
 
-import org.spout.api.event.Event;
-import org.spout.api.protocol.event.ProtocolEvent;
+import org.spout.api.event.HandlerList;
+import org.spout.api.event.ProtocolEvent;
 
 import org.spout.vanilla.inventory.window.AbstractWindow;
 
-public abstract class WindowEvent extends Event implements ProtocolEvent {
+public abstract class WindowEvent extends ProtocolEvent {
+	private static final HandlerList handlers = new HandlerList();
 	private final AbstractWindow window;
 
 	public WindowEvent(AbstractWindow window) {
@@ -44,5 +45,14 @@ public abstract class WindowEvent extends Event implements ProtocolEvent {
 	 */
 	public AbstractWindow getWindow() {
 		return this.window;
+	}
+
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 }

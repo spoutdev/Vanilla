@@ -27,8 +27,8 @@
 package org.spout.vanilla.material.block.component;
 
 import org.spout.api.component.BlockComponentOwner;
+import org.spout.api.event.ProtocolEvent;
 import org.spout.api.geo.World;
-import org.spout.api.protocol.event.ProtocolEvent;
 
 public interface TileMaterial {
 	/**

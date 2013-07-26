@@ -28,17 +28,17 @@ package org.spout.vanilla.event.entity.network;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.entity.EntityEvent;
-import org.spout.api.protocol.event.ProtocolEvent;
+import org.spout.api.event.ProtocolEvent;
 
 import org.spout.vanilla.data.effect.EntityEffect;
 
-public class EntityEffectEvent extends EntityEvent implements ProtocolEvent {
+public class EntityEffectEvent extends ProtocolEvent {
 	private static final HandlerList handlers = new HandlerList();
 	private final EntityEffect effect;
+	private final Entity entity;
 
 	public EntityEffectEvent(Entity e, EntityEffect effect) {
-		super(e);
+		this.entity = e;
 		this.effect = effect;
 	}
 
@@ -49,6 +49,15 @@ public class EntityEffectEvent extends EntityEvent implements ProtocolEvent {
 
 	public EntityEffect getEffect() {
 		return effect;
+	}
+
+	/**
+	 * Gets the entity associated with this event.
+	 *
+	 * @return The entity associated with the event.
+	 */
+	public Entity getEntity() {
+		return entity;
 	}
 
 	@Override

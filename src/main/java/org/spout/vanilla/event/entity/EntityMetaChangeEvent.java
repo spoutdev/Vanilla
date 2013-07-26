@@ -30,19 +30,19 @@ import java.util.List;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.entity.EntityEvent;
-import org.spout.api.protocol.event.ProtocolEvent;
+import org.spout.api.event.ProtocolEvent;
 import org.spout.api.util.Parameter;
 
 /**
  * Event which is called when an Entity changes meta-data
  */
-public class EntityMetaChangeEvent extends EntityEvent implements ProtocolEvent {
+public class EntityMetaChangeEvent extends ProtocolEvent {
 	private static final HandlerList handlers = new HandlerList();
 	private final List<Parameter<?>> parameters;
+	private final Entity entity;
 
 	public EntityMetaChangeEvent(Entity e, List<Parameter<?>> parameters) {
-		super(e);
+		this.entity = e;
 		this.parameters = parameters;
 	}
 
@@ -52,6 +52,15 @@ public class EntityMetaChangeEvent extends EntityEvent implements ProtocolEvent 
 	 */
 	public List<Parameter<?>> getParameters() {
 		return parameters;
+	}
+
+	/**
+	 * Gets the entity associated with this event.
+	 *
+	 * @return The entity associated with the event.
+	 */
+	public Entity getEntity() {
+		return entity;
 	}
 
 	@Override

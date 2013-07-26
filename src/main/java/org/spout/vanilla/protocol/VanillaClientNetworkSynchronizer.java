@@ -26,15 +26,17 @@
  */
 package org.spout.vanilla.protocol;
 
+import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.EventHandler;
+import org.spout.api.event.Listener;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.protocol.ClientNetworkSynchronizer;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.Session;
-import org.spout.api.protocol.event.ProtocolEventListener;
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.block.material.Sign;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.living.Human;
@@ -114,12 +116,12 @@ import org.spout.vanilla.protocol.reposition.VanillaRepositionManager;
 import org.spout.vanilla.scoreboard.Objective;
 import org.spout.vanilla.scoreboard.Team;
 
-public class VanillaClientNetworkSynchronizer extends ClientNetworkSynchronizer implements ProtocolEventListener {
+public class VanillaClientNetworkSynchronizer extends ClientNetworkSynchronizer implements Listener {
 	private final VanillaRepositionManager vpm = new VanillaRepositionManager();
 
 	public VanillaClientNetworkSynchronizer(Session session) {
 		super(session);
-		registerProtocolEvents(this);
+		Spout.getEventManager().registerEvents(this, VanillaPlugin.getInstance());
 		setRepositionManager(vpm);
 	}
 	

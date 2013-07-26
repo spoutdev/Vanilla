@@ -28,21 +28,21 @@ package org.spout.vanilla.event.entity;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.entity.EntityEvent;
+import org.spout.api.event.ProtocolEvent;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.protocol.event.ProtocolEvent;
 
 /**
  * Represents an entity equiping an item.<br/>
  * By default, slot 0 is for a held-item change, and slots 1-4 are for armor.<br/>
  */
-public class EntityEquipmentEvent extends EntityEvent implements ProtocolEvent {
+public class EntityEquipmentEvent extends ProtocolEvent {
 	private static final HandlerList handlers = new HandlerList();
 	private int slot;
 	private ItemStack item;
+	private final Entity entity;
 
 	public EntityEquipmentEvent(Entity e, int slot, ItemStack item) {
-		super(e);
+		this.entity = e;
 		this.slot = slot;
 		this.item = item;
 	}
@@ -61,6 +61,15 @@ public class EntityEquipmentEvent extends EntityEvent implements ProtocolEvent {
 
 	public void setItem(ItemStack item) {
 		this.item = item;
+	}
+
+	/**
+	 * Gets the entity associated with this event.
+	 *
+	 * @return The entity associated with the event.
+	 */
+	public Entity getEntity() {
+		return entity;
 	}
 
 	public static HandlerList getHandlerList() {

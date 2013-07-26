@@ -28,10 +28,9 @@ package org.spout.vanilla.event.player.network;
 
 import org.spout.api.entity.Player;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.player.PlayerEvent;
-import org.spout.api.protocol.event.ProtocolEvent;
+import org.spout.api.event.ProtocolEvent;
 
-public class PlayerSelectedSlotChangeEvent extends PlayerEvent implements ProtocolEvent {
+public class PlayerSelectedSlotChangeEvent extends ProtocolEvent {
 	private static final HandlerList handlers = new HandlerList();
 	private final int slot;
 

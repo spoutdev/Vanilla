@@ -26,11 +26,10 @@
  */
 package org.spout.vanilla.event.player.network;
 
-import org.spout.api.event.Event;
 import org.spout.api.event.HandlerList;
-import org.spout.api.protocol.event.ProtocolEvent;
+import org.spout.api.event.ProtocolEvent;
 
-public class PlayerPingEvent extends Event implements ProtocolEvent {
+public class PlayerPingEvent extends ProtocolEvent {
 	private static final HandlerList handlers = new HandlerList();
 	private final int hash;
 

@@ -28,10 +28,10 @@ package org.spout.vanilla.material.map;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.spout.api.event.ProtocolEvent;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector2;
-import org.spout.api.protocol.event.ProtocolEvent;
 
 import org.spout.vanilla.event.item.MapItemUpdateEvent;
 import org.spout.vanilla.material.item.VanillaItemMaterial;

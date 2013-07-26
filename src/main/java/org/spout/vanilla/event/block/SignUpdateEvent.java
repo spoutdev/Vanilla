@@ -32,14 +32,14 @@ import org.spout.api.event.Cancellable;
 import org.spout.api.event.Cause;
 import org.spout.api.event.Event;
 import org.spout.api.event.HandlerList;
-import org.spout.api.protocol.event.ProtocolEvent;
+import org.spout.api.event.ProtocolEvent;
 
 import org.spout.vanilla.component.block.material.Sign;
 
 /**
  * Event which is called when the text on a sign changes
  */
-public class SignUpdateEvent extends Event implements ProtocolEvent, Cancellable {
+public class SignUpdateEvent extends ProtocolEvent implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private final Sign sign;
 	private final Cause<?> cause;

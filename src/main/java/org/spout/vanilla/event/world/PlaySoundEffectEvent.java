@@ -26,14 +26,13 @@
  */
 package org.spout.vanilla.event.world;
 
-import org.spout.api.event.Event;
 import org.spout.api.event.HandlerList;
+import org.spout.api.event.ProtocolEvent;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.protocol.event.ProtocolEvent;
 
 import org.spout.vanilla.data.effect.SoundEffect;
 
-public class PlaySoundEffectEvent extends Event implements ProtocolEvent {
+public class PlaySoundEffectEvent extends ProtocolEvent {
 	private static final HandlerList handlers = new HandlerList();
 	private final Point position;
 	private final SoundEffect sound;

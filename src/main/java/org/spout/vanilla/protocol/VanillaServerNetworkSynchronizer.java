@@ -46,6 +46,8 @@ import org.spout.api.datatable.ManagedMap;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.EventHandler;
+import org.spout.api.event.Listener;
+import org.spout.api.event.ProtocolEvent;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.World;
@@ -63,8 +65,6 @@ import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.api.protocol.ServerNetworkSynchronizer;
 import org.spout.api.protocol.Session;
 import org.spout.api.protocol.Session.State;
-import org.spout.api.protocol.event.ProtocolEvent;
-import org.spout.api.protocol.event.ProtocolEventListener;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.FlatIterator;
 import org.spout.api.util.hashing.IntPairHashed;
@@ -179,7 +179,7 @@ import org.spout.vanilla.world.lighting.VanillaLighting;
 import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
 import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
 
-public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer implements ProtocolEventListener {
+public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer implements Listener {
 	private static final int SOLID_BLOCK_ID = 1; // Initializer block ID
 	private static final byte[] SOLID_CHUNK_DATA = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
 	private static final byte[] AIR_CHUNK_DATA = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
@@ -188,10 +188,10 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 	private static final int HASH_SEED = 0xB346D76A;
 	public static final int WORLD_HEIGHT = 256;
 	private boolean first = true;
-	private final TSyncIntPairObjectHashMap<TSyncIntHashSet> initChunks = new TSyncIntPairObjectHashMap<TSyncIntHashSet>();
+	// Synchronized internally; no need for a lock
+	private final TSyncIntPairObjectHashMap<TSyncIntHashSet> initColumns = new TSyncIntPairObjectHashMap<TSyncIntHashSet>();
 	private final ConcurrentLinkedQueue<Long> emptyColumns = new ConcurrentLinkedQueue<Long>();
-	private final TSyncIntPairHashSet activeChunksT = new TSyncIntPairHashSet();
-	private final Object initChunkLock = new Object();
+	private final TSyncIntPairHashSet activeColumns = new TSyncIntPairHashSet();
 	private final ChunkInit chunkInit;
 	private int minY = 0;
 	private int maxY = 256;
@@ -247,7 +247,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 		// The minimum block distance is a radius for sending chunks before login/respawn
 		// It needs to be > 0 for reliable login and preventing falling through the world
 		super(session, 2);
-		registerProtocolEvents(this);
+		Spout.getEventManager().registerEvents(this, VanillaPlugin.getInstance());
 		chunkInit = ChunkInit.getChunkInit(VanillaConfiguration.CHUNK_INIT.getString("client"));
 		setRepositionManager(vpm);
 	}
@@ -266,7 +266,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 			return;
 		}
 
-		TIntSet column = initChunks.get(x, z);
+		TIntSet column = initColumns.get(x, z);
 		if (column != null) {
 			column.remove(y);
 			if (column.isEmpty()) {
@@ -297,14 +297,14 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 		chunkSendQueue.clear();
 		chunkFreeQueue.clear();
 		chunkInitQueue.clear();
-		activeChunksT.clear();
-		initChunks.clear();
+		activeColumns.clear();
+		initColumns.clear();
 		lastChunkCheck = Point.invalid;
 		synchronizedEntities.clear();
 		
 		this.emptyColumns.clear();
-		this.activeChunksT.clear();
-		this.initChunks.clear();
+		this.activeColumns.clear();
+		this.initColumns.clear();
 	}
 
 	private int chunksSent = 0;
@@ -320,7 +320,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 			return i;
 		}
 		if (canSendChunk(c)) {
-			Collection<Chunk> sent = sendChunk(c, true);
+			Collection<Chunk> sent = doSendChunk(c);
 			activeChunks.add(c.getBase());
 			i.remove();
 			if (sent != null) {
@@ -435,7 +435,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 		c.removeObserver(player);
 	}
 
-	private void initChunkRaw(Point p) {
+	private void initColumnRaw(Point p) {
 		int x = p.getChunkX();
 		int y = p.getChunkY();// + SEALEVEL_CHUNK;
 		int z = p.getChunkZ();
@@ -448,14 +448,12 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 			return;
 		}
 
-		TSyncIntHashSet column = initChunks.get(x, z);
+		TSyncIntHashSet column = initColumns.get(x, z);
 		if (column == null) {
 			column = new TSyncIntHashSet();
-			synchronized (initChunkLock) {
-				TSyncIntHashSet oldColumn = initChunks.putIfAbsent(x, z, column);
-				if (oldColumn != null) {
-					column = oldColumn;
-				}
+			TSyncIntHashSet oldColumn = initColumns.putIfAbsent(x, z, column);
+			if (oldColumn != null) {
+				column = oldColumn;
 			}
 		}
 		column.add(y);
@@ -503,7 +501,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 
 	@Override
 	protected boolean canSendChunk(Chunk c) {
-		if (activeChunksT.contains(c.getX(), c.getZ())) {
+		if (activeColumns.contains(c.getX(), c.getZ())) {
 			return true;
 		}
 		Collection<Chunk> chunks = chunkInit.getChunks(c);
@@ -528,13 +526,13 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 			return null;
 		}
 
-		initChunkRaw(c.getBase());
+		initColumnRaw(c.getBase());
 
 		Collection<Chunk> chunks = null;
 
 		List<ProtocolEvent> events = new ArrayList<ProtocolEvent>();
 
-		if (activeChunksT.add(x, z)) {
+		if (activeColumns.add(x, z)) {
 			Point p = c.getBase();
 			int[][] heights = getColumnHeights(p);
 			BlockMaterial[][] materials = getColumnTopmostMaterials(p);
@@ -580,7 +578,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 		}
 
 		for (ProtocolEvent e : events) {
-			this.callProtocolEvent(e);
+			Spout.getEventManager().callEvent(e.setPlayer(player));
 		}
 
 		return chunks;
@@ -812,10 +810,10 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 		while ((key = this.emptyColumns.poll()) != null) {
 			int x = IntPairHashed.key1(key);
 			int z = IntPairHashed.key2(key);
-			TIntSet column = initChunks.get(x, z);
+			TIntSet column = initColumns.get(x, z);
 			if (column != null && column.isEmpty()) {
-				column = initChunks.remove(x, z);
-				activeChunksT.remove(x, z);
+				column = initColumns.remove(x, z);
+				activeColumns.remove(x, z);
 				session.send(new ChunkDataMessage(x, z, true, null, null, null, true, player.getSession(), getRepositionManager()));
 			}
 		}

@@ -28,10 +28,9 @@ package org.spout.vanilla.event.player.network;
 
 import org.spout.api.entity.Player;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.player.PlayerEvent;
-import org.spout.api.protocol.event.ProtocolEvent;
+import org.spout.api.event.ProtocolEvent;
 
-public class PlayerHealthEvent extends PlayerEvent implements ProtocolEvent {
+public class PlayerHealthEvent extends ProtocolEvent {
 	private static final HandlerList handlers = new HandlerList();
 
 	public PlayerHealthEvent(Player p) {

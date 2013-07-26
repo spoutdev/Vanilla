@@ -26,14 +26,13 @@
  */
 package org.spout.vanilla.event.block.network;
 
-import org.spout.api.event.Event;
 import org.spout.api.event.HandlerList;
+import org.spout.api.event.ProtocolEvent;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.protocol.event.ProtocolEvent;
 
 import org.spout.nbt.CompoundMap;
 
-public class EntityTileDataEvent extends Event implements ProtocolEvent {
+public class EntityTileDataEvent extends ProtocolEvent {
 	public static final byte SET_MONSTER_SPAWNER_CREATURE = 1;
 	private static final HandlerList handlers = new HandlerList();
 	private final Block block;

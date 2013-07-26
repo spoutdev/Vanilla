@@ -26,11 +26,10 @@
  */
 package org.spout.vanilla.event.item;
 
-import org.spout.api.event.Event;
 import org.spout.api.event.HandlerList;
-import org.spout.api.protocol.event.ProtocolEvent;
+import org.spout.api.event.ProtocolEvent;
 
-public class MapItemUpdateEvent extends Event implements ProtocolEvent {
+public class MapItemUpdateEvent extends ProtocolEvent {
 	private final int x;
 	private final int y;
 	private final int itemData;

@@ -26,11 +26,13 @@
  */
 package org.spout.vanilla.event.scoreboard;
 
-import org.spout.api.protocol.event.ProtocolEvent;
+import org.spout.api.event.HandlerList;
+import org.spout.api.event.ProtocolEvent;
 
 import org.spout.vanilla.scoreboard.Team;
 
-public class TeamActionEvent implements ProtocolEvent {
+public class TeamActionEvent extends ProtocolEvent {
+	private static final HandlerList handlers = new HandlerList();
 	private final Team team;
 	private final String[] players;
 	private final byte action;
@@ -51,5 +53,14 @@ public class TeamActionEvent implements ProtocolEvent {
 
 	public byte getAction() {
 		return action;
+	}
+
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 }

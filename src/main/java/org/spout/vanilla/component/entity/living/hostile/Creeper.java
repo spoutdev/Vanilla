@@ -55,8 +55,8 @@ public class Creeper extends Living implements Hostile {
 		getOwner().add(DeathDrops.class).addDrop(new ItemStack(VanillaMaterials.GUNPOWDER, getRandom().nextInt(2))).addXpDrop((short) 5);
 		PhysicsComponent physics = getOwner().getPhysics();
 		physics.activate(2f, new BoxShape(1f, 2f, 1f), true);
-		physics.getPhysicsMaterial().setFriction(10f);
-		physics.getPhysicsMaterial().setRestitution(0f);
+		physics.setFriction(10f);
+		physics.setRestitution(0f);
 		if (getAttachedCount() == 1) {
 			getOwner().add(Health.class).setSpawnHealth(20);
 		}

@@ -95,7 +95,7 @@ public abstract class ExplosionModel {
 		while (iterator.hasNext()) {
 			amt++;
 			BlockMaterial next = iterator.next().getMaterial();
-			if (next.isSolid()) {
+			if (next.getShape() != null) {
 				solid++;
 			}
 		}
@@ -138,7 +138,7 @@ public abstract class ExplosionModel {
 				if (material == VanillaMaterials.AIR) {
 					if (fire) {
 						BlockMaterial below = block.translate(BlockFace.BOTTOM).getMaterial();
-						if (below.isSolid() && GenericMath.getRandom().nextInt(3) == 0) {
+						if (below.getShape() != null && GenericMath.getRandom().nextInt(3) == 0) {
 							block.setMaterial(VanillaMaterials.FIRE);
 						}
 					}

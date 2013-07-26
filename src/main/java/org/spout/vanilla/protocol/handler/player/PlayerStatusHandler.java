@@ -49,7 +49,8 @@ public class PlayerStatusHandler extends MessageHandler<PlayerStatusMessage> {
 	public void handleServer(ServerSession session, PlayerStatusMessage message) {
 		if (message.getStatus() == PlayerStatusMessage.INITIAL_SPAWN) {
 			if (PlayerConnectEvent.getHandlerList().getRegisteredListeners().length > 0) {
-				VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(new PlayerConnectEvent(session, (String) session.getDataMap().get("username")));
+				// TODO: get correct view distance
+				VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(new PlayerConnectEvent(session, (String) session.getDataMap().get("username"), 10 * 16));
 			}
 			if (VanillaPlugin.getInstance().getEngine().debugMode()) {
 				Spout.getLogger().info("Login took " + (System.currentTimeMillis() - session.getDataMap().get(VanillaProtocol.LOGIN_TIME)) + " ms");

@@ -29,6 +29,8 @@ package org.spout.vanilla.material.block;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.physics.collision.shape.BoxShape;
+import org.spout.physics.collision.shape.CollisionShape;
 
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.VanillaBlockMaterial;
@@ -41,12 +43,12 @@ public class Solid extends VanillaBlockMaterial {
 	}
 
 	public Solid(short dataMask, String name, int id, String model) {
-		super(dataMask, name, id, model);
+		super(dataMask, name, id, model, new BoxShape(1, 1, 1));
 		setOpaque();
 	}
 
 	public Solid(String name, int id, int data, VanillaBlockMaterial parent, String model) {
-		super(name, id, data, parent, model);
+		super(name, id, data, parent, model, new BoxShape(1, 1, 1));
 		setOpaque();
 	}
 

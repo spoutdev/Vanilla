@@ -26,11 +26,12 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import org.spout.physics.collision.shape.BoxShape;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 
 public class LockedChest extends VanillaBlockMaterial {
 	public LockedChest(String name, int id) {
-		super(name, id, VanillaMaterialModels.LOCKED_CHEST);
+		super(name, id, VanillaMaterialModels.LOCKED_CHEST, new BoxShape(1, 1, 1));
 	}
 }

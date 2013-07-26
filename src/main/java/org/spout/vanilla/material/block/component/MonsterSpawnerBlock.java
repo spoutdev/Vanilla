@@ -26,13 +26,14 @@
  */
 package org.spout.vanilla.material.block.component;
 
+import org.spout.physics.collision.shape.BoxShape;
 import org.spout.vanilla.component.block.material.MonsterSpawner;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 
 public class MonsterSpawnerBlock extends VanillaBlockMaterial {
 	public MonsterSpawnerBlock(String name, int id) {
-		super(name, id, VanillaMaterialModels.MONSTER_SPAWNER, MonsterSpawner.class);
+		super(name, id, VanillaMaterialModels.MONSTER_SPAWNER, new BoxShape(1, 1, 1), MonsterSpawner.class);
 		this.setHardness(5.0F).setResistance(8.3F).setTransparent();
 	}
 }

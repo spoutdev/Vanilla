@@ -32,7 +32,6 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
@@ -56,9 +55,9 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	}
 
 	public Liquid(String name, int id, boolean flowing, String model) {
-		super(name, id, model);
+		super(name, id, model, null);
 		this.flowing = flowing;
-		this.setLiquidObstacle(false).setHardness(100.0F).setResistance(166.7F).setOpacity(2).setCollision(CollisionStrategy.SOFT);
+		this.setLiquidObstacle(false).setHardness(100.0F).setResistance(166.7F).setOpacity(2);
 		this.getDrops().clear();
 	}
 

@@ -45,6 +45,8 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector3;
 
+import org.spout.physics.collision.shape.BoxShape;
+
 import org.spout.vanilla.component.block.material.Dispenser;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
@@ -79,7 +81,7 @@ public class DispenserBlock extends VanillaBlockMaterial implements Directional,
 	public static final BlockFaces BTEWNS = new BlockFaces(BlockFace.BOTTOM, BlockFace.TOP, BlockFace.EAST, BlockFace.WEST, BlockFace.NORTH, BlockFace.SOUTH);
 
 	public DispenserBlock(String name, int id) {
-		super(name, id, VanillaMaterialModels.DISPENSER, Dispenser.class);
+		super(name, id, VanillaMaterialModels.DISPENSER, new BoxShape(1, 1, 1), Dispenser.class);
 		this.setHardness(3.5F).setResistance(5.8F);
 	}
 
@@ -127,7 +129,7 @@ public class DispenserBlock extends VanillaBlockMaterial implements Directional,
 		Block facingBlock = block.translate(this.getFacing(block));
 		if (item.getMaterial().equals(VanillaMaterials.TNT)) {
 			//Place Activated TNT entity at direction of Dispenser
-			if (!facingBlock.getMaterial().isSolid()) {
+			if (facingBlock.getMaterial().getShape() != null) {
 				World world = facingBlock.getWorld();
 				Tnt tnt = world.createEntity(facingBlock.getPosition(), Tnt.class).add(Tnt.class);
 				tnt.getOwner().getPhysics().impulse(new Vector3(0.5D, 0.5D, 0.5D));
@@ -136,7 +138,7 @@ public class DispenserBlock extends VanillaBlockMaterial implements Directional,
 				return true;
 			}
 		} else if (item.getMaterial() instanceof SpawnEgg) {
-			if (!facingBlock.getMaterial().isSolid()) {
+			if (facingBlock.getMaterial().getShape() != null) {
 				Entity entity = facingBlock.getWorld().createEntity(facingBlock.getPosition(), ((SpawnEgg) item.getMaterial()).getComponent());
 				entity.getPhysics().translate(new Vector3(0.5D, 0.5D, 0.5D));
 				facingBlock.getWorld().spawnEntity(entity);
@@ -145,7 +147,7 @@ public class DispenserBlock extends VanillaBlockMaterial implements Directional,
 			}
 		} else if (item.getMaterial() instanceof FullBucket) {
 			//Attempt to place any FullBucket with it's placement material
-			if (!facingBlock.getMaterial().isSolid()) {
+			if (facingBlock.getMaterial().getShape() != null) {
 				facingBlock.setMaterial(((FullBucket) item.getMaterial()).getPlacedMaterial());
 				item.setMaterial(VanillaMaterials.BUCKET);
 				//TODO: update physics properly after block has been changed to the liquid

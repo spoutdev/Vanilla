@@ -28,6 +28,7 @@ package org.spout.vanilla.material.block.component;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
+import org.spout.physics.collision.shape.BoxShape;
 
 import org.spout.vanilla.component.block.material.NoteBlock;
 import org.spout.vanilla.data.Instrument;
@@ -42,7 +43,7 @@ public class NoteBlockBlock extends VanillaBlockMaterial implements Fuel, Redsto
 	public final float BURN_TIME = 15;
 
 	public NoteBlockBlock(String name, int id) {
-		super(name, id, VanillaMaterialModels.NOTE_BLOCK, NoteBlock.class);
+		super(name, id, VanillaMaterialModels.NOTE_BLOCK, new BoxShape(1, 1, 1), NoteBlock.class);
 		this.setHardness(0.8F).setResistance(1.3F);
 	}
 

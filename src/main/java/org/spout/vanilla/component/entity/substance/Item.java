@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.component.entity.substance;
 
-import org.spout.api.collision.BoundingBox;
 import org.spout.api.component.entity.PhysicsComponent;
 import org.spout.api.data.Data;
 import org.spout.api.entity.Entity;
@@ -56,7 +55,7 @@ public class Item extends Substance {
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ItemEntityProtocol());
 		PhysicsComponent physics = getOwner().getPhysics();
 		physics.activate(1f, new BoxShape(0.27f, 0.27f, 0.27f), true);
-		physics.getPhysicsMaterial().
+		physics.
 		getOwner().add(Health.class).setMaxHealth(20);
 	}
 

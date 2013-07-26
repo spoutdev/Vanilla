@@ -28,6 +28,7 @@ package org.spout.vanilla.material.block.component;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
+import org.spout.physics.collision.shape.BoxShape;
 
 import org.spout.vanilla.component.block.material.EnchantmentTable;
 import org.spout.vanilla.data.Instrument;
@@ -39,7 +40,7 @@ import org.spout.vanilla.material.block.Directional;
 
 public class EnchantmentTableBlock extends VanillaBlockMaterial implements Directional {
 	public EnchantmentTableBlock(String name, int id) {
-		super(name, id, VanillaMaterialModels.ENCHANTMENT_TABLE, EnchantmentTable.class);
+		super(name, id, VanillaMaterialModels.ENCHANTMENT_TABLE, new BoxShape(1, 1, 1), EnchantmentTable.class);
 		this.setHardness(5.0F).setResistance(2000.0F).setOpacity(0).setOcclusion((short) 0, BlockFace.BOTTOM);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}

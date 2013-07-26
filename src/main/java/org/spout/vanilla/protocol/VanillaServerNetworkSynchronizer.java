@@ -1102,6 +1102,10 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 		return Collections.EMPTY_SET;
 	}
 
+	@Override
+	public void sendChunkDatatable(Chunk c) {
+	}
+
 	public enum ChunkInit {
 		CLIENT_SEL, FULL_COLUMN, HEIGHTMAP, EMPTY_COLUMN;
 

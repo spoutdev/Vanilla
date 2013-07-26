@@ -29,6 +29,7 @@ package org.spout.vanilla.material.block.component;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
+import org.spout.physics.collision.shape.BoxShape;
 
 import org.spout.vanilla.component.block.material.Hopper;
 import org.spout.vanilla.data.MoveReaction;
@@ -41,7 +42,7 @@ import org.spout.vanilla.util.RedstoneUtil;
 
 public class HopperBlock extends VanillaBlockMaterial implements RedstoneTarget {
 	public HopperBlock(String name, int id) {
-		super(name, id, VanillaMaterialModels.HOPPER, Hopper.class);
+		super(name, id, VanillaMaterialModels.HOPPER, new BoxShape(1, 1, 1), Hopper.class);
 		this.setHardness(3.5F).setResistance(5.8F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
 	}
 

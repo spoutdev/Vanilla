@@ -31,6 +31,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
+import org.spout.physics.collision.shape.BoxShape;
 
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.VanillaBlockMaterial;
@@ -38,7 +39,7 @@ import org.spout.vanilla.material.block.Directional;
 
 public class PistonExtension extends VanillaBlockMaterial implements Directional {
 	public PistonExtension(String name, int id) {
-		super(name, id, null);
+		super(name, id, null, new BoxShape(1, 1, 1));
 		this.setHardness(0.5F).setResistance(0.8F).setTransparent();
 	}
 

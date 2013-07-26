@@ -29,6 +29,8 @@ package org.spout.vanilla.material.block.component;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 
+import org.spout.physics.collision.shape.BoxShape;
+
 import org.spout.vanilla.component.block.material.CommandBlock;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.VanillaBlockMaterial;
@@ -37,7 +39,7 @@ import org.spout.vanilla.util.RedstoneUtil;
 
 public class CommandBlockBlock extends VanillaBlockMaterial implements RedstoneTarget {
 	public CommandBlockBlock(String name, int id) {
-		super(name, id, null, CommandBlock.class);
+		super(name, id, null, new BoxShape(1, 1, 1), CommandBlock.class);
 	}
 
 	@Override

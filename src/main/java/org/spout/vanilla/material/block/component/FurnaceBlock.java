@@ -31,6 +31,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
+import org.spout.physics.collision.shape.BoxShape;
 
 import org.spout.vanilla.component.block.material.Furnace;
 import org.spout.vanilla.data.MoveReaction;
@@ -48,14 +49,14 @@ public class FurnaceBlock extends VanillaBlockMaterial implements Directional {
 	private final boolean burning;
 
 	public FurnaceBlock(String name, int id, FurnaceBlock parent, boolean burning, String model) {
-		super(name, id, BURNING_FLAG, parent, model, Furnace.class);
+		super(name, id, BURNING_FLAG, parent, model, new BoxShape(1, 1, 1), Furnace.class);
 		this.burning = burning;
 		this.setHardness(3.5F).setResistance(5.8F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 
 	public FurnaceBlock(short dataMask, String name, int id, boolean burning, String model) {
-		super(dataMask, name, id, model, Furnace.class);
+		super(dataMask, name, id, model, new BoxShape(1, 1, 1), Furnace.class);
 		this.burning = burning;
 		this.setHardness(3.5F).setResistance(5.8F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);

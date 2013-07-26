@@ -17,7 +17,7 @@
 		<currentYear>2012</currentYear>
 		<mainClass>org.spout.vanilla.VanillaPlugin</mainClass>
 		<protocolClass>org.spout.vanilla.protocol.VanillaProtocol</protocolClass>
-		<spoutVersion>dev-SNAPSHOT</spoutVersion>
+		<spoutVersion>1.0.0-SNAPSHOT</spoutVersion>
 		<protocolVersion>61</protocolVersion>
 		<buildNumber>0</buildNumber>
 	</properties>
@@ -96,7 +96,7 @@
 		<!-- Provided by third-party -->
 		<dependency>
 			<groupId>org.spout</groupId>
-			<artifactId>spoutapi</artifactId>
+			<artifactId>spout-api</artifactId>
 			<version>${spoutVersion}</version>
 			<scope>provided</scope>
 		</dependency>

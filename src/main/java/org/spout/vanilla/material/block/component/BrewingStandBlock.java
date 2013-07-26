@@ -33,6 +33,8 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.physics.collision.shape.BoxShape;
+
 import org.spout.vanilla.component.block.material.BrewingStand;
 import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
@@ -41,7 +43,7 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 
 public class BrewingStandBlock extends VanillaBlockMaterial {
 	public BrewingStandBlock(String name, int id) {
-		super(name, id, VanillaMaterialModels.BREWING_STAND, BrewingStand.class);
+		super(name, id, VanillaMaterialModels.BREWING_STAND, new BoxShape(1, 1, 1), BrewingStand.class);
 		this.setResistance(2.5F).setHardness(10.F).setOpacity(0).setOcclusion((short) 0, BlockFace.BOTTOM);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}

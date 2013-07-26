@@ -30,6 +30,7 @@ import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.physics.collision.shape.BoxShape;
 
 import org.spout.vanilla.component.block.material.Jukebox;
 import org.spout.vanilla.data.Instrument;
@@ -43,7 +44,7 @@ public class JukeboxBlock extends VanillaBlockMaterial implements Fuel {
 	public final float BURN_TIME = 15;
 
 	public JukeboxBlock(String name, int id) {
-		super(name, id, VanillaMaterialModels.JUKEBOX, Jukebox.class);
+		super(name, id, VanillaMaterialModels.JUKEBOX, new BoxShape(1, 1, 1), Jukebox.class);
 		this.setHardness(2.0F).setResistance(10.0F);
 	}
 

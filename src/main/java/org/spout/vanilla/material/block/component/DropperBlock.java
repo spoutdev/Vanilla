@@ -33,6 +33,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
+import org.spout.physics.collision.shape.BoxShape;
 
 import org.spout.vanilla.component.block.material.Dropper;
 import org.spout.vanilla.component.entity.substance.Item;
@@ -50,7 +51,7 @@ public class DropperBlock extends VanillaBlockMaterial implements Directional, R
 	public static final BlockFaces BTEWNS = new BlockFaces(BlockFace.BOTTOM, BlockFace.TOP, BlockFace.EAST, BlockFace.WEST, BlockFace.NORTH, BlockFace.SOUTH);
 
 	public DropperBlock(String name, int id) {
-		super(name, id, VanillaMaterialModels.DROPPER, Dropper.class);
+		super(name, id, VanillaMaterialModels.DROPPER, new BoxShape(1, 1, 1), Dropper.class);
 		this.setHardness(3.5F).setResistance(5.8F);
 	}
 
@@ -95,7 +96,7 @@ public class DropperBlock extends VanillaBlockMaterial implements Directional, R
 			return false;
 		}
 		Block facingBlock = block.translate(this.getFacing(block));
-		if (!facingBlock.getMaterial().isSolid()) {
+		if (facingBlock.getMaterial().getShape() != null) {
 			Item item = facingBlock.getWorld().createEntity(facingBlock.getPosition(), Item.class).add(Item.class);
 			item.setItemStack(slot.get().clone());
 			item.getItemStack().setAmount(1);

@@ -52,7 +52,7 @@ If you do not already have repo.spout.org in your repository list, you will need
 
     <repository>
         <id>spout-repo</id>
-        <url>http://repo.spout.org</url>
+        <url>http://nexus.spout.org/content/groups/public/</url>
     </repository>
 
 If you'd prefer to manually import the latest .jar file, you can get it from our [download site][Download], or from our [build server][Builds]. [![Build Status][Build Icon]][Builds]
@@ -61,12 +61,12 @@ Want to know how to use the API? Check out the latest [Javadoc].
 
 [Project Logo]: http://cdn.spout.org/vanilla-github.png
 [Company Logo]: http://cdn.spout.org/spout-github.png
-[Homepage]: http://www.getvanilla.org
+[Homepage]: http://www.spout.org
 [Forums]: http://forums.spout.org
 [License]: http://spout.in/licensev1
-[Source]: https://github.com/VanillaDev/Vanilla
+[Source]: https://github.com/Vanilla/Vanilla
 [Download]: http://get.spout.org/dev/vanilla.jar
-[Download Source]: https://github.com/VanillaDev/Vanilla/archive/master.zip
+[Download Source]: https://github.com/Vanilla/Vanilla/archive/master.zip
 [Builds]: http://build.spout.org/job/Vanilla
 [Build Icon]: http://build.spout.org/job/Vanilla/badge/icon
 [Javadoc]: http://jd.spout.org/vanilla/latest

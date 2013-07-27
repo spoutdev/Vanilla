@@ -1,8 +1,7 @@
 name: ${project.name}
-version: ${releaseVersion} b${buildNumber}
+version: ${project.version}+${ciSystem}-b${buildNumber}.git-${commit}
 description: ${project.description}
 website: ${project.url}
-
 author: ${project.organization.name}
 
 main: ${mainClass}
@@ -10,7 +9,7 @@ load: startup
 platform: ALL
 
 data:
-    protocol: ${protocolVersion}
+  protocol: ${protocolVersion}
 
 protocols:
-    - ${protocolClass}
+  - ${protocolClass}

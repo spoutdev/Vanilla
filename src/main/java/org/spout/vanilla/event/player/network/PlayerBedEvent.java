@@ -39,9 +39,10 @@ public class PlayerBedEvent extends ProtocolEvent implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private final Block bed;
 	private boolean entered;
+	private final Player player;
 
 	public PlayerBedEvent(Player p, Block bed, boolean entered) {
-		super(p);
+		this.player = p;
 		this.bed = bed;
 		this.entered = entered;
 	}
@@ -73,6 +74,10 @@ public class PlayerBedEvent extends ProtocolEvent implements Cancellable {
 	@Override
 	public void setCancelled(boolean cancelled) {
 		super.setCancelled(cancelled);
+	}
+
+	public Player getPlayer() {
+		return player;
 	}
 
 	@Override

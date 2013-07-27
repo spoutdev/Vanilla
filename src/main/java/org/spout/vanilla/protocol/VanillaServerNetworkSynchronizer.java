@@ -47,12 +47,14 @@ import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
+import org.spout.api.event.Order;
 import org.spout.api.event.ProtocolEvent;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
+import org.spout.api.geo.cuboid.ChunkSnapshot;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.material.BlockMaterial;
@@ -65,6 +67,11 @@ import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.api.protocol.ServerNetworkSynchronizer;
 import org.spout.api.protocol.Session;
 import org.spout.api.protocol.Session.State;
+import org.spout.api.protocol.event.ChunkFreeEvent;
+import org.spout.api.protocol.event.ChunkSendEvent;
+import org.spout.api.protocol.event.PositionSendEvent;
+import org.spout.api.protocol.event.UpdateBlockEvent;
+import org.spout.api.protocol.event.WorldChangeProtocolEvent;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.FlatIterator;
 import org.spout.api.util.hashing.IntPairHashed;
@@ -252,8 +259,12 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 		setRepositionManager(vpm);
 	}
 
-	@Override
-	protected void freeChunk(Point p) {
+	@EventHandler(order = Order.MONITOR)
+	public void onChunkFree(ChunkFreeEvent event) {
+		freeChunk(event.getPoint());
+	}
+
+	private void freeChunk(Point p) {
 		int x = (int) p.getX() >> Chunk.BLOCKS.BITS;
 		int y = (int) p.getY() >> Chunk.BLOCKS.BITS; // + SEALEVEL_CHUNK;
 		int z = (int) p.getZ() >> Chunk.BLOCKS.BITS;
@@ -273,10 +284,6 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 				emptyColumns.add(IntPairHashed.key(x, z));
 			}
 		}
-	}
-
-	@Override
-	protected void initChunk(Point p) {
 	}
 
 	public boolean isTeleportPending() {
@@ -499,7 +506,6 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 		}
 	}
 
-	@Override
 	protected boolean canSendChunk(Chunk c) {
 		if (activeColumns.contains(c.getX(), c.getZ())) {
 			return true;
@@ -511,7 +517,19 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 		return true;
 	}
 
-	@Override
+	@EventHandler(order = Order.LATEST)
+	public void onChunkSendLatest(ChunkSendEvent event) {
+		event.getMessages().clear();
+	}
+
+	// We want some extra handling here; therefore we want to handle our own sending.
+	@EventHandler(order = Order.MONITOR)
+	public void onChunkSendMonitor(ChunkSendEvent event) {
+		if (event.isForced() || canSendChunk(event.getChunk())) {
+			doSendChunk(event.getChunk());
+		}
+	}
+
 	protected Collection<Chunk> doSendChunk(Chunk c) {
 
 		int x = c.getX();
@@ -578,24 +596,39 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 		}
 
 		for (ProtocolEvent e : events) {
-			Spout.getEventManager().callEvent(e.setPlayer(player));
+			player.getNetwork().callProtocolEvent(e, player);
 		}
 
 		return chunks;
 	}
 
 	public void sendPosition() {
-		sendPosition(player.getPhysics().getPosition(), player.getPhysics().getRotation());
-	}
-
-	@Override
-	protected void sendPosition(Point p, Quaternion rot) {
+		Point p = player.getPhysics().getPosition();
+		Quaternion rot = player.getPhysics().getRotation();
 		PlayerPositionLookMessage PPLMsg = new PlayerPositionLookMessage(p.getX(), p.getY() + STANCE, p.getZ(), p.getY(), rot.getYaw(), rot.getPitch(), true, VanillaBlockDataChannelMessage.CHANNEL_ID, getRepositionManager());
 		session.send(PPLMsg);
 	}
 
-	@Override
-	protected void worldChanged(World world) {
+	@EventHandler
+	public void onPositionSend(PositionSendEvent event) {
+		Point p = event.getPoint();
+		Quaternion rot = event.getRotation();
+		PlayerPositionLookMessage PPLMsg = new PlayerPositionLookMessage(p.getX(), p.getY() + STANCE, p.getZ(), p.getY(), rot.getYaw(), rot.getPitch(), true, VanillaBlockDataChannelMessage.CHANNEL_ID, getRepositionManager());
+		session.send(PPLMsg);
+	}
+
+	@EventHandler(order = Order.LATEST)
+	public void onWorldChangeLatest(WorldChangeProtocolEvent event) {
+		event.getMessages().clear();
+	}
+	
+	// Same as chunk sending
+	@EventHandler(order = Order.MONITOR)
+	public void onWorldChangeMonitor(WorldChangeProtocolEvent event) {
+		worldChanged(event.getWorld());
+	}
+	
+	private void worldChanged(World world) {
 		WorldConfigurationNode node = VanillaConfiguration.WORLDS.get(world);
 		maxY = node.MAX_Y.getInt() & (~Chunk.BLOCKS.MASK);
 		minY = node.MIN_Y.getInt() & (~Chunk.BLOCKS.MASK);
@@ -773,7 +806,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 
 			for (Point p : chunkInitQueue) {
 				if (initializedChunks.add(p)) {
-					initChunk(p);
+					// TODO: protocol - init chunk?
 				}
 			}
 
@@ -792,7 +825,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 			}
 
 			if (teleported && !player.getPhysics().isTransformDirty()) {
-				sendPosition(player.getPhysics().getPosition(), player.getPhysics().getRotation());
+				sendPosition();
 				teleported = false;
 			}
 
@@ -818,13 +851,15 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 			}
 		}
 	}
-
-	@Override
-	public void updateBlock(Chunk chunk, int x, int y, int z, BlockMaterial material, short data) {
+	
+	@EventHandler
+	public void onBlockUpdate(UpdateBlockEvent event) {
+		BlockMaterial material = event.getChunk().getBlockMaterial(event.getX(), event.getY(), event.getZ());
+		short data = event.getChunk().getBlockData(event.getX(), event.getY(), event.getZ());
 		short id = getMinecraftId(material);
-		x += chunk.getBlockX();
-		y += chunk.getBlockY();
-		z += chunk.getBlockZ();
+		int x = event.getX() + event.getChunk().getBlockX();
+		int y = event.getY() + event.getChunk().getBlockY();
+		int z = event.getZ() + event.getChunk().getBlockZ();
 		BlockChangeMessage BCM = new BlockChangeMessage(x, y, z, id, getMinecraftData(material, data), getRepositionManager());
 		session.send(BCM);
 	}
@@ -878,230 +913,226 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 	}
 
 	@EventHandler
-	public Message onEntityTileData(EntityTileDataEvent event) {
+	public void onEntityTileData(EntityTileDataEvent event) {
 		Block b = event.getBlock();
-		return new EntityTileDataMessage(b.getX(), b.getY(), b.getZ(), event.getAction(), event.getData(), getRepositionManager());
+		event.getMessages().add(new EntityTileDataMessage(b.getX(), b.getY(), b.getZ(), event.getAction(), event.getData(), getRepositionManager()));
 	}
 
 	@EventHandler
-	public Message onMapItemUpdate(MapItemUpdateEvent event) {
-		return new EntityItemDataMessage(VanillaMaterials.MAP, (short) event.getItemData(), event.getData());
+	public void onMapItemUpdate(MapItemUpdateEvent event) {
+		event.getMessages().add(new EntityItemDataMessage(VanillaMaterials.MAP, (short) event.getItemData(), event.getData()));
 	}
 
 	@EventHandler
-	public Message onPlayerAbilityUpdate(PlayerAbilityUpdateEvent event) {
-		return new PlayerAbilityMessage(event.getGodMode(), event.isFlying(), event.canFly(), event.isCreativeMode(), event.getFlyingSpeed(), event.getWalkingSpeed());
+	public void onPlayerAbilityUpdate(PlayerAbilityUpdateEvent event) {
+		event.getMessages().add(new PlayerAbilityMessage(event.getGodMode(), event.isFlying(), event.canFly(), event.isCreativeMode(), event.getFlyingSpeed(), event.getWalkingSpeed()));
 	}
 
 	@EventHandler
-	public Message onEntityEquipment(EntityEquipmentEvent event) {
-		return new EntityEquipmentMessage(event.getEntity().getId(), event.getSlot(), event.getItem());
+	public void onEntityEquipment(EntityEquipmentEvent event) {
+		event.getMessages().add(new EntityEquipmentMessage(event.getEntity().getId(), event.getSlot(), event.getItem()));
 	}
 
 	@EventHandler
-	public Message onWindowOpen(WindowOpenEvent event) {
+	public void onWindowOpen(WindowOpenEvent event) {
 		if (event.getWindow() instanceof DefaultWindow) {
-			return null; // no message for the default Window
+			event.getMessages().add(null); // no message for the default Window
 		}
 		PlayerInventory inventory = event.getWindow().getPlayerInventory();
 		int size = event.getWindow().getSize() - (inventory.getMain().size() + inventory.getQuickbar().size());
-		return new WindowOpenMessage(event.getWindow(), size);
+		event.getMessages().add(new WindowOpenMessage(event.getWindow(), size));
 	}
 
 	@EventHandler
-	public Message onWindowClose(WindowCloseEvent event) {
+	public void onWindowClose(WindowCloseEvent event) {
 		if (event.getWindow() instanceof DefaultWindow) {
-			return null; // no message for the default Window
+			event.getMessages().add(null); // no message for the default Window
 		}
-		return new WindowCloseMessage(event.getWindow());
+		event.getMessages().add(new WindowCloseMessage(event.getWindow()));
 	}
 
 	@EventHandler
-	public Message onWindowSetSlot(WindowSlotEvent event) {
+	public void onWindowSetSlot(WindowSlotEvent event) {
 		//TODO: investigate why this happens (12-1-2013)
 		if (event.getItem() != null && event.getItem().getMaterial() == BlockMaterial.AIR) {
-			return null;
+			event.getMessages().add(null);
 		}
-		return new WindowSlotMessage(event.getWindow(), event.getSlot(), event.getItem());
+		event.getMessages().add(new WindowSlotMessage(event.getWindow(), event.getSlot(), event.getItem()));
 	}
 
 	@EventHandler
-	public Message onWindowItems(WindowItemsEvent event) {
-		return new WindowItemsMessage(event.getWindow(), event.getItems());
+	public void onWindowItems(WindowItemsEvent event) {
+		event.getMessages().add(new WindowItemsMessage(event.getWindow(), event.getItems()));
 	}
 
 	@EventHandler
-	public Message onWindowProperty(WindowPropertyEvent event) {
-		return new WindowPropertyMessage(event.getWindow(), event.getId(), event.getValue());
+	public void onWindowProperty(WindowPropertyEvent event) {
+		event.getMessages().add(new WindowPropertyMessage(event.getWindow(), event.getId(), event.getValue()));
 	}
 
 	@EventHandler
-	public Message onSoundEffect(PlaySoundEffectEvent event) {
-		return new SoundEffectMessage(event.getSound().getName(), event.getPosition(), event.getVolume(), event.getPitch(), getRepositionManager());
+	public void onSoundEffect(PlaySoundEffectEvent event) {
+		event.getMessages().add(new SoundEffectMessage(event.getSound().getName(), event.getPosition(), event.getVolume(), event.getPitch(), getRepositionManager()));
 	}
 
 	@EventHandler
-	public Message onExplosionEffect(PlayExplosionEffectEvent event) {
-		return new ExplosionMessage(event.getPosition(), event.getSize(), new byte[0], getRepositionManager());
+	public void onExplosionEffect(PlayExplosionEffectEvent event) {
+		event.getMessages().add(new ExplosionMessage(event.getPosition(), event.getSize(), new byte[0], getRepositionManager()));
 	}
 
 	@EventHandler
-	public Message onParticleEffect(PlayParticleEffectEvent event) {
+	public void onParticleEffect(PlayParticleEffectEvent event) {
 		int x = event.getPosition().getBlockX();
 		int y = event.getPosition().getBlockY();
 		int z = event.getPosition().getBlockZ();
-		return new EffectMessage(event.getEffect().getId(), x, y, z, event.getData(), getRepositionManager());
+		event.getMessages().add(new EffectMessage(event.getEffect().getId(), x, y, z, event.getData(), getRepositionManager()));
 	}
 
 	@EventHandler
-	public Message onBlockAction(BlockActionEvent event) {
+	public void onBlockAction(BlockActionEvent event) {
 		int id = VanillaMaterials.getMinecraftId(event.getMaterial());
 		if (id == -1) {
-			return null;
+			event.getMessages().add(null);
 		} else {
-			return new BlockActionMessage(event.getBlock(), (short) id, event.getData1(), event.getData2(), getRepositionManager());
+			event.getMessages().add(new BlockActionMessage(event.getBlock(), (short) id, event.getData1(), event.getData2(), getRepositionManager()));
 		}
 	}
 
 	@EventHandler
-	public Message onPlayerKeepAlive(PlayerPingEvent event) {
-		return new PlayerPingMessage(event.getHash());
+	public void onPlayerKeepAlive(PlayerPingEvent event) {
+		event.getMessages().add(new PlayerPingMessage(event.getHash()));
 	}
 
 	@EventHandler
-	public Message onPlayerUpdateUserList(PlayerListEvent event) {
+	public void onPlayerUpdateUserList(PlayerListEvent event) {
 		String name = event.getPlayerDisplayName();
-		return new PlayerListMessage(name, event.getOnline(), (short) event.getPingDelay());
+		event.getMessages().add(new PlayerListMessage(name, event.getOnline(), (short) event.getPingDelay()));
 	}
 
 	@EventHandler
-	public Message onPlayerBed(PlayerBedEvent event) {
-		return new PlayerBedMessage(event.getPlayer(), event.getBed(), getRepositionManager());
+	public void onPlayerBed(PlayerBedEvent event) {
+		event.getMessages().add(new PlayerBedMessage(event.getPlayer(), event.getBed(), getRepositionManager()));
 	}
 
 	@EventHandler
-	public Message onEntityAnimation(EntityAnimationEvent event) {
-		return new EntityAnimationMessage(event.getEntity().getId(), (byte) event.getAnimation().getId());
+	public void onEntityAnimation(EntityAnimationEvent event) {
+		event.getMessages().add(new EntityAnimationMessage(event.getEntity().getId(), (byte) event.getAnimation().getId()));
 	}
 
 	@EventHandler
-	public Message onEntityStatus(EntityStatusEvent event) {
-		return new EntityStatusMessage(event.getEntity().getId(), event.getStatus());
+	public void onEntityStatus(EntityStatusEvent event) {
+		event.getMessages().add(new EntityStatusMessage(event.getEntity().getId(), event.getStatus()));
 	}
 
 	@EventHandler
-	public Message onPlayerUpdateStats(PlayerHealthEvent event) {
+	public void onPlayerUpdateStats(PlayerHealthEvent event) {
 		Hunger hunger = player.get(Hunger.class);
-		return new PlayerHealthMessage((short) player.get(Human.class).getHealth().getHealth(), (short) hunger.getHunger(), hunger.getFoodSaturation());
+		event.getMessages().add(new PlayerHealthMessage((short) player.get(Human.class).getHealth().getHealth(), (short) hunger.getHunger(), hunger.getFoodSaturation()));
 	}
 
 	@EventHandler
-	public Message onEntityMetaChange(EntityMetaChangeEvent event) {
-		return new EntityMetadataMessage(event.getEntity().getId(), event.getParameters());
+	public void onEntityMetaChange(EntityMetaChangeEvent event) {
+		event.getMessages().add(new EntityMetadataMessage(event.getEntity().getId(), event.getParameters()));
 	}
 
 	@EventHandler
-	public Message onSignUpdate(SignUpdateEvent event) {
+	public void onSignUpdate(SignUpdateEvent event) {
 		Sign sign = event.getSign();
-		return new SignMessage(sign.getOwner().getX(), sign.getOwner().getY(), sign.getOwner().getZ(), event.getLines(), getRepositionManager());
+		event.getMessages().add(new SignMessage(sign.getOwner().getX(), sign.getOwner().getY(), sign.getOwner().getZ(), event.getLines(), getRepositionManager()));
 	}
 
 	@EventHandler
-	public Message onEntityCollectItem(EntityCollectItemEvent event) {
-		return new PlayerCollectItemMessage(event.getCollected().getId(), event.getEntity().getId());
+	public void onEntityCollectItem(EntityCollectItemEvent event) {
+		event.getMessages().add(new PlayerCollectItemMessage(event.getCollected().getId(), event.getEntity().getId()));
 	}
 
 	@EventHandler
-	public Message onPlayerGameState(PlayerGameStateEvent event) {
-		return new PlayerGameStateMessage(event.getReason(), event.getGameMode());
+	public void onPlayerGameState(PlayerGameStateEvent event) {
+		event.getMessages().add(new PlayerGameStateMessage(event.getReason(), event.getGameMode()));
 	}
 
 	@EventHandler
-	public Message onWeatherChanged(WeatherChangeEvent event) {
+	public void onWeatherChanged(WeatherChangeEvent event) {
 		Weather newWeather = event.getNewWeather();
 		if (newWeather.equals(Weather.RAIN) || newWeather.equals(Weather.THUNDERSTORM)) {
-			return new PlayerGameStateMessage(PlayerGameStateMessage.BEGIN_RAINING);
+			event.getMessages().add(new PlayerGameStateMessage(PlayerGameStateMessage.BEGIN_RAINING));
 		} else {
-			return new PlayerGameStateMessage(PlayerGameStateMessage.END_RAINING);
+			event.getMessages().add(new PlayerGameStateMessage(PlayerGameStateMessage.END_RAINING));
 		}
 	}
 
 	@EventHandler
-	public Message onTimeUpdate(TimeUpdateEvent event) {
-		return new PlayerTimeMessage(event.getWorld().getAge(), event.getNewTime());
+	public void onTimeUpdate(TimeUpdateEvent event) {
+		event.getMessages().add(new PlayerTimeMessage(event.getWorld().getAge(), event.getNewTime()));
 	}
 
 	@EventHandler
-	public Message onEntityRemoveEffect(EntityRemoveEffectEvent event) {
+	public void onEntityRemoveEffect(EntityRemoveEffectEvent event) {
 		System.out.println("Removing effect");
-		return new EntityRemoveEffectMessage(event.getEntity().getId(), (byte) event.getEffect().getId());
+		event.getMessages().add(new EntityRemoveEffectMessage(event.getEntity().getId(), (byte) event.getEffect().getId()));
 	}
 
 	@EventHandler
-	public Message onBlockBreakAnimation(BlockBreakAnimationEvent event) {
-		return new BlockBreakAnimationMessage(event.getEntity().getId(), (int) event.getPoint().getX(), (int) event.getPoint().getY(), (int) event.getPoint().getZ(), event.getLevel(), getRepositionManager());
+	public void onBlockBreakAnimation(BlockBreakAnimationEvent event) {
+		event.getMessages().add(new BlockBreakAnimationMessage(event.getEntity().getId(), (int) event.getPoint().getX(), (int) event.getPoint().getY(), (int) event.getPoint().getZ(), event.getLevel(), getRepositionManager()));
 	}
 
 	@EventHandler
-	public Message onEntityEffect(EntityEffectEvent event) {
-		return new EntityEffectMessage(event.getEntity().getId(), (byte) event.getEffect().getType().getId(), (byte) 0, (short) (event.getEffect().getDuration() * 20));
+	public void onEntityEffect(EntityEffectEvent event) {
+		event.getMessages().add(new EntityEffectMessage(event.getEntity().getId(), (byte) event.getEffect().getType().getId(), (byte) 0, (short) (event.getEffect().getDuration() * 20)));
 	}
 
 	@EventHandler
-	public Message onExperienceChange(ExperienceChangeEvent event) {
+	public void onExperienceChange(ExperienceChangeEvent event) {
 		Entity entity = event.getEntity();
 		Level level = entity.get(Level.class);
 
 		if (!(entity instanceof Player)) {
-			return null;
+			event.getMessages().add(null);
 		}
 
 		if (level == null) {
-			return null;
+			event.getMessages().add(null);
 		}
 
-		return new PlayerExperienceMessage(level.getProgress(), level.getLevel(), event.getNewExp());
+		event.getMessages().add(new PlayerExperienceMessage(level.getProgress(), level.getLevel(), event.getNewExp()));
 	}
 
 	@EventHandler
-	public Message onPlayerSelectedSlotChange(PlayerSelectedSlotChangeEvent event) {
-		return new PlayerHeldItemChangeMessage(event.getSelectedSlot());
+	public void onPlayerSelectedSlotChange(PlayerSelectedSlotChangeEvent event) {
+		event.getMessages().add(new PlayerHeldItemChangeMessage(event.getSelectedSlot()));
 	}
 
 	@EventHandler
-	public Message onObjectiveAction(ObjectiveActionEvent event) {
+	public void onObjectiveAction(ObjectiveActionEvent event) {
 		Objective obj = event.getObjective();
-		return new ScoreboardObjectiveMessage(obj.getName(), obj.getDisplayName(), event.getAction());
+		event.getMessages().add(new ScoreboardObjectiveMessage(obj.getName(), obj.getDisplayName(), event.getAction()));
 	}
 
 	@EventHandler
-	public Message onObjectiveDisplay(ObjectiveDisplayEvent event) {
-		return new ScoreboardDisplayMessage((byte) event.getSlot().ordinal(), event.getObjectiveName());
+	public void onObjectiveDisplay(ObjectiveDisplayEvent event) {
+		event.getMessages().add(new ScoreboardDisplayMessage((byte) event.getSlot().ordinal(), event.getObjectiveName()));
 	}
 
 	@EventHandler
-	public Message onScoreUpdate(ScoreUpdateEvent event) {
-		return new ScoreboardScoreMessage(event.getKey(), event.isRemove(), event.getObjectiveName(), event.getValue());
+	public void onScoreUpdate(ScoreUpdateEvent event) {
+		event.getMessages().add(new ScoreboardScoreMessage(event.getKey(), event.isRemove(), event.getObjectiveName(), event.getValue()));
 	}
 
 	@EventHandler
-	public Message onTeamAction(TeamActionEvent event) {
+	public void onTeamAction(TeamActionEvent event) {
 		Team team = event.getTeam();
-		return new ScoreboardTeamMessage(
+		event.getMessages().add(new ScoreboardTeamMessage(
 				team.getName(), event.getAction(),
 				team.getDisplayName(),
 				team.getPrefix(), team.getSuffix(),
 				team.isFriendlyFire(), event.getPlayers()
-		);
+		));
 	}
 
 	@Override
 	public Set<Chunk> getActiveChunks() {
 		return Collections.EMPTY_SET;
-	}
-
-	@Override
-	public void sendChunkDatatable(Chunk c) {
 	}
 
 	public enum ChunkInit {

@@ -36,9 +36,10 @@ public class PlayerGameStateEvent extends ProtocolEvent {
 	private static final HandlerList handlers = new HandlerList();
 	private final byte reason;
 	private final GameMode gameMode;
+	private final Player player;
 
 	public PlayerGameStateEvent(Player p, byte reason, GameMode gameMode) {
-		super(p);
+		this.player = p;
 		this.reason = reason;
 		this.gameMode = gameMode;
 	}
@@ -49,6 +50,10 @@ public class PlayerGameStateEvent extends ProtocolEvent {
 
 	public GameMode getGameMode() {
 		return this.gameMode;
+	}
+
+	public Player getPlayer() {
+		return player;
 	}
 
 	@Override

@@ -32,9 +32,14 @@ import org.spout.api.event.ProtocolEvent;
 
 public class PlayerHealthEvent extends ProtocolEvent {
 	private static final HandlerList handlers = new HandlerList();
+	private final Player player;
 
 	public PlayerHealthEvent(Player p) {
-		super(p);
+		this.player = p;
+	}
+
+	public Player getPlayer() {
+		return player;
 	}
 
 	@Override

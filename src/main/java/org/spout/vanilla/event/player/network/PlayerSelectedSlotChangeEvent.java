@@ -33,9 +33,10 @@ import org.spout.api.event.ProtocolEvent;
 public class PlayerSelectedSlotChangeEvent extends ProtocolEvent {
 	private static final HandlerList handlers = new HandlerList();
 	private final int slot;
+	private final Player player;
 
 	public PlayerSelectedSlotChangeEvent(Player p, int slot) {
-		super(p);
+		this.player = p;
 		this.slot = slot;
 	}
 
@@ -45,6 +46,10 @@ public class PlayerSelectedSlotChangeEvent extends ProtocolEvent {
 	 */
 	public int getSelectedSlot() {
 		return this.slot;
+	}
+
+	public Player getPlayer() {
+		return player;
 	}
 
 	@Override

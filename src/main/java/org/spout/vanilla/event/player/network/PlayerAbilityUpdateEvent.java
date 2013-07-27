@@ -41,9 +41,10 @@ public class PlayerAbilityUpdateEvent extends ProtocolEvent {
 	private final boolean isFlying;
 	private final boolean canFly;
 	private final boolean creativeMode;
+	private final Player player;
 
 	public PlayerAbilityUpdateEvent(Player player) {
-		super(player);
+		this.player = player;
 		Human human = player.get(Human.class);
 		if (human == null) {
 			throw new IllegalStateException("Cannot call PlayerAbilityChangeEvent for players which don't have the Human component");
@@ -79,6 +80,10 @@ public class PlayerAbilityUpdateEvent extends ProtocolEvent {
 
 	public boolean isCreativeMode() {
 		return creativeMode;
+	}
+
+	public Player getPlayer() {
+		return player;
 	}
 
 	@Override

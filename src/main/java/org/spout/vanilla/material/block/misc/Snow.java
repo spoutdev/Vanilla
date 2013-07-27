@@ -30,6 +30,8 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.GenericMath;
+import org.spout.physics.collision.shape.BoxShape;
+import org.spout.physics.collision.shape.CollisionShape;
 
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
@@ -46,25 +48,26 @@ public class Snow extends GroundAttachable implements DynamicMaterial, Initializ
 	public static final Snow[] SNOW = new Snow[8];
 
 	static {
-		SNOW[0] = new Snow("Snow", 78, VanillaMaterialModels.SNOW_1);
-		SNOW[1] = new Snow("Snow_1", 1, SNOW[0], VanillaMaterialModels.SNOW_2);
-		SNOW[2] = new Snow("Snow_2", 2, SNOW[0], VanillaMaterialModels.SNOW_3);
-		SNOW[3] = new Snow("Snow_3", 3, SNOW[0], VanillaMaterialModels.SNOW_4);
-		SNOW[4] = new Snow("Snow_4", 4, SNOW[0], VanillaMaterialModels.SNOW_5);
-		SNOW[5] = new Snow("Snow_5", 5, SNOW[0], VanillaMaterialModels.SNOW_6);
-		SNOW[6] = new Snow("Snow_6", 6, SNOW[0], VanillaMaterialModels.SNOW_7);
-		SNOW[7] = new Snow("Snow_7", 7, SNOW[0], VanillaMaterialModels.SNOW_BLOCK);
+		SNOW[0] = new Snow("Snow", 78, VanillaMaterialModels.SNOW_1, null, true);
+		SNOW[1] = new Snow("Snow_1", 1, SNOW[0], VanillaMaterialModels.SNOW_2, null, true);
+		SNOW[2] = new Snow("Snow_2", 2, SNOW[0], VanillaMaterialModels.SNOW_3, null, true);
+		SNOW[3] = new Snow("Snow_3", 3, SNOW[0], VanillaMaterialModels.SNOW_4, null, true);
+		SNOW[4] = new Snow("Snow_4", 4, SNOW[0], VanillaMaterialModels.SNOW_5, null, true);
+		SNOW[5] = new Snow("Snow_5", 5, SNOW[0], VanillaMaterialModels.SNOW_6, null, true);
+		SNOW[6] = new Snow("Snow_6", 6, SNOW[0], VanillaMaterialModels.SNOW_7, null, true);
+		SNOW[7] = new Snow("Snow_7", 7, SNOW[0], VanillaMaterialModels.SNOW_BLOCK, new BoxShape(1f, 1f, 1f), false);
 	}
 
-	public Snow(String name, int id, String model) {
-		super((short) 0x07, name, id, model);
-		this.setLiquidObstacle(false).setStepSound(SoundEffects.STEP_CLOTH).setHardness(0.1F).setResistance(0.2F).setTransparent().setOpacity(1);
+	//TODO: Box Shape
+	public Snow(String name, int id, String model, CollisionShape shape, boolean isGhost) {
+		super((short) 0x07, name, id, model, shape);
+		this.setLiquidObstacle(false).setStepSound(SoundEffects.STEP_CLOTH).setHardness(0.1F).setResistance(0.2F).setTransparent().setOpacity(1).setGhost(isGhost);
 		this.addMiningType(ToolType.SPADE).setMiningLevel(ToolLevel.WOOD);
 	}
 
-	private Snow(String name, int data, Snow parent, String model) {
-		super(name, SNOW[0].getMinecraftId(), data, parent, model);
-		this.setLiquidObstacle(false).setStepSound(SoundEffects.STEP_CLOTH).setHardness(0.1F).setResistance(0.2F).setTransparent().setOpacity(1);
+	private Snow(String name, int data, Snow parent, String model, CollisionShape shape, boolean isGhost) {
+		super(name, SNOW[0].getMinecraftId(), data, parent, model, shape);
+		this.setLiquidObstacle(false).setStepSound(SoundEffects.STEP_CLOTH).setHardness(0.1F).setResistance(0.2F).setTransparent().setOpacity(1).setGhost(isGhost);
 		if (data == 7) {
 			this.setOpaque();
 		}

@@ -34,9 +34,8 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
 /**
- * Thrown when checking if an {@link ItemStack} can be set into an empty inventory slot, or when swapping items.<br/>
- * This event is thrown even when a slot is being set when the system would normally not allow it.<br/>
- * This event is <b>NOT</b> thrown when a player clicks to add items onto a slot that already has the item, or when a player clicks on a crafting slot which already has an item.
+ * Thrown when checking if an {@link ItemStack} can be set into an empty inventory slot, or when swapping items.<br/> This event is thrown even when a slot is being set when the system would normally
+ * not allow it.<br/> This event is <b>NOT</b> thrown when a player clicks to add items onto a slot that already has the item, or when a player clicks on a crafting slot which already has an item.
  */
 public class InventoryCanSetEvent extends InventoryEvent implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
@@ -53,6 +52,7 @@ public class InventoryCanSetEvent extends InventoryEvent implements Cancellable 
 
 	/**
 	 * The index of the slot that the item is being put into.
+	 *
 	 * @return slot
 	 */
 	public int getSlot() {
@@ -61,6 +61,7 @@ public class InventoryCanSetEvent extends InventoryEvent implements Cancellable 
 
 	/**
 	 * Returns a clone of the {@link ItemStack} being set into the slot.
+	 *
 	 * @return the itemstack
 	 */
 	public ItemStack getItem() {

@@ -1,7 +1,7 @@
 /*
  * This file is part of Vanilla.
  *
- * Copyright (c) 2011 Spout LLC <http://www.spout.org/>
+ * Copyright (c) 2011-2012, Spout LLC <http://www.spout.org/>
  * Vanilla is licensed under the Spout License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify it under
@@ -28,12 +28,12 @@ package org.spout.vanilla.event.entity;
 
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.entity.EntityEvent;
+import org.spout.api.event.entity.AbstractEntityEvent;
 
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.data.GameMode;
 
-public class HumanAbilityChangeEvent extends EntityEvent implements Cancellable {
+public class HumanAbilityChangeEvent extends AbstractEntityEvent implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private final byte flyingSpeed;
 	private final byte walkingSpeed;

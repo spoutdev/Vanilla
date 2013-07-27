@@ -52,6 +52,7 @@ public class LivingSpawnEvent extends EntitySpawnEvent {
 
 	/**
 	 * Gets the {@link LivingSpawnCause} of this spawn.
+	 *
 	 * @return cause
 	 */
 	public LivingSpawnCause getSpawnCause() {

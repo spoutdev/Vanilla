@@ -41,6 +41,7 @@ public abstract class WindowEvent extends ProtocolEvent {
 
 	/**
 	 * Gets the Window of this Event
+	 *
 	 * @return the Window
 	 */
 	public AbstractWindow getWindow() {

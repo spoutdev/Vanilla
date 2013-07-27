@@ -47,12 +47,14 @@ public interface VanillaMaterial {
 
 	/**
 	 * Gets the associated 'minecraft' or notchian id for this material
+	 *
 	 * @return minecraft id
 	 */
 	public int getMinecraftId();
 
 	/**
 	 * Gets the associated 'minecraft' or notchian data for this material
+	 *
 	 * @param data to convert
 	 * @return minecraft data
 	 */

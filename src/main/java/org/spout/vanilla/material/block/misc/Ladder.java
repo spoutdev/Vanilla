@@ -35,8 +35,9 @@ import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 
 public class Ladder extends AbstractAttachable {
+	//TODO: Box Shape
 	public Ladder(String name, int id) {
-		super(name, id, VanillaMaterialModels.LADDER);
+		super(name, id, VanillaMaterialModels.LADDER, null);
 		this.setAttachable(BlockFaces.WESN).setHardness(0.4F).setResistance(0.7F).setTransparent();
 	}
 

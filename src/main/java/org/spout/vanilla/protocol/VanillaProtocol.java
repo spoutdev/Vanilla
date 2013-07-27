@@ -26,9 +26,16 @@
  */
 package org.spout.vanilla.protocol;
 
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.commons.lang3.tuple.Pair;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
+
 import org.spout.api.command.Command;
 import org.spout.api.command.CommandArguments;
 import org.spout.api.exception.ArgumentParseException;
@@ -40,8 +47,8 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.Protocol;
 import org.spout.api.protocol.ServerSession;
-import org.spout.api.protocol.Session;
 import org.spout.api.util.Named;
+
 import org.spout.vanilla.ChatStyle;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.msg.ServerPluginMessage;
@@ -60,12 +67,6 @@ import org.spout.vanilla.protocol.plugin.RegisterPluginChannelMessage;
 import org.spout.vanilla.protocol.plugin.RegisterPluginChannelMessageHandler;
 import org.spout.vanilla.protocol.plugin.UnregisterPluginChannelCodec;
 import org.spout.vanilla.protocol.plugin.UnregisterPluginChannelMessageHandler;
-
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class VanillaProtocol extends Protocol {
 	public final static DefaultedKey<String> SESSION_ID = new DefaultedKeyImpl<String>("sessionid", "0000000000000000");
@@ -111,7 +112,7 @@ public class VanillaProtocol extends Protocol {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings ("unchecked")
 	public <T extends Message> Message getWrappedMessage(boolean upstream, T dynamicMessage) throws IOException {
 		MessageCodec<T> codec = (MessageCodec<T>) getCodecLookupService().find(dynamicMessage.getClass());
 		ChannelBuffer buffer = codec.encode(upstream, dynamicMessage);

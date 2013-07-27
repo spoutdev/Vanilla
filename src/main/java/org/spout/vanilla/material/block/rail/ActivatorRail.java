@@ -82,6 +82,7 @@ public class ActivatorRail extends RailBase implements RedstoneTarget, DynamicMa
 
 	/**
 	 * Gets if this block is powered
+	 *
 	 * @param block to get it of
 	 * @return True if powered, False if not
 	 */
@@ -91,6 +92,7 @@ public class ActivatorRail extends RailBase implements RedstoneTarget, DynamicMa
 
 	/**
 	 * Sets if this block is powered
+	 *
 	 * @param block to set it of
 	 * @param powered Whether to power the block or not
 	 */

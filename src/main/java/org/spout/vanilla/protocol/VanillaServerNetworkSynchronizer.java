@@ -28,17 +28,17 @@ package org.spout.vanilla.protocol;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import gnu.trove.set.TIntSet;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
-import org.spout.api.Platform;
 
+import org.spout.api.Platform;
 import org.spout.api.Server;
 import org.spout.api.Spout;
 import org.spout.api.component.BlockComponentOwner;
@@ -54,7 +54,6 @@ import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
-import org.spout.api.geo.cuboid.ChunkSnapshot;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.material.BlockMaterial;
@@ -63,7 +62,6 @@ import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
-import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.api.protocol.ServerNetworkSynchronizer;
 import org.spout.api.protocol.Session;
 import org.spout.api.protocol.Session.State;
@@ -98,24 +96,25 @@ import org.spout.vanilla.data.Weather;
 import org.spout.vanilla.data.WorldType;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.configuration.WorldConfigurationNode;
-import org.spout.vanilla.event.block.BlockActionEvent;
-import org.spout.vanilla.event.block.SignUpdateEvent;
-import org.spout.vanilla.event.block.network.BlockBreakAnimationEvent;
-import org.spout.vanilla.event.block.network.EntityTileDataEvent;
-import org.spout.vanilla.event.entity.EntityAnimationEvent;
-import org.spout.vanilla.event.entity.EntityCollectItemEvent;
-import org.spout.vanilla.event.entity.EntityEquipmentEvent;
-import org.spout.vanilla.event.entity.EntityMetaChangeEvent;
-import org.spout.vanilla.event.entity.EntityStatusEvent;
+import org.spout.vanilla.event.entity.network.EntityAnimationEvent;
+import org.spout.vanilla.event.entity.network.EntityCollectItemEvent;
 import org.spout.vanilla.event.entity.network.EntityEffectEvent;
+import org.spout.vanilla.event.entity.network.EntityEquipmentEvent;
+import org.spout.vanilla.event.entity.network.EntityMetaChangeEvent;
 import org.spout.vanilla.event.entity.network.EntityRemoveEffectEvent;
-import org.spout.vanilla.event.item.MapItemUpdateEvent;
+import org.spout.vanilla.event.entity.network.EntityStatusEvent;
+import org.spout.vanilla.event.material.network.BlockActionEvent;
+import org.spout.vanilla.event.material.network.BlockBreakAnimationEvent;
+import org.spout.vanilla.event.material.network.EntityTileDataEvent;
+import org.spout.vanilla.event.material.network.MapItemUpdateEvent;
+import org.spout.vanilla.event.material.network.SignUpdateEvent;
+import org.spout.vanilla.event.player.network.ListPingEvent;
+import org.spout.vanilla.event.player.network.PingEvent;
 import org.spout.vanilla.event.player.network.PlayerAbilityUpdateEvent;
 import org.spout.vanilla.event.player.network.PlayerBedEvent;
+import org.spout.vanilla.event.player.network.PlayerExperienceChangeEvent;
 import org.spout.vanilla.event.player.network.PlayerGameStateEvent;
 import org.spout.vanilla.event.player.network.PlayerHealthEvent;
-import org.spout.vanilla.event.player.network.PlayerListEvent;
-import org.spout.vanilla.event.player.network.PlayerPingEvent;
 import org.spout.vanilla.event.player.network.PlayerSelectedSlotChangeEvent;
 import org.spout.vanilla.event.scoreboard.ObjectiveActionEvent;
 import org.spout.vanilla.event.scoreboard.ObjectiveDisplayEvent;
@@ -135,7 +134,6 @@ import org.spout.vanilla.inventory.window.DefaultWindow;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.component.TileMaterial;
 import org.spout.vanilla.protocol.container.VanillaContainer;
-import org.spout.vanilla.protocol.entity.player.ExperienceChangeEvent;
 import org.spout.vanilla.protocol.msg.VanillaBlockDataChannelMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
@@ -205,29 +203,37 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 	private int stepY = 160;
 	private int offsetY = 0;
 	private final VanillaRepositionManager vpm = new VanillaRepositionManager();
-
-
 	private boolean teleported = false;
 	private boolean teleportPending = false;
 	private int tickCounter = 0;
 	private volatile boolean worldChanged = false;
-	/** The point that the player was at for the last tick. Used to check world changes */
+	/**
+	 * The point that the player was at for the last tick. Used to check world changes
+	 */
 	//TODO: can we not check the player's live transform versus snapshot?
 	private Point lastPosition = null;
-	/** If the player is going to teleport, this is the point the player was at before. Used to prevent teleport -> free -> send */
+	/**
+	 * If the player is going to teleport, this is the point the player was at before. Used to prevent teleport -> free -> send
+	 */
 	private Point holdingPosition = null;
 	private final LinkedHashSet<Chunk> observed = new LinkedHashSet<Chunk>();
-	/** Includes chunks that need to be observed. When observation is successfully attained or no longer wanted, point is removed */
+	/**
+	 * Includes chunks that need to be observed. When observation is successfully attained or no longer wanted, point is removed
+	 */
 	private final Set<Point> chunksToObserve = new LinkedHashSet<Point>();
-	private Point lastChunkCheck =  Point.invalid;
+	private Point lastChunkCheck = Point.invalid;
 	// Base points used so as not to load chunks unnecessarily
 	private final Set<Point> chunkInitQueue = new LinkedHashSet<Point>();
 	private final Set<Point> priorityChunkSendQueue = new LinkedHashSet<Point>();
 	private final Set<Point> chunkSendQueue = new LinkedHashSet<Point>();
 	private final Set<Point> chunkFreeQueue = new LinkedHashSet<Point>();
-	/** Chunks that have initialized on the client. May also have chunks that have been sent. */
+	/**
+	 * Chunks that have initialized on the client. May also have chunks that have been sent.
+	 */
 	private final Set<Point> initializedChunks = new LinkedHashSet<Point>();
-	/** Chunks that have been sent to the client */
+	/**
+	 * Chunks that have been sent to the client
+	 */
 	private final Set<Point> activeChunks = new LinkedHashSet<Point>();
 
 	static {
@@ -254,12 +260,12 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 		// The minimum block distance is a radius for sending chunks before login/respawn
 		// It needs to be > 0 for reliable login and preventing falling through the world
 		super(session, 2);
-		Spout.getEventManager().registerEvents(this, VanillaPlugin.getInstance());
+		session.getEngine().getEventManager().registerEvents(this, session);
 		chunkInit = ChunkInit.getChunkInit(VanillaConfiguration.CHUNK_INIT.getString("client"));
 		setRepositionManager(vpm);
 	}
 
-	@EventHandler(order = Order.MONITOR)
+	@EventHandler (order = Order.MONITOR)
 	public void onChunkFree(ChunkFreeEvent event) {
 		freeChunk(event.getPoint());
 	}
@@ -308,7 +314,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 		initColumns.clear();
 		lastChunkCheck = Point.invalid;
 		synchronizedEntities.clear();
-		
+
 		this.emptyColumns.clear();
 		this.activeColumns.clear();
 		this.initColumns.clear();
@@ -345,7 +351,6 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 				}
 			}
 			chunksSent++;
-
 		} else {
 			unsendable.add(p);
 		}
@@ -517,13 +522,13 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 		return true;
 	}
 
-	@EventHandler(order = Order.LATEST)
+	@EventHandler (order = Order.LATEST)
 	public void onChunkSendLatest(ChunkSendEvent event) {
 		event.getMessages().clear();
 	}
 
 	// We want some extra handling here; therefore we want to handle our own sending.
-	@EventHandler(order = Order.MONITOR)
+	@EventHandler (order = Order.MONITOR)
 	public void onChunkSendMonitor(ChunkSendEvent event) {
 		if (event.isForced() || canSendChunk(event.getChunk())) {
 			doSendChunk(event.getChunk());
@@ -617,17 +622,17 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 		session.send(PPLMsg);
 	}
 
-	@EventHandler(order = Order.LATEST)
+	@EventHandler (order = Order.LATEST)
 	public void onWorldChangeLatest(WorldChangeProtocolEvent event) {
 		event.getMessages().clear();
 	}
-	
+
 	// Same as chunk sending
-	@EventHandler(order = Order.MONITOR)
+	@EventHandler (order = Order.MONITOR)
 	public void onWorldChangeMonitor(WorldChangeProtocolEvent event) {
 		worldChanged(event.getWorld());
 	}
-	
+
 	private void worldChanged(World world) {
 		WorldConfigurationNode node = VanillaConfiguration.WORLDS.get(world);
 		maxY = node.MAX_Y.getInt() & (~Chunk.BLOCKS.MASK);
@@ -708,7 +713,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 	public void finalizeTick() {
 		super.finalizeTick();
 		tickCounter++;
-		
+
 		Point currentPosition = player.getPhysics().getPosition();
 
 		int y = currentPosition.getBlockY();
@@ -755,7 +760,6 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 				teleported = true;
 				teleportPending = true;
 			}
-
 		}
 
 		lastPosition = currentPosition;
@@ -851,7 +855,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 			}
 		}
 	}
-	
+
 	@EventHandler
 	public void onBlockUpdate(UpdateBlockEvent event) {
 		BlockMaterial material = event.getChunk().getBlockMaterial(event.getX(), event.getY(), event.getZ());
@@ -999,12 +1003,12 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 	}
 
 	@EventHandler
-	public void onPlayerKeepAlive(PlayerPingEvent event) {
+	public void onPlayerKeepAlive(PingEvent event) {
 		event.getMessages().add(new PlayerPingMessage(event.getHash()));
 	}
 
 	@EventHandler
-	public void onPlayerUpdateUserList(PlayerListEvent event) {
+	public void onPlayerUpdateUserList(ListPingEvent event) {
 		String name = event.getPlayerDisplayName();
 		event.getMessages().add(new PlayerListMessage(name, event.getOnline(), (short) event.getPingDelay()));
 	}
@@ -1083,19 +1087,15 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 	}
 
 	@EventHandler
-	public void onExperienceChange(ExperienceChangeEvent event) {
-		Entity entity = event.getEntity();
-		Level level = entity.get(Level.class);
-
-		if (!(entity instanceof Player)) {
-			event.getMessages().add(null);
-		}
+	public void onExperienceChange(PlayerExperienceChangeEvent event) {
+		Player player = event.getPlayer();
+		Level level = player.get(Level.class);
 
 		if (level == null) {
 			event.getMessages().add(null);
+		} else {
+			event.getMessages().add(new PlayerExperienceMessage(level.getProgress(), level.getLevel(), event.getNewExp()));
 		}
-
-		event.getMessages().add(new PlayerExperienceMessage(level.getProgress(), level.getLevel(), event.getNewExp()));
 	}
 
 	@EventHandler
@@ -1136,7 +1136,10 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 	}
 
 	public enum ChunkInit {
-		CLIENT_SEL, FULL_COLUMN, HEIGHTMAP, EMPTY_COLUMN;
+		CLIENT_SEL,
+		FULL_COLUMN,
+		HEIGHTMAP,
+		EMPTY_COLUMN;
 
 		public static ChunkInit getChunkInit(String init) {
 			if (init == null) {

@@ -47,6 +47,7 @@ public class DropperOpenEvent extends InventoryOpenEvent implements Cancellable 
 
 	/**
 	 * Returns the dropper which caused this event.
+	 *
 	 * @return dropper
 	 */
 	public Dropper getDropper() {

@@ -28,12 +28,12 @@ package org.spout.vanilla.material.map;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.spout.api.event.ProtocolEvent;
 
+import org.spout.api.event.ProtocolEvent;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector2;
 
-import org.spout.vanilla.event.item.MapItemUpdateEvent;
+import org.spout.vanilla.event.material.network.MapItemUpdateEvent;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public class Map extends VanillaItemMaterial {
@@ -52,6 +52,7 @@ public class Map extends VanillaItemMaterial {
 
 	/**
 	 * Gets the Instance Id of this Map
+	 *
 	 * @return Map Instance Id
 	 */
 	public int getInstanceId() {
@@ -60,6 +61,7 @@ public class Map extends VanillaItemMaterial {
 
 	/**
 	 * Gets the width dimension of this map
+	 *
 	 * @return the width dimension
 	 */
 	public short getWidth() {
@@ -68,6 +70,7 @@ public class Map extends VanillaItemMaterial {
 
 	/**
 	 * Gets the height dimension of this map
+	 *
 	 * @return the height dimension
 	 */
 	public short getHeight() {
@@ -76,6 +79,7 @@ public class Map extends VanillaItemMaterial {
 
 	/**
 	 * Sets whether this map is changed
+	 *
 	 * @param changed state to set to
 	 */
 	public void setChanged(boolean changed) {
@@ -84,6 +88,7 @@ public class Map extends VanillaItemMaterial {
 
 	/**
 	 * Gets whether this map got changed
+	 *
 	 * @return True if it got changed, False if not
 	 */
 	public boolean isChanged() {
@@ -92,6 +97,7 @@ public class Map extends VanillaItemMaterial {
 
 	/**
 	 * Sets the map color at the coordinates to the map color specified
+	 *
 	 * @param x coordinate
 	 * @param y coordinate
 	 * @param color to set to
@@ -103,6 +109,7 @@ public class Map extends VanillaItemMaterial {
 
 	/**
 	 * Gets the map color at the coordinates specified
+	 *
 	 * @param x coordinate
 	 * @param y coordinate
 	 * @return the map color

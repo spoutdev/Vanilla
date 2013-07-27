@@ -116,6 +116,7 @@ public class Sapling extends GroundAttachable implements Growing, Spreading, Pla
 
 	/**
 	 * Grows a full-sized tree from the sapling at the block given
+	 *
 	 * @param block to place a tree at
 	 */
 	public void growTree(Block block) {
@@ -127,6 +128,7 @@ public class Sapling extends GroundAttachable implements Growing, Spreading, Pla
 
 	/**
 	 * Grows a full-sized tree from the sapling type given
+	 *
 	 * @param block to grow a tree at
 	 * @param type of tree
 	 */

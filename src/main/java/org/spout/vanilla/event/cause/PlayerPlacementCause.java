@@ -43,6 +43,7 @@ public class PlayerPlacementCause extends PlayerCause {
 
 	/**
 	 * Gets where the material is going to be placed
+	 *
 	 * @return placed
 	 */
 	public Block getBlock() {
@@ -51,6 +52,7 @@ public class PlayerPlacementCause extends PlayerCause {
 
 	/**
 	 * Gets the block material that is going to be placed
+	 *
 	 * @return to place
 	 */
 	public Material getPlacedMaterial() {

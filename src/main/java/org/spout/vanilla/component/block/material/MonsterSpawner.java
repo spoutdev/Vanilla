@@ -69,6 +69,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 
 	/**
 	 * Sets the minimum amount of seconds that the spawner can spawn within.
+	 *
 	 * @param delay in seconds
 	 */
 	public void setMinSpawnDelay(int delay) {
@@ -77,6 +78,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 
 	/**
 	 * Returns the minimum amount of seconds that the spawner can spawn within.
+	 *
 	 * @return delay in seconds
 	 */
 	public int getMinSpawnDelay() {
@@ -85,6 +87,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 
 	/**
 	 * Sets the maximum amount of seconds that a spawner can spawn within.
+	 *
 	 * @param delay in seconds
 	 */
 	public void setMaxSpawnDelay(int delay) {
@@ -93,6 +96,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 
 	/**
 	 * Returns the maximum amount of seconds that a spawner can spawn within.
+	 *
 	 * @return delay in seconds
 	 */
 	public int getMaxSpawnDelay() {
@@ -100,8 +104,8 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	}
 
 	/**
-	 * Sets the amount of creatures that can be within the bounds specified by
-	 * {@link #getCreatureSearchRange()}.
+	 * Sets the amount of creatures that can be within the bounds specified by {@link #getCreatureSearchRange()}.
+	 *
 	 * @param maxCreatures maximum amount of creatures that can spawn
 	 */
 	public void setMaxCreatures(int maxCreatures) {
@@ -109,8 +113,8 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	}
 
 	/**
-	 * Returns the amount of creatures that can be within the bounds specified
-	 * by {@link #getCreatureSearchRange()}.
+	 * Returns the amount of creatures that can be within the bounds specified by {@link #getCreatureSearchRange()}.
+	 *
 	 * @return maximum amount of creatures that can spawn
 	 */
 	public int getMaxCreatures() {
@@ -119,6 +123,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 
 	/**
 	 * Sets the range in which to search for creatures in.
+	 *
 	 * @param range to search for creatures in
 	 */
 	public void setCreatureSearchRange(int range) {
@@ -127,6 +132,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 
 	/**
 	 * Returns the range in which to search for creatures in.
+	 *
 	 * @return range to search for creatures in
 	 */
 	public int getCreatureSearchRange() {
@@ -135,6 +141,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 
 	/**
 	 * Sets the range in which entities can spawn from the spawner.
+	 *
 	 * @param spawnRange of spawner
 	 */
 	public void setSpawnRange(float spawnRange) {
@@ -143,6 +150,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 
 	/**
 	 * Returns the range in which entities can spawn from the spawner.
+	 *
 	 * @return range from the spawner
 	 */
 	public float getSpawnRange() {
@@ -150,8 +158,8 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	}
 
 	/**
-	 * Sets the amount of entities the spawner should attempt to spawn on every
-	 * {@link #doSpawn()}.
+	 * Sets the amount of entities the spawner should attempt to spawn on every {@link #doSpawn()}.
+	 *
 	 * @param spawnCount how many entities to try and spawn
 	 */
 	public void setSpawnCount(int spawnCount) {
@@ -159,8 +167,8 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	}
 
 	/**
-	 * Returns the amount of entities the spawner should attempt to spawn on
-	 * every {@link #doSpawn()}.
+	 * Returns the amount of entities the spawner should attempt to spawn on every {@link #doSpawn()}.
+	 *
 	 * @return how many entities to spawn
 	 */
 	public int getSpawnCount() {
@@ -168,9 +176,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	}
 
 	/**
-	 * Attempts to spawn the amount of entities specified by
-	 * {@link #getSpawnCount()} within the range specified by
-	 * {@link #getSpawnRange()} and resets the spawn delay.
+	 * Attempts to spawn the amount of entities specified by {@link #getSpawnCount()} within the range specified by {@link #getSpawnRange()} and resets the spawn delay.
 	 */
 	public void doSpawn() {
 		Point pos = getPoint();
@@ -189,6 +195,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 
 	/**
 	 * Whether the spawner should spawn more creatures.
+	 *
 	 * @return true if the spawner is able to spawn more
 	 */
 	public boolean canSpawn() {
@@ -205,6 +212,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 
 	/**
 	 * Sets the {@link CreatureType} spawned.
+	 *
 	 * @param type to spawn
 	 */
 	public void setCreatureType(CreatureType type) {
@@ -214,6 +222,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 
 	/**
 	 * Returns the {@link CreatureType} to spawn.
+	 *
 	 * @return creature to spawn
 	 */
 	public CreatureType getCreatureType() {
@@ -221,8 +230,8 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	}
 
 	/**
-	 * Sets the radius in which the spawner requires at least one
-	 * {@link Player} to be within.
+	 * Sets the radius in which the spawner requires at least one {@link Player} to be within.
+	 *
 	 * @param radius to search for players in
 	 */
 	public void setRadius(int radius) {
@@ -230,8 +239,8 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	}
 
 	/**
-	 * Returns the radius in which the spawner requires at least one
-	 * {@link Player} to be within.
+	 * Returns the radius in which the spawner requires at least one {@link Player} to be within.
+	 *
 	 * @return radius to search for players in
 	 */
 	public int getRadius() {
@@ -239,8 +248,8 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	}
 
 	/**
-	 * Returns true if a {@link Player} is within the radius specified by
-	 * {@link #getRadius()}.
+	 * Returns true if a {@link Player} is within the radius specified by {@link #getRadius()}.
+	 *
 	 * @return true if there is a player within the radius
 	 */
 	public boolean isActive() {
@@ -248,8 +257,8 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	}
 
 	/**
-	 * Returns the amount of time, in seconds, there is until the next
-	 * {@link #doSpawn()} call.
+	 * Returns the amount of time, in seconds, there is until the next {@link #doSpawn()} call.
+	 *
 	 * @return time, in seconds, until next spawn
 	 */
 	public float getSpawnDelay() {
@@ -257,8 +266,8 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	}
 
 	/**
-	 * Sets the amount of time, in seconds, there is until the next
-	 * {@link #doSpawn()} call.
+	 * Sets the amount of time, in seconds, there is until the next {@link #doSpawn()} call.
+	 *
 	 * @param spawnDelay in seconds
 	 */
 	public void setSpawnDelay(float spawnDelay) {

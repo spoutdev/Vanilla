@@ -30,12 +30,12 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.Cause;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.entity.EntityEvent;
+import org.spout.api.event.entity.AbstractEntityEvent;
 
 /**
  * Event which is called when a projectile hits something
  */
-public class ProjectileHitEvent extends EntityEvent implements Cancellable {
+public class ProjectileHitEvent extends AbstractEntityEvent implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private Cause<?> cause;
 
@@ -46,6 +46,7 @@ public class ProjectileHitEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Gets the cause of this event.
+	 *
 	 * @return cause
 	 */
 	public Cause<?> getCause() {
@@ -54,7 +55,6 @@ public class ProjectileHitEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Sets the cause of this event.
-	 * @param cause
 	 */
 	public void setCause(Cause<?> cause) {
 		this.cause = cause;

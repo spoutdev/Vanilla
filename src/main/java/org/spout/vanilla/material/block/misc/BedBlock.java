@@ -59,7 +59,8 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 	public static final String OCCUPIED_MESSAGE = ChatStyle.RED + "This bed is occupied.";
 
 	public BedBlock(String name, int id) {
-		super(name, id, VanillaMaterialModels.BED_BLOCK);
+		//TODO: Box Shape
+		super(name, id, VanillaMaterialModels.BED_BLOCK, null);
 		this.setHardness(0.2F).setResistance(0.3F).setTransparent();
 	}
 
@@ -114,6 +115,7 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 
 	/**
 	 * Sets whether or not a bed is occupied by a player
+	 *
 	 * @param bedBlock to get it of
 	 */
 	public void setOccupied(Block bedBlock, Entity sleeper, boolean occupied) {
@@ -125,6 +127,7 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 
 	/**
 	 * Gets whether or not a bed block is occupied by a player
+	 *
 	 * @param bedBlock to get it of
 	 * @return True if occupied
 	 */
@@ -134,6 +137,7 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 
 	/**
 	 * Gets the facing state of a single bed block
+	 *
 	 * @param bedBlock to get it of
 	 * @return the face
 	 */
@@ -142,8 +146,8 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 	}
 
 	/**
-	 * Sets the facing state of a single bed block<br>
-	 * Note that this does not affect the misc half
+	 * Sets the facing state of a single bed block<br> Note that this does not affect the misc half
+	 *
 	 * @param bedBlock to set it of
 	 * @param facing to set to
 	 */
@@ -153,6 +157,7 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 
 	/**
 	 * Creates a bed using the parameters specified
+	 *
 	 * @param footBlock of the bed
 	 * @param facing of the bed
 	 */
@@ -192,6 +197,7 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 
 	/**
 	 * Gets the top or face door block when either of the blocks is given
+	 *
 	 * @param bedBlock the top or bottom bed block
 	 * @param head whether to get the top block, if false, gets the bottom block
 	 * @return the requested bed half block

@@ -27,8 +27,7 @@
 package org.spout.vanilla.component.entity.living;
 
 /**
- * Represents a passive entity. A passive entity will never attack another
- * player even if the player provokes said entity.
+ * Represents a passive entity. A passive entity will never attack another player even if the player provokes said entity.
  */
 public interface Passive {
 }

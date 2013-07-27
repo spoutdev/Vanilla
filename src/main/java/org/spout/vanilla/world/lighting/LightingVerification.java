@@ -365,7 +365,7 @@ public class LightingVerification {
 		Spout.getLogger().info(getCuboid(localLight, localMaterials));
 	}
 
-	private final static String[] layers = new String[]{"Bottom", "Middle", "Top"};
+	private final static String[] layers = new String[] {"Bottom", "Middle", "Top"};
 
 	private static String getCuboid(int[][][] light, BlockMaterial[][][] material) {
 		StringBuilder sb = new StringBuilder();

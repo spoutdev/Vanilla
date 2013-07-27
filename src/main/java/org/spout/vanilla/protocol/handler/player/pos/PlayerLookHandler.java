@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.handler.player.pos;
 
 import org.spout.api.entity.Player;
 import org.spout.api.math.QuaternionMath;
-import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.ClientSession;
+import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.ServerSession;
 
 import org.spout.vanilla.component.entity.living.Human;

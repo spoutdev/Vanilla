@@ -32,7 +32,7 @@ import org.spout.api.component.entity.EntityComponent;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.event.entity.EntityMetaChangeEvent;
+import org.spout.vanilla.event.entity.network.EntityMetaChangeEvent;
 
 public class VanillaEntityComponent extends EntityComponent {
 	@Override
@@ -47,12 +47,9 @@ public class VanillaEntityComponent extends EntityComponent {
 	}
 
 	/**
-	 * A counter of how many times this component has been attached to an entity
-	 * <p>
-	 * Values > 1 indicate how many times this component has been saved to disk,
-	 * and reloaded
-	 * <p>
-	 * Values == 1 indicate a new component that has never been saved and loaded.
+	 * A counter of how many times this component has been attached to an entity <p> Values > 1 indicate how many times this component has been saved to disk, and reloaded <p> Values == 1 indicate a new
+	 * component that has never been saved and loaded.
+	 *
 	 * @return attached count
 	 */
 	public final int getAttachedCount() {

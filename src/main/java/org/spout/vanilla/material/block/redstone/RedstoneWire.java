@@ -202,8 +202,8 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 	}
 
 	/**
-	 * Checks if a redstone wire is connected to a certain block<br>
-	 * No solid block connections are checked.
+	 * Checks if a redstone wire is connected to a certain block<br> No solid block connections are checked.
+	 *
 	 * @param block of the wire
 	 * @param face to connect to
 	 * @return True if connected
@@ -231,6 +231,7 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 
 	/**
 	 * Checks if this wire is distracted from connecting to a certain solid block
+	 *
 	 * @param block of the wire
 	 * @param direction it tries to connect to a solid block
 	 * @return True if the wire is distracted

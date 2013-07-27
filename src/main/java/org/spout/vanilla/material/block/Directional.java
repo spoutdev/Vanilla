@@ -35,6 +35,7 @@ import org.spout.api.material.block.BlockFace;
 public interface Directional {
 	/**
 	 * Gets the face to which this block material faces
+	 *
 	 * @param block to get it of
 	 * @return the facing direction
 	 */
@@ -42,6 +43,7 @@ public interface Directional {
 
 	/**
 	 * Sets the face to which this block material faces
+	 *
 	 * @param block to set it for
 	 * @param facing direction to set to
 	 */

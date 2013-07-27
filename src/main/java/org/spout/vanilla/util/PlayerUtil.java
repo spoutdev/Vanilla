@@ -45,6 +45,7 @@ import org.spout.vanilla.inventory.entity.QuickbarInventory;
 public class PlayerUtil {
 	/**
 	 * Checks whether the inventory of an entity, if available, suppresses item removal costs
+	 *
 	 * @param entity to check it for
 	 * @return True if the costs are suppressed, False if not
 	 */
@@ -54,6 +55,7 @@ public class PlayerUtil {
 
 	/**
 	 * Checks whether an Entity is in creative mode
+	 *
 	 * @param entity to check
 	 * @return True if the game mode is creative, False if not
 	 */
@@ -62,8 +64,8 @@ public class PlayerUtil {
 	}
 
 	/**
-	 * Gets the quickbar of a player entity<br>
-	 * If the entity is not a quickbar-containing entity, null is returned
+	 * Gets the quickbar of a player entity<br> If the entity is not a quickbar-containing entity, null is returned
+	 *
 	 * @param entity to get the quickbar of
 	 * @return The quickbar, or null
 	 */
@@ -77,8 +79,8 @@ public class PlayerUtil {
 	}
 
 	/**
-	 * Gets the currently selected Quickbar Slot of a player entity<br>
-	 * Needs to be a valid player entity, otherwise null is returned
+	 * Gets the currently selected Quickbar Slot of a player entity<br> Needs to be a valid player entity, otherwise null is returned
+	 *
 	 * @param entity to get the current slot of
 	 * @return Current slot
 	 */
@@ -89,6 +91,7 @@ public class PlayerUtil {
 
 	/**
 	 * Gets the required facing for a Block to look at a possible Entity in the cause
+	 *
 	 * @param block to get the facing for
 	 * @return The block facing
 	 */
@@ -102,6 +105,7 @@ public class PlayerUtil {
 
 	/**
 	 * Gets the required facing for a Block to look at an Entity
+	 *
 	 * @param block to get the facing for
 	 * @param entity to look at
 	 * @return The block facing
@@ -124,6 +128,7 @@ public class PlayerUtil {
 
 	/**
 	 * Obtains the yaw from a cause, if possible, otherwise 0 is returned
+	 *
 	 * @param cause to obtain the yaw of
 	 * @return yaw
 	 */
@@ -136,8 +141,8 @@ public class PlayerUtil {
 	}
 
 	/**
-	 * Obtains the yaw of an entity, if the entity has a head,
-	 * the head yaw is returned instead
+	 * Obtains the yaw of an entity, if the entity has a head, the head yaw is returned instead
+	 *
 	 * @param entity to get the yaw of
 	 * @return yaw
 	 */
@@ -147,9 +152,8 @@ public class PlayerUtil {
 	}
 
 	/**
-	 * Calculates the facing direction of the entity based on it's
-	 * head if it has one, or it's yaw if not.
-	 * @param entity
+	 * Calculates the facing direction of the entity based on it's head if it has one, or it's yaw if not.
+	 *
 	 * @return the face
 	 */
 	public static BlockFace getFacing(Entity entity) {
@@ -157,9 +161,8 @@ public class PlayerUtil {
 	}
 
 	/**
-	 * Tries to calculate the facing direction from the cause
-	 * if possible. Returns BlockFace.NORTH if not.
-	 * @param cause
+	 * Tries to calculate the facing direction from the cause if possible. Returns BlockFace.NORTH if not.
+	 *
 	 * @return the face
 	 */
 	public static BlockFace getFacing(Cause<?> cause) {

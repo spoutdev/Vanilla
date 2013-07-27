@@ -32,6 +32,7 @@ package org.spout.vanilla.material.block;
 public interface Spreading {
 	/**
 	 * Gets the mimimum required light for this Growing material to spread
+	 *
 	 * @return minimum light
 	 */
 	public int getMinimumLightToSpread();

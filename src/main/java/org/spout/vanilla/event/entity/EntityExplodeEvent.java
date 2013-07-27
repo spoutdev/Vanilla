@@ -31,14 +31,14 @@ import java.util.Set;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.entity.EntityEvent;
+import org.spout.api.event.entity.AbstractEntityEvent;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 
 /**
  * Event which is called when an Entity explodes
  */
-public class EntityExplodeEvent extends EntityEvent implements Cancellable {
+public class EntityExplodeEvent extends AbstractEntityEvent implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private Set<Block> blocks;
 	private Point epicenter;
@@ -51,7 +51,6 @@ public class EntityExplodeEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Gets a set of blocks that explode during this event.
-	 * @return
 	 */
 	public Set<Block> getBlocks() {
 		return blocks;
@@ -59,7 +58,6 @@ public class EntityExplodeEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Sets which blocks to explode.
-	 * @param blocks
 	 */
 	public void setBlocks(Set<Block> blocks) {
 		this.blocks = blocks;
@@ -67,6 +65,7 @@ public class EntityExplodeEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Gets the epicenter of the explosion.
+	 *
 	 * @return epicenter of explosion.
 	 */
 	public Point getEpicenter() {
@@ -75,7 +74,6 @@ public class EntityExplodeEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Sets the epicenter of the explosion.
-	 * @param epicenter
 	 */
 	public void setEpicenter(Point epicenter) {
 		this.epicenter = epicenter;
@@ -83,6 +81,7 @@ public class EntityExplodeEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Whether or not the explosion is incendiary.
+	 *
 	 * @return true if incendiary.
 	 */
 	public boolean isIncendiary() {
@@ -91,7 +90,6 @@ public class EntityExplodeEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Sets whether or not the explosion is incendiary.
-	 * @param incendiary
 	 */
 	public void setIncendiary(boolean incendiary) {
 		this.incendiary = incendiary;
@@ -99,6 +97,7 @@ public class EntityExplodeEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Gets the yield of the explosion.
+	 *
 	 * @return yield of explosion.
 	 */
 	public float getYield() {
@@ -107,7 +106,6 @@ public class EntityExplodeEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Sets the yield of the explosion.
-	 * @param yield
 	 */
 	public void setYield(float yield) {
 		this.yield = yield;

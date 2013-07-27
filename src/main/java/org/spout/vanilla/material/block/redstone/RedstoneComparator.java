@@ -69,11 +69,12 @@ public class RedstoneComparator extends GroundAttachable implements Directional,
 		for (int i = 0; i < PHYSIC_RANGES.length; i++) {
 			PHYSIC_RANGES[i] = new ListEffectRange(BlockFaces.ESWN.get(i));
 		}
-		inputs = new Material[]{VanillaMaterials.HOPPER, VanillaMaterials.CHEST, VanillaMaterials.TRAPPED_CHEST_BLOCK, VanillaMaterials.DISPENSER, VanillaMaterials.BREWING_STAND_BLOCK, VanillaMaterials.FURNACE, VanillaMaterials.FURNACE_BURNING};
+		inputs = new Material[] {VanillaMaterials.HOPPER, VanillaMaterials.CHEST, VanillaMaterials.TRAPPED_CHEST_BLOCK, VanillaMaterials.DISPENSER, VanillaMaterials.BREWING_STAND_BLOCK, VanillaMaterials.FURNACE, VanillaMaterials.FURNACE_BURNING};
 	}
 
 	public RedstoneComparator(String name, int id, boolean powered) {
-		super(name, id, null);
+		//TODO: Box Shape
+		super(name, id, null, null);
 		this.powered = powered;
 		this.setHardness(0.0F).setResistance(0.0F).setOpacity(0).setOcclusion((short) 0, BlockFace.BOTTOM);
 	}

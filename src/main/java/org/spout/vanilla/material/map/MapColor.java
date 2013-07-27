@@ -48,6 +48,7 @@ public class MapColor {
 
 	/**
 	 * Gets a map color by color ID
+	 *
 	 * @param id of the color
 	 * @return Map Color
 	 */
@@ -69,6 +70,7 @@ public class MapColor {
 
 	/**
 	 * Gets the base map material color
+	 *
 	 * @return the base map material color
 	 */
 	public MapMaterialColor getBase() {
@@ -77,6 +79,7 @@ public class MapColor {
 
 	/**
 	 * Gets the red component
+	 *
 	 * @return the red component (0F - 1F)
 	 */
 	public float getRed() {
@@ -85,6 +88,7 @@ public class MapColor {
 
 	/**
 	 * Gets the green component
+	 *
 	 * @return the green component (0F - 1F)
 	 */
 	public float getGreen() {
@@ -93,6 +97,7 @@ public class MapColor {
 
 	/**
 	 * Gets the blue component
+	 *
 	 * @return the blue component (0F - 1F)
 	 */
 	public float getBlue() {
@@ -101,6 +106,7 @@ public class MapColor {
 
 	/**
 	 * Gets the ID of this map color
+	 *
 	 * @return the id
 	 */
 	public byte getId() {

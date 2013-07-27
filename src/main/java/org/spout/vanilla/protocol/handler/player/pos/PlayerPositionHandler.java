@@ -32,7 +32,6 @@ import java.util.concurrent.TimeUnit;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-
 import gnu.trove.iterator.TDoubleIterator;
 import gnu.trove.iterator.TLongIterator;
 import gnu.trove.list.TDoubleList;
@@ -45,8 +44,8 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.ClientSession;
+import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.ServerSession;
 import org.spout.api.protocol.Session;
 import org.spout.api.protocol.reposition.RepositionManager;
@@ -101,7 +100,9 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 		final Point newPosition = rmInverse.convert(rawPosition);
 		final Point position = holder.getPhysics().getPosition();
 
-		if (!(session.getNetworkSynchronizer() instanceof VanillaServerNetworkSynchronizer)) throw new IllegalStateException("Using Vanilla Protocol without using VanillaNetworkSynchronizer");
+		if (!(session.getNetworkSynchronizer() instanceof VanillaServerNetworkSynchronizer)) {
+			throw new IllegalStateException("Using Vanilla Protocol without using VanillaNetworkSynchronizer");
+		}
 		VanillaServerNetworkSynchronizer sync = (VanillaServerNetworkSynchronizer) session.getNetworkSynchronizer();
 		if (sync.isTeleportPending()) {
 			if (position.getX() == newPosition.getX() && position.getZ() == newPosition.getZ() && Math.abs(position.getY() - newPosition.getY()) < 16) {

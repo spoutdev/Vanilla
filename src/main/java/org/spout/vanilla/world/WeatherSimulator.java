@@ -28,8 +28,8 @@ package org.spout.vanilla.world;
 
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
-import org.spout.api.Platform;
 
+import org.spout.api.Platform;
 import org.spout.api.Spout;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.World;
@@ -83,6 +83,7 @@ public class WeatherSimulator extends BasicTickable {
 
 	/**
 	 * Gets if this Weather simulator supports Lightning storms
+	 *
 	 * @return True if it has lightning, False if not
 	 */
 	public boolean hasLightning() {
@@ -91,6 +92,7 @@ public class WeatherSimulator extends BasicTickable {
 
 	/**
 	 * Sets if this Weather simulator supports Lightning storms
+	 *
 	 * @param hasLightning state to set to
 	 */
 	public void setLightning(boolean hasLightning) {
@@ -135,6 +137,7 @@ public class WeatherSimulator extends BasicTickable {
 
 	/**
 	 * Gets the strength of the rain, which is affected by the duration
+	 *
 	 * @param factor to apply to the changing states
 	 * @return the strength
 	 */
@@ -145,6 +148,7 @@ public class WeatherSimulator extends BasicTickable {
 
 	/**
 	 * Gets the strength of the thunder storm, which is affected by the duration
+	 *
 	 * @param factor to apply to the changing states
 	 * @return the strength
 	 */

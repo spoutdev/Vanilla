@@ -34,7 +34,6 @@ import org.spout.api.geo.discrete.Point;
 
 public abstract class Effect implements Serializable {
 	private static final long serialVersionUID = 1L;
-
 	private final int range;
 
 	public Effect(int range) {
@@ -43,6 +42,7 @@ public abstract class Effect implements Serializable {
 
 	/**
 	 * Gets the Block range within this Effect is shown to players
+	 *
 	 * @return range
 	 */
 	public int getRange() {
@@ -51,6 +51,7 @@ public abstract class Effect implements Serializable {
 
 	/**
 	 * Gets all the Players nearby a certain Point that can receive this Effect
+	 *
 	 * @param position of this Effect
 	 * @param ignore Entity to ignore
 	 * @return a Set of nearby Players
@@ -77,6 +78,7 @@ public abstract class Effect implements Serializable {
 
 	/**
 	 * Plays the sound globally to everyone
+	 *
 	 * @param position to play at
 	 */
 	public void playGlobal(Point position) {
@@ -85,6 +87,7 @@ public abstract class Effect implements Serializable {
 
 	/**
 	 * Plays the sound globally to everyone near except the Player Entity specified
+	 *
 	 * @param position to play at
 	 * @param ignore Entity to ignore
 	 */

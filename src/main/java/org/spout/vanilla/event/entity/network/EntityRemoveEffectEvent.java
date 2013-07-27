@@ -29,10 +29,11 @@ package org.spout.vanilla.event.entity.network;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.ProtocolEvent;
+import org.spout.api.event.entity.EntityEvent;
 
 import org.spout.vanilla.data.effect.EntityEffectType;
 
-public class EntityRemoveEffectEvent extends ProtocolEvent {
+public class EntityRemoveEffectEvent extends ProtocolEvent implements EntityEvent {
 	private static final HandlerList handlers = new HandlerList();
 	private final EntityEffectType effect;
 	private final Entity entity;
@@ -51,11 +52,7 @@ public class EntityRemoveEffectEvent extends ProtocolEvent {
 		return effect;
 	}
 
-	/**
-	 * Gets the entity associated with this event.
-	 *
-	 * @return The entity associated with the event.
-	 */
+	@Override
 	public Entity getEntity() {
 		return entity;
 	}

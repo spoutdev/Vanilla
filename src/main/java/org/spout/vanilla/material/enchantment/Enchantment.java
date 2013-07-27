@@ -36,12 +36,12 @@ import gnu.trove.map.hash.TObjectIntHashMap;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.GenericMath;
-
 import org.spout.nbt.CompoundMap;
 import org.spout.nbt.CompoundTag;
 import org.spout.nbt.ListTag;
 import org.spout.nbt.ShortTag;
 import org.spout.nbt.Tag;
+
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 import org.spout.vanilla.util.MathHelper;
@@ -69,12 +69,14 @@ public abstract class Enchantment {
 
 	/**
 	 * Whether this enchantment can enchant the given material
+	 *
 	 * @param material Material to check
 	 */
 	public abstract boolean canEnchant(VanillaMaterial material);
 
 	/**
 	 * Gets the maximum power level that this enchantment can be
+	 *
 	 * @return maximum power level
 	 */
 	public final int getMaximumPowerLevel() {
@@ -83,6 +85,7 @@ public abstract class Enchantment {
 
 	/**
 	 * Sets the maximum power level that this enchantment can be
+	 *
 	 * @param maxPowerLevel Level to set as the maximum
 	 */
 	public Enchantment setMaximumLevel(int maxPowerLevel) {
@@ -91,8 +94,8 @@ public abstract class Enchantment {
 	}
 
 	/**
-	 * Gets the minimum modified enchantment level allowed to produce this
-	 * enchantment with a given power level
+	 * Gets the minimum modified enchantment level allowed to produce this enchantment with a given power level
+	 *
 	 * @param powerLevel The desired power level of the enchantment
 	 * @return Minimum level
 	 */
@@ -101,8 +104,8 @@ public abstract class Enchantment {
 	}
 
 	/**
-	 * Gets the maximum modified enchantment level allowed to produce this
-	 * enchantment with a given power level
+	 * Gets the maximum modified enchantment level allowed to produce this enchantment with a given power level
+	 *
 	 * @param powerLevel The desired power level of the enchantment
 	 * @return Maximum level
 	 */
@@ -111,8 +114,8 @@ public abstract class Enchantment {
 	}
 
 	/**
-	 * Gets the weight of this enchantment, enchantments with higher weights
-	 * have a greater chance of being selected during the enchantment process
+	 * Gets the weight of this enchantment, enchantments with higher weights have a greater chance of being selected during the enchantment process
+	 *
 	 * @return Weight of this enchantment
 	 */
 	public final int getWeight() {
@@ -121,6 +124,7 @@ public abstract class Enchantment {
 
 	/**
 	 * Sets the weight of this enchantment
+	 *
 	 * @param weight Weight to set
 	 */
 	public Enchantment setWeight(int weight) {
@@ -129,8 +133,8 @@ public abstract class Enchantment {
 	}
 
 	/**
-	 * Whether this enchantment is compatible with the given enchantment while
-	 * attached to the given material
+	 * Whether this enchantment is compatible with the given enchantment while attached to the given material
+	 *
 	 * @param enchantment Enchantment to check
 	 * @param material Material that this enchantment is attached to
 	 * @return true if this enchantment is compatible with the given enchantment
@@ -141,6 +145,7 @@ public abstract class Enchantment {
 
 	/**
 	 * Gets the id of this enchantment
+	 *
 	 * @return id of this enchantment
 	 */
 	public final int getId() {
@@ -149,6 +154,7 @@ public abstract class Enchantment {
 
 	/**
 	 * Gets the name of this enchantment
+	 *
 	 * @return name of this enchantment
 	 */
 	public final String getName() {
@@ -157,6 +163,7 @@ public abstract class Enchantment {
 
 	/**
 	 * Whether this enchantment equals any of the given enchantments
+	 *
 	 * @param enchantments Enchantments to check
 	 * @return true if this enchantment matches any a given enchantment
 	 */
@@ -172,6 +179,7 @@ public abstract class Enchantment {
 
 	/**
 	 * Adds the given {@link Enchantment} to the given item
+	 *
 	 * @param item ItemStack to add the enchantment to
 	 * @param enchantment Enchantment to add to the item
 	 * @return Whether the enchantment was able to be added to the item
@@ -182,6 +190,7 @@ public abstract class Enchantment {
 
 	/**
 	 * Adds the given {@link Enchantment} to the given item
+	 *
 	 * @param item ItemStack to add the enchantment to
 	 * @param enchantment Enchantment to add to the item
 	 * @param force Whether the enchantment should be forced on the item
@@ -193,13 +202,14 @@ public abstract class Enchantment {
 
 	/**
 	 * Adds the given {@link Enchantment} with the given level to the given item
+	 *
 	 * @param item ItemStack to add the enchantment to
 	 * @param enchantment Enchantment to add to the item
 	 * @param powerLevel Power level of the enchantment
 	 * @param force Whether the enchantment should be forced on the item
 	 * @return Whether the enchantment was able to be added to the item
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings ("unchecked")
 	public static boolean addEnchantment(ItemStack item, Enchantment enchantment, int powerLevel, boolean force) {
 		VanillaMaterial material = (VanillaMaterial) item.getMaterial();
 		if (hasEnchantment(item, enchantment)) {
@@ -238,16 +248,16 @@ public abstract class Enchantment {
 
 	/**
 	 * Returns the power level of the given {@link Enchantment}
+	 *
 	 * @param item Item containing the enchantment
 	 * @param enchantment Enchantment to check
-	 * @return Power level of the enchantment, or 0 if the item does not contain
-	 *         the enchantment
+	 * @return Power level of the enchantment, or 0 if the item does not contain the enchantment
 	 */
 	public static int getEnchantmentLevel(ItemStack item, Enchantment enchantment) {
 		if (!isEnchanted(item)) {
 			return 0;
 		}
-		@SuppressWarnings("unchecked")
+		@SuppressWarnings ("unchecked")
 		List<CompoundTag> enchantmentList = ((ListTag<CompoundTag>) item.getNBTData().get("ench")).getValue();
 		for (CompoundTag tag : enchantmentList) {
 			Tag<?> idTag = tag.getValue().get("id");
@@ -261,6 +271,7 @@ public abstract class Enchantment {
 
 	/**
 	 * Returns all {@link Enchantment}s attached to the given item
+	 *
 	 * @param item Item to check
 	 * @return Map of the item's enchantments along with their power level
 	 */
@@ -269,7 +280,7 @@ public abstract class Enchantment {
 		if (!isEnchanted(item)) {
 			return enchantments;
 		}
-		@SuppressWarnings("unchecked")
+		@SuppressWarnings ("unchecked")
 		List<CompoundTag> enchantmentList = ((ListTag<CompoundTag>) item.getNBTData().get("ench")).getValue();
 		for (CompoundTag tag : enchantmentList) {
 			Tag<?> idTag = tag.getValue().get("id");
@@ -283,6 +294,7 @@ public abstract class Enchantment {
 
 	/**
 	 * Whether the given item contains the given {@link Enchantment}
+	 *
 	 * @param item Item to check
 	 * @param enchantment Enchantment to check
 	 * @return true if the item contains the enchantment
@@ -293,6 +305,7 @@ public abstract class Enchantment {
 
 	/**
 	 * Whether the given item has any {@link Enchantment}s attached to it
+	 *
 	 * @param item Item to check
 	 * @return true if the item contains any enchantment
 	 */
@@ -302,8 +315,7 @@ public abstract class Enchantment {
 	}
 
 	/**
-	 * An object holding both the type of {@link Enchantment} as well as its
-	 * power level (I, II, III, IV, V)
+	 * An object holding both the type of {@link Enchantment} as well as its power level (I, II, III, IV, V)
 	 */
 	private final static class EnchantmentData {
 		public final Enchantment enchantment;
@@ -322,6 +334,7 @@ public abstract class Enchantment {
 
 	/**
 	 * Tries to add random enchantments to an item stack
+	 *
 	 * @param itemStack The item stack to enchant
 	 * @param level The level of enchantment
 	 * @return Whether enchantments were successfully added
@@ -365,12 +378,11 @@ public abstract class Enchantment {
 	}
 
 	/**
-	 * Generates a list of allowed {@link EnchantmentData} for the given item,
-	 * together with their probability weights
+	 * Generates a list of allowed {@link EnchantmentData} for the given item, together with their probability weights
+	 *
 	 * @param level The modified enchantment level
 	 * @param material The material of the {@link ItemStack} to be enchanted
-	 * @return A map from the allowed {@link EnchantmentData} to their
-	 *         probability weights
+	 * @return A map from the allowed {@link EnchantmentData} to their probability weights
 	 */
 	private static TObjectIntMap<EnchantmentData> makeEnchantmentList(int level, VanillaMaterial material) {
 		TObjectIntMap<EnchantmentData> output = new TObjectIntHashMap<EnchantmentData>();

@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.protocol.handler.player.conn;
 
-import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.ClientSession;
+import org.spout.api.protocol.MessageHandler;
 
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.data.GameMode;

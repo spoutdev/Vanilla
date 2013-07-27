@@ -30,17 +30,18 @@ import java.awt.Color;
 
 import org.spout.api.generator.biome.Biome;
 import org.spout.cereal.config.annotated.Setting;
+
 import org.spout.vanilla.data.Climate;
 
 public abstract class VanillaBiome extends Biome {
 	private final int biomeId;
 	@Setting
 	private Climate climate = Climate.MODERATE;
-	@Setting({"color-multiplier", "grass"})
+	@Setting ( {"color-multiplier", "grass"})
 	private Color grassColorMultiplier = new Color(255, 255, 255);
-	@Setting({"color-multiplier", "foliage"})
+	@Setting ( {"color-multiplier", "foliage"})
 	private Color foliageColorMultiplier = new Color(255, 255, 255);
-	@Setting({"color-multiplier", "water"})
+	@Setting ( {"color-multiplier", "water"})
 	private Color waterColorMultiplier = new Color(255, 255, 255);
 
 	protected VanillaBiome(int biomeId) {
@@ -53,6 +54,7 @@ public abstract class VanillaBiome extends Biome {
 
 	/**
 	 * Gets the Climate of this Biome
+	 *
 	 * @return the climate
 	 */
 	public Climate getClimate() {
@@ -61,6 +63,7 @@ public abstract class VanillaBiome extends Biome {
 
 	/**
 	 * Sets the Climate for this Biome
+	 *
 	 * @param climate to set to
 	 */
 	public void setClimate(Climate climate) {

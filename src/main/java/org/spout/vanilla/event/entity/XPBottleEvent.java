@@ -34,8 +34,7 @@ import org.spout.api.exception.InvalidControllerException;
 import org.spout.vanilla.component.entity.substance.projectile.XPBottle;
 
 /**
- * Event which is called when a Bottle o' Enchanting is broken and
- * releases experience orbs.
+ * Event which is called when a Bottle o' Enchanting is broken and releases experience orbs.
  */
 public class XPBottleEvent extends ProjectileHitEvent {
 	private static final HandlerList handlers = new HandlerList();
@@ -56,8 +55,8 @@ public class XPBottleEvent extends ProjectileHitEvent {
 	}
 
 	/**
-	 * Gets the amount of experience to be dropped by this
-	 * Bottle o' Enchanting breaking.
+	 * Gets the amount of experience to be dropped by this Bottle o' Enchanting breaking.
+	 *
 	 * @return experience
 	 */
 	public int getExperience() {
@@ -65,17 +64,15 @@ public class XPBottleEvent extends ProjectileHitEvent {
 	}
 
 	/**
-	 * Sets the amount of experience to be dropped by this
-	 * Bottle o' Enchanting breaking.
-	 * @param experience
+	 * Sets the amount of experience to be dropped by this Bottle o' Enchanting breaking.
 	 */
 	public void setExperience(int experience) {
 		this.experience = experience;
 	}
 
 	/**
-	 * Tells whether the particle effect will be shown when this
-	 * Bottle o' Enchanting breaks.
+	 * Tells whether the particle effect will be shown when this Bottle o' Enchanting breaks.
+	 *
 	 * @return boolean
 	 */
 	public boolean isEffectShown() {
@@ -83,9 +80,7 @@ public class XPBottleEvent extends ProjectileHitEvent {
 	}
 
 	/**
-	 * Sets whether the particle effect will be shown when this
-	 * Bottle o' Enchanting breaks.
-	 * @param showEffect
+	 * Sets whether the particle effect will be shown when this Bottle o' Enchanting breaks.
 	 */
 	public void setEffectShown(boolean showEffect) {
 		this.showEffect = showEffect;

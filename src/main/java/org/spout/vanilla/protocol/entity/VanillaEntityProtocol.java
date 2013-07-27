@@ -62,7 +62,7 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 
 	@Override
 	public final List<Message> getDestroyMessages(Entity entity) {
-		return Arrays.<Message>asList(new EntityDestroyMessage(new int[]{entity.getId()}));
+		return Arrays.<Message>asList(new EntityDestroyMessage(new int[] {entity.getId()}));
 	}
 
 	@Override

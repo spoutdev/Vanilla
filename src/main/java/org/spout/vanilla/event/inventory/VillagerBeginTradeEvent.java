@@ -47,6 +47,7 @@ public class VillagerBeginTradeEvent extends InventoryOpenEvent implements Cance
 
 	/**
 	 * Returns the villager which caused this event.
+	 *
 	 * @return villager
 	 */
 	public Villager getVillager() {

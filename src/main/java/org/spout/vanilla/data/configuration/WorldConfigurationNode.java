@@ -62,6 +62,7 @@ public final class WorldConfigurationNode extends ConfigurationHolderConfigurati
 
 	/**
 	 * Gets the world name of this world configuration node
+	 *
 	 * @return the world name
 	 */
 	public String getWorldName() {
@@ -70,6 +71,7 @@ public final class WorldConfigurationNode extends ConfigurationHolderConfigurati
 
 	/**
 	 * Gets the parent configuration of this world configuration node
+	 *
 	 * @return the parent configuration
 	 */
 	public WorldConfiguration getParent() {
@@ -78,6 +80,7 @@ public final class WorldConfigurationNode extends ConfigurationHolderConfigurati
 
 	/**
 	 * Sets some of the default values for this configuration node
+	 *
 	 * @param sky default
 	 * @param generator default
 	 * @return this node
@@ -90,6 +93,7 @@ public final class WorldConfigurationNode extends ConfigurationHolderConfigurati
 
 	/**
 	 * Changes the default value for the load key.
+	 *
 	 * @param load True if the world should load by default, false if not.
 	 * @return this node
 	 */

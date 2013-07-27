@@ -47,6 +47,7 @@ public class BrewingStandCloseEvent extends InventoryCloseEvent implements Cance
 
 	/**
 	 * Returns the brewingStand which caused this event.
+	 *
 	 * @return brewingStand
 	 */
 	public BrewingStand getBrewingStand() {

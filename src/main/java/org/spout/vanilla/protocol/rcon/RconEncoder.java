@@ -26,18 +26,6 @@
  */
 package org.spout.vanilla.protocol.rcon;
 
-import java.io.IOException;
-import java.nio.ByteOrder;
-
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
-import org.jboss.netty.channel.Channel;
-import org.jboss.netty.channel.ChannelHandlerContext;
-import org.jboss.netty.handler.codec.oneone.OneToOneEncoder;
-
-import org.spout.api.protocol.Message;
-import org.spout.api.protocol.MessageCodec;
-
 /**
  * Encoder for the rcon protocol
  */

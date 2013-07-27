@@ -24,36 +24,48 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.entity;
+package org.spout.vanilla.event.player.network;
 
-import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.ProtocolEvent;
 
-/**
- * Event which is called when an Entity changes its status
- */
-public class EntityStatusEvent extends ProtocolEvent {
+public class ListPingEvent extends ProtocolEvent {
 	private static final HandlerList handlers = new HandlerList();
-	private final byte status;
-	private final Entity entity;
+	private final long ping;
+	private final boolean online;
+	private final String playerDisplayName;
 
-	public EntityStatusEvent(Entity e, byte status) {
-		this.entity = e;
-		this.status = status;
-	}
-
-	public byte getStatus() {
-		return this.status;
+	public ListPingEvent(String playerDisplayName, long pingDelayMS, boolean online) {
+		this.ping = pingDelayMS;
+		this.online = online;
+		this.playerDisplayName = playerDisplayName;
 	}
 
 	/**
-	 * Gets the entity associated with this event.
+	 * Gets the name of the player that this event relates to
 	 *
-	 * @return The entity associated with the event.
+	 * @return the player's name
 	 */
-	public Entity getEntity() {
-		return entity;
+	public String getPlayerDisplayName() {
+		return this.playerDisplayName;
+	}
+
+	/**
+	 * Gets the player's online status
+	 *
+	 * @return true if the player is online
+	 */
+	public boolean getOnline() {
+		return this.online;
+	}
+
+	/**
+	 * Gets the network delay between the server and the player
+	 *
+	 * @return true if the player is online
+	 */
+	public long getPingDelay() {
+		return this.ping;
 	}
 
 	@Override

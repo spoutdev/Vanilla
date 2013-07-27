@@ -28,6 +28,7 @@ package org.spout.vanilla.event.scoreboard;
 
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.ProtocolEvent;
+
 import org.spout.vanilla.scoreboard.ObjectiveSlot;
 
 public class ObjectiveDisplayEvent extends ProtocolEvent {

@@ -29,14 +29,14 @@ package org.spout.vanilla.event.player;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.player.PlayerEvent;
+import org.spout.api.event.player.AbstractPlayerEvent;
 
 import org.spout.vanilla.data.GameMode;
 
 /**
  * Event which is called when a player changes the gamemode
  */
-public class PlayerGameModeChangedEvent extends PlayerEvent implements Cancellable {
+public class PlayerGameModeChangedEvent extends AbstractPlayerEvent implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private GameMode mode;
 
@@ -52,6 +52,7 @@ public class PlayerGameModeChangedEvent extends PlayerEvent implements Cancellab
 
 	/**
 	 * Get the GameMode the player will have.
+	 *
 	 * @return The GameMode the player will have
 	 */
 	public GameMode getMode() {
@@ -60,6 +61,7 @@ public class PlayerGameModeChangedEvent extends PlayerEvent implements Cancellab
 
 	/**
 	 * Sets the GameMode the player will have
+	 *
 	 * @param mode The new GameMode the player will have
 	 */
 	public void setGameMode(GameMode mode) {

@@ -31,6 +31,7 @@ import java.io.File;
 import org.spout.cereal.config.ConfigurationHolder;
 import org.spout.cereal.config.ConfigurationHolderConfiguration;
 import org.spout.cereal.config.yaml.YamlConfiguration;
+
 import org.spout.vanilla.VanillaPlugin;
 
 public class InputConfiguration extends ConfigurationHolderConfiguration {

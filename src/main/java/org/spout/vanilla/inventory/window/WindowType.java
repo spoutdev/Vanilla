@@ -42,58 +42,48 @@ public enum WindowType {
 	 */
 	DEFAULT(-1, VanillaRenderMaterials.INVENTORY_MATERIAL),
 	/**
-	 * The window seen when opening a
-	 * {@link org.spout.vanilla.component.block.material.chest.Chest}
+	 * The window seen when opening a {@link org.spout.vanilla.component.block.material.chest.Chest}
 	 */
 	CHEST(0, VanillaRenderMaterials.CONTAINER_MATERIAL),
 	/**
-	 * The window seen when using a
-	 * {@link org.spout.vanilla.material.block.solid.CraftingTable}
+	 * The window seen when using a {@link org.spout.vanilla.material.block.solid.CraftingTable}
 	 */
 	CRAFTING_TABLE(1, VanillaRenderMaterials.CRAFTING_MATERIAL),
 	/**
-	 * The window seen when opening a
-	 * {@link org.spout.vanilla.component.block.material.Furnace}
+	 * The window seen when opening a {@link org.spout.vanilla.component.block.material.Furnace}
 	 */
 	FURNACE(2, VanillaRenderMaterials.FURNACE_MATERIAL),
 	/**
-	 * The window seen when opening a
-	 * {@link org.spout.vanilla.component.block.material.Dispenser}
+	 * The window seen when opening a {@link org.spout.vanilla.component.block.material.Dispenser}
 	 */
 	DISPENSER(3, VanillaRenderMaterials.TRAP_MATERIAL),
 	/**
-	 * The window seen when using an
-	 * {@link org.spout.vanilla.component.block.material.EnchantmentTable}
+	 * The window seen when using an {@link org.spout.vanilla.component.block.material.EnchantmentTable}
 	 */
 	ENCHANTMENT_TABLE(4, VanillaRenderMaterials.ENCHANT_MATERIAL),
 	/**
-	 * The window seen when using a
-	 * {@link org.spout.vanilla.component.block.material.BrewingStand}
+	 * The window seen when using a {@link org.spout.vanilla.component.block.material.BrewingStand}
 	 */
 	BREWING_STAND(5, VanillaRenderMaterials.ALCHEMY_MATERIAL),
 	/**
-	 * The window seen when trading with a
-	 * {@link org.spout.vanilla.component.entity.living.passive.Villager}
+	 * The window seen when trading with a {@link org.spout.vanilla.component.entity.living.passive.Villager}
 	 */
 	VILLAGER(6, VanillaRenderMaterials.VILLAGER_MATERIAL),
 	/**
-	 * The window seen when using a
-	 * {@link org.spout.vanilla.component.block.material.Beacon}
+	 * The window seen when using a {@link org.spout.vanilla.component.block.material.Beacon}
 	 */
 	BEACON(7, VanillaRenderMaterials.BEACON_MATERIAL),
 	/**
-	 * The window seen when using an
-	 * {@link org.spout.vanilla.material.block.solid.Anvil}
+	 * The window seen when using an {@link org.spout.vanilla.material.block.solid.Anvil}
 	 */
 	ANVIL(8, VanillaRenderMaterials.ANVIL_MATERIAL),
 	/**
-	 * The window seen when using an
-	 * {@link org.spout.vanilla.component.block.material.Hopper}
+	 * The window seen when using an {@link org.spout.vanilla.component.block.material.Hopper}
 	 */
-	HOPPER(9, VanillaRenderMaterials.HOPPER_MATERIAL), //TODO: double-check inventory ID sent to client
+	HOPPER(9, VanillaRenderMaterials.HOPPER_MATERIAL),
+	//TODO: double-check inventory ID sent to client
 	/**
-	 * The window seen when using an
-	 * {@link org.spout.vanilla.component.block.material.Dropper}
+	 * The window seen when using an {@link org.spout.vanilla.component.block.material.Dropper}
 	 */
 	DROPPER(10, VanillaRenderMaterials.DROPPER_MATERIAL);
 	private final int id;
@@ -106,8 +96,8 @@ public enum WindowType {
 	}
 
 	/**
-	 * Returns the id sent to the client in the
-	 * {@link org.spout.vanilla.protocol.msg.window.WindowOpenMessage}
+	 * Returns the id sent to the client in the {@link org.spout.vanilla.protocol.msg.window.WindowOpenMessage}
+	 *
 	 * @return id of type
 	 */
 	public int getId() {
@@ -116,6 +106,7 @@ public enum WindowType {
 
 	/**
 	 * Returns the {@link RenderMaterial} for the GUI
+	 *
 	 * @return render material
 	 */
 	public RenderMaterial getRenderMaterial() {
@@ -130,6 +121,7 @@ public enum WindowType {
 
 	/**
 	 * Returns a window type with the specified id.
+	 *
 	 * @param id of window type
 	 * @return window type with specified id
 	 */

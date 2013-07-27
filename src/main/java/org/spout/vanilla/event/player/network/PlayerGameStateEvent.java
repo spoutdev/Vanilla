@@ -29,10 +29,11 @@ package org.spout.vanilla.event.player.network;
 import org.spout.api.entity.Player;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.ProtocolEvent;
+import org.spout.api.event.player.PlayerEvent;
 
 import org.spout.vanilla.data.GameMode;
 
-public class PlayerGameStateEvent extends ProtocolEvent {
+public class PlayerGameStateEvent extends ProtocolEvent implements PlayerEvent {
 	private static final HandlerList handlers = new HandlerList();
 	private final byte reason;
 	private final GameMode gameMode;
@@ -52,6 +53,7 @@ public class PlayerGameStateEvent extends ProtocolEvent {
 		return this.gameMode;
 	}
 
+	@Override
 	public Player getPlayer() {
 		return player;
 	}

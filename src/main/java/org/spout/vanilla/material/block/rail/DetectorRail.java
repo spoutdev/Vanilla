@@ -55,6 +55,7 @@ public class DetectorRail extends RailBase implements RedstoneSource, DynamicMat
 
 	/**
 	 * Gets if this block is supplying power
+	 *
 	 * @param block to get it of
 	 * @return True if powered, False if not
 	 */
@@ -64,6 +65,7 @@ public class DetectorRail extends RailBase implements RedstoneSource, DynamicMat
 
 	/**
 	 * Sets if this block is supplying power
+	 *
 	 * @param block to set it of
 	 * @param powering Whether the block is supplying power
 	 */

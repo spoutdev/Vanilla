@@ -414,11 +414,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 	}
 
 	/**
-	 * Resolves block changes that cause blocks to become brighter.  This method never causes the light level
-	 * for blocks to be reduced.
-	 * @param dirtySets
-	 * @param light
-	 * @param material
+	 * Resolves block changes that cause blocks to become brighter.  This method never causes the light level for blocks to be reduced.
 	 */
 	protected void resolveHigher(TInt10TripleSet[] dirtySets, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height) {
 		ResolveHigherProcedure resolveProc = new ResolveHigherProcedure(this, light, material, height, dirtySets);
@@ -470,13 +466,6 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 
 	/**
 	 * Copies the emitted light values of each block in the given chunk into the given array for coords (1, 1, 1) to (16, 16, 16)
-	 * @param light
-	 * @param material
-	 * @param height
-	 * @param x
-	 * @param y
-	 * @param z
-	 * @return
 	 */
 	public abstract void updateEmittingBlocks(int[][][] emittedLight, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int x, int y, int z);
 

@@ -47,12 +47,13 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 
 /**
- * A model used to find the faces to which a liquid can flow<br>
- * Is basically a flat disk where 64 elements can have a state.
+ * A model used to find the faces to which a liquid can flow<br> Is basically a flat disk where 64 elements can have a state.
  */
 public class LiquidModel {
 	public static enum State {
-		BLOCKED, OPEN, HOLE
+		BLOCKED,
+		OPEN,
+		HOLE
 	}
 
 	public static class Element {

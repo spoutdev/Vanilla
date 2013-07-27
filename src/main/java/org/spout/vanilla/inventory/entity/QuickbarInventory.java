@@ -43,6 +43,7 @@ public abstract class QuickbarInventory extends Inventory {
 
 	/**
 	 * Returns the currently selected itemstack
+	 *
 	 * @return itemstack selected
 	 */
 	public ItemStack getSelectedItem() {
@@ -51,6 +52,7 @@ public abstract class QuickbarInventory extends Inventory {
 
 	/**
 	 * returns the slot that is currently selected on the quickbar
+	 *
 	 * @return slot selected
 	 */
 	public Slot getSelectedSlot() {
@@ -59,7 +61,6 @@ public abstract class QuickbarInventory extends Inventory {
 
 	/**
 	 * Sets the currently selected slot to the index given
-	 * @param currentSlot
 	 */
 	public void setSelectedSlot(int currentSlot) {
 		this.selected = currentSlot;
@@ -67,6 +68,7 @@ public abstract class QuickbarInventory extends Inventory {
 
 	/**
 	 * Informs a player of a certain equipment (held item) change
+	 *
 	 * @param entity to inform
 	 */
 	public abstract void updateHeldItem(Entity entity);

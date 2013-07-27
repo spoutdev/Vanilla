@@ -32,13 +32,12 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.data.RedstonePowerMode;
 
 /**
- * Defines a material that can power other redstone target materials, excluding solid blocks<br>
- * Includes methods to obtain the redstone power level of the material itself
+ * Defines a material that can power other redstone target materials, excluding solid blocks<br> Includes methods to obtain the redstone power level of the material itself
  */
 public interface IndirectRedstoneSource {
 	/**
-	 * Gets how much redstone power this redstone source block provides to the direction given.<br>
-	 * This is indirect power, which only powers redstone targets, not other solid blocks
+	 * Gets how much redstone power this redstone source block provides to the direction given.<br> This is indirect power, which only powers redstone targets, not other solid blocks
+	 *
 	 * @param block of this redstone source
 	 * @param direction it provides power to
 	 * @param powerMode to use to get the power
@@ -47,8 +46,8 @@ public interface IndirectRedstoneSource {
 	short getIndirectRedstonePower(Block block, BlockFace direction, RedstonePowerMode powerMode);
 
 	/**
-	 * Gets if this redstone source block provides power to the direction given.<br>
-	 * This is indirect power, which only powers redstone targets, not other solid blocks
+	 * Gets if this redstone source block provides power to the direction given.<br> This is indirect power, which only powers redstone targets, not other solid blocks
+	 *
 	 * @param block of this redstone source
 	 * @param direction it provides power to
 	 * @param powerMode to use to get the power
@@ -58,6 +57,7 @@ public interface IndirectRedstoneSource {
 
 	/**
 	 * Gets the power level of this material at a block
+	 *
 	 * @param block to get it of
 	 * @return the redstone power level
 	 */
@@ -65,6 +65,7 @@ public interface IndirectRedstoneSource {
 
 	/**
 	 * Gets the power level of this material at a block
+	 *
 	 * @param block to get it of
 	 * @param powerMode to use to find the power
 	 * @return the redstone power level
@@ -73,6 +74,7 @@ public interface IndirectRedstoneSource {
 
 	/**
 	 * Gets if this material is powered at a block
+	 *
 	 * @param block to get it of
 	 * @return True if the block receives power
 	 */
@@ -80,6 +82,7 @@ public interface IndirectRedstoneSource {
 
 	/**
 	 * Gets if this material is powered at a block
+	 *
 	 * @param block to get it of
 	 * @param powerMode to use to find out the power levels
 	 * @return True if the block receives power
@@ -87,9 +90,8 @@ public interface IndirectRedstoneSource {
 	boolean hasRedstonePower(Block block, RedstonePowerMode powerMode);
 
 	/**
-	 * Gets whether this material acts as a redstone conductor<br>
-	 * A redstone conductor can conduct power from direct redstone sources, and power
-	 * other blocks indirectly
+	 * Gets whether this material acts as a redstone conductor<br> A redstone conductor can conduct power from direct redstone sources, and power other blocks indirectly
+	 *
 	 * @return True if it is a conductor, False if not
 	 */
 	boolean isRedstoneConductor();

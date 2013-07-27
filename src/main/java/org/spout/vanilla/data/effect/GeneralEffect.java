@@ -54,6 +54,7 @@ public class GeneralEffect extends Effect {
 
 	/**
 	 * Gets the Id of this Effect
+	 *
 	 * @return Effect Id
 	 */
 	public int getId() {
@@ -62,6 +63,7 @@ public class GeneralEffect extends Effect {
 
 	/**
 	 * Gets the Default data for this Effect
+	 *
 	 * @return default data
 	 */
 	public int getDefaultData() {

@@ -24,66 +24,41 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.block;
+package org.spout.vanilla.event.entity.network;
 
-import org.spout.api.event.Cancellable;
-import org.spout.api.event.Cause;
+import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.block.BlockChangeEvent;
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.block.BlockSnapshot;
+import org.spout.api.event.ProtocolEvent;
+import org.spout.api.event.entity.EntityEvent;
 
 /**
- * Event which is called when a block forms or spreads in the world.
- * For example: Snow, Ice, etc
- * todo implement calling of this event
+ * Event which is called when an Entity changes its status
  */
-public class BlockFormEvent extends BlockChangeEvent implements Cancellable {
-	/**
-	 * The different causes why a Block is formed in the world.
-	 */
-	public static enum FormCause {
-		/**
-		 * Block spread randomly
-		 */
-		SPREAD_RANDOM,
-		/**
-		 * Block spread
-		 */
-		SPREAD,
-		/**
-		 * Block formed due to world conditions (for example Snow)
-		 */
-		FORMING,
-	}
-
+public class EntityStatusEvent extends ProtocolEvent implements EntityEvent {
 	private static final HandlerList handlers = new HandlerList();
-	private final FormCause formCause;
+	private final byte status;
+	private final Entity entity;
 
-	public BlockFormEvent(Block block, BlockSnapshot newState, Cause<?> reason, FormCause formCause) {
-		super(block, newState, reason);
-		this.formCause = formCause;
+	public EntityStatusEvent(Entity e, byte status) {
+		this.entity = e;
+		this.status = status;
 	}
 
-	/**
-	 * The reason why the block formed
-	 * @return FormCause
-	 */
-	public FormCause getFormCause() {
-		return formCause;
+	public byte getStatus() {
+		return this.status;
 	}
 
 	@Override
-	public void setCancelled(boolean cancelled) {
-		super.setCancelled(cancelled);
-	}
-
-	public static HandlerList getHandlerList() {
-		return handlers;
+	public Entity getEntity() {
+		return entity;
 	}
 
 	@Override
 	public HandlerList getHandlers() {
+		return handlers;
+	}
+
+	public static HandlerList getHandlerList() {
 		return handlers;
 	}
 }

@@ -69,6 +69,7 @@ public class FurnaceBlock extends VanillaBlockMaterial implements Directional {
 
 	/**
 	 * Gets if this furnace block material is burning
+	 *
 	 * @return True if burning
 	 */
 	public boolean isBurning() {
@@ -77,6 +78,7 @@ public class FurnaceBlock extends VanillaBlockMaterial implements Directional {
 
 	/**
 	 * Sets the burning state of a Furnace block
+	 *
 	 * @param block of the Furnace
 	 * @param burning state to set to
 	 */

@@ -101,8 +101,8 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 	}
 
 	/**
-	 * Checks if the given fire block has a burn source at a certain face<br>
-	 * It checks if the fire has a {@link org.spout.vanilla.material.Burnable} block at the face
+	 * Checks if the given fire block has a burn source at a certain face<br> It checks if the fire has a {@link org.spout.vanilla.material.Burnable} block at the face
+	 *
 	 * @param block of the fire
 	 * @param to the face the source is
 	 * @return True if it has a source there, False if not
@@ -113,8 +113,8 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 	}
 
 	/**
-	 * Checks if the given fire block has a burn source<br>
-	 * It checks if the fire has a {@link org.spout.vanilla.material.Burnable} block nearby
+	 * Checks if the given fire block has a burn source<br> It checks if the fire has a {@link org.spout.vanilla.material.Burnable} block nearby
+	 *
 	 * @param block of the fire
 	 * @return True if it has a source, False if not
 	 */
@@ -129,6 +129,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 
 	/**
 	 * Checks if the fire can degrade (disappear over time)
+	 *
 	 * @param block of the fire
 	 * @return True if it can degrade, False if not
 	 */

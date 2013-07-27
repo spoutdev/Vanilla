@@ -24,48 +24,48 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.block;
+package org.spout.vanilla.event.entity.network;
 
-import org.spout.api.event.Cancellable;
-import org.spout.api.event.Cause;
+import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.block.BlockEvent;
-
-import org.spout.vanilla.component.block.material.Furnace;
+import org.spout.api.event.ProtocolEvent;
+import org.spout.api.event.entity.EntityEvent;
+import org.spout.api.inventory.ItemStack;
 
 /**
- * Event which is called when a furnace is toggled on or off.
+ * Represents an entity equiping an item.<br/> By default, slot 0 is for a held-item change, and slots 1-4 are for armor.<br/>
  */
-public class FurnaceActionEvent extends BlockEvent implements Cancellable {
+public class EntityEquipmentEvent extends ProtocolEvent implements EntityEvent {
 	private static final HandlerList handlers = new HandlerList();
-	private final Furnace furnace;
-	private final boolean switchON;
+	private int slot;
+	private ItemStack item;
+	private final Entity entity;
 
-	public FurnaceActionEvent(Furnace furnace, Cause<?> reason, boolean switchON) {
-		super(furnace.getBlock(), reason);
-		this.furnace = furnace;
-		this.switchON = switchON;
+	public EntityEquipmentEvent(Entity e, int slot, ItemStack item) {
+		this.entity = e;
+		this.slot = slot;
+		this.item = item;
 	}
 
-	/**
-	 * Returns the Furnace which caused the FurnaceActionEvent
-	 * @return the furnace
-	 */
-	public Furnace getFurnace() {
-		return furnace;
+	public int getSlot() {
+		return slot;
 	}
 
-	/**
-	 * Returns if the Furnace should be switched on
-	 * @return
-	 */
-	public boolean isSwitchON() {
-		return switchON;
+	public void setSlot(int slot) {
+		this.slot = slot;
+	}
+
+	public ItemStack getItem() {
+		return item;
+	}
+
+	public void setItem(ItemStack item) {
+		this.item = item;
 	}
 
 	@Override
-	public void setCancelled(boolean cancelled) {
-		super.setCancelled(cancelled);
+	public Entity getEntity() {
+		return entity;
 	}
 
 	public static HandlerList getHandlerList() {

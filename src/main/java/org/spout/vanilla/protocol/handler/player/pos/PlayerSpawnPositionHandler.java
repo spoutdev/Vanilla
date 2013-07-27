@@ -29,8 +29,8 @@ package org.spout.vanilla.protocol.handler.player.pos;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.ClientSession;
+import org.spout.api.protocol.MessageHandler;
 
 import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnPositionMessage;
 

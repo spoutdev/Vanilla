@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.protocol;
 
-import org.spout.api.Spout;
-import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
@@ -36,31 +34,32 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.protocol.ClientNetworkSynchronizer;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.Session;
-import org.spout.vanilla.VanillaPlugin;
+
 import org.spout.vanilla.component.block.material.Sign;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.component.entity.misc.Hunger;
 import org.spout.vanilla.component.entity.misc.Level;
 import org.spout.vanilla.data.Weather;
-import org.spout.vanilla.event.block.BlockActionEvent;
-import org.spout.vanilla.event.block.SignUpdateEvent;
-import org.spout.vanilla.event.block.network.BlockBreakAnimationEvent;
-import org.spout.vanilla.event.block.network.EntityTileDataEvent;
-import org.spout.vanilla.event.entity.EntityAnimationEvent;
-import org.spout.vanilla.event.entity.EntityCollectItemEvent;
-import org.spout.vanilla.event.entity.EntityEquipmentEvent;
-import org.spout.vanilla.event.entity.EntityMetaChangeEvent;
-import org.spout.vanilla.event.entity.EntityStatusEvent;
+import org.spout.vanilla.event.entity.network.EntityAnimationEvent;
+import org.spout.vanilla.event.entity.network.EntityCollectItemEvent;
 import org.spout.vanilla.event.entity.network.EntityEffectEvent;
+import org.spout.vanilla.event.entity.network.EntityEquipmentEvent;
+import org.spout.vanilla.event.entity.network.EntityMetaChangeEvent;
 import org.spout.vanilla.event.entity.network.EntityRemoveEffectEvent;
-import org.spout.vanilla.event.item.MapItemUpdateEvent;
+import org.spout.vanilla.event.entity.network.EntityStatusEvent;
+import org.spout.vanilla.event.material.network.BlockActionEvent;
+import org.spout.vanilla.event.material.network.BlockBreakAnimationEvent;
+import org.spout.vanilla.event.material.network.EntityTileDataEvent;
+import org.spout.vanilla.event.material.network.MapItemUpdateEvent;
+import org.spout.vanilla.event.material.network.SignUpdateEvent;
+import org.spout.vanilla.event.player.network.ListPingEvent;
+import org.spout.vanilla.event.player.network.PingEvent;
 import org.spout.vanilla.event.player.network.PlayerAbilityUpdateEvent;
 import org.spout.vanilla.event.player.network.PlayerBedEvent;
+import org.spout.vanilla.event.player.network.PlayerExperienceChangeEvent;
 import org.spout.vanilla.event.player.network.PlayerGameStateEvent;
 import org.spout.vanilla.event.player.network.PlayerHealthEvent;
-import org.spout.vanilla.event.player.network.PlayerListEvent;
-import org.spout.vanilla.event.player.network.PlayerPingEvent;
 import org.spout.vanilla.event.player.network.PlayerSelectedSlotChangeEvent;
 import org.spout.vanilla.event.scoreboard.ObjectiveActionEvent;
 import org.spout.vanilla.event.scoreboard.ObjectiveDisplayEvent;
@@ -78,7 +77,6 @@ import org.spout.vanilla.event.world.TimeUpdateEvent;
 import org.spout.vanilla.event.world.WeatherChangeEvent;
 import org.spout.vanilla.inventory.window.DefaultWindow;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.entity.player.ExperienceChangeEvent;
 import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityItemDataMessage;
@@ -121,10 +119,10 @@ public class VanillaClientNetworkSynchronizer extends ClientNetworkSynchronizer 
 
 	public VanillaClientNetworkSynchronizer(Session session) {
 		super(session);
-		Spout.getEventManager().registerEvents(this, VanillaPlugin.getInstance());
+		session.getEngine().getEventManager().registerEvents(this, session);
 		setRepositionManager(vpm);
 	}
-	
+
 	// TODO verify all of these are client -> server
 
 	@EventHandler
@@ -214,12 +212,12 @@ public class VanillaClientNetworkSynchronizer extends ClientNetworkSynchronizer 
 	}
 
 	@EventHandler
-	public Message onPlayerKeepAlive(PlayerPingEvent event) {
+	public Message onPlayerKeepAlive(PingEvent event) {
 		return new PlayerPingMessage(event.getHash());
 	}
 
 	@EventHandler
-	public Message onPlayerUpdateUserList(PlayerListEvent event) {
+	public Message onPlayerUpdateUserList(ListPingEvent event) {
 		String name = event.getPlayerDisplayName();
 		return new PlayerListMessage(name, event.getOnline(), (short) event.getPingDelay());
 	}
@@ -298,19 +296,17 @@ public class VanillaClientNetworkSynchronizer extends ClientNetworkSynchronizer 
 	}
 
 	@EventHandler
-	public Message onExperienceChange(ExperienceChangeEvent event) {
-		Entity entity = event.getEntity();
-		Level level = entity.get(Level.class);
+	public Message onExperienceChange(PlayerExperienceChangeEvent event) {
+		Player player = event.getPlayer();
+		Level level = player.get(Level.class);
 
-		if (!(entity instanceof Player)) {
-			return null;
+		//TODO: This is at the protocol level, this should never be null...
+		if (level != null) {
+			return new PlayerExperienceMessage(level.getProgress(), level.getLevel(), event.getNewExp());
 		}
 
-		if (level == null) {
-			return null;
-		}
-
-		return new PlayerExperienceMessage(level.getProgress(), level.getLevel(), event.getNewExp());
+		//TODO: kitskub, can the CNS handle null messages?
+		return null;
 	}
 
 	@EventHandler
@@ -344,5 +340,4 @@ public class VanillaClientNetworkSynchronizer extends ClientNetworkSynchronizer 
 				team.isFriendlyFire(), event.getPlayers()
 		);
 	}
-
 }

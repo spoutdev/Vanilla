@@ -38,9 +38,7 @@ import org.spout.api.entity.Entity;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
 
 /**
- * Simple Sensor that detects Entities with a specified Component nearby.
- * <p>
- * TODO Probably should have some sort of sight limitation on this sensor. Would be a great optimization.
+ * Simple Sensor that detects Entities with a specified Component nearby. <p> TODO Probably should have some sort of sight limitation on this sensor. Would be a great optimization.
  */
 public class NearbyComponentsSensor implements Sensor {
 	private final PlannerAgent agent;
@@ -81,6 +79,7 @@ public class NearbyComponentsSensor implements Sensor {
 
 	/**
 	 * Returns all the entities this sensor found.
+	 *
 	 * @return Entities found
 	 */
 	public List<Entity> getEntities() {
@@ -90,6 +89,7 @@ public class NearbyComponentsSensor implements Sensor {
 
 	/**
 	 * Returns if the sensor sensed a player nearby.
+	 *
 	 * @return True if player detected, false if not.
 	 */
 	public boolean hasFoundEntity() {
@@ -98,6 +98,7 @@ public class NearbyComponentsSensor implements Sensor {
 
 	/**
 	 * Sets the radius the sensor will scan for entities.
+	 *
 	 * @param radius radius to scan for players
 	 */
 	public void setSensorRadius(int radius) {
@@ -106,6 +107,7 @@ public class NearbyComponentsSensor implements Sensor {
 
 	/**
 	 * Gets the radius this sensor will scan for.
+	 *
 	 * @return radius the sensor scans for.
 	 */
 	public int getSensorRadius() {
@@ -114,6 +116,7 @@ public class NearbyComponentsSensor implements Sensor {
 
 	/**
 	 * Returns the classes this Entity is sensing.
+	 *
 	 * @return classes the entity is sensing
 	 */
 	public List<Class<? extends VanillaEntityComponent>> sensing() {
@@ -122,7 +125,6 @@ public class NearbyComponentsSensor implements Sensor {
 
 	/**
 	 * Adds a new class for the Entity to sense.
-	 * @param clazz
 	 */
 	public void shouldSense(Class<? extends VanillaEntityComponent> clazz) {
 		if (clazz == null) {
@@ -136,6 +138,7 @@ public class NearbyComponentsSensor implements Sensor {
 
 	/**
 	 * Removes a class from being sensed anymore. Ignores classes that are null or aren't contained in the list.
+	 *
 	 * @param clazz The class to remove
 	 */
 	public void removeSense(Class<? extends VanillaEntityComponent> clazz) {

@@ -38,7 +38,7 @@ import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
-import org.spout.vanilla.event.entity.EntityMetaChangeEvent;
+import org.spout.vanilla.event.entity.network.EntityMetaChangeEvent;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.object.ObjectType;

@@ -32,7 +32,7 @@ import org.spout.api.event.Cause;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.block.VanillaBlockComponent;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.event.block.SignUpdateEvent;
+import org.spout.vanilla.event.material.network.SignUpdateEvent;
 
 /**
  * Component that represents a Sign in a world.
@@ -43,6 +43,7 @@ public class Sign extends VanillaBlockComponent {
 
 	/**
 	 * The maximum number of characters, Vanilla can only handle 16.
+	 *
 	 * @return max characters per line
 	 */
 	public int getMaxCharsPerLine() {
@@ -51,6 +52,7 @@ public class Sign extends VanillaBlockComponent {
 
 	/**
 	 * The maximum number of lines this sign supports, Vanilla can only handle 4
+	 *
 	 * @return max lines
 	 */
 	public int getMaxLines() {
@@ -59,6 +61,7 @@ public class Sign extends VanillaBlockComponent {
 
 	/**
 	 * Gets a copy of the text from this sign
+	 *
 	 * @return copy of the text
 	 */
 	public String[] getText() {
@@ -85,8 +88,8 @@ public class Sign extends VanillaBlockComponent {
 	}
 
 	/**
-	 * Sets the text on this sign.<br/>
-	 * For Vanilla compatible signs: The text must be 4 lines, and no longer than 16 chars in length
+	 * Sets the text on this sign.<br/> For Vanilla compatible signs: The text must be 4 lines, and no longer than 16 chars in length
+	 *
 	 * @param text to set
 	 * @param cause of the sign change
 	 */

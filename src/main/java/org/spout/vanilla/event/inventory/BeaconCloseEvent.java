@@ -47,6 +47,7 @@ public class BeaconCloseEvent extends InventoryCloseEvent implements Cancellable
 
 	/**
 	 * Returns the beacon which caused this event.
+	 *
 	 * @return beacon
 	 */
 	public Beacon getBeacon() {

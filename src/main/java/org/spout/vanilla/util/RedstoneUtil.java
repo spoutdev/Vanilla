@@ -38,6 +38,7 @@ import org.spout.vanilla.material.block.redstone.RedstoneSource;
 public class RedstoneUtil {
 	/**
 	 * Checks if the block given is a redstone conductor
+	 *
 	 * @param block to check
 	 * @return True if it is a redstone conductor
 	 */
@@ -47,6 +48,7 @@ public class RedstoneUtil {
 
 	/**
 	 * Checks if the block material given is a redstone conductor
+	 *
 	 * @param mat to check
 	 * @return True if it is a redstone conductor
 	 */
@@ -56,6 +58,7 @@ public class RedstoneUtil {
 
 	/**
 	 * Gets if the given block receives Redstone power or not
+	 *
 	 * @param block to get it of
 	 * @return True if it receives power, False if not
 	 */
@@ -65,6 +68,7 @@ public class RedstoneUtil {
 
 	/**
 	 * Gets the block that is powering this block, or null if none
+	 *
 	 * @param block to get source of power of
 	 * @return Source of redstone power, or null if none
 	 */
@@ -80,6 +84,7 @@ public class RedstoneUtil {
 
 	/**
 	 * Gets if the given block is emitting power to surrounding blocks
+	 *
 	 * @param block to check
 	 * @param to the face it is powering
 	 * @return True if emitting power, False if not
@@ -90,6 +95,7 @@ public class RedstoneUtil {
 
 	/**
 	 * Gets if the given block is emitting power to surrounding blocks
+	 *
 	 * @param block to check
 	 * @param powerMode to use when reading power
 	 * @return True if emitting power, False if not
@@ -100,6 +106,7 @@ public class RedstoneUtil {
 
 	/**
 	 * Gets if the given block is emitting power to surrounding blocks
+	 *
 	 * @param block to check
 	 * @param to the face it is powering
 	 * @param powerMode to use when reading power

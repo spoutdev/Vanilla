@@ -37,8 +37,7 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.inventory.window.gui.RenderSlot;
 
 /**
- * Represents an {@link InventoryConverter} that converts slots given the
- * length of a grid in an inventory.
+ * Represents an {@link InventoryConverter} that converts slots given the length of a grid in an inventory.
  */
 public class GridInventoryConverter extends InventoryConverter {
 	public static final float SLOT_WIDTH = 0.1f;
@@ -72,6 +71,7 @@ public class GridInventoryConverter extends InventoryConverter {
 
 	/**
 	 * Returns the grid associated with this converter.
+	 *
 	 * @return grid
 	 */
 	public Grid getGrid() {

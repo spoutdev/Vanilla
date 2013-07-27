@@ -34,8 +34,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.flag.Flag;
 
 /**
- * If all flags match, it drops the first segment, else the other<br>
- * If a chance is set, this Chance also defines what mode is used
+ * If all flags match, it drops the first segment, else the other<br> If a chance is set, this Chance also defines what mode is used
  */
 public class SwitchDrops extends Drops {
 	public final Drops TRUE = new Drops();

@@ -34,9 +34,7 @@ import org.spout.api.protocol.CodecLookupService;
 import org.spout.vanilla.protocol.rcon.handler.RconHandlerLookupService;
 
 /**
- * Core interface for the rcon system
- * <p>
- * This has most of the stuff needed for a client implementation, but that has not been done yet.
+ * Core interface for the rcon system <p> This has most of the stuff needed for a client implementation, but that has not been done yet.
  */
 public abstract class RemoteConnectionCore implements Closeable {
 	private final Logger logger;

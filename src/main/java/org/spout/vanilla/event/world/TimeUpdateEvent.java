@@ -28,9 +28,10 @@ package org.spout.vanilla.event.world;
 
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.ProtocolEvent;
+import org.spout.api.event.world.WorldEvent;
 import org.spout.api.geo.World;
 
-public class TimeUpdateEvent extends ProtocolEvent {
+public class TimeUpdateEvent extends ProtocolEvent implements WorldEvent {
 	private static final HandlerList handlers = new HandlerList();
 	private final long newTime;
 	private final World world;
@@ -44,11 +45,7 @@ public class TimeUpdateEvent extends ProtocolEvent {
 		return this.newTime;
 	}
 
-	/**
-	 * Gets the world associated with this event.
-	 *
-	 * @return The world associated with the event.
-	 */
+	@Override
 	public World getWorld() {
 		return world;
 	}

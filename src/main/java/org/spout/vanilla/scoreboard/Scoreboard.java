@@ -30,9 +30,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
-import org.spout.api.protocol.event.ProtocolEvent;
+import org.spout.api.event.ProtocolEvent;
 
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.event.scoreboard.ObjectiveActionEvent;
@@ -44,12 +43,12 @@ import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardTeamMessage;
  * Represents a collection of objective attached to a player.
  */
 public class Scoreboard extends VanillaEntityComponent {
-	private Player player;
 	private final Set<Objective> objectives = new HashSet<Objective>();
 	private final Set<Team> teams = new HashSet<Team>();
 
 	/**
 	 * Creates a new objective with the specified name and display name.
+	 *
 	 * @param name of objective
 	 * @return newly created objective
 	 */
@@ -62,6 +61,7 @@ public class Scoreboard extends VanillaEntityComponent {
 
 	/**
 	 * Removes the objective with the specified name.
+	 *
 	 * @param name to remove objective
 	 */
 	public void removeObjective(String name) {
@@ -75,6 +75,7 @@ public class Scoreboard extends VanillaEntityComponent {
 
 	/**
 	 * Returns the objective with the specified name.
+	 *
 	 * @param name to get objective from
 	 * @return objective with specified name
 	 */
@@ -89,6 +90,7 @@ public class Scoreboard extends VanillaEntityComponent {
 
 	/**
 	 * Returns all created objectives on this scoreboard.
+	 *
 	 * @return all objectives
 	 */
 	public Set<Objective> getObjectives() {
@@ -97,6 +99,7 @@ public class Scoreboard extends VanillaEntityComponent {
 
 	/**
 	 * Creates a new team on this scoreboard.
+	 *
 	 * @param name of new team
 	 * @return newly created team
 	 */
@@ -109,6 +112,7 @@ public class Scoreboard extends VanillaEntityComponent {
 
 	/**
 	 * Removes team with specified name.
+	 *
 	 * @param name of team to remove
 	 */
 	public void removeTeam(String name) {
@@ -122,6 +126,7 @@ public class Scoreboard extends VanillaEntityComponent {
 
 	/**
 	 * Returns the team with the specified name.
+	 *
 	 * @param name of team to get
 	 * @return team with specified name
 	 */
@@ -136,6 +141,7 @@ public class Scoreboard extends VanillaEntityComponent {
 
 	/**
 	 * Returns a set of all teams on this scoreboard.
+	 *
 	 * @return set of all teams
 	 */
 	public Set<Team> getTeams() {
@@ -143,8 +149,8 @@ public class Scoreboard extends VanillaEntityComponent {
 	}
 
 	/**
-	 * Updates the score of the specified key for every objective with the
-	 * specified criteria to the specified value.
+	 * Updates the score of the specified key for every objective with the specified criteria to the specified value.
+	 *
 	 * @param criteria to check for
 	 * @param key to find
 	 * @param value of points to add
@@ -163,24 +169,19 @@ public class Scoreboard extends VanillaEntityComponent {
 		}
 	}
 
-	/**
-	 * Returns the player associated with this scoreboard.
-	 * @return player
-	 */
-	public Player getPlayer() {
-		return player;
+	@Override
+	public Player getOwner() {
+		return (Player) super.getOwner();
 	}
 
 	protected void callProtocolEvent(ProtocolEvent event) {
-		player.getNetworkSynchronizer().callProtocolEvent(event);
+		getOwner().getNetwork().callProtocolEvent(event);
 	}
 
 	@Override
 	public void onAttached() {
-		Entity owner = getOwner();
-		if (!(owner instanceof Player)) {
+		if (!(super.getOwner() instanceof Player)) {
 			throw new IllegalStateException("Scoreboard can only be attached to players.");
 		}
-		player = (Player) owner;
 	}
 }

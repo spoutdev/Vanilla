@@ -87,6 +87,7 @@ public class DropperBlock extends VanillaBlockMaterial implements Directional, R
 
 	/**
 	 * Shoots an item from the inventory slot of the Dropper
+	 *
 	 * @param block of the Dropper
 	 * @param slot to fire
 	 */

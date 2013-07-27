@@ -43,6 +43,7 @@ import org.spout.vanilla.inventory.window.block.HopperWindow;
 public class Hopper extends ViewedBlockComponent implements Container {
 	/**
 	 * Returns true if the block this component is attached to is currently powered
+	 *
 	 * @return true if the block is powered
 	 */
 	public boolean isPowered() {
@@ -51,7 +52,6 @@ public class Hopper extends ViewedBlockComponent implements Container {
 
 	/**
 	 * Sets the block as powered, or unpowered
-	 * @param powered
 	 */
 	public void setPowered(boolean powered) {
 		getData().put(VanillaData.IS_POWERED, powered);

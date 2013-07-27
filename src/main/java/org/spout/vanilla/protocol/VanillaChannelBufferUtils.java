@@ -36,21 +36,22 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.GenericMath;
-import static org.spout.api.util.ChannelBufferUtils.readCompound;
-import static org.spout.api.util.ChannelBufferUtils.writeCompound;
 import org.spout.api.util.Parameter;
-
 import org.spout.nbt.CompoundMap;
 
 import org.spout.vanilla.material.VanillaMaterials;
 
+import static org.spout.api.util.ChannelBufferUtils.readCompound;
+import static org.spout.api.util.ChannelBufferUtils.writeCompound;
+
 public final class VanillaChannelBufferUtils {
 	/**
 	 * Writes a list of parameters (e.g. mob metadata) to the buffer.
+	 *
 	 * @param buf The buffer.
 	 * @param parameters The parameters.
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings ("unchecked")
 	public static void writeParameters(ChannelBuffer buf, List<Parameter<?>> parameters) {
 		for (Parameter<?> parameter : parameters) {
 			int type = parameter.getType();
@@ -89,6 +90,7 @@ public final class VanillaChannelBufferUtils {
 
 	/**
 	 * Reads a list of parameters from the buffer.
+	 *
 	 * @param buf The buffer.
 	 * @return The parameters.
 	 */
@@ -126,6 +128,7 @@ public final class VanillaChannelBufferUtils {
 
 	/**
 	 * Writes a string to the buffer.
+	 *
 	 * @param buf The buffer.
 	 * @param str The string.
 	 * @throws IllegalArgumentException if the string is too long <em>after</em> it is encoded.
@@ -143,6 +146,7 @@ public final class VanillaChannelBufferUtils {
 
 	/**
 	 * Reads a string from the buffer.
+	 *
 	 * @param buf The buffer.
 	 * @return The string.
 	 */

@@ -51,6 +51,7 @@ public abstract class ArmorInventory extends Inventory {
 
 	/**
 	 * Informs an entity of all the equipment (armor)
+	 *
 	 * @param entity to inform
 	 */
 	public void updateSlots(Entity entity) {
@@ -61,6 +62,7 @@ public abstract class ArmorInventory extends Inventory {
 
 	/**
 	 * Informs an entity of a certain equipment (armor) change
+	 *
 	 * @param i - item slot index
 	 * @param item that the slot got set to
 	 * @param entity to inform
@@ -89,6 +91,7 @@ public abstract class ArmorInventory extends Inventory {
 
 	/**
 	 * Returns the {@link org.spout.api.inventory.ItemStack} in the boots slot.
+	 *
 	 * @return boots
 	 */
 	public ItemStack getBoots() {
@@ -97,7 +100,6 @@ public abstract class ArmorInventory extends Inventory {
 
 	/**
 	 * Sets the {@link org.spout.api.inventory.ItemStack} in the boots slot.
-	 * @param boots
 	 */
 	public void setBoots(ItemStack boots) {
 		set(BOOT_SLOT, boots);
@@ -105,6 +107,7 @@ public abstract class ArmorInventory extends Inventory {
 
 	/**
 	 * Returns the {@link org.spout.api.inventory.ItemStack} in the leggings slot.
+	 *
 	 * @return leggings
 	 */
 	public ItemStack getLeggings() {
@@ -113,7 +116,6 @@ public abstract class ArmorInventory extends Inventory {
 
 	/**
 	 * Sets the {@link org.spout.api.inventory.ItemStack} in the leggings slot.
-	 * @param leggings
 	 */
 	public void setLeggings(ItemStack leggings) {
 		set(LEGGINGS_SLOT, leggings);
@@ -121,6 +123,7 @@ public abstract class ArmorInventory extends Inventory {
 
 	/**
 	 * Returns the {@link org.spout.api.inventory.ItemStack} in the chest plate slot.
+	 *
 	 * @return chest plate
 	 */
 	public ItemStack getChestPlate() {
@@ -129,7 +132,6 @@ public abstract class ArmorInventory extends Inventory {
 
 	/**
 	 * Sets the {@link org.spout.api.inventory.ItemStack} in the chest plate slot.
-	 * @param chestPlate
 	 */
 	public void setChestPlate(ItemStack chestPlate) {
 		set(CHEST_PLATE_SLOT, chestPlate);
@@ -137,6 +139,7 @@ public abstract class ArmorInventory extends Inventory {
 
 	/**
 	 * Returns the {@link org.spout.api.inventory.ItemStack} in the helmet slot
+	 *
 	 * @return helmet
 	 */
 	public ItemStack getHelmet() {
@@ -145,7 +148,6 @@ public abstract class ArmorInventory extends Inventory {
 
 	/**
 	 * Sets the {@link org.spout.api.inventory.ItemStack} in the helmet slot.
-	 * @param helmet
 	 */
 	public void setHelmet(ItemStack helmet) {
 		set(HELMET_SLOT, helmet);

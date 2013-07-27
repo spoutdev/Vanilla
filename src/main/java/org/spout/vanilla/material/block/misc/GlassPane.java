@@ -31,8 +31,9 @@ import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 
 public class GlassPane extends VanillaBlockMaterial {
+	//TODO: Box Shape
 	public GlassPane(String name, int id) {
-		super(name, id, VanillaMaterialModels.GLASS_PANE);
+		super(name, id, VanillaMaterialModels.GLASS_PANE, null);
 		this.setHardness(0.3F).setResistance(0.3F).setTransparent();
 		this.getDrops().clear();
 	}

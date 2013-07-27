@@ -59,6 +59,7 @@ public class VanillaItemMaterial extends Material implements VanillaMaterial {
 
 	/**
 	 * Gets the enchantability of this item material to use in the process of enchanting
+	 *
 	 * @return Enchantability level of this item material
 	 */
 	public int getEnchantability() {
@@ -67,6 +68,7 @@ public class VanillaItemMaterial extends Material implements VanillaMaterial {
 
 	/**
 	 * Gets whether this item material is enchantable (has an enchantability greater than 0)
+	 *
 	 * @return true if this item material's enchantability is greater than 0
 	 */
 	public boolean isEnchantable() {
@@ -75,6 +77,7 @@ public class VanillaItemMaterial extends Material implements VanillaMaterial {
 
 	/**
 	 * Sets the enchantability of this item material
+	 *
 	 * @param enchantability Enchantability to set
 	 */
 	public void setEnchantability(int enchantability) {

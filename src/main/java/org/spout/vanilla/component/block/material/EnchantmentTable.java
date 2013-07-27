@@ -63,6 +63,7 @@ public class EnchantmentTable extends ViewedBlockComponent {
 
 	/**
 	 * Returns the amount of bookshelves within a 2 block radius for the X/Z coordinates and 1 block above this enchantment table for the Y coordinate
+	 *
 	 * @return Amount of bookshelves near this enchantment table
 	 */
 	public int getNearbyBookshelves() {

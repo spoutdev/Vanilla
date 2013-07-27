@@ -50,6 +50,7 @@ public class Chest extends AbstractChest implements Container {
 
 	/**
 	 * Whether the chest has a double inventory.
+	 *
 	 * @return true if has a double inventory.
 	 */
 	public boolean isDouble() {

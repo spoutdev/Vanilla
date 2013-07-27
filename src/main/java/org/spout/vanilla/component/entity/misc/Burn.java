@@ -91,6 +91,7 @@ public class Burn extends VanillaEntityComponent {
 
 	/**
 	 * Retrieve the firetick value. Any value higher than 0 means the entity is on fire.
+	 *
 	 * @return The firetick value.
 	 */
 	public float getFireTick() {
@@ -99,6 +100,7 @@ public class Burn extends VanillaEntityComponent {
 
 	/**
 	 * Check if the entity is on fire or not
+	 *
 	 * @return True if the entity is on fire else false.
 	 */
 	public boolean isOnFire() {
@@ -107,6 +109,7 @@ public class Burn extends VanillaEntityComponent {
 
 	/**
 	 * Check if the fire hurts or not.
+	 *
 	 * @return True if the fire hurts and false if it doesn't
 	 */
 	public boolean isFireHurting() {
@@ -115,6 +118,7 @@ public class Burn extends VanillaEntityComponent {
 
 	/**
 	 * Sets the entity on fire.
+	 *
 	 * @param time The amount of time in seconds the entity should be on fire.
 	 * @param hurt True if the fire should hurt else false.
 	 */
@@ -126,6 +130,7 @@ public class Burn extends VanillaEntityComponent {
 
 	/**
 	 * Set the firetick value. Any value higher than 0 will put the entity on fire.
+	 *
 	 * @param fireTick The fire tick amount.
 	 */
 	private void setFireTick(float fireTick) {
@@ -134,6 +139,7 @@ public class Burn extends VanillaEntityComponent {
 
 	/**
 	 * Sets if the fire should hurt or not. Maybe we just want to be warm? ^^
+	 *
 	 * @param fireHurt True if the fire should hurt else false.
 	 */
 	private void setFireHurting(boolean fireHurt) {

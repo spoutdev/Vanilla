@@ -45,6 +45,7 @@ public class Damage extends VanillaEntityComponent {
 
 	/**
 	 * Get the damage level depending of the difficulty level.
+	 *
 	 * @param difficulty The difficulty level
 	 * @return The {@link org.spout.vanilla.data.Damage} associated with the difficulty.
 	 */

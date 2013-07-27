@@ -47,6 +47,7 @@ public class DispenserCloseEvent extends InventoryCloseEvent implements Cancella
 
 	/**
 	 * Returns the dispenser which caused this event.
+	 *
 	 * @return dispenser
 	 */
 	public Dispenser getDispenser() {

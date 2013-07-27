@@ -97,6 +97,7 @@ public class Anvil extends Solid implements Directional {
 
 	/**
 	 * Gets the damage state of an Anvil, a value from 0 to 3
+	 *
 	 * @param block to get the damage of
 	 * @return Damage value
 	 */
@@ -106,6 +107,7 @@ public class Anvil extends Solid implements Directional {
 
 	/**
 	 * Sets the damage state of an Anvil
+	 *
 	 * @param block to set the damage for
 	 * @param damage state to set to, a value from 0 to 3
 	 */

@@ -61,7 +61,7 @@ public enum RailsState {
 	}
 
 	private RailsState(BlockFace dir1, BlockFace dir2, boolean sloped) {
-		this.directions = new BlockFace[]{dir1, dir2};
+		this.directions = new BlockFace[] {dir1, dir2};
 		this.curved = dir1.getOpposite() != dir2;
 		this.sloped = sloped;
 	}
@@ -75,6 +75,7 @@ public enum RailsState {
 
 	/**
 	 * Check if the state is connected to the one in the param.
+	 *
 	 * @param direction The RailsState to check.
 	 * @return Whether the 2 states are connected.
 	 */
@@ -84,6 +85,7 @@ public enum RailsState {
 
 	/**
 	 * Gets the directions the RailState goes towards/from.
+	 *
 	 * @return The directions.
 	 */
 	public BlockFace[] getDirections() {
@@ -92,6 +94,7 @@ public enum RailsState {
 
 	/**
 	 * Get a RailState from the specified data.
+	 *
 	 * @param data The data.
 	 * @return The RailState, or null if the data is invalid.
 	 */
@@ -105,6 +108,7 @@ public enum RailsState {
 
 	/**
 	 * Get the RailState from a BlockFace, and whether it is curved.
+	 *
 	 * @param direction The BlockFace.
 	 * @param sloped Whether the RailsState should be sloped.
 	 * @return The RailState.
@@ -130,6 +134,7 @@ public enum RailsState {
 
 	/**
 	 * Returns the RailState from one BlockFace to another!
+	 *
 	 * @param from The first BlockFace.
 	 * @param to The second one.
 	 * @return The RailState, or null if a connection is not possible.

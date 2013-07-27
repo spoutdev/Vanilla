@@ -40,7 +40,7 @@ import org.spout.vanilla.event.entity.EntityDeathEvent;
 import org.spout.vanilla.event.entity.EntityHealthChangeEvent;
 
 public class ScoreboardListener implements Listener {
-	@EventHandler(order = Order.LATEST)
+	@EventHandler (order = Order.LATEST)
 	public void entityDeath(EntityDeathEvent event) {
 		Entity entity = event.getEntity();
 		Engine engine = Spout.getEngine();
@@ -69,7 +69,7 @@ public class ScoreboardListener implements Listener {
 		evaluateCriteria(player.getName(), 1, true, Objective.CRITERIA_DEATH_COUNT);
 	}
 
-	@EventHandler(order = Order.LATEST)
+	@EventHandler (order = Order.LATEST)
 	public void entityHealth(EntityHealthChangeEvent event) {
 		Entity entity = event.getEntity();
 		Engine engine = Spout.getEngine();

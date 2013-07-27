@@ -27,9 +27,8 @@
 package org.spout.vanilla.component.entity.living;
 
 /**
- * Represents an entity that is used for some kind of utility. A utility entity
- * will not attack another player even if the player provokes said entity and
- * an utility entity exists for the benefit of the player.
+ * Represents an entity that is used for some kind of utility. A utility entity will not attack another player even if the player provokes said entity and an utility entity exists for the benefit of
+ * the player.
  */
 public interface Utility extends Passive {
 }

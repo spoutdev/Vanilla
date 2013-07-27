@@ -39,6 +39,7 @@ public class VanillaProtectionService extends ProtectionService {
 
 	/**
 	 * Returns the protection registered that matches the name provided
+	 *
 	 * @param name Name of the desired protection one is seeking
 	 * @return The protection or null if not found
 	 */
@@ -56,6 +57,7 @@ public class VanillaProtectionService extends ProtectionService {
 
 	/**
 	 * Gets all protections registered with the world provided
+	 *
 	 * @param world The world to lookup
 	 * @return A collection of protections or an empty list otherwise
 	 */
@@ -74,6 +76,7 @@ public class VanillaProtectionService extends ProtectionService {
 
 	/**
 	 * Gets all protections registered to a point
+	 *
 	 * @param point The point to lookup
 	 * @return A collection of protections or an empty list otherwise
 	 */
@@ -92,6 +95,7 @@ public class VanillaProtectionService extends ProtectionService {
 
 	/**
 	 * Gets all protections registered under this Protection Service
+	 *
 	 * @return A collection of protections or an empty list otherwise
 	 */
 	@Override
@@ -101,6 +105,7 @@ public class VanillaProtectionService extends ProtectionService {
 
 	/**
 	 * Add a protection to the Protection Service
+	 *
 	 * @param protection the protection to add
 	 */
 	public void addProtection(Protection protection) {

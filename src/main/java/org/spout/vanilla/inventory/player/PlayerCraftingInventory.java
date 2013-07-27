@@ -42,6 +42,7 @@ public class PlayerCraftingInventory extends CraftingInventory {
 
 	/**
 	 * Returns the current {@link ItemStack} in the top left input in the crafting grid slot (slot 42) ; can return null.
+	 *
 	 * @return top left input item stack
 	 */
 	public ItemStack getTopLeft() {
@@ -50,6 +51,7 @@ public class PlayerCraftingInventory extends CraftingInventory {
 
 	/**
 	 * Returns the current {@link ItemStack} in the top right input in the crafting grid slot (slot 43) ; can return null.
+	 *
 	 * @return top right item stack
 	 */
 	public ItemStack getTopRight() {
@@ -58,6 +60,7 @@ public class PlayerCraftingInventory extends CraftingInventory {
 
 	/**
 	 * Returns the current {@link ItemStack} in the bottom left input in the crafting grid slot (slot 38) ; can return null.
+	 *
 	 * @return bottom left input item stack
 	 */
 	public ItemStack getBottomLeft() {
@@ -66,6 +69,7 @@ public class PlayerCraftingInventory extends CraftingInventory {
 
 	/**
 	 * Returns the current {@link ItemStack} in the bottom right input in the crafting grid slot (slot 39) ; can return null.
+	 *
 	 * @return bottom right input item stack
 	 */
 	public ItemStack getBottomRight() {

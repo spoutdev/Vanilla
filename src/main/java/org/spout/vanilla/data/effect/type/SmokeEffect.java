@@ -49,6 +49,7 @@ public class SmokeEffect extends GeneralEffect {
 
 	/**
 	 * Gets the data effect data to use for the smoke particle effect
+	 *
 	 * @param direction the smoke goes
 	 * @return the data of that direction
 	 */

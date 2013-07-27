@@ -29,15 +29,14 @@ package org.spout.vanilla.event.entity;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.entity.EntityEvent;
+import org.spout.api.event.entity.AbstractEntityEvent;
 
 import org.spout.vanilla.event.cause.HealthChangeCause;
 
 /**
- * Called when an entity has a health change.<br/>
- * Implements {@link Cancellable}. Canceling this prevents the Entity's health from changing.
+ * Called when an entity has a health change.<br/> Implements {@link Cancellable}. Canceling this prevents the Entity's health from changing.
  */
-public class EntityHealthChangeEvent extends EntityEvent implements Cancellable {
+public class EntityHealthChangeEvent extends AbstractEntityEvent implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private int change;
 	private final HealthChangeCause cause;
@@ -50,6 +49,7 @@ public class EntityHealthChangeEvent extends EntityEvent implements Cancellable 
 
 	/**
 	 * Gets the cause of the event.
+	 *
 	 * @return The source that caused this event.
 	 */
 	public HealthChangeCause getCause() {
@@ -58,6 +58,7 @@ public class EntityHealthChangeEvent extends EntityEvent implements Cancellable 
 
 	/**
 	 * Gets the change in health.
+	 *
 	 * @return The amount of change.
 	 */
 	public int getChange() {
@@ -66,6 +67,7 @@ public class EntityHealthChangeEvent extends EntityEvent implements Cancellable 
 
 	/**
 	 * Sets the change in health.
+	 *
 	 * @param change The amount of change.
 	 */
 	public void setChange(int change) {

@@ -29,9 +29,9 @@ package org.spout.vanilla.event.player;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.player.PlayerEvent;
+import org.spout.api.event.player.AbstractPlayerEvent;
 
-public class PlayerFoodSaturationChangeEvent extends PlayerEvent implements Cancellable {
+public class PlayerFoodSaturationChangeEvent extends AbstractPlayerEvent implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private float foodSaturation;
 

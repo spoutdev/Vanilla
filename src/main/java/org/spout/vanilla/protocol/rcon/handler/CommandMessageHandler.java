@@ -26,9 +26,6 @@
  */
 package org.spout.vanilla.protocol.rcon.handler;
 
-import org.spout.vanilla.protocol.rcon.RemoteConnectionSession;
-import org.spout.vanilla.protocol.rcon.msg.CommandMessage;
-
 public class CommandMessageHandler /*extends RconMessageHandler<CommandMessage>*/ {
 	/*@Override
 	public void handleServer(RemoteConnectionSession session, CommandMessage message) {

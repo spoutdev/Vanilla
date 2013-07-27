@@ -24,63 +24,60 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.block;
+package org.spout.vanilla.event.material;
 
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.Cause;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.block.BlockEvent;
-import org.spout.api.inventory.ItemStack;
-
-import org.spout.vanilla.component.block.material.Furnace;
+import org.spout.api.event.block.BlockChangeEvent;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.block.BlockSnapshot;
 
 /**
- * Event which is called when an unit of an ItemStack has finished smelting.
+ * Event which is called when a block is ignited todo implement calling of this event
  */
-public class FurnaceSmeltEvent extends BlockEvent implements Cancellable {
+public class BlockIgniteEvent extends BlockChangeEvent implements Cancellable {
+	/**
+	 * The different causes why a Block was ignited.
+	 */
+	public static enum IgniteCause {
+		/**
+		 * Block ignition caused by Lava
+		 */
+		LAVA,
+		/**
+		 * Block ignition caused by using the Lightener
+		 */
+		FLINT_AND_STEEL,
+		/**
+		 * Block ignition caused by dynamic spread of fire
+		 */
+		SPREAD,
+		/**
+		 * Block ignition caused by lightning
+		 */
+		LIGHTING,
+		/**
+		 * Block ignition caused by a fireball
+		 */
+		FIREBALL,
+	}
+
 	private static final HandlerList handlers = new HandlerList();
-	private final Furnace furnace;
-	private final ItemStack source;
-	private ItemStack result;
+	private final IgniteCause igniteCause;
 
-	public FurnaceSmeltEvent(Furnace furnace, Cause<?> reason, ItemStack source, ItemStack result) {
-		super(furnace.getBlock(), reason);
-		this.furnace = furnace;
-		this.source = source;
-		this.result = result;
+	public BlockIgniteEvent(Block block, BlockSnapshot newState, Cause<?> reason, IgniteCause igniteCause) {
+		super(block, newState, reason);
+		this.igniteCause = igniteCause;
 	}
 
 	/**
-	 * Gets the smelted ItemStack
-	 * @return ItemStack which was smelted
+	 * The reason why the block was ignited
+	 *
+	 * @return IgniteCause
 	 */
-	public ItemStack getSource() {
-		return source;
-	}
-
-	/**
-	 * Gets the result of the smelting process for this furnace, as a clone.
-	 * Changes to this itemstack will not be reflected on event completion.
-	 * @return the result ItemStack
-	 */
-	public ItemStack getResult() {
-		return result.clone();
-	}
-
-	/**
-	 * Sets the result ItemStack
-	 * @param newResult the result ItemStack
-	 */
-	public void setResult(ItemStack newResult) {
-		result = newResult;
-	}
-
-	/**
-	 * Returns the Furnace in which an item was smelted.
-	 * @return furnace
-	 */
-	public Furnace getFurnace() {
-		return furnace;
+	public IgniteCause getIgniteCause() {
+		return igniteCause;
 	}
 
 	@Override

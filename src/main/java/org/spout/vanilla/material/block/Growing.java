@@ -30,24 +30,26 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.Material;
 
 /**
- * A material that can grow over time. Growing could happen using multiple blocks. If that is the case, <br>
- * it does not matter what block you use when changing growth stages.
+ * A material that can grow over time. Growing could happen using multiple blocks. If that is the case, <br> it does not matter what block you use when changing growth stages.
  */
 public interface Growing {
 	/**
 	 * Gets the mimimum required light for this Growing material to grow
+	 *
 	 * @return minimum light
 	 */
 	public int getMinimumLightToGrow();
 
 	/**
 	 * Gets the amount of growth stages this Growing material has
+	 *
 	 * @return amount of growth stages
 	 */
 	public int getGrowthStageCount();
 
 	/**
 	 * Gets the current growth stage of this Growing material
+	 *
 	 * @param block of the Plant
 	 * @return growth stage
 	 */
@@ -55,6 +57,7 @@ public interface Growing {
 
 	/**
 	 * Sets the growth stage of this Growing material
+	 *
 	 * @param block of the plant
 	 * @param stage to set to
 	 */
@@ -62,6 +65,7 @@ public interface Growing {
 
 	/**
 	 * Gets if this Growing material is fully grown
+	 *
 	 * @param block of the Plant
 	 * @return True if fully grown, False if not
 	 */
@@ -69,8 +73,7 @@ public interface Growing {
 
 	/**
 	 * Attempts to grow the block with the given {@link Material}
-	 * @param block
-	 * @param material
+	 *
 	 * @return true if the block grew to a new stage
 	 */
 	public boolean grow(Block block, Material material);

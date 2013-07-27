@@ -37,8 +37,8 @@ import org.bouncycastle.crypto.params.KeyParameter;
 import org.bouncycastle.crypto.params.ParametersWithIV;
 import org.bouncycastle.crypto.util.PublicKeyFactory;
 
-import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.ClientSession;
+import org.spout.api.protocol.MessageHandler;
 import org.spout.api.security.EncryptionChannelProcessor;
 import org.spout.api.security.SecurityHandler;
 
@@ -87,7 +87,7 @@ public class EncryptionKeyRequestHandler extends MessageHandler<EncryptionKeyReq
 			}
 		};
 
-		String hash = sha1Hash(new Object[]{message.getSessionId(), sharedSecret, message.getSecretArray()});
+		String hash = sha1Hash(new Object[] {message.getSessionId(), sharedSecret, message.getSecretArray()});
 
 		Thread loginAuth = new Thread(new ClientLoginAuth(hash, runnable));
 		loginAuth.start();

@@ -52,6 +52,7 @@ public class PlayerRespawnEvent extends EntitySpawnEvent {
 
 	/**
 	 * Gets the player associated in this event.
+	 *
 	 * @return The player of the event.
 	 */
 	public Player getPlayer() {
@@ -60,7 +61,6 @@ public class PlayerRespawnEvent extends EntitySpawnEvent {
 
 	/**
 	 * Gets the point where the player respawned.
-	 * @return
 	 */
 	public Point getPoint() {
 		return point;
@@ -68,6 +68,7 @@ public class PlayerRespawnEvent extends EntitySpawnEvent {
 
 	/**
 	 * Sets the point where the player respawns.
+	 *
 	 * @param point The new location where spawning will take place.
 	 */
 	public void setPoint(Point point) {

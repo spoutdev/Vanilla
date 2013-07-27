@@ -73,7 +73,8 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, R
 	}
 
 	public RedstoneRepeater(String name, int id, boolean powered) {
-		super(name, id, null);
+		//TODO: Box Shape
+		super(name, id, null, null);
 		this.powered = powered;
 		this.setHardness(0.0F).setResistance(0.0F).setOpacity(0).setOcclusion((short) 0, BlockFace.BOTTOM);
 	}
@@ -138,6 +139,7 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, R
 
 	/**
 	 * Checks whether a redstone repeater block is locked by one or more powered repeaters powering the sides
+	 *
 	 * @param block of the redstone repeater
 	 * @return True if locked, False if not
 	 */

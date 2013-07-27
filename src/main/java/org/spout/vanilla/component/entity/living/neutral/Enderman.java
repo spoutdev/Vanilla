@@ -29,8 +29,8 @@ package org.spout.vanilla.component.entity.living.neutral;
 import org.spout.api.component.entity.PhysicsComponent;
 import org.spout.api.material.Material;
 import org.spout.api.util.Parameter;
-
 import org.spout.physics.collision.shape.BoxShape;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.living.Neutral;

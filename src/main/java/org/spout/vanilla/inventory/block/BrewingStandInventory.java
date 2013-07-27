@@ -47,6 +47,7 @@ public class BrewingStandInventory extends Inventory {
 
 	/**
 	 * Gets the output slot at the given index. There are three output slots; the index given must be between 0 and 2.
+	 *
 	 * @param index of the output slot
 	 * @return {@link ItemStack} in the output
 	 */
@@ -61,6 +62,7 @@ public class BrewingStandInventory extends Inventory {
 
 	/**
 	 * Whether the inventory contains an item in any of the output slots
+	 *
 	 * @return true if there is an item in at least one of the output slots
 	 */
 	public boolean hasOutput() {
@@ -75,6 +77,7 @@ public class BrewingStandInventory extends Inventory {
 
 	/**
 	 * Gets the input of the brewing stand
+	 *
 	 * @return {@link ItemStack} in input of brewing stand.
 	 */
 	public ItemStack getInput() {
@@ -83,6 +86,7 @@ public class BrewingStandInventory extends Inventory {
 
 	/**
 	 * Whether the inventory contains an item in the input slot
+	 *
 	 * @return true if an item is present
 	 */
 	public boolean hasInput() {

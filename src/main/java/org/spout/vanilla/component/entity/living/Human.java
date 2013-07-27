@@ -190,6 +190,7 @@ public class Human extends Living {
 
 	/**
 	 * Drops the item specified into the direction the player looks, with slight randomness
+	 *
 	 * @param item to drop
 	 */
 	public void dropItem(ItemStack item) {

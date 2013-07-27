@@ -62,15 +62,17 @@ public class Slab extends VanillaBlockMaterial implements Burnable {
 	private final ByteBitSet occlusionTop = new ByteBitSet(BlockFace.TOP);
 	private final ByteBitSet occlusionBottom = new ByteBitSet(BlockFace.BOTTOM);
 
+	//TODO: Box Shape
 	private Slab(short datamask, String name, int id, boolean wood, String model) {
-		super(datamask, name, id, model);
+		super(datamask, name, id, model, null);
 		this.wood = wood;
 		this.setHardness(2.0F).setResistance(10.0F).setOpacity(0);
 		this.addMiningType(wood ? ToolType.AXE : ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
 	}
 
+	//TODO: Box Shape
 	private Slab(String name, int data, Slab parent, String model) {
-		super(name, parent.getMinecraftId(), data, parent, model);
+		super(name, parent.getMinecraftId(), data, parent, model, null);
 		this.wood = parent.wood;
 		this.setHardness(2.0F).setResistance(10.0F).setOpacity(0);
 		this.addMiningType(wood ? ToolType.AXE : ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
@@ -92,6 +94,7 @@ public class Slab extends VanillaBlockMaterial implements Burnable {
 
 	/**
 	 * Gets if this Slab is made of Wood
+	 *
 	 * @return True if wooden, False if not
 	 */
 	public boolean isWooden() {
@@ -100,6 +103,7 @@ public class Slab extends VanillaBlockMaterial implements Burnable {
 
 	/**
 	 * Gets if this half slab is the top-half
+	 *
 	 * @param block to get it of
 	 * @return True if it is the block half
 	 */
@@ -109,6 +113,7 @@ public class Slab extends VanillaBlockMaterial implements Burnable {
 
 	/**
 	 * Sets if this half slab is the top-half
+	 *
 	 * @param block to set it for
 	 * @param top state
 	 */

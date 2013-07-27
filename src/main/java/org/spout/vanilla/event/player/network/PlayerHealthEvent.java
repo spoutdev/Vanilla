@@ -29,8 +29,9 @@ package org.spout.vanilla.event.player.network;
 import org.spout.api.entity.Player;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.ProtocolEvent;
+import org.spout.api.event.player.PlayerEvent;
 
-public class PlayerHealthEvent extends ProtocolEvent {
+public class PlayerHealthEvent extends ProtocolEvent implements PlayerEvent {
 	private static final HandlerList handlers = new HandlerList();
 	private final Player player;
 
@@ -38,6 +39,7 @@ public class PlayerHealthEvent extends ProtocolEvent {
 		this.player = p;
 	}
 
+	@Override
 	public Player getPlayer() {
 		return player;
 	}

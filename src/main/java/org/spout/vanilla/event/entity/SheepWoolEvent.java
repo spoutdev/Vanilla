@@ -28,7 +28,7 @@ package org.spout.vanilla.event.entity;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.entity.EntityEvent;
+import org.spout.api.event.entity.AbstractEntityEvent;
 import org.spout.api.exception.InvalidControllerException;
 
 import org.spout.vanilla.component.entity.living.passive.Sheep;
@@ -36,7 +36,7 @@ import org.spout.vanilla.component.entity.living.passive.Sheep;
 /**
  * Event which is called when a sheep's wool changes.
  */
-public class SheepWoolEvent extends EntityEvent {
+public class SheepWoolEvent extends AbstractEntityEvent {
 	private static final HandlerList handlers = new HandlerList();
 	private final SheepWoolEventType type;
 	private int data = 15; // default to white wool
@@ -62,8 +62,7 @@ public class SheepWoolEvent extends EntityEvent {
 	}
 
 	/**
-	 * Get any additional data associated with this event, ie. the color
-	 * for the wool to be dyed.
+	 * Get any additional data associated with this event, ie. the color for the wool to be dyed.
 	 */
 	public int getData() {
 		return data;

@@ -27,13 +27,12 @@
 package org.spout.vanilla.component.entity.living.hostile;
 
 import org.spout.api.component.entity.PhysicsComponent;
-import org.spout.api.entity.Entity;
 import org.spout.api.event.entity.EntityCollideEntityEvent;
 import org.spout.api.event.entity.EntityCollideEvent;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
-
 import org.spout.physics.collision.shape.BoxShape;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.ai.action.ActionAttack;
 import org.spout.vanilla.ai.goal.AttackPlayerGoal;
@@ -88,6 +87,7 @@ public class Zombie extends Living implements Hostile {
 
 	/**
 	 * True if the zombie was once a villager, or is a Villager Zombie
+	 *
 	 * @return true if this is a villager zombie
 	 */
 	public boolean wasVillager() {
@@ -96,7 +96,6 @@ public class Zombie extends Living implements Hostile {
 
 	/**
 	 * Sets if this is a villager zombie.
-	 * @param value
 	 */
 	public void setWasVillager(boolean value) {
 		getOwner().getData().put(VanillaData.WAS_VILLAGER, value);

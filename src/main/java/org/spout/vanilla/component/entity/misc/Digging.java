@@ -34,8 +34,8 @@ import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.data.Animation;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.tool.ToolType;
-import org.spout.vanilla.event.block.network.BlockBreakAnimationEvent;
-import org.spout.vanilla.event.entity.EntityAnimationEvent;
+import org.spout.vanilla.event.entity.network.EntityAnimationEvent;
+import org.spout.vanilla.event.material.network.BlockBreakAnimationEvent;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.item.tool.MiningTool;
 
@@ -69,6 +69,7 @@ public class Digging extends VanillaEntityComponent {
 
 	/**
 	 * Returns the digging state of the entity
+	 *
 	 * @return true if player is digging
 	 */
 	public boolean isDigging() {
@@ -77,6 +78,7 @@ public class Digging extends VanillaEntityComponent {
 
 	/**
 	 * Sets isDigging true and records start time, unless already digging
+	 *
 	 * @return true if successful
 	 */
 	public boolean startDigging(Point position, Material tool) {
@@ -113,6 +115,7 @@ public class Digging extends VanillaEntityComponent {
 
 	/**
 	 * Sets isDigging false and records total time, unless the dig was invalid/never started.
+	 *
 	 * @return true if successful
 	 */
 	public boolean stopDigging(Point position, boolean blockBreak) {
@@ -132,6 +135,7 @@ public class Digging extends VanillaEntityComponent {
 
 	/**
 	 * Gets time spent digging
+	 *
 	 * @return time spent digging
 	 */
 	public long getDiggingTime() {
@@ -145,6 +149,7 @@ public class Digging extends VanillaEntityComponent {
 
 	/**
 	 * Gets last time spent digging in real(client) ticks
+	 *
 	 * @return ticks spent digging
 	 */
 	public long getDiggingTicks() {
@@ -153,6 +158,7 @@ public class Digging extends VanillaEntityComponent {
 
 	/**
 	 * Adds and checks mining speed for cheating.
+	 *
 	 * @param damageRemaining Remaining damage on block
 	 * @return false if player is cheating
 	 */
@@ -172,6 +178,7 @@ public class Digging extends VanillaEntityComponent {
 
 	/**
 	 * Checks mining speed for cheating.
+	 *
 	 * @return false if player is cheating
 	 */
 	public boolean checkMiningSpeed() {

@@ -32,14 +32,9 @@ import org.spout.api.geo.World;
 
 public interface TileMaterial {
 	/**
-	 * Gets the protocol event to reflect the block state at the location
-	 * or null if none exists
-	 * Used when sending chunks to the client in {@link org.spout.vanilla.protocol.msg.world.chunk.ChunkDataMessage}
-	 * @param world
-	 * @param x
-	 * @param y
-	 * @param z
-	 * @param owner
+	 * Gets the protocol event to reflect the block state at the location or null if none exists Used when sending chunks to the client in {@link
+	 * org.spout.vanilla.protocol.msg.world.chunk.ChunkDataMessage}
+	 *
 	 * @return event
 	 */
 	public ProtocolEvent getUpdate(World world, int x, int y, int z, BlockComponentOwner owner);

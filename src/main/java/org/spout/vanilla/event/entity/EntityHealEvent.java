@@ -34,8 +34,7 @@ import org.spout.vanilla.event.cause.HealCause;
 import org.spout.vanilla.event.cause.HealthChangeCause;
 
 /**
- * Called when an entity is healed.<br/>
- * Implements {@link Cancellable}. Canceling this prevents the Entity from being healed.
+ * Called when an entity is healed.<br/> Implements {@link Cancellable}. Canceling this prevents the Entity from being healed.
  */
 public class EntityHealEvent extends EntityHealthChangeEvent {
 	private static final HandlerList handlers = new HandlerList();
@@ -53,6 +52,7 @@ public class EntityHealEvent extends EntityHealthChangeEvent {
 
 	/**
 	 * Gets the type of heal. Defaults to UNKNOWN.
+	 *
 	 * @return type
 	 */
 	public HealCause getHealCause() {
@@ -61,6 +61,7 @@ public class EntityHealEvent extends EntityHealthChangeEvent {
 
 	/**
 	 * Gets the heal to be applied to the health component.
+	 *
 	 * @return The damage to the health component.
 	 */
 	public int getHealAmount() {
@@ -69,6 +70,7 @@ public class EntityHealEvent extends EntityHealthChangeEvent {
 
 	/**
 	 * Sets the heal to be applied to the health component.
+	 *
 	 * @param amount The amount of health given
 	 */
 	public void setHealAmount(int amount) {

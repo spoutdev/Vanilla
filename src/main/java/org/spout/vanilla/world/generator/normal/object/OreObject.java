@@ -60,6 +60,7 @@ public class OreObject extends RandomObject {
 
 	/**
 	 * Generates a cluster of this ore at the position using the random given
+	 *
 	 * @param world to place in
 	 * @param originX of the cluster
 	 * @param originY of the cluster

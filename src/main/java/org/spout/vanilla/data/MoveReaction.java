@@ -30,5 +30,7 @@ package org.spout.vanilla.data;
  * What a block does when it is being moved (by a piston)
  */
 public enum MoveReaction {
-	DENY, ALLOW, BREAK
+	DENY,
+	ALLOW,
+	BREAK
 }

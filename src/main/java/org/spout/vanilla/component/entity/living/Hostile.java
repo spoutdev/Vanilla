@@ -27,8 +27,7 @@
 package org.spout.vanilla.component.entity.living;
 
 /**
- * Represents a hostile entity. A hostile entity will pursue the player
- * unprovoked and will attack when possible.
+ * Represents a hostile entity. A hostile entity will pursue the player unprovoked and will attack when possible.
  */
 public interface Hostile {
 }

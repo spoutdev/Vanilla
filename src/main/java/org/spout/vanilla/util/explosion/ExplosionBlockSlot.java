@@ -36,8 +36,7 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 
 /**
- * This is a permanent block slot whose information is loaded from a world dynamically
- * It is used to load block information all at once
+ * This is a permanent block slot whose information is loaded from a world dynamically It is used to load block information all at once
  */
 public class ExplosionBlockSlot {
 	public ExplosionBlockSlot(final Vector3 offset) {
@@ -53,6 +52,7 @@ public class ExplosionBlockSlot {
 
 	/**
 	 * Generates the material and initial damage factor for this block
+	 *
 	 * @param world to use
 	 * @param x coordinate of the middle
 	 * @param y coordinate of the middle

@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.material.block.misc;
 
-import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cause;
@@ -50,9 +49,9 @@ import org.spout.vanilla.util.RedstoneUtil;
 
 public class FenceGate extends VanillaBlockMaterial implements Openable, RedstoneTarget {
 	public FenceGate(String name, int id) {
-		super(name, id, VanillaMaterialModels.FENCE_GATE);
+		//TODO: Box Shape
+		super(name, id, VanillaMaterialModels.FENCE_GATE, null);
 		this.setHardness(2.0F).setResistance(3.0F).setTransparent();
-		this.setCollision(CollisionStrategy.SOLID);
 	}
 
 	@Override

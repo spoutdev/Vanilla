@@ -40,8 +40,7 @@ import org.spout.vanilla.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.material.block.liquid.Water;
 
 /**
- * Component that handles a entity drowning in water.
- * The drowning component requires a health component and head component
+ * Component that handles a entity drowning in water. The drowning component requires a health component and head component
  */
 public class Drowning extends VanillaEntityComponent {
 	private Entity owner;
@@ -62,7 +61,7 @@ public class Drowning extends VanillaEntityComponent {
 		return !health.isDead();
 	}
 
-	@SuppressWarnings("incomplete-switch")
+	@SuppressWarnings ("incomplete-switch")
 	@Override
 	public void onTick(float dt) {
 		switch (getEngine().getPlatform()) {
@@ -135,6 +134,7 @@ public class Drowning extends VanillaEntityComponent {
 
 	/**
 	 * Retrieve the amount of air the entity currently have.
+	 *
 	 * @return The amount of air in seconds.
 	 */
 	public float getAir() {
@@ -143,6 +143,7 @@ public class Drowning extends VanillaEntityComponent {
 
 	/**
 	 * Sets the amount of air the entity currently have.
+	 *
 	 * @param airSecs The amount of air (in seconds) that the entity have.
 	 */
 	public void setAir(float airSecs) {

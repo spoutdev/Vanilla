@@ -35,6 +35,7 @@ import org.spout.vanilla.data.VanillaData;
 public class Skull extends VanillaBlockComponent {
 	/**
 	 * Retrieve the rotation of the Skull.
+	 *
 	 * @return The rotation.
 	 */
 	public float getRotation() {
@@ -43,6 +44,7 @@ public class Skull extends VanillaBlockComponent {
 
 	/**
 	 * Sets the rotation of the skull.
+	 *
 	 * @param rotation The rotation.
 	 */
 	public void setRotation(float rotation) {

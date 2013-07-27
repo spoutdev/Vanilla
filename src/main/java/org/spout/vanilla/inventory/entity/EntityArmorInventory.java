@@ -30,7 +30,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 
-import org.spout.vanilla.event.entity.EntityEquipmentEvent;
+import org.spout.vanilla.event.entity.network.EntityEquipmentEvent;
 import org.spout.vanilla.material.block.solid.Pumpkin;
 import org.spout.vanilla.material.item.armor.Boots;
 import org.spout.vanilla.material.item.armor.Chestplate;

@@ -29,11 +29,12 @@ package org.spout.vanilla.event.player.network;
 import org.spout.api.entity.Player;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.ProtocolEvent;
+import org.spout.api.event.player.PlayerEvent;
 
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.data.GameMode;
 
-public class PlayerAbilityUpdateEvent extends ProtocolEvent {
+public class PlayerAbilityUpdateEvent extends ProtocolEvent implements PlayerEvent {
 	private static final HandlerList handlers = new HandlerList();
 	private final byte flyingSpeed;
 	private final byte walkingSpeed;
@@ -44,12 +45,11 @@ public class PlayerAbilityUpdateEvent extends ProtocolEvent {
 	private final Player player;
 
 	public PlayerAbilityUpdateEvent(Player player) {
-		this.player = player;
 		Human human = player.get(Human.class);
 		if (human == null) {
 			throw new IllegalStateException("Cannot call PlayerAbilityChangeEvent for players which don't have the Human component");
 		}
-
+		this.player = player;
 		flyingSpeed = human.getFlyingSpeed();
 		walkingSpeed = human.getWalkingSpeed();
 		godMode = human.getGodMode();
@@ -82,6 +82,7 @@ public class PlayerAbilityUpdateEvent extends ProtocolEvent {
 		return creativeMode;
 	}
 
+	@Override
 	public Player getPlayer() {
 		return player;
 	}

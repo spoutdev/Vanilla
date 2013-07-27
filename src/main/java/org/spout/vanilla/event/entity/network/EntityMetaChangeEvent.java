@@ -24,73 +24,49 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.block;
+package org.spout.vanilla.event.entity.network;
 
-import org.spout.api.event.Cancellable;
-import org.spout.api.event.Cause;
+import java.util.List;
+
+import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.block.BlockChangeEvent;
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.block.BlockSnapshot;
+import org.spout.api.event.ProtocolEvent;
+import org.spout.api.event.entity.EntityEvent;
+import org.spout.api.util.Parameter;
 
 /**
- * Event which is called when a block is ignited
- * todo implement calling of this event
+ * Event which is called when an Entity changes meta-data
  */
-public class BlockIgniteEvent extends BlockChangeEvent implements Cancellable {
-	/**
-	 * The different causes why a Block was ignited.
-	 */
-	public static enum IgniteCause {
-		/**
-		 * Block ignition caused by Lava
-		 */
-		LAVA,
-		/**
-		 * Block ignition caused by using the Lightener
-		 */
-		FLINT_AND_STEEL,
-		/**
-		 * Block ignition caused by dynamic spread of fire
-		 */
-		SPREAD,
-		/**
-		 * Block ignition caused by lightning
-		 */
-		LIGHTING,
-		/**
-		 * Block ignition caused by a fireball
-		 */
-		FIREBALL,
-	}
-
+public class EntityMetaChangeEvent extends ProtocolEvent implements EntityEvent {
 	private static final HandlerList handlers = new HandlerList();
-	private final IgniteCause igniteCause;
+	private final List<Parameter<?>> parameters;
+	private final Entity entity;
 
-	public BlockIgniteEvent(Block block, BlockSnapshot newState, Cause<?> reason, IgniteCause igniteCause) {
-		super(block, newState, reason);
-		this.igniteCause = igniteCause;
+	public EntityMetaChangeEvent(Entity e, List<Parameter<?>> parameters) {
+		this.entity = e;
+		this.parameters = parameters;
 	}
 
 	/**
-	 * The reason why the block was ignited
-	 * @return IgniteCause
+	 * Gets the updates meta data parameters of the Entity
+	 *
+	 * @return parameter list
 	 */
-	public IgniteCause getIgniteCause() {
-		return igniteCause;
+	public List<Parameter<?>> getParameters() {
+		return parameters;
 	}
 
 	@Override
-	public void setCancelled(boolean cancelled) {
-		super.setCancelled(cancelled);
-	}
-
-	public static HandlerList getHandlerList() {
-		return handlers;
+	public Entity getEntity() {
+		return entity;
 	}
 
 	@Override
 	public HandlerList getHandlers() {
+		return handlers;
+	}
+
+	public static HandlerList getHandlerList() {
 		return handlers;
 	}
 }

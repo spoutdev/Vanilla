@@ -55,6 +55,7 @@ public class ToolLevel {
 
 	/**
 	 * Gets the additional damage this tool level provides
+	 *
 	 * @return tool damage bonus
 	 */
 	public short getDamageBonus() {
@@ -63,6 +64,7 @@ public class ToolLevel {
 
 	/**
 	 * Gets the particular tool flag for this tool level
+	 *
 	 * @return Tool flag
 	 */
 	public Flag getToolFlag() {
@@ -71,6 +73,7 @@ public class ToolLevel {
 
 	/**
 	 * Gets the particular block drop flag for this tool level
+	 *
 	 * @return Drop flag
 	 */
 	public Flag getDropFlag() {
@@ -79,6 +82,7 @@ public class ToolLevel {
 
 	/**
 	 * Gets the time it takes to dig using this tool level
+	 *
 	 * @return digging time
 	 */
 	public float getDiggingSpeed() {
@@ -87,6 +91,7 @@ public class ToolLevel {
 
 	/**
 	 * Gets the maximum durability a tool with this level has
+	 *
 	 * @return maximum durability
 	 */
 	public short getMaxDurability() {
@@ -95,6 +100,7 @@ public class ToolLevel {
 
 	/**
 	 * Gets the enchantability that a tool with this level has
+	 *
 	 * @return Tool enchantability
 	 */
 	public int getEnchantability() {

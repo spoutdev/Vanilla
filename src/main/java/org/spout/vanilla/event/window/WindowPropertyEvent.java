@@ -43,6 +43,7 @@ public class WindowPropertyEvent extends WindowEvent {
 
 	/**
 	 * Gets the id of the Window property that got changed
+	 *
 	 * @return property Id
 	 */
 	public int getId() {
@@ -51,6 +52,7 @@ public class WindowPropertyEvent extends WindowEvent {
 
 	/**
 	 * Gets the value the property got set to
+	 *
 	 * @return the new property value
 	 */
 	public int getValue() {

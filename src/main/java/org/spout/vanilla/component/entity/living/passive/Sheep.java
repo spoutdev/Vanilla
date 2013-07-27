@@ -42,7 +42,7 @@ import org.spout.vanilla.component.entity.living.Passive;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.event.entity.EntityStatusEvent;
+import org.spout.vanilla.event.entity.network.EntityStatusEvent;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.solid.Wool;
 import org.spout.vanilla.material.block.solid.Wool.WoolColor;
@@ -100,6 +100,7 @@ public class Sheep extends Animal implements Passive {
 
 	/**
 	 * Gets the color of the sheep.
+	 *
 	 * @return color of the sheep.
 	 */
 	public WoolColor getColor() {
@@ -108,7 +109,6 @@ public class Sheep extends Animal implements Passive {
 
 	/**
 	 * Sets the color of the sheep.
-	 * @param color
 	 */
 	public void setColor(Wool.WoolColor color) {
 		short oldData = getColor().getData();

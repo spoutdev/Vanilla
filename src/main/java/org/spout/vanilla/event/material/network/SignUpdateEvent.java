@@ -24,13 +24,12 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.block;
+package org.spout.vanilla.event.material.network;
 
 import java.util.Arrays;
 
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.Cause;
-import org.spout.api.event.Event;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.ProtocolEvent;
 
@@ -60,6 +59,7 @@ public class SignUpdateEvent extends ProtocolEvent implements Cancellable {
 
 	/**
 	 * Get the cause of the changes
+	 *
 	 * @return cause which changes the text on a sign
 	 */
 	public Cause<?> getSource() {
@@ -68,6 +68,7 @@ public class SignUpdateEvent extends ProtocolEvent implements Cancellable {
 
 	/**
 	 * Get the SignComponent which text is being changed
+	 *
 	 * @return sign which is being changed
 	 */
 	public Sign getSign() {
@@ -76,6 +77,7 @@ public class SignUpdateEvent extends ProtocolEvent implements Cancellable {
 
 	/**
 	 * Get the text which should be placed on the sign.
+	 *
 	 * @return text which is placed on the sign 1 - 4 lines
 	 */
 	public String[] getLines() {
@@ -84,6 +86,7 @@ public class SignUpdateEvent extends ProtocolEvent implements Cancellable {
 
 	/**
 	 * Set the text which should be placed on the sign.
+	 *
 	 * @param newLines text which is placed on the sign 1 - 4 lines
 	 */
 	public void setLines(String[] newLines) {
@@ -94,8 +97,8 @@ public class SignUpdateEvent extends ProtocolEvent implements Cancellable {
 	}
 
 	/**
-	 * Sets a single line for the sign involved in this event. Index below 0 and above the ArraySize of the sign will throw an
-	 * {@link ArrayIndexOutOfBoundsException}
+	 * Sets a single line for the sign involved in this event. Index below 0 and above the ArraySize of the sign will throw an {@link ArrayIndexOutOfBoundsException}
+	 *
 	 * @param index index of the line to set
 	 * @param line text to set
 	 */
@@ -104,8 +107,8 @@ public class SignUpdateEvent extends ProtocolEvent implements Cancellable {
 	}
 
 	/**
-	 * Gets a single line from the sign involved in this event. Index below 0 and above the ArraySize of the sign will throw an
-	 * {@link ArrayIndexOutOfBoundsException}
+	 * Gets a single line from the sign involved in this event. Index below 0 and above the ArraySize of the sign will throw an {@link ArrayIndexOutOfBoundsException}
+	 *
 	 * @param index index of the line to get
 	 * @return string of the line which is at the index
 	 */

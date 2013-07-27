@@ -48,6 +48,7 @@ public class EnchantmentTableOpenEvent extends InventoryOpenEvent implements Can
 
 	/**
 	 * Returns the enchantmentTable which caused this event.
+	 *
 	 * @return enchantmentTable
 	 */
 	public EnchantmentTable getEnchantmentTable() {

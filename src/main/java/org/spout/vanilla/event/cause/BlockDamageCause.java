@@ -35,6 +35,7 @@ public class BlockDamageCause extends BlockCause implements DamageCause<Block> {
 
 	/**
 	 * Contains the source and type of damage.
+	 *
 	 * @param block The block causing the damage
 	 * @param type The cause of the damage.
 	 */
@@ -45,6 +46,7 @@ public class BlockDamageCause extends BlockCause implements DamageCause<Block> {
 
 	/**
 	 * Contains the source and type of damage.
+	 *
 	 * @param parent cause of this cause
 	 * @param block who caused this cause
 	 * @param type who caused this cause

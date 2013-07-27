@@ -27,8 +27,7 @@
 package org.spout.vanilla.material.block.attachable;
 
 /**
- * Represents a block material that is attached to a single point
- * For example: torches and signs
+ * Represents a block material that is attached to a single point For example: torches and signs
  */
 public interface PointAttachable extends Attachable {
 }

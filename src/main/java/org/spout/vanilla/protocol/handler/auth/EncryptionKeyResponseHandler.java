@@ -108,7 +108,7 @@ public class EncryptionKeyResponseHandler extends MessageHandler<EncryptionKeyRe
 
 			byte[] publicKeyEncoded = SecurityHandler.getInstance().encodeKey(pair.getPublic());
 
-			String sha1Hash = sha1Hash(new Object[]{sessionId, initialVector, publicKeyEncoded});
+			String sha1Hash = sha1Hash(new Object[] {sessionId, initialVector, publicKeyEncoded});
 			session.getDataMap().put(VanillaProtocol.SESSION_ID, sha1Hash);
 
 			String handshakeUsername = session.getDataMap().get(VanillaProtocol.HANDSHAKE_USERNAME);

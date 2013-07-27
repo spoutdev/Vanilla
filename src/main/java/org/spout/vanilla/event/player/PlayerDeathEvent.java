@@ -48,6 +48,7 @@ public class PlayerDeathEvent extends EntityDeathEvent {
 
 	/**
 	 * Gets the player associated in this event.
+	 *
 	 * @return The player.
 	 */
 	public Player getPlayer() {

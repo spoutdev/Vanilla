@@ -36,7 +36,7 @@ import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.data.Animation;
-import org.spout.vanilla.event.entity.EntityAnimationEvent;
+import org.spout.vanilla.event.entity.network.EntityAnimationEvent;
 import org.spout.vanilla.event.player.PlayerToggleSneakingEvent;
 import org.spout.vanilla.event.player.PlayerToggleSprintingEvent;
 import org.spout.vanilla.protocol.msg.entity.EntityActionMessage;

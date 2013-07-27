@@ -37,8 +37,7 @@ import org.spout.vanilla.event.cause.HealthChangeCause;
 import org.spout.vanilla.event.cause.NullDamageCause;
 
 /**
- * Called when an entity is damaged.<br/>
- * Implements {@link Cancellable}. Canceling this prevents the Entity from taking damage.
+ * Called when an entity is damaged.<br/> Implements {@link Cancellable}. Canceling this prevents the Entity from taking damage.
  */
 public class EntityDamageEvent extends EntityHealthChangeEvent {
 	private static final HandlerList handlers = new HandlerList();
@@ -62,8 +61,8 @@ public class EntityDamageEvent extends EntityHealthChangeEvent {
 	}
 
 	/**
-	 * Returns the object causing the damage, such as a block or entity.
-	 * Defaults to null.
+	 * Returns the object causing the damage, such as a block or entity. Defaults to null.
+	 *
 	 * @return The source of the damage.
 	 */
 	public Object getDamager() {
@@ -72,6 +71,7 @@ public class EntityDamageEvent extends EntityHealthChangeEvent {
 
 	/**
 	 * Gets the type of damage. Defaults to UNKNOWN.
+	 *
 	 * @return type
 	 */
 	public DamageType getDamageType() {
@@ -89,8 +89,8 @@ public class EntityDamageEvent extends EntityHealthChangeEvent {
 	}
 
 	/**
-	 * Returns whether or not a hurt message will be sent.
-	 * Defaults to true.
+	 * Returns whether or not a hurt message will be sent. Defaults to true.
+	 *
 	 * @return boolean
 	 */
 	public boolean getSendMessage() {
@@ -99,7 +99,6 @@ public class EntityDamageEvent extends EntityHealthChangeEvent {
 
 	/**
 	 * Sets whether or not to send a hurt message.
-	 * @param sendMessage
 	 */
 	public void setSendHurtMessage(boolean sendMessage) {
 		this.hasSendHurtMessage = sendMessage;
@@ -107,6 +106,7 @@ public class EntityDamageEvent extends EntityHealthChangeEvent {
 
 	/**
 	 * Gets the damage dealt to the health component.
+	 *
 	 * @return The damage to the health component.
 	 */
 	public int getDamage() {
@@ -115,6 +115,7 @@ public class EntityDamageEvent extends EntityHealthChangeEvent {
 
 	/**
 	 * Sets the damage to be dealt to the health component.
+	 *
 	 * @param damage The amount of damage dealt.
 	 */
 	public void setDamage(int damage) {

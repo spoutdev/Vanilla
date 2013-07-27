@@ -53,6 +53,7 @@ public enum MapMaterialColor {
 
 	/**
 	 * Gets the first level shaded map color
+	 *
 	 * @return level 1 map color
 	 */
 	public MapColor getLevel1() {
@@ -61,6 +62,7 @@ public enum MapMaterialColor {
 
 	/**
 	 * Gets the second level shaded map color
+	 *
 	 * @return level 2 map color
 	 */
 	public MapColor getLevel2() {
@@ -69,6 +71,7 @@ public enum MapMaterialColor {
 
 	/**
 	 * Gets the third level shaded map color
+	 *
 	 * @return level 3 map color
 	 */
 	public MapColor getLevel3() {
@@ -77,6 +80,7 @@ public enum MapMaterialColor {
 
 	/**
 	 * Gets the fourth level shaded map color
+	 *
 	 * @return level 4 map color
 	 */
 	public MapColor getLevel4() {
@@ -85,6 +89,7 @@ public enum MapMaterialColor {
 
 	/**
 	 * Gets the red component
+	 *
 	 * @return the red component (0F - 1F)
 	 */
 	public float getRed() {
@@ -93,6 +98,7 @@ public enum MapMaterialColor {
 
 	/**
 	 * Gets the green component
+	 *
 	 * @return the green component (0F - 1F)
 	 */
 	public float getGreen() {
@@ -101,6 +107,7 @@ public enum MapMaterialColor {
 
 	/**
 	 * Gets the blue component
+	 *
 	 * @return the blue component (0F - 1F)
 	 */
 	public float getBlue() {
@@ -109,6 +116,7 @@ public enum MapMaterialColor {
 
 	/**
 	 * Gets the ID of this material map color
+	 *
 	 * @return the id
 	 */
 	public byte getId() {

@@ -28,8 +28,7 @@ package org.spout.vanilla.material;
 
 public interface InitializableMaterial {
 	/**
-	 * Initializes the default properties of this material<br>
-	 * This is automatically called after the initial construction of all Vanilla materials
+	 * Initializes the default properties of this material<br> This is automatically called after the initial construction of all Vanilla materials
 	 */
 	public void initialize();
 }

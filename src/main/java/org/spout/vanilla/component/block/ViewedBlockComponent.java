@@ -38,14 +38,14 @@ public abstract class ViewedBlockComponent extends VanillaBlockComponent {
 
 	/**
 	 * Opens a window for the given player.
-	 * @param player
+	 *
 	 * @return true if the component opened successfully
 	 */
 	public abstract boolean open(Player player);
 
 	/**
 	 * Closes the window for the given player
-	 * @param player
+	 *
 	 * @return true if the window was closed successfully
 	 */
 	public boolean close(Player player) {

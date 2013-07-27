@@ -24,67 +24,23 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.block;
+package org.spout.vanilla.event.material;
 
 import org.spout.api.event.Cancellable;
+import org.spout.api.event.Cause;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.block.BlockEvent;
-import org.spout.api.event.cause.MaterialCause;
-import org.spout.api.inventory.ItemStack;
-
-import org.spout.vanilla.component.block.material.Furnace;
+import org.spout.api.event.block.BlockChangeEvent;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.block.BlockSnapshot;
 
 /**
- * Event which is called when an unit of an ItemStack is burned as fuel.
+ * Event which is called when a block grows in the world. For example: Wheat, Sugar, Cactus, etc. todo implement calling of this event
  */
-public class FurnaceBurnEvent extends BlockEvent implements Cancellable {
+public class BlockGrowEvent extends BlockChangeEvent implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
-	private final Furnace furnace;
-	private final ItemStack fuel;
-	private float burnTime;
 
-	public FurnaceBurnEvent(Furnace furnace, ItemStack fuel, float burnTime) {
-		super(furnace.getBlock(), new MaterialCause(fuel.getMaterial(), furnace.getBlock()));
-		this.furnace = furnace;
-		this.fuel = fuel;
-		this.burnTime = burnTime;
-	}
-
-	/**
-	 * Gets the fuel ItemStack for this furnace
-	 * @return the fuel ItemStack
-	 */
-	public ItemStack getFuel() {
-		return fuel.clone();
-	}
-
-	/**
-	 * Gets the burn time of one unit of the ItemStack
-	 * @return the time one unit of the fuel will burn
-	 */
-	public float getBurnTime() {
-		return burnTime;
-	}
-
-	/**
-	 * Set the burn time of one unit of fuel for the ItemStack.
-	 * Will throw an {@link IllegalArgumentException} if burnTime is <= 0
-	 * @param burnTime the time one unit of the fuel will burn
-	 * @see Furnace for more information about the BurnTime
-	 */
-	public void setBurnTime(float burnTime) {
-		if (burnTime <= 0) {
-			throw new IllegalArgumentException();
-		}
-		this.burnTime = burnTime;
-	}
-
-	/**
-	 * Returns the Furnace where fuel was burned
-	 * @return furnace
-	 */
-	public Furnace getFurnace() {
-		return furnace;
+	public BlockGrowEvent(Block block, BlockSnapshot newState, Cause<?> reason) {
+		super(block, newState, reason);
 	}
 
 	@Override

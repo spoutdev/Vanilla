@@ -60,13 +60,13 @@ import org.spout.vanilla.event.cause.DamageCause;
 import org.spout.vanilla.event.cause.HealCause;
 import org.spout.vanilla.event.cause.HealthChangeCause;
 import org.spout.vanilla.event.cause.NullDamageCause;
-import org.spout.vanilla.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.event.entity.EntityDamageEvent;
 import org.spout.vanilla.event.entity.EntityDeathEvent;
 import org.spout.vanilla.event.entity.EntityHealEvent;
 import org.spout.vanilla.event.entity.EntityHealthChangeEvent;
-import org.spout.vanilla.event.entity.EntityMetaChangeEvent;
-import org.spout.vanilla.event.entity.EntityStatusEvent;
+import org.spout.vanilla.event.entity.network.EntityAnimationEvent;
+import org.spout.vanilla.event.entity.network.EntityMetaChangeEvent;
+import org.spout.vanilla.event.entity.network.EntityStatusEvent;
 import org.spout.vanilla.event.player.PlayerDeathEvent;
 import org.spout.vanilla.event.player.network.PlayerHealthEvent;
 import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
@@ -127,7 +127,7 @@ public class Health extends VanillaEntityComponent {
 		}
 	}
 
-	@SuppressWarnings("incomplete-switch")
+	@SuppressWarnings ("incomplete-switch")
 	@Override
 	public void onTick(float dt) {
 		switch (getEngine().getPlatform()) {
@@ -234,6 +234,7 @@ public class Health extends VanillaEntityComponent {
 
 	/**
 	 * Drops all items from all Inventories of a Player.
+	 *
 	 * @param owner the entity.
 	 */
 	private void dropInventoryItems(Entity owner) {
@@ -256,6 +257,7 @@ public class Health extends VanillaEntityComponent {
 
 	/**
 	 * Drops all items/xp in the DeathDrops of the given entity
+	 *
 	 * @param owner the entity
 	 */
 	private void dropDropInventory(Entity owner) {
@@ -280,6 +282,7 @@ public class Health extends VanillaEntityComponent {
 
 	/**
 	 * Gets the last cause of the damage
+	 *
 	 * @return the last damager
 	 */
 	public DamageCause<?> getLastDamageCause() {
@@ -288,6 +291,7 @@ public class Health extends VanillaEntityComponent {
 
 	/**
 	 * Gets the last entity that damages this entity
+	 *
 	 * @return last damager
 	 */
 	public Object getLastDamager() {
@@ -296,6 +300,7 @@ public class Health extends VanillaEntityComponent {
 
 	/**
 	 * Gets the maximum health this entity can have
+	 *
 	 * @return the maximum health
 	 */
 	public int getMaxHealth() {
@@ -304,6 +309,7 @@ public class Health extends VanillaEntityComponent {
 
 	/**
 	 * Sets the maximum health this entity can have
+	 *
 	 * @param maxHealth to set to
 	 */
 	public void setMaxHealth(int maxHealth) {
@@ -312,6 +318,7 @@ public class Health extends VanillaEntityComponent {
 
 	/**
 	 * Sets the initial maximum health and sets the health to this value
+	 *
 	 * @param maxHealth of this health component
 	 */
 	public void setSpawnHealth(int maxHealth) {
@@ -322,6 +329,7 @@ public class Health extends VanillaEntityComponent {
 
 	/**
 	 * Gets the health of this entity (hitpoints)
+	 *
 	 * @return the health value
 	 */
 	public int getHealth() {
@@ -330,6 +338,7 @@ public class Health extends VanillaEntityComponent {
 
 	/**
 	 * Sets the current health value for this entity
+	 *
 	 * @param health hitpoints value to set to
 	 * @param cause of the change
 	 */
@@ -357,6 +366,7 @@ public class Health extends VanillaEntityComponent {
 
 	/**
 	 * Heals this entity
+	 *
 	 * @param amount amount the entity will be healed by
 	 */
 	public void heal(int amount) {
@@ -365,6 +375,7 @@ public class Health extends VanillaEntityComponent {
 
 	/**
 	 * Heals this entity with the given {@link org.spout.vanilla.event.cause.HealCause}
+	 *
 	 * @param amount amount the entity will be healed by
 	 * @param cause cause of this entity being healed
 	 */
@@ -378,6 +389,7 @@ public class Health extends VanillaEntityComponent {
 
 	/**
 	 * Sets the health value to 0
+	 *
 	 * @param cause of the change
 	 */
 	public void kill(HealthChangeCause cause) {
@@ -386,6 +398,7 @@ public class Health extends VanillaEntityComponent {
 
 	/**
 	 * Returns true if the entity is equal to or less than zero health remaining
+	 *
 	 * @return True if the entity is dead (Health less than 0) else false.
 	 */
 	public boolean isDead() {
@@ -394,6 +407,7 @@ public class Health extends VanillaEntityComponent {
 
 	/**
 	 * Returns true if the entity is currently dying, death ticks is greater than 0.
+	 *
 	 * @return true if the entity is dying
 	 */
 	public boolean isDying() {
@@ -402,6 +416,7 @@ public class Health extends VanillaEntityComponent {
 
 	/**
 	 * Retrieve the death ticks of this entity
+	 *
 	 * @return The death ticks amount
 	 */
 	public int getDeathTicks() {
@@ -410,6 +425,7 @@ public class Health extends VanillaEntityComponent {
 
 	/**
 	 * Set the death ticks of this entity
+	 *
 	 * @param deathTicks the amount of death ticks.
 	 */
 	public void setDeathTicks(int deathTicks) {
@@ -421,6 +437,7 @@ public class Health extends VanillaEntityComponent {
 
 	/**
 	 * Damages this entity
+	 *
 	 * @param amount amount the entity will be damaged by, can be modified based on armor and enchantments
 	 */
 	public void damage(int amount) {
@@ -429,6 +446,7 @@ public class Health extends VanillaEntityComponent {
 
 	/**
 	 * Damages this entity with the given {@link org.spout.vanilla.event.cause.DamageCause}.
+	 *
 	 * @param amount amount the entity will be damaged by, can be modified based on armor and enchantments
 	 * @param cause cause of this entity being damaged
 	 */
@@ -438,6 +456,7 @@ public class Health extends VanillaEntityComponent {
 
 	/**
 	 * Damages this entity with the given {@link org.spout.vanilla.event.cause.DamageCause} and damager.
+	 *
 	 * @param amount amount the entity will be damaged by, can be modified based on armor and enchantments
 	 * @param cause cause of this entity being damaged
 	 * @param sendHurtMessage whether to send the hurt packet to all players online
@@ -474,6 +493,7 @@ public class Health extends VanillaEntityComponent {
 
 	/**
 	 * True if the specific entity has an animation when it dies.
+	 *
 	 * @return true if animated death
 	 */
 	public boolean hasDeathAnimation() {
@@ -482,7 +502,6 @@ public class Health extends VanillaEntityComponent {
 
 	/**
 	 * Sets whether this entity has a death animation or not.
-	 * @param hasDeathAnimation
 	 */
 	public void setDeathAnimation(boolean hasDeathAnimation) {
 		getData().put(VanillaData.HAS_DEATH_ANIMATION, hasDeathAnimation);
@@ -490,6 +509,7 @@ public class Health extends VanillaEntityComponent {
 
 	/**
 	 * True if the entity has infinite health.
+	 *
 	 * @return true if entity has infinite health
 	 */
 	public boolean hasInfiniteHealth() {

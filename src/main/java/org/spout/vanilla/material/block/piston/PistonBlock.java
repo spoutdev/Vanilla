@@ -116,6 +116,7 @@ public class PistonBlock extends VanillaBlockMaterial implements Directional, Re
 
 	/**
 	 * Extends or retracts a piston block, complete with the animation and block changes.
+	 *
 	 * @param block of the piston
 	 * @param extended True to extend, False to retract
 	 * @return True if the piston really got extended or retracted, False if not
@@ -215,6 +216,7 @@ public class PistonBlock extends VanillaBlockMaterial implements Directional, Re
 
 	/**
 	 * Gets the amount of blocks this piston material can push
+	 *
 	 * @param block of the piston
 	 * @return Pushable block count, -1 if the amount exceeds the limit
 	 */
@@ -240,6 +242,7 @@ public class PistonBlock extends VanillaBlockMaterial implements Directional, Re
 
 	/**
 	 * Gets whether this piston block is extended
+	 *
 	 * @param block to get it of
 	 * @return True if extended, False if not
 	 */

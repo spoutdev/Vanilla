@@ -47,6 +47,7 @@ public class ChestOpenEvent extends InventoryOpenEvent implements Cancellable {
 
 	/**
 	 * Returns the chest which caused this event.
+	 *
 	 * @return chest
 	 */
 	public Chest getChest() {

@@ -29,12 +29,12 @@ package org.spout.vanilla.event.entity;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.entity.EntityEvent;
+import org.spout.api.event.entity.AbstractEntityEvent;
 
 /**
  * Event which is called when an Entity targets something
  */
-public class EntityTargetEvent extends EntityEvent implements Cancellable {
+public class EntityTargetEvent extends AbstractEntityEvent implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private TargetCause cause;
 	private Entity target = null;
@@ -51,6 +51,7 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Gets the cause for targeting.
+	 *
 	 * @return the target cause
 	 */
 	public TargetCause getCause() {
@@ -59,6 +60,7 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Sets the cause for the targeting.
+	 *
 	 * @param cause The reason for the targeting
 	 */
 	public void setCause(TargetCause cause) {
@@ -67,6 +69,7 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Gets the new target.
+	 *
 	 * @return target or null
 	 */
 	public Entity getTarget() {
@@ -75,7 +78,6 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Sets the new target.
-	 * @param target
 	 */
 	public void setTarget(Entity target) {
 		this.target = target;
@@ -83,6 +85,7 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Whether this is a targeting or untargeting event.
+	 *
 	 * @return true if the entity is targeting, false if it is untargeting
 	 */
 	public boolean isTargeting() {
@@ -124,6 +127,7 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 
 		/**
 		 * Whether this is targeting or untargeting.
+		 *
 		 * @return true if targeting, false if untargeting
 		 */
 		public boolean isTarget() {

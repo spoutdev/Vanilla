@@ -50,7 +50,6 @@ public enum ChatStyle {
 	UNDERLINE('n'),
 	ITALIC('o'),
 	RESET('r');
-
 	public static final char COLOR_CHAR = '\u00A7';
 	private final char c;
 	private final Color foregroundColor, backgroundColor;

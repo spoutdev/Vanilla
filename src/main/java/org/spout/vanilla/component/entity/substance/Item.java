@@ -33,8 +33,8 @@ import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector3;
-
 import org.spout.physics.collision.shape.BoxShape;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.data.VanillaData;
@@ -54,9 +54,9 @@ public class Item extends Substance {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ItemEntityProtocol());
 		PhysicsComponent physics = getOwner().getPhysics();
-		physics.activate(1f, new BoxShape(0.27f, 0.27f, 0.27f), true);
+		physics.activate(1f, new BoxShape(0.27f, 0.27f, 0.27f), false, true);
 		physics.
-		getOwner().add(Health.class).setMaxHealth(20);
+				getOwner().add(Health.class).setMaxHealth(20);
 	}
 
 	@Override
@@ -74,6 +74,7 @@ public class Item extends Substance {
 
 	/**
 	 * Gets the time from which this item can be picked up
+	 *
 	 * @return uncollectable time in milliseconds
 	 */
 	public long getUncollectableTime() {
@@ -82,6 +83,7 @@ public class Item extends Substance {
 
 	/**
 	 * Sets the time from which this item can be picked up
+	 *
 	 * @param uncollectableTime in milliseconds
 	 */
 	public void setUncollectableTime(long uncollectableTime) {
@@ -90,6 +92,7 @@ public class Item extends Substance {
 
 	/**
 	 * Sets the delay from the current time until this item can be picked up
+	 *
 	 * @param uncollectableDelay in milliseconds
 	 */
 	public void setUncollectableDelay(long uncollectableDelay) {
@@ -102,6 +105,7 @@ public class Item extends Substance {
 
 	/**
 	 * Drops an item at the position with the item stack specified with a natural random velocity
+	 *
 	 * @param position to spawn the item
 	 * @param itemStack to set to the item
 	 * @return the Item entity
@@ -113,6 +117,7 @@ public class Item extends Substance {
 
 	/**
 	 * Drops an item at the position with the item stack specified
+	 *
 	 * @param position to spawn the item
 	 * @param itemStack to set to the item
 	 * @param velocity to drop at

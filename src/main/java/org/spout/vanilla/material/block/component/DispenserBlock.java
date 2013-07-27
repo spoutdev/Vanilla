@@ -44,7 +44,6 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector3;
-
 import org.spout.physics.collision.shape.BoxShape;
 
 import org.spout.vanilla.component.block.material.Dispenser;
@@ -117,6 +116,7 @@ public class DispenserBlock extends VanillaBlockMaterial implements Directional,
 
 	/**
 	 * Shoots an item from this Dispenser
+	 *
 	 * @param block of the Dispenser
 	 * @param slot to shoot
 	 */

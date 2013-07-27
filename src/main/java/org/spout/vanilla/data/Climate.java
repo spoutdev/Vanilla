@@ -49,6 +49,7 @@ public enum Climate {
 
 	/**
 	 * Gets whether snow and ice melts in this Climate
+	 *
 	 * @return True if ice and snow melts, False if not
 	 */
 	public boolean isMelting() {
@@ -57,6 +58,7 @@ public enum Climate {
 
 	/**
 	 * Gets whether water freezes in this Climate
+	 *
 	 * @return True if water freezes, False if not
 	 */
 	public boolean isFreezing() {
@@ -65,6 +67,7 @@ public enum Climate {
 
 	/**
 	 * Gets whether there is rainfall in this Climate
+	 *
 	 * @return True if it rains, False if not
 	 */
 	public boolean hasRainfall() {
@@ -73,6 +76,7 @@ public enum Climate {
 
 	/**
 	 * Gets whether there is snowfall in this Climate
+	 *
 	 * @return True if it snows, False if not
 	 */
 	public boolean hasSnowfall() {
@@ -81,6 +85,7 @@ public enum Climate {
 
 	/**
 	 * Gets the Climate at the Block specified
+	 *
 	 * @param block position
 	 * @return the Climate
 	 */

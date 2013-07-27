@@ -29,12 +29,12 @@ package org.spout.vanilla.event.entity;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.entity.EntityEvent;
+import org.spout.api.event.entity.AbstractEntityEvent;
 
 import org.spout.vanilla.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.event.cause.NullDamageCause;
 
-public class EntityCombustEvent extends EntityEvent {
+public class EntityCombustEvent extends AbstractEntityEvent {
 	private static final HandlerList handlers = new HandlerList();
 	private final Cause<?> cause;
 	private int duration;
@@ -53,6 +53,7 @@ public class EntityCombustEvent extends EntityEvent {
 
 	/**
 	 * Gets the time that the entity should burn for.
+	 *
 	 * @return The time in seconds.
 	 */
 	public int getDuration() {
@@ -61,6 +62,7 @@ public class EntityCombustEvent extends EntityEvent {
 
 	/**
 	 * Sets the time that the entity should burn for.
+	 *
 	 * @param duration The time in seconds.
 	 */
 	public void setDuration(int duration) {

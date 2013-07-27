@@ -30,7 +30,6 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.entity.EntityCollideEntityEvent;
 import org.spout.api.event.entity.EntityCollideEvent;
 import org.spout.api.geo.LoadOption;
-import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 
 import org.spout.vanilla.VanillaPlugin;
@@ -72,11 +71,11 @@ public class Egg extends Substance implements Projectile {
 	}
 
 	/**
-	 * Spawns a chicken by a chance of 1/8.
-	 * If a chicken is spawned, there is an additional chance of 1/32 to spawn four instead of one chicken.
+	 * Spawns a chicken by a chance of 1/8. If a chicken is spawned, there is an additional chance of 1/32 to spawn four instead of one chicken.
+	 *
 	 * @param point the point the chicken(s) will spawn at.
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings ("unchecked")
 	private void spawnChickens(Point point) {
 		if (getRandom().nextInt(8) == 0) {
 			int chickensToSpawn = 1;

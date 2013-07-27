@@ -33,6 +33,7 @@ import org.spout.api.inventory.Slot;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
+import org.spout.physics.collision.shape.BoxShape;
 
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.InitializableMaterial;
@@ -57,19 +58,20 @@ public class FlowerPotBlock extends GroundAttachable implements InitializableMat
 	private final BlockMaterial flowerMaterial;
 
 	private FlowerPotBlock(String name, String model) {
-		super((short) 0xF, name, 140, model);
+		super((short) 0xF, name, 140, model, new BoxShape(1f, 1f, 1f));
 		setHardness(0.0f).setResistance(0.0f).setTransparent();
 		this.flowerMaterial = null;
 	}
 
 	private FlowerPotBlock(String name, int data, BlockMaterial flowerMaterial, String model) {
-		super(name, 140, data, EMPTY, model);
+		super(name, 140, data, EMPTY, model, new BoxShape(1f, 1f, 1f));
 		setHardness(0.0f).setResistance(0.0f).setTransparent();
 		this.flowerMaterial = flowerMaterial;
 	}
 
 	/**
 	 * Obtains the Flower Pot Block material for the flower material specified
+	 *
 	 * @param flowerMaterial to get the flower pot for
 	 * @return The flower pot block of the flower, or null if none is found
 	 */

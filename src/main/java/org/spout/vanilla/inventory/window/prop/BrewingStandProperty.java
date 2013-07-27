@@ -57,6 +57,7 @@ public enum BrewingStandProperty implements WindowProperty {
 
 	/**
 	 * Returns the property from the specified id.
+	 *
 	 * @param id of property
 	 * @return property with specified id
 	 */

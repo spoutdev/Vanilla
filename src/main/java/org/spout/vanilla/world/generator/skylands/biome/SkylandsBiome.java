@@ -29,6 +29,7 @@ package org.spout.vanilla.world.generator.skylands.biome;
 import org.spout.cereal.config.ConfigurationNode;
 import org.spout.cereal.config.annotated.Load;
 import org.spout.cereal.config.annotated.Save;
+
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.biome.VanillaBiome;
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome.NormalTallGrassFactory;
@@ -45,7 +46,7 @@ import org.spout.vanilla.world.generator.normal.populator.GroundCoverPopulator.G
 import org.spout.vanilla.world.generator.skylands.SkylandsGenerator;
 
 public class SkylandsBiome extends VanillaBiome implements GroundCoverBiome {
-	private GroundCoverLayer[] groundCover = new GroundCoverLayer[]{
+	private GroundCoverLayer[] groundCover = new GroundCoverLayer[] {
 			new GroundCoverUniformLayer(VanillaMaterials.GRASS, VanillaMaterials.GRASS, (byte) 1),
 			new GroundCoverVariableLayer(VanillaMaterials.DIRT, VanillaMaterials.DIRT, (byte) 1, (byte) 4)
 	};

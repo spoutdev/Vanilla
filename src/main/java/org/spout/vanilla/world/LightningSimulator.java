@@ -59,6 +59,7 @@ public class LightningSimulator extends Component {
 
 	/**
 	 * Gets the strength of the thunder storm, which is affected by the duration
+	 *
 	 * @param factor to apply to the changing states
 	 * @return the strength
 	 */

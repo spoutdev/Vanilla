@@ -53,6 +53,7 @@ public abstract class EntityMessage extends VanillaMainChannelMessage implements
 
 	/**
 	 * Gets the Id of the Entity this Message is of
+	 *
 	 * @return the Entity Id
 	 */
 	public int getEntityId() {

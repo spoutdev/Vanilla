@@ -33,6 +33,7 @@ import org.spout.api.material.block.BlockFace;
 public interface Attachable {
 	/**
 	 * Checks if this material can be attached to certain face of a block material
+	 *
 	 * @param block to attach to
 	 * @param face of the material to attach to
 	 * @return if this material can be attached to face of the block material given
@@ -41,6 +42,7 @@ public interface Attachable {
 
 	/**
 	 * Sets the face the block is attached to
+	 *
 	 * @param block to set
 	 * @param attachedFace to set the block to
 	 * @param cause of the attachment
@@ -49,6 +51,7 @@ public interface Attachable {
 
 	/**
 	 * Gets the face the block is attached to
+	 *
 	 * @param block to get it of
 	 * @return to which face the block is attached to
 	 */
@@ -56,6 +59,7 @@ public interface Attachable {
 
 	/**
 	 * Gets the face the block is attached to
+	 *
 	 * @param data of the block
 	 * @return to which face the block is attached to
 	 */
@@ -63,6 +67,7 @@ public interface Attachable {
 
 	/**
 	 * Returns the block that this attachable is attached to
+	 *
 	 * @param block of this attachable
 	 * @return the block
 	 */

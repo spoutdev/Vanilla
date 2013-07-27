@@ -57,8 +57,8 @@ import org.spout.api.math.Vector2;
 import org.spout.api.render.RenderMaterial;
 import org.spout.api.util.flag.Flag;
 import org.spout.api.util.flag.FlagBundle;
-
 import org.spout.physics.collision.shape.CollisionShape;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.component.world.sky.Sky;
@@ -74,7 +74,7 @@ import org.spout.vanilla.data.effect.SoundEffect;
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.data.tool.ToolLevel;
 import org.spout.vanilla.data.tool.ToolType;
-import org.spout.vanilla.event.block.BlockActionEvent;
+import org.spout.vanilla.event.material.network.BlockActionEvent;
 import org.spout.vanilla.material.block.redstone.IndirectRedstoneSource;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.render.VanillaEffects;
@@ -158,6 +158,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	/**
 	 * Called when this block is destroyed because of an explosion
+	 *
 	 * @param block that got ignition
 	 * @param cause of the ignition
 	 */
@@ -212,6 +213,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	/**
 	 * Sets the sound played when the block is being walked over or is being placed
+	 *
 	 * @param sound to play
 	 * @return this Material
 	 */
@@ -222,6 +224,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	/**
 	 * Gets the sound played when the block is being walked over or is being placed
+	 *
 	 * @return step sound
 	 */
 	public SoundEffect getStepSound() {
@@ -256,6 +259,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	/**
 	 * Gets the instrument note blocks play with this block material below
+	 *
 	 * @return the instrument
 	 */
 	public Instrument getInstrument() {
@@ -322,9 +326,9 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	/**
 	 * Gets whether this block material can support the attachable block material to the face given
+	 *
 	 * @param material to attach
 	 * @param face of this block to attach to
-	 * @return
 	 */
 	public boolean canSupport(BlockMaterial material, BlockFace face) {
 		return false;
@@ -332,6 +336,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	/**
 	 * Gets the move reaction of block material for the block specified
+	 *
 	 * @param block that is being moved
 	 * @return the move reaction
 	 */
@@ -348,6 +353,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	/**
 	 * Gets if this material is a liquid obstacle
+	 *
 	 * @return True if it can stop liquids, False if this material gets destroyed
 	 */
 	public boolean isLiquidObstacle() {
@@ -356,6 +362,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	/**
 	 * Sets if this material is a liquid obstacle
+	 *
 	 * @param state True to make it an obstacle, False to let liquids destroy this block
 	 */
 	public VanillaBlockMaterial setLiquidObstacle(boolean state) {
@@ -385,8 +392,8 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	}
 
 	/**
-	 * Adds the mining type to this Block material<br>
-	 * This type will be used when checking for drops and when calculating the digging time
+	 * Adds the mining type to this Block material<br> This type will be used when checking for drops and when calculating the digging time
+	 *
 	 * @param miningType to add
 	 * @return this material
 	 */
@@ -397,8 +404,8 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	}
 
 	/**
-	 * Gets if the mining type is set for this Block material<br>
-	 * This type is used when checking for drops and when calculating digging time
+	 * Gets if the mining type is set for this Block material<br> This type is used when checking for drops and when calculating digging time
+	 *
 	 * @return True if the tool type is set
 	 */
 	public boolean isMiningType(ToolType toolType) {
@@ -406,8 +413,8 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	}
 
 	/**
-	 * Gets the mining level required for breaking this BlockMaterial<br>
-	 * This level has to be met to spawn drops
+	 * Gets the mining level required for breaking this BlockMaterial<br> This level has to be met to spawn drops
+	 *
 	 * @return mining level
 	 */
 	public ToolLevel getMiningLevel() {
@@ -416,6 +423,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	/**
 	 * Gets the drops for this block material
+	 *
 	 * @return the drops
 	 */
 	public BlockDrops getDrops() {
@@ -427,6 +435,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	/**
 	 * Plays a block action for this type of Block Material
+	 *
 	 * @param block to play at
 	 * @param arg1 for the action
 	 * @param arg2 for the action
@@ -440,6 +449,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	/**
 	 * Gets if rain is falling nearby the block specified
+	 *
 	 * @param block to check it nearby of
 	 * @return True if it is raining, False if not
 	 */
@@ -459,6 +469,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	/**
 	 * Gets if rain is falling on top of the block specified
+	 *
 	 * @param block to check
 	 * @return True if rain is falling on the Block, false if not
 	 */
@@ -467,8 +478,8 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	}
 
 	/**
-	 * Gets the chance of a crop block growing<br>
-	 * The higher the value, the lower the chance.
+	 * Gets the chance of a crop block growing<br> The higher the value, the lower the chance.
+	 *
 	 * @param block to check
 	 * @return the growth chance
 	 */
@@ -507,6 +518,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	/**
 	 * Gets a vertical column of chunks
+	 *
 	 * @param middle chunk
 	 * @return list of chunks in the column
 	 */

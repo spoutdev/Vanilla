@@ -43,6 +43,7 @@ import org.spout.vanilla.inventory.window.block.DispenserWindow;
 public class Dispenser extends ViewedBlockComponent implements Container {
 	/**
 	 * Retrieve the powered status of the dispenser.
+	 *
 	 * @return True if the dispenser is powered. Else false.
 	 */
 	public boolean isPowered() {
@@ -51,6 +52,7 @@ public class Dispenser extends ViewedBlockComponent implements Container {
 
 	/**
 	 * Sets the powered status of the dispenser
+	 *
 	 * @param powered True if the dispenser is powered else false.
 	 */
 	public void setPowered(boolean powered) {

@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.component.entity.misc;
 
-import javax.tools.Tool;
 import java.util.List;
+import javax.tools.Tool;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
@@ -37,7 +37,7 @@ import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.component.entity.inventory.EntityInventory;
 import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
-import org.spout.vanilla.event.entity.EntityCollectItemEvent;
+import org.spout.vanilla.event.entity.network.EntityCollectItemEvent;
 import org.spout.vanilla.inventory.entity.ArmorInventory;
 import org.spout.vanilla.inventory.entity.EntityQuickbarInventory;
 import org.spout.vanilla.material.item.VanillaItemMaterial;

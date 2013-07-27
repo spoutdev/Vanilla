@@ -24,52 +24,48 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.entity;
+package org.spout.vanilla.event.material;
 
-import org.spout.api.entity.Entity;
+import org.spout.api.event.Cancellable;
+import org.spout.api.event.Cause;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.ProtocolEvent;
-import org.spout.api.inventory.ItemStack;
+import org.spout.api.event.block.BlockEvent;
+
+import org.spout.vanilla.component.block.material.Furnace;
 
 /**
- * Represents an entity equiping an item.<br/>
- * By default, slot 0 is for a held-item change, and slots 1-4 are for armor.<br/>
+ * Event which is called when a furnace is toggled on or off.
  */
-public class EntityEquipmentEvent extends ProtocolEvent {
+public class FurnaceActionEvent extends BlockEvent implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
-	private int slot;
-	private ItemStack item;
-	private final Entity entity;
+	private final Furnace furnace;
+	private final boolean switchON;
 
-	public EntityEquipmentEvent(Entity e, int slot, ItemStack item) {
-		this.entity = e;
-		this.slot = slot;
-		this.item = item;
-	}
-
-	public int getSlot() {
-		return slot;
-	}
-
-	public void setSlot(int slot) {
-		this.slot = slot;
-	}
-
-	public ItemStack getItem() {
-		return item;
-	}
-
-	public void setItem(ItemStack item) {
-		this.item = item;
+	public FurnaceActionEvent(Furnace furnace, Cause<?> reason, boolean switchON) {
+		super(furnace.getBlock(), reason);
+		this.furnace = furnace;
+		this.switchON = switchON;
 	}
 
 	/**
-	 * Gets the entity associated with this event.
+	 * Returns the Furnace which caused the FurnaceActionEvent
 	 *
-	 * @return The entity associated with the event.
+	 * @return the furnace
 	 */
-	public Entity getEntity() {
-		return entity;
+	public Furnace getFurnace() {
+		return furnace;
+	}
+
+	/**
+	 * Returns if the Furnace should be switched on
+	 */
+	public boolean isSwitchON() {
+		return switchON;
+	}
+
+	@Override
+	public void setCancelled(boolean cancelled) {
+		super.setCancelled(cancelled);
 	}
 
 	public static HandlerList getHandlerList() {

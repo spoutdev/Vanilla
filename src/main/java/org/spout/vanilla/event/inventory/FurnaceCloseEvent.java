@@ -47,6 +47,7 @@ public class FurnaceCloseEvent extends InventoryCloseEvent implements Cancellabl
 
 	/**
 	 * Returns the furnace which caused this event.
+	 *
 	 * @return furnace
 	 */
 	public Furnace getFurnace() {

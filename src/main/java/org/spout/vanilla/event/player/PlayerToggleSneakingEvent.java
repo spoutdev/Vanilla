@@ -29,12 +29,12 @@ package org.spout.vanilla.event.player;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.player.PlayerEvent;
+import org.spout.api.event.player.AbstractPlayerEvent;
 
 /**
  * Event which is called when a player toggles sneaking
  */
-public class PlayerToggleSneakingEvent extends PlayerEvent implements Cancellable {
+public class PlayerToggleSneakingEvent extends AbstractPlayerEvent implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private final boolean isSneaking;
 
@@ -50,7 +50,6 @@ public class PlayerToggleSneakingEvent extends PlayerEvent implements Cancellabl
 
 	/**
 	 * Returns the new state of sneaking
-	 * @return
 	 */
 	public boolean isSneaking() {
 		return isSneaking;

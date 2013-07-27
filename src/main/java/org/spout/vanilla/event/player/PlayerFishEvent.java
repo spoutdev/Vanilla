@@ -30,12 +30,12 @@ import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.player.PlayerEvent;
+import org.spout.api.event.player.AbstractPlayerEvent;
 
 /**
  * Event which is called when a player fishes
  */
-public class PlayerFishEvent extends PlayerEvent implements Cancellable {
+public class PlayerFishEvent extends AbstractPlayerEvent implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private Entity caught = null;
 	private FishingStatus status;
@@ -54,8 +54,8 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Gets the entity of the entity caught by the player
-	 * @return Controller of the entity caught by the player, null if fishing,
-	 *         bobber has gotten stuck in the ground or nothing has been caught
+	 *
+	 * @return Controller of the entity caught by the player, null if fishing, bobber has gotten stuck in the ground or nothing has been caught
 	 */
 	public Entity getCaught() {
 		return caught;
@@ -63,6 +63,7 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Sets the entity of the entity that as caught.
+	 *
 	 * @param caught Controller of the entity that was caught.
 	 */
 	public void setCaught(Entity caught) {
@@ -71,6 +72,7 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Gets the status of the fishing event
+	 *
 	 * @return The status of fishing.
 	 */
 	public FishingStatus getStatus() {
@@ -79,6 +81,7 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Sets the status of the fishing event.
+	 *
 	 * @param status Sets the status of fishing.
 	 */
 	public void setStatus(FishingStatus status) {
@@ -116,8 +119,7 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
 		 */
 		IN_GROUND,
 		/**
-		 * When a player fails to catch anything while fishing usually due to
-		 * poor aiming or timing
+		 * When a player fails to catch anything while fishing usually due to poor aiming or timing
 		 */
 		FAILED_ATTEMPT
 	}

@@ -60,6 +60,7 @@ public class EnderPearl extends Substance implements Projectile {
 
 	/**
 	 * Called when the entity collides with a block.
+	 *
 	 * @param colliderPoint The point where this entity collided with the material
 	 * @param collidedPoint The point where the material was collided with the entity
 	 * @param block The block this entity collided with

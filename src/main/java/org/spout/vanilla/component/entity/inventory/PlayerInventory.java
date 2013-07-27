@@ -41,7 +41,6 @@ import org.spout.vanilla.inventory.player.PlayerCraftingInventory;
  * Represents the inventory of a Player.
  */
 public class PlayerInventory extends EntityInventory {
-
 	@Override
 	public QuickbarInventory getQuickbar() {
 		return getData().get(VanillaData.QUICKBAR_INVENTORY);
@@ -79,6 +78,7 @@ public class PlayerInventory extends EntityInventory {
 
 	/**
 	 * Returns the entity's armor inventory
+	 *
 	 * @return armor
 	 */
 	public ArmorInventory getArmor() {
@@ -87,6 +87,7 @@ public class PlayerInventory extends EntityInventory {
 
 	/**
 	 * Gets the item inventory of this player inventory
+	 *
 	 * @return an Inventory with the items
 	 */
 	public Inventory getMain() {
@@ -95,6 +96,7 @@ public class PlayerInventory extends EntityInventory {
 
 	/**
 	 * Gets the crafting grid inventory of this player inventory
+	 *
 	 * @return an inventory with the crafting grid items
 	 */
 	public PlayerCraftingInventory getCraftingGrid() {
@@ -103,6 +105,7 @@ public class PlayerInventory extends EntityInventory {
 
 	/**
 	 * Gets the enderchest inventory of this player
+	 *
 	 * @return an inventory for the persistent chest
 	 */
 	public Inventory getEnderChestInventory() {
@@ -110,8 +113,8 @@ public class PlayerInventory extends EntityInventory {
 	}
 
 	/**
-	 * Attempts to add the specified item to the quickbar and then the main if
-	 * not all of the item is transferred.
+	 * Attempts to add the specified item to the quickbar and then the main if not all of the item is transferred.
+	 *
 	 * @param item to add
 	 * @return true if item is completely transferred
 	 */
@@ -125,6 +128,7 @@ public class PlayerInventory extends EntityInventory {
 
 	/**
 	 * Clears either the armor, quickbar, main, craftinggrid, or enderchest inventories (if specified).
+	 *
 	 * @param armor True clears the armor inventory
 	 * @param quickbar True clears the quickbar inventory
 	 * @param main True clears the main inventory

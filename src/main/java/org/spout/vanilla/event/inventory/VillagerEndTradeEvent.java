@@ -47,6 +47,7 @@ public class VillagerEndTradeEvent extends InventoryCloseEvent implements Cancel
 
 	/**
 	 * Returns the villager which caused this event.
+	 *
 	 * @return villager
 	 */
 	public Villager getVillager() {

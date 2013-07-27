@@ -74,6 +74,7 @@ public class MinecartTrackLogic {
 
 	/**
 	 * Generates all neighbours around this rail
+	 *
 	 * @param deep whether to perform a deep search
 	 */
 	public void genNeighbours(boolean deep) {
@@ -127,9 +128,7 @@ public class MinecartTrackLogic {
 	}
 
 	/**
-	 * Tries to find a neighbour in the direction given.
-	 * Returns null if none was found
-	 * @param direction
+	 * Tries to find a neighbour in the direction given. Returns null if none was found
 	 */
 	public MinecartTrackLogic getNeighbour(BlockFace direction) {
 		for (MinecartTrackLogic logic : this.neighbours) {
@@ -168,10 +167,7 @@ public class MinecartTrackLogic {
 	}
 
 	/**
-	 * Connects the two neighbouring rail using this piece of track
-	 * It is allowed to pass in null for the rail to connect to one rail, or to none
-	 * @param rails1
-	 * @param rails2
+	 * Connects the two neighbouring rail using this piece of track It is allowed to pass in null for the rail to connect to one rail, or to none
 	 */
 	public void connect(MinecartTrackLogic rails1, MinecartTrackLogic rails2) {
 		if (rails1 == null || rails1 == rails2) {

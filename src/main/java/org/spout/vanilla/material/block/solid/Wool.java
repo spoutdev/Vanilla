@@ -97,7 +97,7 @@ public class Wool extends Solid implements Burnable {
 		}
 	}
 
-	public static enum WoolColor{
+	public static enum WoolColor {
 		WHITE(0),
 		ORANGE(1),
 		MAGENTA(2),

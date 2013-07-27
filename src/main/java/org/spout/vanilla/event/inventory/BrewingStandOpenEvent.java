@@ -34,8 +34,7 @@ import org.spout.api.event.inventory.InventoryOpenEvent;
 import org.spout.vanilla.component.block.material.BrewingStand;
 
 /**
- * Event which is called when a BrewingStand is opened / looked into.
- * todo implement calling of this event
+ * Event which is called when a BrewingStand is opened / looked into. todo implement calling of this event
  */
 public class BrewingStandOpenEvent extends InventoryOpenEvent implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
@@ -48,6 +47,7 @@ public class BrewingStandOpenEvent extends InventoryOpenEvent implements Cancell
 
 	/**
 	 * Returns the brewingStand which caused this event.
+	 *
 	 * @return brewingStand
 	 */
 	public BrewingStand getBrewingStand() {

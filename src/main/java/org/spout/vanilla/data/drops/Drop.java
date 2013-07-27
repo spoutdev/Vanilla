@@ -52,6 +52,7 @@ public abstract class Drop extends FlagContainer {
 
 	/**
 	 * Tests if a drop is possible
+	 *
 	 * @param random to use
 	 * @param flags to check against
 	 * @return True if a drop can be performed, False if not
@@ -65,6 +66,7 @@ public abstract class Drop extends FlagContainer {
 
 	/**
 	 * Gets if chance is involved when this Drop is activated
+	 *
 	 * @return True if it has chance set, False if not
 	 */
 	public boolean hasChance() {
@@ -73,6 +75,7 @@ public abstract class Drop extends FlagContainer {
 
 	/**
 	 * Sets the chance for this Drop to be activated<br>
+	 *
 	 * @param chance to set to, value from 0 to 1
 	 */
 	public Drop setChance(double chance) {
@@ -82,6 +85,7 @@ public abstract class Drop extends FlagContainer {
 
 	/**
 	 * Gets the chance for this Drop to be activated
+	 *
 	 * @return chance
 	 */
 	public double getChance() {
@@ -102,6 +106,7 @@ public abstract class Drop extends FlagContainer {
 
 	/**
 	 * Fills a list with the Drops
+	 *
 	 * @param random to use
 	 * @param flags to evaluate against (contains no inverted flags)
 	 * @param drops list to fill
@@ -111,6 +116,7 @@ public abstract class Drop extends FlagContainer {
 
 	/**
 	 * Gets the Drops
+	 *
 	 * @param random to use
 	 * @param flags to evaluate against (contains no inverted flags)
 	 * @return list of ItemStacks
@@ -121,6 +127,7 @@ public abstract class Drop extends FlagContainer {
 
 	/**
 	 * Tests if this Drop contains the Material specified
+	 *
 	 * @param material to check
 	 * @return True if the material is contained, False if not
 	 */

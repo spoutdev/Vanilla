@@ -29,7 +29,7 @@ package org.spout.vanilla.inventory.entity;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.event.entity.EntityEquipmentEvent;
+import org.spout.vanilla.event.entity.network.EntityEquipmentEvent;
 import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
 
 /**
@@ -46,7 +46,6 @@ public class EntityQuickbarInventory extends QuickbarInventory {
 
 	/**
 	 * Returns the item the {@link org.spout.api.inventory.ItemStack} in the held slot.
-	 * @return
 	 */
 	public ItemStack get() {
 		return get(HELD_SLOT);
@@ -54,7 +53,6 @@ public class EntityQuickbarInventory extends QuickbarInventory {
 
 	/**
 	 * Sets the {@link org.spout.api.inventory.ItemStack} in the held slot.
-	 * @param held
 	 */
 	public void set(ItemStack held) {
 		set(HELD_SLOT, held);

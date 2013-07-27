@@ -24,38 +24,48 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.block;
+package org.spout.vanilla.event.player.network;
 
-import org.spout.api.event.Cancellable;
-import org.spout.api.event.Cause;
+import org.spout.api.entity.Player;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.block.BlockChangeEvent;
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.block.BlockSnapshot;
+import org.spout.api.event.ProtocolEvent;
+import org.spout.api.event.player.PlayerEvent;
 
-/**
- * Event which is called when a block grows in the world.
- * For example: Wheat, Sugar, Cactus, etc.
- * todo implement calling of this event
- */
-public class BlockGrowEvent extends BlockChangeEvent implements Cancellable {
+public class PlayerExperienceChangeEvent extends ProtocolEvent implements PlayerEvent {
 	private static final HandlerList handlers = new HandlerList();
+	private final Player player;
+	private final short oldExp;
+	private short newExp;
 
-	public BlockGrowEvent(Block block, BlockSnapshot newState, Cause<?> reason) {
-		super(block, newState, reason);
+	public PlayerExperienceChangeEvent(Player player, short oldExp, short newExp) {
+		this.player = player;
+		this.oldExp = oldExp;
+		this.newExp = newExp;
+	}
+
+	public short getPreviousExp() {
+		return oldExp;
+	}
+
+	public short getNewExp() {
+		return newExp;
+	}
+
+	public void setNewExp(short exp) {
+		this.newExp = exp;
 	}
 
 	@Override
-	public void setCancelled(boolean cancelled) {
-		super.setCancelled(cancelled);
-	}
-
-	public static HandlerList getHandlerList() {
-		return handlers;
+	public Player getPlayer() {
+		return player;
 	}
 
 	@Override
 	public HandlerList getHandlers() {
+		return handlers;
+	}
+
+	public static HandlerList getHandlerList() {
 		return handlers;
 	}
 }

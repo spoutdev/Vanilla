@@ -41,6 +41,7 @@ import org.spout.api.input.Keyboard;
 import org.spout.api.input.Mouse;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.component.entity.player.PlayerInteract;
@@ -61,9 +62,9 @@ public class InputCommands {
 		return args.success("pressed", args.currentArgument("pressed").equalsIgnoreCase("+"));
 	}
 
-	@CommandDescription(aliases = "toggle_inventory", desc = "Opens and closes your inventory.")
-	@Binding(Keyboard.KEY_E)
-	@Filter(PlayerFilter.class)
+	@CommandDescription (aliases = "toggle_inventory", desc = "Opens and closes your inventory.")
+	@Binding (Keyboard.KEY_E)
+	@Filter (PlayerFilter.class)
 	public void toggleInventory(CommandSource source, CommandArguments args) throws CommandException {
 		if (!isPressed(args)) {
 			return;
@@ -79,9 +80,9 @@ public class InputCommands {
 		}
 	}
 
-	@CommandDescription(aliases = "break_block", desc = "Breaks a block.")
-	@Binding(mouse = Mouse.BUTTON_LEFT)
-	@Filter(PlayerFilter.class)
+	@CommandDescription (aliases = "break_block", desc = "Breaks a block.")
+	@Binding (mouse = Mouse.BUTTON_LEFT)
+	@Filter (PlayerFilter.class)
 	public void breakBlock(CommandSource source, CommandArguments args) throws CommandException {
 		if (!isPressed(args)) {
 			return;
@@ -103,9 +104,9 @@ public class InputCommands {
 		}
 	}
 
-	@CommandDescription(aliases = "select_block", desc = "Selects a block to place")
-	@Binding(mouse = Mouse.BUTTON_MIDDLE)
-	@Filter(PlayerFilter.class)
+	@CommandDescription (aliases = "select_block", desc = "Selects a block to place")
+	@Binding (mouse = Mouse.BUTTON_MIDDLE)
+	@Filter (PlayerFilter.class)
 	public void selectBlock(CommandSource source, CommandArguments args) throws CommandException {
 		if (!isPressed(args)) {
 			return;
@@ -122,9 +123,9 @@ public class InputCommands {
 		}
 	}
 
-	@CommandDescription(aliases = "place_block", desc = "Places a block.")
-	@Binding(mouse = Mouse.BUTTON_RIGHT)
-	@Filter(PlayerFilter.class)
+	@CommandDescription (aliases = "place_block", desc = "Places a block.")
+	@Binding (mouse = Mouse.BUTTON_RIGHT)
+	@Filter (PlayerFilter.class)
 	public void placeBlock(CommandSource source, CommandArguments args) throws CommandException {
 		if (!isPressed(args)) {
 			return;

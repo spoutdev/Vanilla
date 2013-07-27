@@ -36,8 +36,7 @@ import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 
 /**
- * A simplistic class which redirects placement requests to another (official) block material<br>
- * Can be used to store multi-block creations
+ * A simplistic class which redirects placement requests to another (official) block material<br> Can be used to store multi-block creations
  */
 public class BlockItem extends VanillaItemMaterial implements Placeable {
 	private final BlockMaterial place;
@@ -69,6 +68,7 @@ public class BlockItem extends VanillaItemMaterial implements Placeable {
 
 	/**
 	 * Gets the block material this block item places
+	 *
 	 * @return the Block material
 	 */
 	public BlockMaterial getPlacedMaterial() {

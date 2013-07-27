@@ -45,7 +45,8 @@ import org.spout.vanilla.util.PlayerUtil;
 
 public class LilyPad extends GroundAttachable {
 	public LilyPad(String name, int id) {
-		super(name, id, null);
+		//TODO: Box Shape
+		super(name, id, null, null);
 		this.setHardness(0.0F).setResistance(0.3F).setTransparent();
 	}
 

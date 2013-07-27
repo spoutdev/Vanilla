@@ -29,12 +29,12 @@ package org.spout.vanilla.event.player;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.player.PlayerEvent;
+import org.spout.api.event.player.AbstractPlayerEvent;
 
 /**
  * Event which is called when the hunger-level changes
  */
-public class PlayerHungerChangeEvent extends PlayerEvent implements Cancellable {
+public class PlayerHungerChangeEvent extends AbstractPlayerEvent implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private short hunger;
 
@@ -50,6 +50,7 @@ public class PlayerHungerChangeEvent extends PlayerEvent implements Cancellable 
 
 	/**
 	 * Get the Hunger level that the player will have.
+	 *
 	 * @return The Hunger level
 	 */
 	public short getHunger() {
@@ -58,6 +59,7 @@ public class PlayerHungerChangeEvent extends PlayerEvent implements Cancellable 
 
 	/**
 	 * Set the Hunger level that the player will have.
+	 *
 	 * @param hunger The hunger level to set to. Between 0 and 20.
 	 */
 	public void setHunger(short hunger) {

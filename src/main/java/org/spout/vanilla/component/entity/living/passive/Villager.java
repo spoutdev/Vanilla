@@ -76,6 +76,7 @@ public class Villager extends Ageable implements Container, Passive {
 
 	/**
 	 * The integer value associated with this villager type.
+	 *
 	 * @return int
 	 */
 	public int getVillagerTypeID() {

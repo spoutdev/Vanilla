@@ -56,6 +56,7 @@ public class PotionSplashEvent extends ProjectileHitEvent {
 
 	/**
 	 * Gets the potion that was thrown
+	 *
 	 * @return The potion thrown.
 	 */
 	public Potion getPotionThrown() {
@@ -64,6 +65,7 @@ public class PotionSplashEvent extends ProjectileHitEvent {
 
 	/**
 	 * Sets the potion that was thrown.
+	 *
 	 * @param potion The potion that is thrown.
 	 */
 	public void setPotionThrown(Potion potion) {
@@ -72,6 +74,7 @@ public class PotionSplashEvent extends ProjectileHitEvent {
 
 	/**
 	 * Gets a list of all of the effected resources.entities.
+	 *
 	 * @return A list of the affected resources.entities.
 	 */
 	public Collection<Entity> getAffectedEntities() {
@@ -80,6 +83,7 @@ public class PotionSplashEvent extends ProjectileHitEvent {
 
 	/**
 	 * Gets the intensity of the potion effect for an entity.
+	 *
 	 * @param entity The entity to get the intensity for
 	 * @return The intensity of the potion effect. 0.0 symbolizes no effect, 1.0 symbolizes full effect.
 	 */
@@ -93,6 +97,7 @@ public class PotionSplashEvent extends ProjectileHitEvent {
 
 	/**
 	 * Sets the intensity of the potion effect for an entity.
+	 *
 	 * @param entity The entity that will have a new defined intensity.
 	 * @param intensity The intensity of the potion effect.
 	 */

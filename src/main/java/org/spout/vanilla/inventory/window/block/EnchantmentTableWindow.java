@@ -67,6 +67,7 @@ public class EnchantmentTableWindow extends Window {
 
 	/**
 	 * Returns the level of the enchantment in the given slot.
+	 *
 	 * @param slot Slot to check
 	 * @return Level of the the enchantment
 	 */
@@ -80,6 +81,7 @@ public class EnchantmentTableWindow extends Window {
 
 	/**
 	 * Sets the level of the enchantment in the given {@link EnchantmentTableProperty} slot.
+	 *
 	 * @param slot Slot to set, null to clear the
 	 * @param level Level of the enchantment
 	 */
@@ -89,6 +91,7 @@ public class EnchantmentTableWindow extends Window {
 
 	/**
 	 * Sets the level of the enchantment in the given slot.
+	 *
 	 * @param slot Slot to set
 	 * @param level Level of the enchantment
 	 */

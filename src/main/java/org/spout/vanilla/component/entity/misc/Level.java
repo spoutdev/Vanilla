@@ -30,15 +30,27 @@ import org.spout.api.entity.Player;
 
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.protocol.entity.player.ExperienceChangeEvent;
-import org.spout.vanilla.protocol.msg.player.PlayerExperienceMessage;
+import org.spout.vanilla.event.player.network.PlayerExperienceChangeEvent;
 
 /**
  * Components that handles everything about the Experience system.
  */
 public class Level extends VanillaEntityComponent {
+	@Override
+	public void onAttached() {
+		if (!(super.getOwner() instanceof Player)) {
+			throw new IllegalStateException("Only Players can have the 'Level' component");
+		}
+	}
+
+	@Override
+	public Player getOwner() {
+		return (Player) super.getOwner();
+	}
+
 	/**
 	 * Gets current level
+	 *
 	 * @return the level
 	 */
 	public short getLevel() {
@@ -47,6 +59,7 @@ public class Level extends VanillaEntityComponent {
 
 	/**
 	 * Gets current experience
+	 *
 	 * @return the total exp
 	 */
 	public short getExperience() {
@@ -55,23 +68,21 @@ public class Level extends VanillaEntityComponent {
 
 	/**
 	 * Sets current experience
+	 *
 	 * @param xp the total xp
 	 * @return false if the experience change event is cancelled
 	 */
 	public boolean setExperience(short xp) {
-		ExperienceChangeEvent event = new ExperienceChangeEvent(getOwner(), getExperience(), xp);
-		getOwner().getEngine().getEventManager().callEvent(event);
-		if (event.isCancelled()) {
-			return false;
-		}
+		//TODO: Non-protocol cancellable event to be called here
+		updateUI(getExperience(), xp);
 		getData().put(VanillaData.EXPERIENCE_AMOUNT, xp);
 		getData().put(VanillaData.EXPERIENCE_LEVEL, convertXpToLevel(xp));
-		updateUi();
 		return true;
 	}
 
 	/**
 	 * Gets current progress of the progress bar, this value will be between 0 and 1 (0 = 0%, 1 = 100%)
+	 *
 	 * @return the progress bar
 	 */
 	public float getProgress() {
@@ -80,10 +91,12 @@ public class Level extends VanillaEntityComponent {
 
 	/**
 	 * Changes the experience points of a player.
+	 *
 	 * @param amount the amount to add. The player loses experience if amount is negative
 	 */
 	public void addExperience(int amount) {
-		short newExperience = (short) (getExperience() + amount);
+		short oldExperience = getExperience();
+		short newExperience = (short) (oldExperience + amount);
 		if (newExperience < 0) {
 			newExperience = 0;
 		}
@@ -97,11 +110,12 @@ public class Level extends VanillaEntityComponent {
 			newProgress = (float) (newExperience - convertLevelToXp(newLevel)) / getXpCap(newLevel);
 		}
 		getData().put(VanillaData.EXPERIENCE_BAR_PROGRESS, newProgress);
-		updateUi();
+		updateUI(oldExperience, getExperience());
 	}
 
 	/**
 	 * Reduces current level without changing progress. Modifies total xp accordingly
+	 *
 	 * @param reduction number of levels to be removed
 	 */
 	public void removeLevels(int reduction) {
@@ -110,6 +124,7 @@ public class Level extends VanillaEntityComponent {
 
 	/**
 	 * Increase the current level without changing progress. Modifies total xp accordingly.
+	 *
 	 * @param addition numbers of levels to be added.
 	 */
 	public void addLevel(int addition) {
@@ -123,6 +138,7 @@ public class Level extends VanillaEntityComponent {
 
 	/**
 	 * Get the XP cap of a given level.
+	 *
 	 * @param level The experience level
 	 * @return The XP cap
 	 */
@@ -138,6 +154,7 @@ public class Level extends VanillaEntityComponent {
 
 	/**
 	 * Determines the experience level of a player with a given total xp
+	 *
 	 * @param xp The total xp
 	 * @return The experience level
 	 */
@@ -153,6 +170,7 @@ public class Level extends VanillaEntityComponent {
 
 	/**
 	 * Determines the xp required to reach a given experience level
+	 *
 	 * @param level The experience level
 	 * @return The total xp
 	 */
@@ -170,12 +188,7 @@ public class Level extends VanillaEntityComponent {
 	/**
 	 * Update the player UI bar.
 	 */
-	private void updateUi() {
-
-		if (!(getOwner() instanceof Player)) {
-			return;
-		}
-		Player p = (Player) getOwner();
-		p.getSession().send(new PlayerExperienceMessage(getProgress(), getLevel(), getExperience()));
+	private void updateUI(short oldExp, short newExp) {
+		getOwner().getNetwork().callProtocolEvent(new PlayerExperienceChangeEvent(getOwner(), oldExp, newExp));
 	}
 }

@@ -58,6 +58,7 @@ public class MapPalette {
 
 	/**
 	 * Tries to save this Map Palette to file
+	 *
 	 * @param file to save to
 	 * @return True if it was successful, False if not
 	 */
@@ -78,6 +79,7 @@ public class MapPalette {
 
 	/**
 	 * Gets the map color nearest to the RGB color specified
+	 *
 	 * @param r component of the color (0 - 255)
 	 * @param g component of the color (0 - 255)
 	 * @param b component of the color (0 - 255)
@@ -93,8 +95,8 @@ public class MapPalette {
 	}
 
 	/**
-	 * Gets the map color nearest to the RGB color specified<br>
-	 * Note: This is a slow function
+	 * Gets the map color nearest to the RGB color specified<br> Note: This is a slow function
+	 *
 	 * @param r component of the color (0F - 1F)
 	 * @param g component of the color (0F - 1F)
 	 * @param b component of the color (0F - 1F)
@@ -106,6 +108,7 @@ public class MapPalette {
 
 	/**
 	 * Sets the map color nearest for the RGB color specified
+	 *
 	 * @param r component of the color (0 - 255)
 	 * @param g component of the color (0 - 255)
 	 * @param b component of the color (0 - 255)
@@ -122,6 +125,7 @@ public class MapPalette {
 
 	/**
 	 * Generates the default nearest-color palette
+	 *
 	 * @return default map palette
 	 */
 	public static MapPalette generateDefault() {

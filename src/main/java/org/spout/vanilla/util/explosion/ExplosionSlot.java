@@ -44,6 +44,7 @@ public class ExplosionSlot {
 
 	/**
 	 * Adds the next linked block slot to the chain
+	 *
 	 * @param next slot to add
 	 */
 	public void addNext(ExplosionSlot next) {
@@ -51,8 +52,7 @@ public class ExplosionSlot {
 	}
 
 	/**
-	 * Transfers all next slots previously added to the next array
-	 * After this is called you can no longer add new 'next' slots
+	 * Transfers all next slots previously added to the next array After this is called you can no longer add new 'next' slots
 	 */
 	public void finish() {
 		this.next = this.nextSet.toArray(new ExplosionSlot[0]);

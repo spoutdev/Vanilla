@@ -24,51 +24,49 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.entity.player;
+package org.spout.vanilla.event.material.network;
 
-import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.ProtocolEvent;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.BlockMaterial;
 
-public class ExperienceChangeEvent extends ProtocolEvent {
+public class BlockActionEvent extends ProtocolEvent {
 	private static final HandlerList handlers = new HandlerList();
-	private final short oldExp;
-	private short newExp;
-	private final Entity entity;
+	private final Block block;
+	private final BlockMaterial material;
+	private final byte data1;
+	private final byte data2;
 
-	public ExperienceChangeEvent(Entity e, short oldExp, short newExp) {
-		this.entity = e;
-		this.oldExp = oldExp;
-		this.newExp = newExp;
+	public BlockActionEvent(Block block, BlockMaterial material, byte data1, byte data2) {
+		this.block = block;
+		this.data1 = data1;
+		this.data2 = data2;
+		this.material = material;
 	}
 
-	public short getPreviousExp() {
-		return oldExp;
+	public Block getBlock() {
+		return this.block;
 	}
 
-	public short getNewExp() {
-		return newExp;
+	public byte getData1() {
+		return this.data1;
 	}
 
-	public void setNewExp(short exp) {
-		this.newExp = exp;
+	public byte getData2() {
+		return this.data2;
 	}
 
-	/**
-	 * Gets the entity associated with this event.
-	 *
-	 * @return The entity associated with the event.
-	 */
-	public Entity getEntity() {
-		return entity;
+	public BlockMaterial getMaterial() {
+		return this.material;
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 
 	@Override
 	public HandlerList getHandlers() {
-		return handlers;
-	}
-
-	public static HandlerList getHandlerList() {
 		return handlers;
 	}
 }

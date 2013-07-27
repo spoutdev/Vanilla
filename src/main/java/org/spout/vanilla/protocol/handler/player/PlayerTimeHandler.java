@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.handler.player;
 
 import org.spout.api.entity.Player;
 import org.spout.api.geo.World;
-import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.ClientSession;
+import org.spout.api.protocol.MessageHandler;
 
 import org.spout.vanilla.component.world.sky.Sky;
 import org.spout.vanilla.protocol.msg.player.PlayerTimeMessage;

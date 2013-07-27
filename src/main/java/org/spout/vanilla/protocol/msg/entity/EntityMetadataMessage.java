@@ -43,8 +43,7 @@ public final class EntityMetadataMessage extends EntityMessage {
 		META_RIGHTCLICKACTION(0, (byte) 0x10),
 		META_INVISIBLE(0, (byte) 0x20),
 		/**
-		 * Drowning counter for resources.entities. This should be sent when an entity spawns and be decremented
-		 * per tick. If the value hits -19, send a 0x26 and reset this to 0
+		 * Drowning counter for resources.entities. This should be sent when an entity spawns and be decremented per tick. If the value hits -19, send a 0x26 and reset this to 0
 		 */
 		META_FULLDROWNINGCOUNTER(1, (short) 300),
 		META_DROWNINGCOUNTEDDEPLETED(1, (short) -19),
@@ -59,8 +58,8 @@ public final class EntityMetadataMessage extends EntityMessage {
 		 */
 		META_NOPOTIONEFFECT(8, 000000),
 		/**
-		 * Animal growth and control. -23999 is the value for babies, 6000 is the value for adults. When set
-		 * to 6000, decrease over time (to determine when to breed again). Value of 0 means the adult can breed.
+		 * Animal growth and control. -23999 is the value for babies, 6000 is the value for adults. When set to 6000, decrease over time (to determine when to breed again). Value of 0 means the adult can
+		 * breed.
 		 */
 		META_BABYANIMALSTAGE(12, -23999),
 		META_PARENTANIMALSTAGE(12, 6000),

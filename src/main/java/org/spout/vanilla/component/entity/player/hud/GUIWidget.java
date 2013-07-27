@@ -42,10 +42,7 @@ public abstract class GUIWidget {
 	protected HUD hud;
 
 	/**
-	 * Initial code for a Widget, this method needs to be called as super
-	 * from init in Widget main code.
-	 * @param widget
-	 * @param hud
+	 * Initial code for a Widget, this method needs to be called as super from init in Widget main code.
 	 */
 	public void init(Widget widget, HUD hud) {
 		SCALE = hud.getScale();
@@ -55,14 +52,12 @@ public abstract class GUIWidget {
 	}
 
 	/**
-	 * Update code for a widget, should be used to update the
-	 * widget after any data has changed.
+	 * Update code for a widget, should be used to update the widget after any data has changed.
 	 */
 	public abstract void update();
 
 	/**
-	 * Animate code for a widget, should be used if data has
-	 * not been updated but animates.
+	 * Animate code for a widget, should be used if data has not been updated but animates.
 	 */
 	public abstract void animate();
 
@@ -78,6 +73,7 @@ public abstract class GUIWidget {
 
 	/**
 	 * Returns the widget
+	 *
 	 * @return widget
 	 */
 	public Widget getWidget() {

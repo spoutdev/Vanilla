@@ -33,6 +33,7 @@ public class NullDamageCause extends Cause<Object> implements DamageCause<Object
 
 	/**
 	 * Contains the point and type of damage.
+	 *
 	 * @param type The cause of the damage.
 	 */
 	public NullDamageCause(DamageType type) {

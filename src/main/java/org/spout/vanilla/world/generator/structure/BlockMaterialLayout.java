@@ -35,12 +35,9 @@ public class BlockMaterialLayout {
 	private final TCharObjectHashMap<BlockMaterial> style = new TCharObjectHashMap<BlockMaterial>();
 
 	/**
-	 * <p>Constructs the layout using a string. The string has to be formatted
-	 * in alphanumeric codes.</p> <p><strong>Example:</strong></p>
+	 * <p>Constructs the layout using a string. The string has to be formatted in alphanumeric codes.</p> <p><strong>Example:</strong></p>
 	 * <p><pre>setLayout("00000\n00100\n01110\n00100\n00000", Wool.WHITE, Wool.RED);</pre></p>
-	 * <p>This would draw a red cross wrapped in white wool</p> <p>The '.' char
-	 * represents no material.</p>
-	 * @param layout
+	 * <p>This would draw a red cross wrapped in white wool</p> <p>The '.' char represents no material.</p>
 	 */
 	public BlockMaterialLayout(String layout) {
 		final String lines[] = layout.split("\n");
@@ -57,10 +54,7 @@ public class BlockMaterialLayout {
 	}
 
 	/**
-	 * Construct a layout from a 2D character array. Each character can then be
-	 * mapped to a material, and represents a block. The '.' char represents no
-	 * material.
-	 * @param layout
+	 * Construct a layout from a 2D character array. Each character can then be mapped to a material, and represents a block. The '.' char represents no material.
 	 */
 	public BlockMaterialLayout(char[][] layout) {
 		this.layout = layout;
@@ -69,10 +63,8 @@ public class BlockMaterialLayout {
 
 	/**
 	 * Map a character to a block material.
-	 * @param key
-	 * @param material
-	 * @throws IllegalArgumentException if the reserved '.' char is used as a
-	 * key.
+	 *
+	 * @throws IllegalArgumentException if the reserved '.' char is used as a key.
 	 */
 	public void setBlockMaterial(char key, BlockMaterial material) {
 		if (key == '.') {
@@ -90,8 +82,7 @@ public class BlockMaterialLayout {
 	}
 
 	/**
-	 * Returns the block material at the row and column position. Returns null
-	 * if no material is set at the position.
+	 * Returns the block material at the row and column position. Returns null if no material is set at the position.
 	 */
 	public BlockMaterial getBlockMaterial(int row, int column) {
 		return style.get(layout[row][column]);

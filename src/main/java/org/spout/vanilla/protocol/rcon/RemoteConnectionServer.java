@@ -38,18 +38,18 @@ import org.jboss.netty.buffer.HeapChannelBufferFactory;
 import org.jboss.netty.channel.ChannelFuture;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelPipeline;
-import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jboss.netty.channel.ChannelStateEvent;
-import org.jboss.netty.channel.Channels;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
 import org.jboss.netty.channel.group.ChannelGroup;
 import org.jboss.netty.channel.group.ChannelGroupFuture;
 import org.jboss.netty.channel.group.DefaultChannelGroup;
 import org.jboss.netty.channel.socket.ServerSocketChannel;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
+
 import org.spout.api.Server;
 import org.spout.api.protocol.PortBinding;
 import org.spout.cereal.config.yaml.YamlConfiguration;
+
 import org.spout.vanilla.protocol.VanillaProtocol;
 
 /**

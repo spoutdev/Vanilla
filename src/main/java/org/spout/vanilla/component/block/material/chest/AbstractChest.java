@@ -39,6 +39,7 @@ public abstract class AbstractChest extends ViewedBlockComponent {
 
 	/**
 	 * Whether the chest is toggled open.
+	 *
 	 * @return true if chest is opened
 	 */
 	public boolean isOpened() {
@@ -47,6 +48,7 @@ public abstract class AbstractChest extends ViewedBlockComponent {
 
 	/**
 	 * Sets the open state of the chest.
+	 *
 	 * @param player who opened the chest
 	 * @param opened state of chest
 	 */

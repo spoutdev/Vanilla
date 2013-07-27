@@ -42,6 +42,7 @@ public class WindowItemsEvent extends WindowEvent {
 
 	/**
 	 * Gets the new Items that are set for the Window
+	 *
 	 * @return items
 	 */
 	public ItemStack[] getItems() {

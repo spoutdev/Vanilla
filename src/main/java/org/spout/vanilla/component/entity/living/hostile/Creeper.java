@@ -29,8 +29,8 @@ package org.spout.vanilla.component.entity.living.hostile;
 import org.spout.api.component.entity.PhysicsComponent;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.Parameter;
-
 import org.spout.physics.collision.shape.BoxShape;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.ai.action.ActionAttack;
 import org.spout.vanilla.ai.goal.AttackPlayerGoal;

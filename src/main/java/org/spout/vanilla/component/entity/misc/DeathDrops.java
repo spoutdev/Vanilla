@@ -40,6 +40,7 @@ import org.spout.vanilla.data.VanillaData;
 public class DeathDrops extends VanillaEntityComponent {
 	/**
 	 * Add a amount of XP the entity drops.
+	 *
 	 * @param amount The amount of XP the entity drops.
 	 * @return The current component.
 	 */
@@ -50,6 +51,7 @@ public class DeathDrops extends VanillaEntityComponent {
 
 	/**
 	 * Retrieve the amount of XP the entity drops on death.
+	 *
 	 * @return the amount of XP.
 	 */
 	public short getXpDrop() {
@@ -58,6 +60,7 @@ public class DeathDrops extends VanillaEntityComponent {
 
 	/**
 	 * Add a item the entity drops.
+	 *
 	 * @param itemstack Contains the item to drop.
 	 * @return The current component.
 	 */
@@ -69,6 +72,7 @@ public class DeathDrops extends VanillaEntityComponent {
 
 	/**
 	 * Retrieve a list of all the item drops this entity does.
+	 *
 	 * @return A list of all the items this entity drops.
 	 */
 	public List<ItemStack> getDrops() {

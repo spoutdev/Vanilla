@@ -40,6 +40,7 @@ public class PlayerClickBlockCause extends PlayerCause {
 
 	/**
 	 * Gets the block that has been clicked
+	 *
 	 * @return clicked block
 	 */
 	public Block getBlock() {

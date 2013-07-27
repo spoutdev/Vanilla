@@ -65,7 +65,7 @@ import org.spout.vanilla.component.entity.player.hud.VanillaHunger;
 import org.spout.vanilla.component.entity.player.hud.VanillaQuickbar;
 import org.spout.vanilla.component.world.sky.Sky;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
-import org.spout.vanilla.event.block.RedstoneChangeEvent;
+import org.spout.vanilla.event.material.RedstoneChangeEvent;
 import org.spout.vanilla.input.VanillaInputExecutor;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.protocol.ClientAuthentification;
@@ -78,7 +78,7 @@ public class VanillaListener implements Listener {
 		this.plugin = plugin;
 	}
 
-	@EventHandler(order = Order.EARLIEST)
+	@EventHandler (order = Order.EARLIEST)
 	public void onPermissionNode(PermissionNodeEvent event) {
 		if (VanillaConfiguration.OPS.isOp(event.getSubject().getName())) {
 			event.setResult(Result.ALLOW);

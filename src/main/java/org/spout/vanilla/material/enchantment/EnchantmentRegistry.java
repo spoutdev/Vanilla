@@ -41,6 +41,7 @@ public class EnchantmentRegistry {
 
 	/**
 	 * Registers the given enchantment
+	 *
 	 * @param enchantment Enchantment to register
 	 * @return Registered enchantment
 	 */
@@ -56,6 +57,7 @@ public class EnchantmentRegistry {
 
 	/**
 	 * Gets an enchantment with the given id
+	 *
 	 * @param id id of the enchantment
 	 * @return Enchantment with the given id, or null if not found
 	 */
@@ -65,6 +67,7 @@ public class EnchantmentRegistry {
 
 	/**
 	 * Gets an enchantment with the given name (case-insensitive)
+	 *
 	 * @param name Name of the enchantment
 	 * @return Enchantment with the given name, or null if not found
 	 */
@@ -74,6 +77,7 @@ public class EnchantmentRegistry {
 
 	/**
 	 * Gets all registered Enchantments
+	 *
 	 * @return Array of enchantments
 	 */
 	public static Enchantment[] values() {

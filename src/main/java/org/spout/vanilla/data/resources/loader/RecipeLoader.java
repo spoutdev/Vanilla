@@ -43,6 +43,7 @@ import org.spout.api.resource.ResourceLoader;
 import org.spout.cereal.config.ConfigurationException;
 import org.spout.cereal.config.ConfigurationNode;
 import org.spout.cereal.config.yaml.YamlConfiguration;
+
 import org.spout.vanilla.data.resources.RecipeYaml;
 
 public class RecipeLoader extends ResourceLoader {
@@ -67,17 +68,17 @@ public class RecipeLoader extends ResourceLoader {
 			String[] resultString = recipe.getNode("result").getString().split(",");
 			Material matched = MaterialRegistry.get(resultString[0]);
 			if (matched == null) {
-				Spout.getLogger().log(Level.WARNING, "Unknown material result for {1}: {0}", new Object[]{resultString[0], key});
+				Spout.getLogger().log(Level.WARNING, "Unknown material result for {1}: {0}", new Object[] {resultString[0], key});
 				continue;
 			}
 			int amount;
 			try {
 				amount = Integer.parseInt(resultString[1]);
 			} catch (NumberFormatException numberFormatException) {
-				Spout.getLogger().log(Level.WARNING, "Unknown number for {1}: {0}", new Object[]{resultString[1], key});
+				Spout.getLogger().log(Level.WARNING, "Unknown number for {1}: {0}", new Object[] {resultString[1], key});
 				amount = 1;
 			} catch (IndexOutOfBoundsException ex) {
-				Spout.getLogger().log(Level.WARNING, "Wrong number of parts for {1}: {0} should have a \",<amount>\" at the end of it.", new Object[]{recipe.getNode("result").getString(), key});
+				Spout.getLogger().log(Level.WARNING, "Wrong number of parts for {1}: {0} should have a \",<amount>\" at the end of it.", new Object[] {recipe.getNode("result").getString(), key});
 				amount = 1;
 			}
 			builder.setResult(matched, amount);
@@ -85,7 +86,7 @@ public class RecipeLoader extends ResourceLoader {
 				for (String inKey : recipe.getNode("ingredients").getKeys(false)) {
 					Material ingredient = MaterialRegistry.get(recipe.getNode("ingredients").getNode(inKey).getString());
 					if (ingredient == null) {
-						Spout.getLogger().log(Level.WARNING, "Unknown material ingredient for {1}: {0}", new Object[]{recipe.getNode("ingredients").getNode(inKey).getString(), key});
+						Spout.getLogger().log(Level.WARNING, "Unknown material ingredient for {1}: {0}", new Object[] {recipe.getNode("ingredients").getNode(inKey).getString(), key});
 						continue;
 					}
 					builder.setIngredient(inKey.charAt(0), ingredient);
@@ -101,13 +102,13 @@ public class RecipeLoader extends ResourceLoader {
 				try {
 					recipes.put(key, builder.buildShapedRecipe());
 				} catch (IllegalStateException ex) {
-					Spout.getLogger().log(Level.WARNING, "Error when adding recipe {0} because: {1}", new Object[]{key, ex.getMessage()});
+					Spout.getLogger().log(Level.WARNING, "Error when adding recipe {0} because: {1}", new Object[] {key, ex.getMessage()});
 				}
 			} else if (recipe.getNode("type").getString().equalsIgnoreCase("Shapeless")) {
 				for (String rowString : recipe.getNode("ingredients").getStringList(new ArrayList<String>())) {
 					Material ingredient = MaterialRegistry.get(rowString);
 					if (ingredient == null) {
-						Spout.getLogger().log(Level.WARNING, "Unknown material ingredient for {1}: {0}", new Object[]{rowString, key});
+						Spout.getLogger().log(Level.WARNING, "Unknown material ingredient for {1}: {0}", new Object[] {rowString, key});
 						continue;
 					}
 					builder.addIngredient(ingredient);
@@ -115,13 +116,13 @@ public class RecipeLoader extends ResourceLoader {
 				try {
 					recipes.put(key, builder.buildShapelessRecipe());
 				} catch (IllegalStateException ex) {
-					Spout.getLogger().log(Level.WARNING, "Error when adding recipe {0} because: {1}", new Object[]{key, ex.getMessage()});
+					Spout.getLogger().log(Level.WARNING, "Error when adding recipe {0} because: {1}", new Object[] {key, ex.getMessage()});
 				}
 			} else if (recipe.getNode("type").getString().equalsIgnoreCase("Smelted")) {
 				for (String rowString : recipe.getNode("ingredients").getStringList(new ArrayList<String>())) {
 					Material ingredient = MaterialRegistry.get(rowString);
 					if (ingredient == null) {
-						Spout.getLogger().log(Level.WARNING, "Unknown material ingredient for {1}: {0}", new Object[]{recipe.getNode("ingredients").getNode(rowString).getString(), key});
+						Spout.getLogger().log(Level.WARNING, "Unknown material ingredient for {1}: {0}", new Object[] {recipe.getNode("ingredients").getNode(rowString).getString(), key});
 						continue;
 					}
 					builder.addIngredient(ingredient);
@@ -129,7 +130,7 @@ public class RecipeLoader extends ResourceLoader {
 				try {
 					recipes.put(key, builder.buildSmeltedRecipe());
 				} catch (IllegalStateException ex) {
-					Spout.getLogger().log(Level.WARNING, "Error when adding recipe {0} because: {1}", new Object[]{key, ex.getMessage()});
+					Spout.getLogger().log(Level.WARNING, "Error when adding recipe {0} because: {1}", new Object[] {key, ex.getMessage()});
 				}
 			} else {
 				Spout.getLogger().log(Level.INFO, "Unknown type " + recipe.getNode("type") + " when loading recipe from recipes.yml");

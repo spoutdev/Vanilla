@@ -30,7 +30,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
 public class ModelUtil {
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings ("unchecked")
 	public static String[] getDirectionalModels(String baseModel, BlockFaces faces) {
 		final String[] dirModels = new String[faces.size()];
 		int i = 0;

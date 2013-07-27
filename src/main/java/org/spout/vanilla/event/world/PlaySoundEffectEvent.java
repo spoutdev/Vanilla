@@ -48,6 +48,7 @@ public class PlaySoundEffectEvent extends ProtocolEvent {
 
 	/**
 	 * Gets the Position where the Sound should be played
+	 *
 	 * @return position of the Sound
 	 */
 	public Point getPosition() {
@@ -56,6 +57,7 @@ public class PlaySoundEffectEvent extends ProtocolEvent {
 
 	/**
 	 * Gets the Sound being played
+	 *
 	 * @return Sound to play
 	 */
 	public SoundEffect getSound() {
@@ -64,6 +66,7 @@ public class PlaySoundEffectEvent extends ProtocolEvent {
 
 	/**
 	 * Gets the Pitch to play the Sound at
+	 *
 	 * @return Sound pitch
 	 */
 	public float getPitch() {
@@ -72,6 +75,7 @@ public class PlaySoundEffectEvent extends ProtocolEvent {
 
 	/**
 	 * Gets the Volume to play the Sound at
+	 *
 	 * @return Sound volume
 	 */
 	public float getVolume() {

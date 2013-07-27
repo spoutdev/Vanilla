@@ -87,6 +87,7 @@ public class FurnaceInventory extends Inventory {
 
 	/**
 	 * Whether or not the inventory is fueled and ready to go!
+	 *
 	 * @return true if has fuel in slot.
 	 */
 	public boolean hasFuel() {
@@ -95,6 +96,7 @@ public class FurnaceInventory extends Inventory {
 
 	/**
 	 * Whether or not the inventory has an ingredient and ready to cook!
+	 *
 	 * @return true if has ingredient in slot.
 	 */
 	public boolean hasIngredient() {

@@ -356,6 +356,7 @@ public class HugeMushroomObject extends VariableHeightObject {
 	}
 
 	public static enum HugeMushroomShape {
-		FLAT, ROUND
+		FLAT,
+		ROUND
 	}
 }

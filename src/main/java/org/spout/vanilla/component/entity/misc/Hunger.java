@@ -47,8 +47,7 @@ import org.spout.vanilla.material.item.potion.PotionItem;
 import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 
 /**
- * Component to handle everything related to the hunger system.
- * It controls the Hunger level, the food saturation value, the exhaustion value and the eating process.
+ * Component to handle everything related to the hunger system. It controls the Hunger level, the food saturation value, the exhaustion value and the eating process.
  */
 public class Hunger extends VanillaEntityComponent {
 	//Timer used for when eating. Prevents insta-eating.
@@ -74,7 +73,7 @@ public class Hunger extends VanillaEntityComponent {
 		return !human.isCreative() && !human.getHealth().isDead();
 	}
 
-	@SuppressWarnings("incomplete-switch")
+	@SuppressWarnings ("incomplete-switch")
 	@Override
 	public void onTick(float dt) {
 		/*
@@ -210,6 +209,7 @@ public class Hunger extends VanillaEntityComponent {
 
 	/**
 	 * Retrieve the hunger level of the entity.
+	 *
 	 * @return The hunger level.
 	 */
 	public int getHunger() {
@@ -226,8 +226,8 @@ public class Hunger extends VanillaEntityComponent {
 	}
 
 	/**
-	 * Sets the hunger level of the entity.
-	 * The maximum is 20.
+	 * Sets the hunger level of the entity. The maximum is 20.
+	 *
 	 * @param hunger The hunger level of the entity
 	 */
 	public void setHunger(int hunger) {
@@ -243,6 +243,7 @@ public class Hunger extends VanillaEntityComponent {
 
 	/**
 	 * Retrieve the food saturation value of the entity.
+	 *
 	 * @return The food saturation value.
 	 */
 	public float getFoodSaturation() {
@@ -250,8 +251,8 @@ public class Hunger extends VanillaEntityComponent {
 	}
 
 	/**
-	 * Sets the food saturation level of the entity.
-	 * A value of 0 makes the food bar "jump". It can't be higher than the current hunger level.
+	 * Sets the food saturation level of the entity. A value of 0 makes the food bar "jump". It can't be higher than the current hunger level.
+	 *
 	 * @param foodSaturation The food saturation value.
 	 */
 	public void setFoodSaturation(float foodSaturation) {
@@ -261,6 +262,7 @@ public class Hunger extends VanillaEntityComponent {
 
 	/**
 	 * Retrieve the exhaustion value of the entity.
+	 *
 	 * @return The exhaustion value.
 	 */
 	public float getExhaustion() {
@@ -269,6 +271,7 @@ public class Hunger extends VanillaEntityComponent {
 
 	/**
 	 * Sets the exhaustion value of the entity.
+	 *
 	 * @param exhaustion The exhaustion value.
 	 */
 	public void setExhaustion(float exhaustion) {
@@ -277,6 +280,7 @@ public class Hunger extends VanillaEntityComponent {
 
 	/**
 	 * Retrieve the poisoned status.
+	 *
 	 * @return True if the entity is poisoned else false
 	 */
 	public boolean isPoisoned() {
@@ -285,6 +289,7 @@ public class Hunger extends VanillaEntityComponent {
 
 	/**
 	 * Set the entity poisoned by food or not
+	 *
 	 * @param poisoned True if he is poisoned else false
 	 */
 	public void setPoisoned(boolean poisoned) {
@@ -323,6 +328,7 @@ public class Hunger extends VanillaEntityComponent {
 
 	/**
 	 * Sets the player as eating. This will starts a timer to be sure the player doesn't instant-eat the food. Does nothing if eating is true but slot is null.
+	 *
 	 * @param eating Is the player eating? If true, starts the timer.
 	 * @param slot The slot associated with the food being used.
 	 */

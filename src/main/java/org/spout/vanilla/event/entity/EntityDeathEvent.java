@@ -28,14 +28,14 @@ package org.spout.vanilla.event.entity;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.entity.EntityEvent;
+import org.spout.api.event.entity.AbstractEntityEvent;
 
 import org.spout.vanilla.event.cause.DamageCause;
 
 /**
  * Event which is called when a Living dies
  */
-public class EntityDeathEvent extends EntityEvent {
+public class EntityDeathEvent extends AbstractEntityEvent {
 	private static final HandlerList handlers = new HandlerList();
 	private int dropExp;
 	private DamageCause<?> lastDamageCause;
@@ -53,6 +53,7 @@ public class EntityDeathEvent extends EntityEvent {
 
 	/**
 	 * Gets the last damage cause.
+	 *
 	 * @return The last damage cause.
 	 */
 	public DamageCause<?> getLastDamageCause() {
@@ -61,6 +62,7 @@ public class EntityDeathEvent extends EntityEvent {
 
 	/**
 	 * Sets the last damage cause.
+	 *
 	 * @param lastDamageCause The last damage cause to set.
 	 */
 	public void setLastDamageCause(DamageCause<?> lastDamageCause) {
@@ -69,6 +71,7 @@ public class EntityDeathEvent extends EntityEvent {
 
 	/**
 	 * Gets the last damager.
+	 *
 	 * @return the last damager.
 	 */
 	public Object getLastDamager() {
@@ -77,6 +80,7 @@ public class EntityDeathEvent extends EntityEvent {
 
 	/**
 	 * Sets the last damager.
+	 *
 	 * @param lastDamager the last damager to set.
 	 */
 	public void setLastDamager(Object lastDamager) {
@@ -85,6 +89,7 @@ public class EntityDeathEvent extends EntityEvent {
 
 	/**
 	 * Gets the amount of experience to drop.
+	 *
 	 * @return The amount of experience to drop.
 	 */
 	public int getDropExp() {
@@ -93,6 +98,7 @@ public class EntityDeathEvent extends EntityEvent {
 
 	/**
 	 * Sets the amount of experience to drop.
+	 *
 	 * @param dropExp The experience to set.
 	 */
 	public void setDropExp(int dropExp) {

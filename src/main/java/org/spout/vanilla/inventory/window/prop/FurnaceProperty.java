@@ -30,8 +30,7 @@ import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 
 /**
- * Represents a property of
- * {@link org.spout.vanilla.inventory.window.WindowType#FURNACE}
+ * Represents a property of {@link org.spout.vanilla.inventory.window.WindowType#FURNACE}
  */
 public enum FurnaceProperty implements WindowProperty {
 	/**
@@ -62,6 +61,7 @@ public enum FurnaceProperty implements WindowProperty {
 
 	/**
 	 * Returns the property from the specified id.
+	 *
 	 * @param id of property
 	 * @return property with specified id
 	 */

@@ -81,6 +81,7 @@ public class InventoryConverter {
 
 	/**
 	 * Returns a slot sent from the client in the proper Spout format.
+	 *
 	 * @param nativeSlot slot sent from the client
 	 * @return slot in the proper Spout format
 	 */
@@ -96,8 +97,8 @@ public class InventoryConverter {
 
 	/**
 	 * Returns a slot to send to the client from the specified 'Spout slot'.
-	 * @param slot 'Spout formatted' slot to convert to slot sent to and from
-	 * the client
+	 *
+	 * @param slot 'Spout formatted' slot to convert to slot sent to and from the client
 	 * @return slot received and sent to and from the client
 	 */
 	public int revert(int slot) {
@@ -106,6 +107,7 @@ public class InventoryConverter {
 
 	/**
 	 * Returns the inventory associated with the converter
+	 *
 	 * @return inventory
 	 */
 	public Inventory getInventory() {
@@ -113,8 +115,8 @@ public class InventoryConverter {
 	}
 
 	/**
-	 * Returns the 'Spout formatted slots' mapped to the 'native slots' in an
-	 * array.
+	 * Returns the 'Spout formatted slots' mapped to the 'native slots' in an array.
+	 *
 	 * @return slot mapping array
 	 */
 	public int[] getSlots() {

@@ -68,6 +68,7 @@ public class Drops extends Drop {
 
 	/**
 	 * Removes the given Drop Material from these drops
+	 *
 	 * @param dropMaterial to remove
 	 * @return this
 	 */
@@ -86,6 +87,7 @@ public class Drops extends Drop {
 
 	/**
 	 * Adds a drop to these drops
+	 *
 	 * @param drop to add
 	 * @return the drop parameter
 	 */
@@ -96,6 +98,7 @@ public class Drops extends Drop {
 
 	/**
 	 * Gets whether these Drops contains other drops or not
+	 *
 	 * @return True if empty, False if not
 	 */
 	public boolean isEmpty() {
@@ -104,6 +107,7 @@ public class Drops extends Drop {
 
 	/**
 	 * Gets the amount of drops
+	 *
 	 * @return Drop count
 	 */
 	public int getDropCount() {
@@ -112,6 +116,7 @@ public class Drops extends Drop {
 
 	/**
 	 * Gets a single set drop from these Drops
+	 *
 	 * @param index to get at
 	 * @return drop
 	 */
@@ -121,6 +126,7 @@ public class Drops extends Drop {
 
 	/**
 	 * Removes all the Drops set
+	 *
 	 * @return these Drops
 	 */
 	public Drops clear() {
@@ -130,6 +136,7 @@ public class Drops extends Drop {
 
 	/**
 	 * Gets the all the Drops contained
+	 *
 	 * @return unsafe List of drops
 	 */
 	public List<Drop> getAll() {

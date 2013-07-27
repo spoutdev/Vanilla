@@ -34,6 +34,7 @@ public class PlayerDamageCause extends PlayerCause implements DamageCause<Player
 
 	/**
 	 * Contains the source and type of damage.
+	 *
 	 * @param player The player causing the damage
 	 * @param type The cause of the damage.
 	 */

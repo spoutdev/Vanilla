@@ -38,7 +38,7 @@ import org.spout.api.util.Parameter;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.component.entity.substance.Substance;
-import org.spout.vanilla.event.entity.EntityMetaChangeEvent;
+import org.spout.vanilla.event.entity.network.EntityMetaChangeEvent;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 import org.spout.vanilla.protocol.entity.object.vehicle.BoatObjectEntityProtocol;

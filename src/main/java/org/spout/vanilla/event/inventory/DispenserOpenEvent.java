@@ -47,6 +47,7 @@ public class DispenserOpenEvent extends InventoryOpenEvent implements Cancellabl
 
 	/**
 	 * Returns the dispenser which caused this event.
+	 *
 	 * @return dispenser
 	 */
 	public Dispenser getDispenser() {

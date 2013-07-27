@@ -34,6 +34,7 @@ import org.spout.vanilla.material.item.potion.PotionItem;
 public interface PotionReagent {
 	/**
 	 * Returns the resulting {@link org.spout.vanilla.material.item.potion.PotionItem} after brewing this reagent with the original potion.
+	 *
 	 * @param original Original potion
 	 * @return Resulting item from brewing this ingredient and the original potion
 	 */

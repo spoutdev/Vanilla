@@ -56,6 +56,7 @@ public class CakeBlock extends Solid {
 
 	/**
 	 * Returns the {@link CakeSize} of this cake material.
+	 *
 	 * @param block Block with this cake material
 	 * @return Size of this material
 	 */
@@ -65,6 +66,7 @@ public class CakeBlock extends Solid {
 
 	/**
 	 * Sets the {@link CakeSize} of this cake material.
+	 *
 	 * @param block Block with this cake material
 	 * @param size Size to set
 	 */

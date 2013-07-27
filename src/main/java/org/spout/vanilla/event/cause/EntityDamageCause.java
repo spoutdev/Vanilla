@@ -35,6 +35,7 @@ public class EntityDamageCause extends EntityCause implements DamageCause<Entity
 
 	/**
 	 * Contains the source and type of damage.
+	 *
 	 * @param entity The entity causing the damage
 	 * @param type The cause of the damage.
 	 */
@@ -45,6 +46,7 @@ public class EntityDamageCause extends EntityCause implements DamageCause<Entity
 
 	/**
 	 * Contains the source and type of damage.
+	 *
 	 * @param parent cause of this cause
 	 * @param entity who caused this cause
 	 * @param type who caused this cause

@@ -43,6 +43,7 @@ public class PlayerBreakCause extends PlayerCause {
 
 	/**
 	 * Gets the block being broken
+	 *
 	 * @return broken
 	 */
 	public Block getBlock() {

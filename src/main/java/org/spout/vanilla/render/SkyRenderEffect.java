@@ -29,9 +29,9 @@ package org.spout.vanilla.render;
 import org.spout.api.math.TrigMath;
 import org.spout.api.math.Vector3;
 import org.spout.api.math.Vector4;
-import org.spout.api.render.shader.Shader;
 import org.spout.api.render.effect.RenderEffect;
 import org.spout.api.render.effect.SnapshotRender;
+import org.spout.api.render.shader.Shader;
 
 public class SkyRenderEffect implements RenderEffect {
 	private static final float size = 256f;

@@ -92,6 +92,7 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 
 	/**
 	 * Gets the sapling associated with this Log
+	 *
 	 * @return the sapling
 	 */
 	public Sapling getSapling() {

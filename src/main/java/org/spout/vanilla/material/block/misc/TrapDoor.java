@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.material.block.misc;
 
-import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cause;
@@ -49,9 +48,9 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Openable, Reds
 	public final float BURN_TIME = 15;
 
 	public TrapDoor(String name, int id) {
-		super(name, id, VanillaMaterialModels.TRAP_DOOR);
+		//TODO: Box Shape
+		super(name, id, VanillaMaterialModels.TRAP_DOOR, null);
 		this.setAttachable(BlockFaces.NESW).setHardness(3.0F).setResistance(5.0F).setTransparent();
-		this.setCollision(CollisionStrategy.SOLID);
 	}
 
 	@Override
@@ -100,6 +99,7 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Openable, Reds
 
 	/**
 	 * Gets whether the trapdoor is aligned to the top-side of the block it is attached to
+	 *
 	 * @param block of the trapdoor
 	 * @return True if it is top-aligned, False if not
 	 */
@@ -109,6 +109,7 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Openable, Reds
 
 	/**
 	 * Sets whether the trapdoor is aligned to the top-side of the block it is attached to
+	 *
 	 * @param block of the trapdoor
 	 * @param topAligned state to set to
 	 */

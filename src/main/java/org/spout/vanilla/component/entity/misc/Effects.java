@@ -49,6 +49,7 @@ public class Effects extends VanillaEntityComponent {
 
 	/**
 	 * Returns the player associated with this component.
+	 *
 	 * @return player attached to this component
 	 */
 	public Player getPlayer() {
@@ -57,6 +58,7 @@ public class Effects extends VanillaEntityComponent {
 
 	/**
 	 * Applies an effect on the player.
+	 *
 	 * @param effect to apply
 	 */
 	public void add(EntityEffect effect) {
@@ -77,6 +79,7 @@ public class Effects extends VanillaEntityComponent {
 
 	/**
 	 * Removes a player's effect.
+	 *
 	 * @param type type of effect to remove
 	 */
 	public void remove(EntityEffectType type) {
@@ -99,6 +102,7 @@ public class Effects extends VanillaEntityComponent {
 
 	/**
 	 * Returns true if the player has the specified effect type applied.
+	 *
 	 * @param type to check for
 	 * @return true if effect is applied
 	 */

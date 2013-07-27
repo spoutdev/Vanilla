@@ -681,6 +681,7 @@ public final class VanillaMaterials {
 
 	/**
 	 * Gets the minecraft id associated with the Spout material
+	 *
 	 * @param material to convert
 	 * @return minecraft id
 	 */
@@ -694,6 +695,7 @@ public final class VanillaMaterials {
 
 	/**
 	 * Gets the minecraft id associated with the Spout material id
+	 *
 	 * @param id to convert
 	 * @return minecraft id
 	 */

@@ -34,6 +34,7 @@ import org.spout.api.geo.cuboid.Block;
 public interface RedstoneTarget {
 	/**
 	 * Checks if a block is receiving power from neighboring blocks.
+	 *
 	 * @param block to check
 	 * @return True if the block is receiving power
 	 */

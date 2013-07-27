@@ -34,8 +34,8 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.bytebit.ByteBitSet;
-
 import org.spout.physics.collision.shape.CollisionShape;
+
 import org.spout.vanilla.material.VanillaBlockMaterial;
 
 public abstract class AbstractAttachable extends VanillaBlockMaterial implements Attachable {
@@ -55,6 +55,7 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 
 	/**
 	 * Gets whether a certain face is attachable
+	 *
 	 * @param face to get it of
 	 * @return attachable state
 	 */
@@ -64,6 +65,7 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 
 	/**
 	 * Sets multiple faces attachable to true
+	 *
 	 * @param faces to set
 	 * @return this attachable material
 	 */
@@ -76,6 +78,7 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 
 	/**
 	 * Sets multiple faces attachable to true
+	 *
 	 * @param faces to set
 	 * @return this attachable material
 	 */
@@ -88,6 +91,7 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 
 	/**
 	 * Sets whether a certain face is attachable
+	 *
 	 * @param face to set
 	 * @param attachable state
 	 * @return this attachable material
@@ -123,8 +127,8 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 	}
 
 	/**
-	 * Finds out what face this attachable can properly attach to<br>
-	 * The north-east-south-west-bottom-top search pattern is used.
+	 * Finds out what face this attachable can properly attach to<br> The north-east-south-west-bottom-top search pattern is used.
+	 *
 	 * @param block of the attachable
 	 * @return the attached face, or null if not found
 	 */
@@ -163,9 +167,9 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 	}
 
 	/**
-	 * Checks if this attachable is at a position it can actually be<br>
-	 * This is called in the underlying physics function to check if the block has to be broken<br>
-	 * No checks on the block itself should be performed other than the face it is attached to
+	 * Checks if this attachable is at a position it can actually be<br> This is called in the underlying physics function to check if the block has to be broken<br> No checks on the block itself should
+	 * be performed other than the face it is attached to
+	 *
 	 * @param block to place at
 	 * @param attachedFace to use
 	 * @param seekAlternative whether an alternative attached face should be sought

@@ -40,14 +40,15 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.vanilla.component.block.material.Sign;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
-import org.spout.vanilla.event.block.SignUpdateEvent;
+import org.spout.vanilla.event.material.network.SignUpdateEvent;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 
 public abstract class SignBase extends AbstractAttachable implements InitializableMaterial, TileMaterial {
 	public SignBase(String name, int id) {
-		super(name, id, VanillaMaterialModels.SIGN, Sign.class);
+		//TODO: Box Shape
+		super(name, id, VanillaMaterialModels.SIGN, null, Sign.class);
 		this.setAttachable(BlockFaces.NESWB).setHardness(1.0F).setResistance(1.6F).setTransparent();
 	}
 

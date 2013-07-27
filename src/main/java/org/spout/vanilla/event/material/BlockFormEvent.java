@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.block;
+package org.spout.vanilla.event.material;
 
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.Cause;
@@ -34,46 +34,42 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockSnapshot;
 
 /**
- * Event which is called when a block disappears
- * todo implement calling of this event
+ * Event which is called when a block forms or spreads in the world. For example: Snow, Ice, etc todo implement calling of this event
  */
-public class BlockDisappearEvent extends BlockChangeEvent implements Cancellable {
+public class BlockFormEvent extends BlockChangeEvent implements Cancellable {
 	/**
-	 * The different causes why a Block disappears from the world.
+	 * The different causes why a Block is formed in the world.
 	 */
-	public static enum DisappearCause {
+	public static enum FormCause {
 		/**
-		 * Block faded
+		 * Block spread randomly
 		 */
-		FADE,
+		SPREAD_RANDOM,
 		/**
-		 * Block melted
+		 * Block spread
 		 */
-		MELT,
+		SPREAD,
 		/**
-		 * Block disappeared
+		 * Block formed due to world conditions (for example Snow)
 		 */
-		DISAPPEAR,
-		/**
-		 * Block decayed
-		 */
-		DECAY,
+		FORMING,
 	}
 
 	private static final HandlerList handlers = new HandlerList();
-	private final DisappearCause disappearCause;
+	private final FormCause formCause;
 
-	public BlockDisappearEvent(Block block, BlockSnapshot newState, Cause<?> reason, DisappearCause disappearCause) {
+	public BlockFormEvent(Block block, BlockSnapshot newState, Cause<?> reason, FormCause formCause) {
 		super(block, newState, reason);
-		this.disappearCause = disappearCause;
+		this.formCause = formCause;
 	}
 
 	/**
-	 * The reason why the block has disappeared
-	 * @return DisappearCause
+	 * The reason why the block formed
+	 *
+	 * @return FormCause
 	 */
-	public DisappearCause getDisappearCause() {
-		return disappearCause;
+	public FormCause getFormCause() {
+		return formCause;
 	}
 
 	@Override

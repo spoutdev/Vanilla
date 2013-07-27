@@ -49,7 +49,8 @@ public class StoneButton extends AttachedRedstoneSource implements PointAttachab
 	public static final int TICK_DELAY = 1000;
 
 	public StoneButton(String name, int id) {
-		super(name, id, VanillaMaterialModels.STONE_BUTTON);
+		//TODO Box shape
+		super(name, id, VanillaMaterialModels.STONE_BUTTON, null);
 		this.setAttachable(BlockFaces.NESW).setLiquidObstacle(false).setHardness(0.5F).setResistance(0.8F).setTransparent();
 	}
 

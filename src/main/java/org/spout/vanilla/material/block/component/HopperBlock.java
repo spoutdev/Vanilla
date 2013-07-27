@@ -75,8 +75,6 @@ public class HopperBlock extends VanillaBlockMaterial implements RedstoneTarget 
 
 	/**
 	 * Dumps an item from the hopper into a block below.
-	 * @param block
-	 * @param item
 	 */
 	public void dropItem(Block block, ItemStack item) {
 		if (isReceivingPower(block)) {
@@ -86,8 +84,6 @@ public class HopperBlock extends VanillaBlockMaterial implements RedstoneTarget 
 
 	/**
 	 * Pulls an item into the hopper from the block above.
-	 * @param block
-	 * @param item
 	 */
 	public void pullItem(Block block, ItemStack item) {
 		if (isReceivingPower(block)) {

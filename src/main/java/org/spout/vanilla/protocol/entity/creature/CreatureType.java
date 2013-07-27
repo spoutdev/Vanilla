@@ -115,6 +115,7 @@ public enum CreatureType {
 
 	/**
 	 * Gets the entity component associated with the creature type
+	 *
 	 * @return component
 	 */
 	public Class<? extends Living> getComponentType() {
@@ -123,6 +124,7 @@ public enum CreatureType {
 
 	/**
 	 * Gets the creature type associated with its exact entity component class
+	 *
 	 * @return creature type, or null if no creature type matching the component could be found
 	 */
 	public static CreatureType get(Class<? extends EntityComponent> clazz) {

@@ -30,8 +30,8 @@ import java.util.Random;
 
 import org.spout.api.component.entity.PhysicsComponent;
 import org.spout.api.inventory.ItemStack;
-
 import org.spout.physics.collision.shape.BoxShape;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.inventory.EntityInventory;
 import org.spout.vanilla.component.entity.living.Hostile;

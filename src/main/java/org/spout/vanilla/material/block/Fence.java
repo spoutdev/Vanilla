@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
@@ -35,9 +34,9 @@ import org.spout.vanilla.material.block.component.SignBase;
 import org.spout.vanilla.material.block.misc.Torch;
 
 public abstract class Fence extends VanillaBlockMaterial {
+	//TODO: Box Shape
 	public Fence(String name, int id, String model) {
-		super(name, id, model);
-		this.setCollision(CollisionStrategy.SOLID);
+		super(name, id, model, null);
 	}
 
 	@Override

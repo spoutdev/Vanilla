@@ -43,6 +43,7 @@ import org.spout.vanilla.inventory.entity.QuickbarInventory;
 public class EntityInventory extends EntityComponent {
 	/**
 	 * Returns the entity's armor inventory
+	 *
 	 * @return armor
 	 */
 	public ArmorInventory getArmor() {
@@ -51,6 +52,7 @@ public class EntityInventory extends EntityComponent {
 
 	/**
 	 * Gets the quickbar slots for this entity
+	 *
 	 * @return quickbar
 	 */
 	public QuickbarInventory getQuickbar() {
@@ -59,6 +61,7 @@ public class EntityInventory extends EntityComponent {
 
 	/**
 	 * Returns the entity's held item
+	 *
 	 * @return itemstack
 	 */
 	public ItemStack getHeldItem() {
@@ -75,6 +78,7 @@ public class EntityInventory extends EntityComponent {
 
 	/**
 	 * Updates all slots of the given inventory
+	 *
 	 * @param inv to update
 	 */
 	protected void updateAll(Inventory inv) {
@@ -85,6 +89,7 @@ public class EntityInventory extends EntityComponent {
 
 	/**
 	 * Returns a List of all inventories that are dropped when the component owner is removed.
+	 *
 	 * @return list of droppable inventories
 	 */
 	public List<Inventory> getDroppable() {
@@ -96,10 +101,11 @@ public class EntityInventory extends EntityComponent {
 
 	/**
 	 * Clears either the armor or quickbar inventories (if specified).
+	 *
 	 * @param armor True clears the armor inventory
 	 * @param quickbar True clears the quickbar inventory
 	 */
-	public void clear (boolean armor, boolean quickbar) {
+	public void clear(boolean armor, boolean quickbar) {
 		if (armor) {
 			getArmor().clear();
 		}

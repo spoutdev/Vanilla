@@ -71,6 +71,7 @@ public class RedstoneOre extends Ore implements TimedCraftable, InitializableMat
 
 	/**
 	 * Whether this redstone ore block material is glowing
+	 *
 	 * @return true if glowing
 	 */
 	public boolean isGlowing() {

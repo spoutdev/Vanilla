@@ -34,14 +34,16 @@ import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 
 public abstract class Portal extends VanillaBlockMaterial {
+	//TODO: Box Shape
 	public Portal(String name, int id, String model) {
-		super(name, id, model);
-		this.setTransparent();
+		super(name, id, model, null);
+		this.setTransparent().setGhost(true);
 		getDrops().DEFAULT.clear();
 	}
 
 	/**
 	 * Gets the frame block material used around this Portal
+	 *
 	 * @return Portal frame material
 	 */
 	public abstract BlockMaterial getFrameMaterial();

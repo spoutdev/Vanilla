@@ -30,8 +30,7 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
 /**
- * Represents a enchantment table inventory belonging to an enchantment table
- * entity.
+ * Represents a enchantment table inventory belonging to an enchantment table entity.
  */
 public class BeaconInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
@@ -44,6 +43,7 @@ public class BeaconInventory extends Inventory {
 
 	/**
 	 * Whether the inventory contains an item to enchant
+	 *
 	 * @return true if an item is present
 	 */
 	public boolean has() {
@@ -51,8 +51,8 @@ public class BeaconInventory extends Inventory {
 	}
 
 	/**
-	 * Returns the {@link ItemStack} in the enchantment slot; can
-	 * return null.
+	 * Returns the {@link ItemStack} in the enchantment slot; can return null.
+	 *
 	 * @return ingredient item stack
 	 */
 	public ItemStack get() {

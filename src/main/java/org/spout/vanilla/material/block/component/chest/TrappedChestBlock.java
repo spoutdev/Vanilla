@@ -53,6 +53,7 @@ public class TrappedChestBlock extends AbstractChestBlock implements RedstoneSou
 
 	/**
 	 * Gets the other half of a double chest
+	 *
 	 * @param block of the Double chest
 	 * @return the other half, or null if there is none
 	 */
@@ -67,6 +68,7 @@ public class TrappedChestBlock extends AbstractChestBlock implements RedstoneSou
 
 	/**
 	 * Gets whether a certain chest block is a double chest
+	 *
 	 * @param block of the Chest
 	 * @return True if it is a double chest, False if it is a single chest
 	 */

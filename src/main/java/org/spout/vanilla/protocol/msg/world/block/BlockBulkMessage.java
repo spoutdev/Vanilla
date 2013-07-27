@@ -41,6 +41,7 @@ public final class BlockBulkMessage extends VanillaBlockDataChannelMessage {
 
 	/**
 	 * Creates a BlockBulkMessage using the specified data
+	 *
 	 * @param chunkX The x coordinate of the chunk containing these changes
 	 * @param chunkZ The z coordinate of the chunk containing these changes
 	 * @param coordinates An array of change coordinates. Length should be 3 * types.length, with coordinates in x y z format

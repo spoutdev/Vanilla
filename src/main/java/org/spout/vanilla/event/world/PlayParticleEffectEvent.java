@@ -46,6 +46,7 @@ public class PlayParticleEffectEvent extends ProtocolEvent {
 
 	/**
 	 * Gets the Position where the Sound should be played
+	 *
 	 * @return position of the Sound
 	 */
 	public Point getPosition() {
@@ -54,6 +55,7 @@ public class PlayParticleEffectEvent extends ProtocolEvent {
 
 	/**
 	 * Gets the Effect to play
+	 *
 	 * @return the Effect
 	 */
 	public GeneralEffect getEffect() {
@@ -62,6 +64,7 @@ public class PlayParticleEffectEvent extends ProtocolEvent {
 
 	/**
 	 * Gets the data to use for the Effect
+	 *
 	 * @return Effect data
 	 */
 	public int getData() {

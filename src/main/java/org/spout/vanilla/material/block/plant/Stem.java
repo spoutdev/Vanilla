@@ -84,6 +84,7 @@ public abstract class Stem extends GroundAttachable implements Growing, Crop, Dy
 
 	/**
 	 * Sets the material placed after this Stem is fully grown
+	 *
 	 * @param material of the last stage
 	 */
 	public void setLastStageMaterial(BlockMaterial material) {
@@ -92,6 +93,7 @@ public abstract class Stem extends GroundAttachable implements Growing, Crop, Dy
 
 	/**
 	 * Gets the material placed after this Stem is fully grown
+	 *
 	 * @return material of the last stage
 	 */
 	public BlockMaterial getLastStageMaterial() {

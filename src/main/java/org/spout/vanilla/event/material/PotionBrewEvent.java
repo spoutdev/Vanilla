@@ -24,55 +24,77 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.block.network;
+package org.spout.vanilla.event.material;
 
+import org.spout.api.event.Cancellable;
+import org.spout.api.event.Cause;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.ProtocolEvent;
-import org.spout.api.geo.cuboid.Block;
+import org.spout.api.event.block.BlockEvent;
+import org.spout.api.inventory.ItemStack;
 
-import org.spout.nbt.CompoundMap;
+import org.spout.vanilla.component.block.material.BrewingStand;
 
-public class EntityTileDataEvent extends ProtocolEvent {
-	public static final byte SET_MONSTER_SPAWNER_CREATURE = 1;
+public class PotionBrewEvent extends BlockEvent implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
-	private final Block block;
-	private final byte action;
-	private final CompoundMap data;
+	private BrewingStand brewingStand;
+	private ItemStack ingredient;
+	private ItemStack original;
+	private ItemStack result;
 
-	/**
-	 * Constructs a new Data event for the block specified
-	 * @param block for the data
-	 * @param action to perform
-	 * @param data to use, max 3 elements
-	 */
-	public EntityTileDataEvent(Block block, byte action, CompoundMap data) {
-		this.block = block;
-		this.action = action;
-		this.data = data;
+	public PotionBrewEvent(BrewingStand brewingStand, Cause<?> reason, ItemStack ingredient, ItemStack original, ItemStack result) {
+		super(brewingStand.getBlock(), reason);
+		this.brewingStand = brewingStand;
+		this.ingredient = ingredient;
+		this.original = original;
+		this.result = result;
 	}
 
 	/**
-	 * Gets the Block the data is meant for
-	 * @return Block
+	 * Get the brewing stand in which the potion was brewed
+	 *
+	 * @return brewingStand
 	 */
-	public Block getBlock() {
-		return this.block;
+	public BrewingStand getBrewingStand() {
+		return brewingStand;
 	}
 
 	/**
-	 * Gets the action to perform
-	 * @return action Id
+	 * Get the ingredient used in the brewing process
+	 *
+	 * @return ingredient
 	 */
-	public byte getAction() {
-		return this.action;
+	public ItemStack getIngredient() {
+		return ingredient;
 	}
 
 	/**
-	 * Gets the data to use
-	 * @return data array
+	 * Get the original potion
+	 *
+	 * @return original
 	 */
-	public CompoundMap getData() {
-		return this.data;
+	public ItemStack getOriginal() {
+		return original;
+	}
+
+	/**
+	 * Get the result of the brewing process
+	 *
+	 * @return result
+	 */
+	public ItemStack getResult() {
+		return result;
+	}
+
+	/**
+	 * Set the result ItemStack
+	 */
+	public void setResult(ItemStack result) {
+		this.result = result;
+	}
+
+	@Override
+	public void setCancelled(boolean cancelled) {
+		super.setCancelled(cancelled);
 	}
 
 	public static HandlerList getHandlerList() {

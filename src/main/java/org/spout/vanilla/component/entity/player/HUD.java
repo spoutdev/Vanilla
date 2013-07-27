@@ -75,23 +75,16 @@ public class HUD extends VanillaEntityComponent {
 	}
 
 	/**
-	 * Will update the class used for each part of the HUD
-	 * Will not replace a class if one already is placed
-	 * <p>
-	 * To replace use setDefault(Class clazz, boolean force)
-	 * @param clazz
+	 * Will update the class used for each part of the HUD Will not replace a class if one already is placed <p> To replace use setDefault(Class clazz, boolean force)
 	 */
 	public <T extends GUIWidget> T setDefault(Class<T> clazz) {
 		return setDefault(clazz, false);
 	}
 
 	/**
-	 * Will update the class used for each part of the HUD
-	 * <p>
-	 * Second param is to force the update, a false will only update the
-	 * class if a class isn't already placed, true will replace any class
-	 * and force an update (forced update not implemented yet)
-	 * @param clazz
+	 * Will update the class used for each part of the HUD <p> Second param is to force the update, a false will only update the class if a class isn't already placed, true will replace any class and
+	 * force an update (forced update not implemented yet)
+	 *
 	 * @return New or already attached class
 	 */
 	public <T extends GUIWidget> T setDefault(Class<T> clazz, boolean force) {
@@ -152,10 +145,8 @@ public class HUD extends VanillaEntityComponent {
 	}
 
 	/**
-	 * Will retrieve a non core Widget that is attached to hud.
-	 * Will return null if class is not found.
-	 * @param <T>
-	 * @param clazz
+	 * Will retrieve a non core Widget that is attached to hud. Will return null if class is not found.
+	 *
 	 * @return Widget class or NULL if not found
 	 */
 	public <T extends GUIWidget> T getWidget(Class<T> clazz) {
@@ -174,9 +165,7 @@ public class HUD extends VanillaEntityComponent {
 	}
 
 	/**
-	 * Sets the amount of armor to display.
-	 * <p>
-	 * This method will be removed once armor is handled by Vanilla
+	 * Sets the amount of armor to display. <p> This method will be removed once armor is handled by Vanilla
 	 */
 	public void setArmor() {
 		armorWidget.update();
@@ -193,10 +182,7 @@ public class HUD extends VanillaEntityComponent {
 	}
 
 	/**
-	 * Modify the advancement of the xp bar.
-	 * <p>
-	 * This method needs to be removed when experience is handled by
-	 * Vanilla code.
+	 * Modify the advancement of the xp bar. <p> This method needs to be removed when experience is handled by Vanilla code.
 	 */
 	public void setExp() {
 		expBar.update();
@@ -204,7 +190,6 @@ public class HUD extends VanillaEntityComponent {
 
 	/**
 	 * Returns the CORE GUI Widget (AirMeter)
-	 * @return
 	 */
 	public DrowningWidget getAirMeter() {
 		return drowningWidget;
@@ -212,7 +197,6 @@ public class HUD extends VanillaEntityComponent {
 
 	/**
 	 * Returns the CORE GUI Widget (Quickbar)
-	 * @return
 	 */
 	public QuickbarWidget getQuickbar() {
 		return quickbarWidget;
@@ -220,7 +204,6 @@ public class HUD extends VanillaEntityComponent {
 
 	/**
 	 * Returns the CORE GUI Widget (ExpMeter)
-	 * @return
 	 */
 	public ExpBarWidget getExpMeter() {
 		return expBar;
@@ -228,7 +211,6 @@ public class HUD extends VanillaEntityComponent {
 
 	/**
 	 * Returns the CORE GUI Widget (ArmorMeter)
-	 * @return
 	 */
 	public ArmorWidget getArmorMeter() {
 		return armorWidget;
@@ -236,7 +218,6 @@ public class HUD extends VanillaEntityComponent {
 
 	/**
 	 * Returns the CORE GUI Widget (Cross hair)
-	 * @return
 	 */
 	public CrosshairWidget getCrosshair() {
 		return crosshairWidget;
@@ -244,7 +225,6 @@ public class HUD extends VanillaEntityComponent {
 
 	/**
 	 * Returns the CORE GUI Widget (HungerMeter)
-	 * @return
 	 */
 	public HungerWidget getHungerMeter() {
 		return hungerWidget;

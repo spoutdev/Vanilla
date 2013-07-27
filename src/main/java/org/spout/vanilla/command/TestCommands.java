@@ -26,6 +26,9 @@
  */
 package org.spout.vanilla.command;
 
+import java.util.List;
+import java.util.Set;
+
 import org.spout.api.Client;
 import org.spout.api.Engine;
 import org.spout.api.Platform;
@@ -52,11 +55,12 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
-import org.spout.api.material.MaterialRegistry;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.ServerNetworkSynchronizer;
+import org.spout.api.protocol.event.ChunkSendEvent;
 import org.spout.api.util.BlockIterator;
+
 import org.spout.vanilla.ChatStyle;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.block.material.chest.Chest;
@@ -92,9 +96,7 @@ import org.spout.vanilla.inventory.window.block.EnchantmentTableWindow;
 import org.spout.vanilla.inventory.window.block.FurnaceWindow;
 import org.spout.vanilla.inventory.window.block.chest.ChestWindow;
 import org.spout.vanilla.inventory.window.entity.VillagerWindow;
-import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.item.VanillaItemMaterial;
 import org.spout.vanilla.material.map.Map;
 import org.spout.vanilla.protocol.VanillaServerNetworkSynchronizer;
 import org.spout.vanilla.protocol.entity.creature.CreatureType;
@@ -110,9 +112,6 @@ import org.spout.vanilla.world.generator.object.RandomizableObject;
 import org.spout.vanilla.world.generator.object.VanillaObjects;
 import org.spout.vanilla.world.lighting.LightingVerification;
 
-import java.util.List;
-import java.util.Set;
-
 public class TestCommands {
 	private final VanillaPlugin plugin;
 
@@ -124,9 +123,9 @@ public class TestCommands {
 		return plugin.getEngine();
 	}
 
-	@CommandDescription(aliases = {"effect", "fx"}, usage = "<type> <duration> [amp]", desc = "Applies an effect.")
-	@Permissible("vanilla.command.debug")
-	@Filter(PlayerFilter.class)
+	@CommandDescription (aliases = {"effect", "fx"}, usage = "<type> <duration> [amp]", desc = "Applies an effect.")
+	@Permissible ("vanilla.command.debug")
+	@Filter (PlayerFilter.class)
 	public void effect(CommandSource source, CommandArguments args) throws CommandException {
 		Player player = args.checkPlayer(source);
 		EntityEffectType type = args.popEnumValue("type", EntityEffectType.class);
@@ -138,9 +137,9 @@ public class TestCommands {
 		player.sendMessage(ChatStyle.GREEN + "Applied effect '" + type + "' with amplitude '" + amp + "' for '" + duration + "' seconds.");
 	}
 
-	@CommandDescription(aliases = {"testscoreboard", "tsb"}, desc = "Not to be confused with '/scoreboard'")
-	@Permissible("vanilla.command.debug")
-	@Filter(PlayerFilter.class)
+	@CommandDescription (aliases = {"testscoreboard", "tsb"}, desc = "Not to be confused with '/scoreboard'")
+	@Permissible ("vanilla.command.debug")
+	@Filter (PlayerFilter.class)
 	public void scoreboard(Player player, CommandArguments args) throws CommandException {
 		args.assertCompletelyParsed();
 
@@ -161,9 +160,9 @@ public class TestCommands {
 				.setSlot(ObjectiveSlot.LIST);
 	}
 
-	@CommandDescription(aliases = {"testteams", "tt"}, desc = "Tests teams functionality.")
-	@Permissible("vanilla.command.debug")
-	@Filter(PlayerFilter.class)
+	@CommandDescription (aliases = {"testteams", "tt"}, desc = "Tests teams functionality.")
+	@Permissible ("vanilla.command.debug")
+	@Filter (PlayerFilter.class)
 	public void teams(Player player, CommandArguments args) throws CommandException {
 		args.assertCompletelyParsed();
 
@@ -181,9 +180,9 @@ public class TestCommands {
 				.addPlayerName(name);
 	}
 
-	@CommandDescription(aliases = "chunklight", usage = "", desc = "Tests lighting in current chunk")
-	@Permissible("vanilla.command.debug")
-	@Filter(PlayerFilter.class)
+	@CommandDescription (aliases = "chunklight", usage = "", desc = "Tests lighting in current chunk")
+	@Permissible ("vanilla.command.debug")
+	@Filter (PlayerFilter.class)
 	public void chunkLight(Player player, CommandArguments args) throws CommandException {
 		args.assertCompletelyParsed();
 
@@ -194,18 +193,18 @@ public class TestCommands {
 		LightingVerification.checkChunk(c, false);
 	}
 
-	@CommandDescription(aliases = "alllight", usage = "", desc = "Tests lighting in all loaded chunks in the current world")
-	@Permissible("vanilla.command.debug")
-	@Filter(PlayerFilter.class)
+	@CommandDescription (aliases = "alllight", usage = "", desc = "Tests lighting in all loaded chunks in the current world")
+	@Permissible ("vanilla.command.debug")
+	@Filter (PlayerFilter.class)
 	public void allLight(Player player, CommandArguments args) throws CommandException {
 		args.assertCompletelyParsed();
 
 		LightingVerification.checkAll(player.getWorld(), true);
 	}
 
-	@CommandDescription(aliases = "checkheight", usage = "", desc = "Finds surface height of current column")
-	@Permissible("vanilla.command.debug")
-	@Filter(PlayerFilter.class)
+	@CommandDescription (aliases = "checkheight", usage = "", desc = "Finds surface height of current column")
+	@Permissible ("vanilla.command.debug")
+	@Filter (PlayerFilter.class)
 	public void targetHeight(Player player, CommandArguments args) throws CommandException {
 		args.assertCompletelyParsed();
 
@@ -217,8 +216,8 @@ public class TestCommands {
 		player.sendMessage("Surface Height " + height + " " + (pos.getBlockY() - height) + " blocks below");
 	}
 
-	@CommandDescription(aliases = "getblock", usage = "<world> <x> <y> <z>", desc = "Finds block at the given coords")
-	@Permissible("vanilla.command.debug")
+	@CommandDescription (aliases = "getblock", usage = "<world> <x> <y> <z>", desc = "Finds block at the given coords")
+	@Permissible ("vanilla.command.debug")
 	public void getBlock(CommandSource source, CommandArguments args) throws CommandException {
 		Point p = args.popPoint("loc", source);
 		args.assertCompletelyParsed();
@@ -232,9 +231,9 @@ public class TestCommands {
 		source.sendMessage("Material at " + p.getBlockX() + ", " + p.getBlockY() + ", " + p.getBlockZ() + " is " + m.getClass().getSimpleName());
 	}
 
-	@CommandDescription(aliases = "growtree", usage = "", desc = "grows a tree at the current location")
-	@Permissible("vanilla.command.debug")
-	@Filter(PlayerFilter.class)
+	@CommandDescription (aliases = "growtree", usage = "", desc = "grows a tree at the current location")
+	@Permissible ("vanilla.command.debug")
+	@Filter (PlayerFilter.class)
 	public void growTree(Player player, CommandArguments args) throws CommandException {
 		args.assertCompletelyParsed();
 		Point pos = player.getPhysics().getPosition();
@@ -247,9 +246,9 @@ public class TestCommands {
 	// TODO - There needs to be a method that guarantees unique data values on a per-server basis
 	private int mapId = 1;
 
-	@CommandDescription(aliases = "map", usage = "", desc = "Creates a map")
-	@Permissible("vanilla.command.debug")
-	@Filter(PlayerFilter.class)
+	@CommandDescription (aliases = "map", usage = "", desc = "Creates a map")
+	@Permissible ("vanilla.command.debug")
+	@Filter (PlayerFilter.class)
 	public void map(Player player, CommandArguments args) throws CommandException {
 		args.assertCompletelyParsed();
 
@@ -257,9 +256,9 @@ public class TestCommands {
 		player.get(PlayerInventory.class).add(i);
 	}
 
-	@CommandDescription(aliases = "mapdraw", usage = "<bx> <by> <tx> <ty> <col>", desc = "Draws a rectangle on the current map.  The top nibble for col is the colour and the bottom nibble is the brightness")
-	@Permissible("vanilla.command.debug")
-	@Filter(PlayerFilter.class)
+	@CommandDescription (aliases = "mapdraw", usage = "<bx> <by> <tx> <ty> <col>", desc = "Draws a rectangle on the current map.  The top nibble for col is the colour and the bottom nibble is the brightness")
+	@Permissible ("vanilla.command.debug")
+	@Filter (PlayerFilter.class)
 	public void mapDraw(Player player, CommandArguments args) throws CommandException {
 		args.assertCompletelyParsed();
 		PlayerInventory inventory = player.get(PlayerInventory.class);
@@ -301,9 +300,9 @@ public class TestCommands {
 		}
 	}
 
-	@CommandDescription(aliases = "mapflood", usage = "<col>", desc = "Floods the current map with the given color")
-	@Permissible("vanilla.command.debug")
-	@Filter(PlayerFilter.class)
+	@CommandDescription (aliases = "mapflood", usage = "<col>", desc = "Floods the current map with the given color")
+	@Permissible ("vanilla.command.debug")
+	@Filter (PlayerFilter.class)
 	public void mapFlood(Player player, CommandArguments args) throws CommandException {
 		args.assertCompletelyParsed();
 		PlayerInventory inventory = player.get(PlayerInventory.class);
@@ -321,17 +320,17 @@ public class TestCommands {
 		}
 	}
 
-	@CommandDescription(aliases = "respawn", usage = "", desc = "Forces the client to respawn")
-	@Permissible("vanilla.command.debug")
-	@org.spout.api.command.annotated.Platform(Platform.SERVER)
-	@Filter(PlayerFilter.class)
+	@CommandDescription (aliases = "respawn", usage = "", desc = "Forces the client to respawn")
+	@Permissible ("vanilla.command.debug")
+	@org.spout.api.command.annotated.Platform (Platform.SERVER)
+	@Filter (PlayerFilter.class)
 	public void respawn(Player player, CommandArguments args) throws CommandException {
 		args.assertCompletelyParsed();
 		((ServerNetworkSynchronizer) player.getNetworkSynchronizer()).forceRespawn();
 	}
 
-	@CommandDescription(aliases = "sun", usage = "<x> <y> <z>", desc = "Sets the sun direction.")
-	@Permissible("vanilla.command.debug")
+	@CommandDescription (aliases = "sun", usage = "<x> <y> <z>", desc = "Sets the sun direction.")
+	@Permissible ("vanilla.command.debug")
 	public void setSunDirection(CommandSource source, CommandArguments args) throws CommandException {
 		Vector3 dir = args.popVector3("dir", null);
 		args.assertCompletelyParsed();
@@ -339,9 +338,9 @@ public class TestCommands {
 		SkyRenderEffect.setSun(dir);
 	}
 
-	@CommandDescription(aliases = "findframe", usage = "<radius>", desc = "Find a nether portal frame.")
-	@Permissible("vanilla.command.debug")
-	@Filter(PlayerFilter.class)
+	@CommandDescription (aliases = "findframe", usage = "<radius>", desc = "Find a nether portal frame.")
+	@Permissible ("vanilla.command.debug")
+	@Filter (PlayerFilter.class)
 	public void findFrame(Player player, CommandArguments args) throws CommandException {
 		final int radius = args.popInteger("radius");
 		args.assertCompletelyParsed();
@@ -353,9 +352,9 @@ public class TestCommands {
 		}
 	}
 
-	@CommandDescription(aliases = "traceray", desc = "Set all blocks that cross your view to stone.")
-	@Permissible("vanilla.command.debug")
-	@Filter(PlayerFilter.class)
+	@CommandDescription (aliases = "traceray", desc = "Set all blocks that cross your view to stone.")
+	@Permissible ("vanilla.command.debug")
+	@Filter (PlayerFilter.class)
 	public void traceray(CommandSource source, CommandArguments args) throws CommandException {
 		args.assertCompletelyParsed();
 		Player player = (Player) source;
@@ -377,17 +376,17 @@ public class TestCommands {
 		}
 	}
 
-	@Permissible("vanilla.command.debug")
-	@CommandDescription(aliases = "resetpos", desc = "Resets players position")
-	@Filter(PlayerFilter.class)
+	@Permissible ("vanilla.command.debug")
+	@CommandDescription (aliases = "resetpos", desc = "Resets players position")
+	@Filter (PlayerFilter.class)
 	public void resetPosition(Player player, CommandArguments args) throws CommandException {
 		args.assertCompletelyParsed();
 		((VanillaServerNetworkSynchronizer) player.getNetworkSynchronizer()).sendPosition();
 	}
 
-	@CommandDescription(aliases = "torch", desc = "Place a torch.")
-	@Filter(PlayerFilter.class)
-	@Permissible("vanilla.command.debug")
+	@CommandDescription (aliases = "torch", desc = "Place a torch.")
+	@Filter (PlayerFilter.class)
+	@Permissible ("vanilla.command.debug")
 	public void torch(Player player, CommandArguments args) throws CommandException {
 		args.assertCompletelyParsed();
 
@@ -402,9 +401,9 @@ public class TestCommands {
 		}
 	}
 
-	@CommandDescription(aliases = "window", usage = "<type>", desc = "Open a window.")
-	@Permissible("vanilla.command.debug")
-	@Filter(PlayerFilter.class)
+	@CommandDescription (aliases = "window", usage = "<type>", desc = "Open a window.")
+	@Permissible ("vanilla.command.debug")
+	@Filter (PlayerFilter.class)
 	public void window(Player player, CommandArguments args) throws CommandException {
 		WindowType type = args.popEnumValue("type", WindowType.class);
 		args.assertCompletelyParsed();
@@ -436,18 +435,18 @@ public class TestCommands {
 		}
 	}
 
-	@CommandDescription(aliases = "damage", usage = "<amount>", desc = "Damage yourself")
-	@Filter(PlayerFilter.class)
-	@Permissible("vanilla.command.debug")
+	@CommandDescription (aliases = "damage", usage = "<amount>", desc = "Damage yourself")
+	@Filter (PlayerFilter.class)
+	@Permissible ("vanilla.command.debug")
 	public void damage(Player player, CommandArguments args) throws CommandException {
 		final int amount = args.popInteger("amount");
 		args.assertCompletelyParsed();
 		player.get(Health.class).damage(amount);
 	}
 
-	@CommandDescription(aliases = "hunger", usage = "<amount> <hungry>", desc = "Modify your hunger")
-	@Filter(PlayerFilter.class)
-	@Permissible("vanilla.command.debug")
+	@CommandDescription (aliases = "hunger", usage = "<amount> <hungry>", desc = "Modify your hunger")
+	@Filter (PlayerFilter.class)
+	@Permissible ("vanilla.command.debug")
 	public void hunger(Player player, CommandArguments args) throws CommandException {
 		final int amount = args.popInteger("amount");
 		final boolean hungry = args.popBoolean("hungry");
@@ -458,9 +457,9 @@ public class TestCommands {
 		hunger.setPoisoned(hungry);
 	}
 
-	@CommandDescription(aliases = {"explode"}, usage = "<explode>", desc = "Create an explosion")
-	@Permissible("vanilla.command.debug")
-	@Filter(PlayerFilter.class)
+	@CommandDescription (aliases = {"explode"}, usage = "<explode>", desc = "Create an explosion")
+	@Permissible ("vanilla.command.debug")
+	@Filter (PlayerFilter.class)
 	public void explode(Player player, CommandArguments args) throws CommandException {
 		args.assertCompletelyParsed();
 
@@ -468,10 +467,10 @@ public class TestCommands {
 		ExplosionModels.SPHERICAL.execute(position, 4.0f);
 	}
 
-	@CommandDescription(aliases = {"object", "obj"}, usage = "[-f] <object>", flags = {@Flag(aliases = {"force", "f"})},
+	@CommandDescription (aliases = {"object", "obj"}, usage = "[-f] <object>", flags = {@Flag (aliases = {"force", "f"})},
 			desc = "Spawn a WorldGeneratorObject at your location. Use -f to ignore canPlace check")
-	@Filter(PlayerFilter.class)
-	@Permissible("vanilla.command.debug")
+	@Filter (PlayerFilter.class)
+	@Permissible ("vanilla.command.debug")
 	public void generateObject(Player player, CommandArguments args) throws CommandException {
 		final WorldGeneratorObject object = VanillaObjects.byName(args.currentArgument("object"));
 		if (object == null) {
@@ -500,8 +499,8 @@ public class TestCommands {
 		}
 	}
 
-	@CommandDescription(aliases = {"killall", "ka"}, desc = "Kill all non-player or world entities within a world")
-	@Permissible("vanilla.command.debug")
+	@CommandDescription (aliases = {"killall", "ka"}, desc = "Kill all non-player or world entities within a world")
+	@Permissible ("vanilla.command.debug")
 	public void killall(CommandSource source, CommandArguments args) throws CommandException {
 		World world = args.popWorld("world", source);
 		args.assertCompletelyParsed();
@@ -524,18 +523,18 @@ public class TestCommands {
 			entity.remove();
 		}
 		if (count > 0) {
-				if (count == 1) {
-					args.logAndNotify(plugin, source, "1 entity has been killed by " + source.getName() +  ".");
-				} else {
-					args.logAndNotify(plugin, source, count + " entities have been killed by " + source.getName() + ".");
-				}
+			if (count == 1) {
+				args.logAndNotify(plugin, source, "1 entity has been killed by " + source.getName() + ".");
+			} else {
+				args.logAndNotify(plugin, source, count + " entities have been killed by " + source.getName() + ".");
+			}
 		} else {
 			source.sendMessage("No valid entities found to kill");
 		}
 	}
 
-	@CommandDescription(aliases = "debug", usage = "<resend|resendall|look|packets)", desc = "Debug commands")
-	@Permissible("vanilla.command.debug")
+	@CommandDescription (aliases = "debug", usage = "<resend|resendall|look|packets)", desc = "Debug commands")
+	@Permissible ("vanilla.command.debug")
 	public void debug(CommandSource source, CommandArguments args) throws CommandException {
 		String action = args.popString("action");
 		Player player = args.popPlayerOrMe("player", source);
@@ -558,22 +557,21 @@ public class TestCommands {
 				throw new CommandException("You cannot resend chunks in client mode.");
 			}
 			if (action.contains("resendall")) {
-				ServerNetworkSynchronizer network = (ServerNetworkSynchronizer) player.getNetworkSynchronizer();
-				Set<Chunk> chunks = network.getActiveChunks();
+				Set<Chunk> chunks = ((ServerNetworkSynchronizer) player.getNetworkSynchronizer()).getActiveChunks();
 				for (Chunk c : chunks) {
-					network.sendChunk(c);
+					player.getNetwork().callProtocolEvent(new ChunkSendEvent(c, true));
 				}
 
 				source.sendMessage("All chunks resent");
 			} else if (action.contains("resend")) {
-				((ServerNetworkSynchronizer) player.getNetworkSynchronizer()).sendChunk(player.getChunk());
+				player.getNetwork().callProtocolEvent(new ChunkSendEvent(player.getChunk(), true));
 				source.sendMessage("Chunk resent");
 			}
 		}
 	}
 
-	@CommandDescription(aliases = "spawn", desc = "Spawns a living entity at your location")
-	@Filter(PlayerFilter.class)
+	@CommandDescription (aliases = "spawn", desc = "Spawns a living entity at your location")
+	@Filter (PlayerFilter.class)
 	public void spawn(Player player, CommandArguments args) throws CommandException {
 		final String name = args.popString("name");
 
@@ -637,9 +635,9 @@ public class TestCommands {
 		}
 	}
 
-	@CommandDescription(aliases = "fire", usage = "<time> [hurt]", desc = "Set you on fire")
-	@Permissible("vanilla.command.debug")
-	@Filter(PlayerFilter.class)
+	@CommandDescription (aliases = "fire", usage = "<time> [hurt]", desc = "Set you on fire")
+	@Permissible ("vanilla.command.debug")
+	@Filter (PlayerFilter.class)
 	public void fire(Player player, CommandArguments args) throws CommandException {
 		final float time = args.popFloat("time");
 		final boolean hurt = args.popBoolean("hurt", false);

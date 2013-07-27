@@ -59,6 +59,7 @@ public class EndPortalObject extends RandomObject {
 
 	/**
 	 * Finds the center of the end portal object
+	 *
 	 * @param frameBlock to start looking from
 	 * @return Center origin block
 	 */

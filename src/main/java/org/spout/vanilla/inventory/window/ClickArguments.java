@@ -30,8 +30,7 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.Slot;
 
 /**
- * Represents the arguments of a click on a
- * {@link org.spout.vanilla.inventory.window.Window}
+ * Represents the arguments of a click on a {@link org.spout.vanilla.inventory.window.Window}
  */
 public class ClickArguments {
 	private final Slot slot;
@@ -47,8 +46,8 @@ public class ClickArguments {
 	}
 
 	/**
-	 * Returns true if the client was holding shift when the window was clicked
-	 * NOTE: this is only a shortcut method
+	 * Returns true if the client was holding shift when the window was clicked NOTE: this is only a shortcut method
+	 *
 	 * @return true if shift was being held down
 	 */
 	public boolean isShiftClick() {
@@ -61,6 +60,7 @@ public class ClickArguments {
 
 	/**
 	 * Gets the slot that was clicked, from which the inventory and item index can be obtained
+	 *
 	 * @return Clicked Slot
 	 */
 	public Slot getSlot() {

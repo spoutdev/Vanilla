@@ -35,12 +35,12 @@ import org.spout.api.Engine;
 import org.spout.api.Platform;
 import org.spout.api.ServerOnly;
 import org.spout.api.entity.Player;
+import org.spout.api.event.ProtocolEvent;
 import org.spout.api.event.cause.PlayerCause;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
-import org.spout.api.protocol.event.ProtocolEvent;
 
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.event.inventory.InventoryCanSetEvent;
@@ -79,6 +79,7 @@ public abstract class AbstractWindow implements InventoryViewer {
 
 	/**
 	 * Gets the owner of this window
+	 *
 	 * @return player
 	 */
 	public final Player getPlayer() {
@@ -91,6 +92,7 @@ public abstract class AbstractWindow implements InventoryViewer {
 
 	/**
 	 * Returns the player inventory.
+	 *
 	 * @return player inventory
 	 */
 	public PlayerInventory getPlayerInventory() {
@@ -124,6 +126,7 @@ public abstract class AbstractWindow implements InventoryViewer {
 
 	/**
 	 * Handles a click when the shift button is held down
+	 *
 	 * @param stack clicked
 	 * @param slot clicked
 	 * @param from inventory with item
@@ -133,6 +136,7 @@ public abstract class AbstractWindow implements InventoryViewer {
 
 	/**
 	 * Handles a click on the server or the client.
+	 *
 	 * @param args to handle
 	 * @return true if successful
 	 */
@@ -140,6 +144,7 @@ public abstract class AbstractWindow implements InventoryViewer {
 
 	/**
 	 * Handles a click on the creative message
+	 *
 	 * @param inventory clicked
 	 * @param clickedSlot slot clicked
 	 * @param item clicked
@@ -148,6 +153,7 @@ public abstract class AbstractWindow implements InventoryViewer {
 
 	/**
 	 * Called when the cursor clicks outside of the window.
+	 *
 	 * @return true if successful
 	 */
 	public abstract boolean onOutsideClick();
@@ -160,19 +166,21 @@ public abstract class AbstractWindow implements InventoryViewer {
 
 	/**
 	 * Gets the number of slots on the window.
+	 *
 	 * @return size of window
 	 */
 	public abstract int getSize();
 
 	/**
 	 * Whether the window is currently being viewed.
+	 *
 	 * @return true if being viewed
 	 */
 	public abstract boolean isOpened();
 
 	/**
-	 * Gets the inventory at the specified native slot. Returns -1 if
-	 * non-existent.
+	 * Gets the inventory at the specified native slot. Returns -1 if non-existent.
+	 *
 	 * @param nativeSlot clicked slot
 	 * @return inventory entry at slot
 	 */
@@ -180,14 +188,15 @@ public abstract class AbstractWindow implements InventoryViewer {
 
 	/**
 	 * Arguments to handle
+	 *
 	 * @param nativeSlot clicked slot
 	 * @param action the action
-	 * @return
 	 */
 	public abstract ClickArguments getClickArguments(int nativeSlot, ClickArguments.ClickAction action);
 
 	/**
 	 * Sets a property of the window
+	 *
 	 * @param id id of property
 	 * @param value value of property
 	 */
@@ -208,6 +217,7 @@ public abstract class AbstractWindow implements InventoryViewer {
 
 	/**
 	 * Sets a property of the window.
+	 *
 	 * @param prop property to set
 	 * @param value set
 	 */
@@ -217,7 +227,7 @@ public abstract class AbstractWindow implements InventoryViewer {
 
 	/**
 	 * Returns the value of the specified property.
-	 * @param property
+	 *
 	 * @return value of property
 	 */
 	public int getProperty(WindowProperty property) {
@@ -226,6 +236,7 @@ public abstract class AbstractWindow implements InventoryViewer {
 
 	/**
 	 * Returns the id of the window.
+	 *
 	 * @return id of window
 	 */
 	public int getId() {
@@ -234,6 +245,7 @@ public abstract class AbstractWindow implements InventoryViewer {
 
 	/**
 	 * Returns the type of the window.
+	 *
 	 * @return window type
 	 */
 	public WindowType getType() {
@@ -242,6 +254,7 @@ public abstract class AbstractWindow implements InventoryViewer {
 
 	/**
 	 * Returns the title of the window.
+	 *
 	 * @return title
 	 */
 	public String getTitle() {
@@ -250,6 +263,7 @@ public abstract class AbstractWindow implements InventoryViewer {
 
 	/**
 	 * Whether or not there is an item on the cursor
+	 *
 	 * @return true if has item on cursor
 	 */
 	public boolean hasCursorItem() {
@@ -258,6 +272,7 @@ public abstract class AbstractWindow implements InventoryViewer {
 
 	/**
 	 * Gets the item on the cursor
+	 *
 	 * @return item on cursor
 	 */
 	public ItemStack getCursorItem() {
@@ -266,7 +281,6 @@ public abstract class AbstractWindow implements InventoryViewer {
 
 	/**
 	 * Sets the item on the cursor.
-	 * @param cursorItem
 	 */
 	public void setCursorItem(ItemStack cursorItem) {
 		this.cursorItem = cursorItem;
@@ -309,8 +323,8 @@ public abstract class AbstractWindow implements InventoryViewer {
 	}
 
 	/**
-	 * Checks whether a certain slot can be set to the item specified<br>
-	 * Fires the {@link InventoryCanSetEvent}
+	 * Checks whether a certain slot can be set to the item specified<br> Fires the {@link InventoryCanSetEvent}
+	 *
 	 * @param inventory of the slot
 	 * @param index of the slot
 	 * @param item to set to

@@ -49,7 +49,8 @@ public class WoodButton extends AttachedRedstoneSource implements PointAttachabl
 	public static final int TICK_DELAY = 1000;
 
 	public WoodButton(String name, int id) {
-		super(name, id, VanillaMaterialModels.WOODEN_BUTTON);
+		//TODO Box shape
+		super(name, id, VanillaMaterialModels.WOODEN_BUTTON, null);
 		this.setAttachable(BlockFaces.NESW).setLiquidObstacle(false).setHardness(0.5F).setResistance(1.5F).setTransparent();
 	}
 

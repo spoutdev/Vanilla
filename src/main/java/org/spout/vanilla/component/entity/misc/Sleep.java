@@ -31,7 +31,7 @@ import org.spout.api.geo.cuboid.Block;
 
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.data.Animation;
-import org.spout.vanilla.event.entity.EntityAnimationEvent;
+import org.spout.vanilla.event.entity.network.EntityAnimationEvent;
 import org.spout.vanilla.event.player.network.PlayerBedEvent;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.misc.BedBlock;
@@ -48,6 +48,7 @@ public class Sleep extends VanillaEntityComponent {
 
 	/**
 	 * Retrieve the bed associated with the entity sleeping.
+	 *
 	 * @return The bed.
 	 */
 	public Block getBed() {
@@ -56,6 +57,7 @@ public class Sleep extends VanillaEntityComponent {
 
 	/**
 	 * Make the entity sleeps on the given bed
+	 *
 	 * @param bed The bed the entity sleeps on.
 	 */
 	public void sleep(Block bed) {
@@ -78,6 +80,7 @@ public class Sleep extends VanillaEntityComponent {
 
 	/**
 	 * Set the bed as occuped or not.
+	 *
 	 * @param occupy True if we want to set it to occuped, else false.
 	 */
 	private void occupy(boolean occupy) {
@@ -88,6 +91,7 @@ public class Sleep extends VanillaEntityComponent {
 
 	/**
 	 * If the player can skip the night.
+	 *
 	 * @return True if the player can skip the night else false.
 	 */
 	public boolean canSkipNight() {
@@ -119,6 +123,7 @@ public class Sleep extends VanillaEntityComponent {
 
 	/**
 	 * Whether the player is currently sleeping or not.
+	 *
 	 * @return sleeping status
 	 */
 	public boolean isSleeping() {

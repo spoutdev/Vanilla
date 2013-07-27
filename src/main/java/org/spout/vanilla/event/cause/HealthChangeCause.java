@@ -36,11 +36,13 @@ public enum HealthChangeCause {
 	COMMAND,
 	/**
 	 * Health changed due to being damaged.
+	 *
 	 * @see {@link org.spout.vanilla.event.cause.DamageCause}
 	 */
 	DAMAGE,
 	/**
 	 * Health changed due to being healed.
+	 *
 	 * @see {@link org.spout.vanilla.event.cause.HealCause}
 	 */
 	HEAL,

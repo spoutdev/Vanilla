@@ -24,45 +24,43 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.entity;
+package org.spout.vanilla.event.material.network;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.ProtocolEvent;
+import org.spout.api.geo.discrete.Point;
 
-/**
- * Event which is called when an Entity collects an Item/Entity
- */
-public class EntityCollectItemEvent extends ProtocolEvent {
+public class BlockBreakAnimationEvent extends ProtocolEvent {
 	private static final HandlerList handlers = new HandlerList();
-	private final Entity collected;
+	private final Point point;
+	private final byte level;
 	private final Entity entity;
-	
 
-	public EntityCollectItemEvent(Entity e, Entity collected) {
-		this.entity = e;
-		this.collected = collected;
+	public BlockBreakAnimationEvent(Entity entity, Point point, byte level) {
+		this.entity = entity;
+		this.point = point;
+		this.level = level;
 	}
 
-	public Entity getCollected() {
-		return this.collected;
+	public Point getPoint() {
+		return point;
 	}
 
-	/**
-	 * Gets the entity associated with this event.
-	 *
-	 * @return The entity associated with the event.
-	 */
+	public byte getLevel() {
+		return level;
+	}
+
 	public Entity getEntity() {
 		return entity;
 	}
 
-	@Override
-	public HandlerList getHandlers() {
+	public static HandlerList getHandlerList() {
 		return handlers;
 	}
 
-	public static HandlerList getHandlerList() {
+	@Override
+	public HandlerList getHandlers() {
 		return handlers;
 	}
 }

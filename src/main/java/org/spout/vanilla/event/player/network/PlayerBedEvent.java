@@ -27,15 +27,15 @@
 package org.spout.vanilla.event.player.network;
 
 import org.spout.api.entity.Player;
-import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.ProtocolEvent;
+import org.spout.api.event.player.PlayerEvent;
 import org.spout.api.geo.cuboid.Block;
 
 /**
  * Event which is called when a player enters or leaves a bed
  */
-public class PlayerBedEvent extends ProtocolEvent implements Cancellable {
+public class PlayerBedEvent extends ProtocolEvent implements PlayerEvent {
 	private static final HandlerList handlers = new HandlerList();
 	private final Block bed;
 	private boolean entered;
@@ -49,6 +49,7 @@ public class PlayerBedEvent extends ProtocolEvent implements Cancellable {
 
 	/**
 	 * Returns the bed block involved in this event.
+	 *
 	 * @return the bed block involved in this event
 	 */
 	public Block getBed() {
@@ -57,6 +58,7 @@ public class PlayerBedEvent extends ProtocolEvent implements Cancellable {
 
 	/**
 	 * Gets if the player entered the bed.
+	 *
 	 * @return True if the bed was entered.
 	 */
 	public boolean isEntered() {
@@ -65,6 +67,7 @@ public class PlayerBedEvent extends ProtocolEvent implements Cancellable {
 
 	/**
 	 * Sets if a player has entered the bed.
+	 *
 	 * @param entered The new status of if the player has entered a bed (true or false).
 	 */
 	public void setEntered(boolean entered) {
@@ -76,6 +79,7 @@ public class PlayerBedEvent extends ProtocolEvent implements Cancellable {
 		super.setCancelled(cancelled);
 	}
 
+	@Override
 	public Player getPlayer() {
 		return player;
 	}

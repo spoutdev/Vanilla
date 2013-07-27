@@ -39,8 +39,9 @@ import org.spout.vanilla.util.PlayerUtil;
 public abstract class Stairs extends VanillaBlockMaterial implements Directional {
 	private final ByteBitSet[] occlusion;
 
+	//TODO: Box Shape
 	public Stairs(String name, int id, String model) {
-		super(name, id, model);
+		super(name, id, model, null);
 		this.occlusion = new ByteBitSet[8];
 		for (int i = 0; i < 4; i++) {
 			this.occlusion[i] = new ByteBitSet(BlockFaces.NSEW.get(i).getOpposite(), BlockFace.BOTTOM);
@@ -50,6 +51,7 @@ public abstract class Stairs extends VanillaBlockMaterial implements Directional
 
 	/**
 	 * Gets if this stair is upside down
+	 *
 	 * @param block to get it of
 	 * @return True if it is upside down
 	 */
@@ -59,6 +61,7 @@ public abstract class Stairs extends VanillaBlockMaterial implements Directional
 
 	/**
 	 * Sets if this stair is upside down
+	 *
 	 * @param block to set it for
 	 * @param upsideDown state
 	 */

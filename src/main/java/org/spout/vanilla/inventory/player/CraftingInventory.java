@@ -71,6 +71,7 @@ public abstract class CraftingInventory extends Inventory {
 
 	/**
 	 * Returns the grid of the slots that will have the output slot updated.
+	 *
 	 * @return grid of slots to trigger update
 	 */
 	public Grid getGrid() {
@@ -79,6 +80,7 @@ public abstract class CraftingInventory extends Inventory {
 
 	/**
 	 * Returns the slot to update when a slot is updated in the crafting grid.
+	 *
 	 * @return slot to update
 	 */
 	public int getOutputSlot() {
@@ -87,6 +89,7 @@ public abstract class CraftingInventory extends Inventory {
 
 	/**
 	 * Returns the offset of the first slot in the crafting grid.
+	 *
 	 * @return offset of grid
 	 */
 	public int getOffset() {
@@ -95,8 +98,7 @@ public abstract class CraftingInventory extends Inventory {
 
 	/**
 	 * Handles a shift click on the given inventory slot
-	 * @param slot
-	 * @param toInventory
+	 *
 	 * @return true if the action completed successfully.
 	 */
 	public boolean onShiftClick(int slot, PlayerInventory toInventory) {
@@ -143,8 +145,7 @@ public abstract class CraftingInventory extends Inventory {
 	}
 
 	/**
-	 * Assesses the crafting matrix to determine if an {@link ItemStack} should
-	 * be crafted to the {@link #outputSlot};
+	 * Assesses the crafting matrix to determine if an {@link ItemStack} should be crafted to the {@link #outputSlot};
 	 */
 	public void updateOutput() {
 		GridIterator iterator = grid.iterator();

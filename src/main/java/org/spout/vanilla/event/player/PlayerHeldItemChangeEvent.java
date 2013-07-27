@@ -74,12 +74,12 @@ package org.spout.vanilla.event.player;
 
 import org.spout.api.entity.Player;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.player.PlayerEvent;
+import org.spout.api.event.player.AbstractPlayerEvent;
 
 /**
  * Event which is called when a player changes the held item
  */
-public class PlayerHeldItemChangeEvent extends PlayerEvent {
+public class PlayerHeldItemChangeEvent extends AbstractPlayerEvent {
 	private static final HandlerList handlers = new HandlerList();
 	private final int oldSlot;
 	private int newSlot;
@@ -92,6 +92,7 @@ public class PlayerHeldItemChangeEvent extends PlayerEvent {
 
 	/**
 	 * Gets the previous slot the player had selected.
+	 *
 	 * @return The index of the previous slot.
 	 */
 	public int getPreviousSlot() {
@@ -100,6 +101,7 @@ public class PlayerHeldItemChangeEvent extends PlayerEvent {
 
 	/**
 	 * Gets the new slot the player selected.
+	 *
 	 * @return The index of the new selected slot.
 	 */
 	public int getNewSlot() {
@@ -108,6 +110,7 @@ public class PlayerHeldItemChangeEvent extends PlayerEvent {
 
 	/**
 	 * Sets the new slot for the player to select. Values should be between 0 and 8.
+	 *
 	 * @param slot index of the new selected slot.
 	 */
 	public void setNewSlot(int slot) {

@@ -603,6 +603,7 @@ public abstract class Window extends AbstractWindow {
 
 	/**
 	 * Gets the human viewing the window
+	 *
 	 * @return human
 	 */
 	public final Human getHuman() {
@@ -611,8 +612,6 @@ public abstract class Window extends AbstractWindow {
 
 	/**
 	 * Gets the converter for the specified inventory.
-	 * @param inventory
-	 * @return
 	 */
 	public InventoryConverter getInventoryConverter(Inventory inventory) {
 		for (InventoryConverter converter : converters) {
@@ -625,7 +624,6 @@ public abstract class Window extends AbstractWindow {
 
 	/**
 	 * Returns all inventory converters
-	 * @return
 	 */
 	public List<InventoryConverter> getInventoryConverters() {
 		return converters;
@@ -633,7 +631,6 @@ public abstract class Window extends AbstractWindow {
 
 	/**
 	 * Adds an inventory converter
-	 * @param converter
 	 */
 	public void addInventoryConverter(InventoryConverter converter) {
 		converter.getInventory().addViewer(this);
@@ -642,7 +639,6 @@ public abstract class Window extends AbstractWindow {
 
 	/**
 	 * Removes an inventory conveter
-	 * @param converter
 	 */
 	public void removeInventoryConverter(InventoryConverter converter) {
 		converter.getInventory().removeViewer(this);
@@ -663,6 +659,7 @@ public abstract class Window extends AbstractWindow {
 
 	/**
 	 * Sets a property of the window
+	 *
 	 * @param id of the property
 	 * @param value value of property
 	 */

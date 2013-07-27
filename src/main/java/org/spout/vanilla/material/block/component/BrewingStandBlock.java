@@ -32,7 +32,6 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
-
 import org.spout.physics.collision.shape.BoxShape;
 
 import org.spout.vanilla.component.block.material.BrewingStand;
@@ -75,6 +74,7 @@ public class BrewingStandBlock extends VanillaBlockMaterial {
 
 	/**
 	 * Sets the amount of potions on this brewing stand to display as "filled"
+	 *
 	 * @param block Brewing stand to change
 	 * @param amount Number of potions to set as "filled"
 	 */

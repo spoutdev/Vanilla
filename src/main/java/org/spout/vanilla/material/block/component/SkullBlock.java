@@ -47,12 +47,14 @@ public class SkullBlock extends VanillaBlockMaterial implements Attachable {
 	public static final SkullBlock CREEPER_HEAD = new SkullBlock("Creeper Head", 4, SKELETON_SKULL);
 
 	private SkullBlock(String name, int id) {
-		super((short) 0x7, name, id, null, Skull.class);
+		//TODO: Box Shape
+		super((short) 0x7, name, id, null, null, Skull.class);
 		this.setHardness(1.0F).setResistance(3.0F).setTransparent();
 	}
 
 	private SkullBlock(String name, int data, SkullBlock parent) {
-		super(name, parent.getId(), data, parent, null);
+		//TODO: Box Shape
+		super(name, parent.getId(), data, parent, null, null);
 		this.setHardness(1.0F).setResistance(3.0F).setTransparent();
 	}
 

@@ -30,8 +30,7 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
 /**
- * Represents the inventory of a
- * {@link org.spout.vanilla.component.block.material.chest.Chest}.
+ * Represents the inventory of a {@link org.spout.vanilla.component.block.material.chest.Chest}.
  */
 public class ChestInventory extends Inventory {
 	private static final long serialVersionUID = 1L;

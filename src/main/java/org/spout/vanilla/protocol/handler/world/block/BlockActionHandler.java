@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.protocol.handler.world.block;
 
-import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.ClientSession;
+import org.spout.api.protocol.MessageHandler;
 
 import org.spout.vanilla.protocol.msg.world.block.BlockActionMessage;
 

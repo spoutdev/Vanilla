@@ -30,16 +30,14 @@ import org.spout.api.command.CommandArguments;
 import org.spout.api.exception.ArgumentParseException;
 import org.spout.api.material.Material;
 import org.spout.api.material.MaterialRegistry;
+
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.material.VanillaMaterials;
 
 /**
- * Handlers for various argument types in Vanilla
- * <p/>
- * All methods should be static, etc, etc, etc
+ * Handlers for various argument types in Vanilla <p/> All methods should be static, etc, etc, etc
  */
 public final class VanillaArgumentTypes {
-
 	private VanillaArgumentTypes() {
 		// NO INSTANCES FOR YOU, FOOL!
 	}
@@ -75,8 +73,4 @@ public final class VanillaArgumentTypes {
 		}
 		return args.popEnumValue(argName, GameMode.class);
 	}
-
-
-
-
 }

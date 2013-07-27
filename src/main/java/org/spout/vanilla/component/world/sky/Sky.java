@@ -104,7 +104,6 @@ public abstract class Sky extends VanillaWorldComponent {
 
 	/**
 	 * Sets the time of the sky.
-	 * @param time
 	 */
 	public void setTime(long time) {
 		getData().put(VanillaData.WORLD_TIME, time);
@@ -113,6 +112,7 @@ public abstract class Sky extends VanillaWorldComponent {
 
 	/**
 	 * Gets the time of the sky
+	 *
 	 * @return time
 	 */
 	public long getTime() {
@@ -120,18 +120,14 @@ public abstract class Sky extends VanillaWorldComponent {
 	}
 
 	/**
-	 * Gets the max time of the sky. When the time reached the maxTime, the time
-	 * will be set to 0.
-	 * @return
+	 * Gets the max time of the sky. When the time reached the maxTime, the time will be set to 0.
 	 */
 	public long getMaxTime() {
 		return getData().get(VanillaData.MAX_TIME);
 	}
 
 	/**
-	 * Sets the max time of the sky. When the time reaches the maxTime, the time
-	 * will be set to 0.
-	 * @param maxTime
+	 * Sets the max time of the sky. When the time reaches the maxTime, the time will be set to 0.
 	 */
 	public void setMaxTime(long maxTime) {
 		getData().put(VanillaData.MAX_TIME, maxTime);
@@ -140,16 +136,13 @@ public abstract class Sky extends VanillaWorldComponent {
 
 	/**
 	 * Gets the rate of how many ticks the time is incremented each time update.
-	 * @return
 	 */
 	public long getRate() {
 		return getData().get(VanillaData.TIME_RATE);
 	}
 
 	/**
-	 * Sets the rate of how many ticks the time is incremented by each time
-	 * update.
-	 * @param rate
+	 * Sets the rate of how many ticks the time is incremented by each time update.
 	 */
 	public void setRate(long rate) {
 		getData().put(VanillaData.TIME_RATE, rate);
@@ -158,6 +151,7 @@ public abstract class Sky extends VanillaWorldComponent {
 
 	/**
 	 * Gets the Weather Simulator
+	 *
 	 * @return the weather simulator, or null if no weather is enabled
 	 */
 	public synchronized WeatherSimulator getWeatherSimulator() {
@@ -166,6 +160,7 @@ public abstract class Sky extends VanillaWorldComponent {
 
 	/**
 	 * Whether or not the sky can produce weather
+	 *
 	 * @return true if sky has weather.
 	 */
 	public synchronized boolean hasWeather() {
@@ -174,7 +169,6 @@ public abstract class Sky extends VanillaWorldComponent {
 
 	/**
 	 * Sets whether or not the sky can produce weather.
-	 * @param hasWeather
 	 */
 	public synchronized void setHasWeather(boolean hasWeather) {
 		if (hasWeather && this.weather == null) {
@@ -186,6 +180,7 @@ public abstract class Sky extends VanillaWorldComponent {
 
 	/**
 	 * Gets the weather of the sky.
+	 *
 	 * @return weather
 	 */
 	public synchronized Weather getWeather() {
@@ -194,7 +189,6 @@ public abstract class Sky extends VanillaWorldComponent {
 
 	/**
 	 * Sets the forecast for the next weather change.
-	 * @param forecast
 	 */
 	public synchronized void setWeather(Weather forecast) {
 		if (this.weather != null) {
@@ -205,6 +199,7 @@ public abstract class Sky extends VanillaWorldComponent {
 
 	/**
 	 * Gets the forecast for the next weather change.
+	 *
 	 * @return forecast
 	 */
 	public synchronized Weather getForecast() {

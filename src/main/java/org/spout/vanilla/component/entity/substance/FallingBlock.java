@@ -29,16 +29,13 @@ package org.spout.vanilla.component.entity.substance;
 import org.spout.api.component.entity.PhysicsComponent;
 import org.spout.api.event.entity.EntityCollideBlockEvent;
 import org.spout.api.event.entity.EntityCollideEvent;
-import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.GenericMath;
-import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.protocol.entity.object.FallingBlockProtocol;
 import org.spout.vanilla.protocol.entity.object.ObjectType;
 
@@ -60,7 +57,7 @@ public class FallingBlock extends Substance {
 		this.material = material;
 		//Physics
 		PhysicsComponent physics = getOwner().getPhysics();
-		physics.activate(material.getMass(), material.getShape(), true);
+		physics.activate(material.getMass(), material.getShape(), false, true);
 		physics.setFriction(material.getFriction());
 		physics.setRestitution(material.getRestitution());
 	}

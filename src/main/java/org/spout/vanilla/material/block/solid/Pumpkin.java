@@ -85,6 +85,7 @@ public class Pumpkin extends Solid implements Directional {
 
 	/**
 	 * Whether this pumpkin block material is a jack o' lantern
+	 *
 	 * @return true if jack o' lantern
 	 */
 	public boolean isLantern() {

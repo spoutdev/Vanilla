@@ -55,8 +55,8 @@ public class MiningTool extends Tool {
 	}
 
 	/**
-	 * Gets the time this type of tool subtracts from the digging time<br>
-	 * The default digging speed without tool is 1.0
+	 * Gets the time this type of tool subtracts from the digging time<br> The default digging speed without tool is 1.0
+	 *
 	 * @return digging time
 	 */
 	public float getDiggingSpeed() {
@@ -64,8 +64,8 @@ public class MiningTool extends Tool {
 	}
 
 	/**
-	 * Sets the time this type of tool subtracts from the digging time<br>
-	 * The default digging speed without tool is 1.0
+	 * Sets the time this type of tool subtracts from the digging time<br> The default digging speed without tool is 1.0
+	 *
 	 * @param diggingSpeed to set to
 	 * @return this Mining Tool
 	 */

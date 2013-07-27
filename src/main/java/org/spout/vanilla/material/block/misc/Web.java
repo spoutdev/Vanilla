@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.material.block.misc;
 
+import org.spout.api.event.entity.EntityCollideBlockEvent;
+
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.data.tool.ToolLevel;
@@ -34,10 +36,17 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 
 public class Web extends VanillaBlockMaterial {
 	public Web(String name, int id) {
-		super(name, id, VanillaMaterialModels.WEB);
-		this.setLiquidObstacle(false).setHardness(4.0F).setResistance(20.0F).setTransparent();
+		//TODO: Box Shape
+		super(name, id, VanillaMaterialModels.WEB, null);
+		this.setLiquidObstacle(false).setHardness(4.0F).setResistance(20.0F).setTransparent().setGhost(true);
 		this.addMiningType(ToolType.SWORD).setMiningLevel(ToolLevel.WOOD);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.SWORD, ToolTypeFlags.SHEARS);
+	}
+
+	@Override
+	public void onCollided(EntityCollideBlockEvent event) {
+		super.onCollided(event);
+		//TODO: Lower velocity
 	}
 
 	@Override

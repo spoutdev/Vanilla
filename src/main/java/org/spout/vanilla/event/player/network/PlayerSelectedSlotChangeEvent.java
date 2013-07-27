@@ -29,8 +29,9 @@ package org.spout.vanilla.event.player.network;
 import org.spout.api.entity.Player;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.ProtocolEvent;
+import org.spout.api.event.player.PlayerEvent;
 
-public class PlayerSelectedSlotChangeEvent extends ProtocolEvent {
+public class PlayerSelectedSlotChangeEvent extends ProtocolEvent implements PlayerEvent {
 	private static final HandlerList handlers = new HandlerList();
 	private final int slot;
 	private final Player player;
@@ -42,12 +43,14 @@ public class PlayerSelectedSlotChangeEvent extends ProtocolEvent {
 
 	/**
 	 * Gets the new slot index that is selected
+	 *
 	 * @return Selected slot index
 	 */
 	public int getSelectedSlot() {
 		return this.slot;
 	}
 
+	@Override
 	public Player getPlayer() {
 		return player;
 	}

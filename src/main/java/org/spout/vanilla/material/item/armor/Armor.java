@@ -97,6 +97,7 @@ public abstract class Armor extends VanillaItemMaterial {
 
 	/**
 	 * The index of the slot that this armor will equip in an {@link org.spout.vanilla.inventory.entity.ArmorInventory}
+	 *
 	 * @return index
 	 */
 	public abstract int getEquipableSlot();

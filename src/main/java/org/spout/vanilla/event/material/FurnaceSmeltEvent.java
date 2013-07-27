@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.block;
+package org.spout.vanilla.event.material;
 
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.Cause;
@@ -32,61 +32,58 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.event.block.BlockEvent;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.component.block.material.BrewingStand;
+import org.spout.vanilla.component.block.material.Furnace;
 
-public class PotionBrewEvent extends BlockEvent implements Cancellable {
+/**
+ * Event which is called when an unit of an ItemStack has finished smelting.
+ */
+public class FurnaceSmeltEvent extends BlockEvent implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
-	private BrewingStand brewingStand;
-	private ItemStack ingredient;
-	private ItemStack original;
+	private final Furnace furnace;
+	private final ItemStack source;
 	private ItemStack result;
 
-	public PotionBrewEvent(BrewingStand brewingStand, Cause<?> reason, ItemStack ingredient, ItemStack original, ItemStack result) {
-		super(brewingStand.getBlock(), reason);
-		this.brewingStand = brewingStand;
-		this.ingredient = ingredient;
-		this.original = original;
+	public FurnaceSmeltEvent(Furnace furnace, Cause<?> reason, ItemStack source, ItemStack result) {
+		super(furnace.getBlock(), reason);
+		this.furnace = furnace;
+		this.source = source;
 		this.result = result;
 	}
 
 	/**
-	 * Get the brewing stand in which the potion was brewed
-	 * @return brewingStand
+	 * Gets the smelted ItemStack
+	 *
+	 * @return ItemStack which was smelted
 	 */
-	public BrewingStand getBrewingStand() {
-		return brewingStand;
+	public ItemStack getSource() {
+		return source;
 	}
 
 	/**
-	 * Get the ingredient used in the brewing process
-	 * @return ingredient
-	 */
-	public ItemStack getIngredient() {
-		return ingredient;
-	}
-
-	/**
-	 * Get the original potion
-	 * @return original
-	 */
-	public ItemStack getOriginal() {
-		return original;
-	}
-
-	/**
-	 * Get the result of the brewing process
-	 * @return result
+	 * Gets the result of the smelting process for this furnace, as a clone. Changes to this itemstack will not be reflected on event completion.
+	 *
+	 * @return the result ItemStack
 	 */
 	public ItemStack getResult() {
-		return result;
+		return result.clone();
 	}
 
 	/**
-	 * Set the result ItemStack
-	 * @param result
+	 * Sets the result ItemStack
+	 *
+	 * @param newResult the result ItemStack
 	 */
-	public void setResult(ItemStack result) {
-		this.result = result;
+	public void setResult(ItemStack newResult) {
+		result = newResult;
+	}
+
+	/**
+	 * Returns the Furnace in which an item was smelted.
+	 *
+	 * @return furnace
+	 */
+	public Furnace getFurnace() {
+		return furnace;
 	}
 
 	@Override

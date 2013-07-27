@@ -80,6 +80,7 @@ public class DoubleSlab extends Solid implements Burnable {
 
 	/**
 	 * Gets if this Double Slab is made of Wood
+	 *
 	 * @return True if wooden, False if not
 	 */
 	public boolean isWooden() {

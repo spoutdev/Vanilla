@@ -75,7 +75,6 @@ public class Follow extends VanillaEntityComponent {
 
 	/**
 	 * Instructs the holder to follow the entity specified. Passing a null will instruct the holder to cancel following.
-	 * @param toFollow
 	 */
 	public void follow(Entity toFollow) {
 		this.toFollow = toFollow;
@@ -83,6 +82,7 @@ public class Follow extends VanillaEntityComponent {
 
 	/**
 	 * Instructs the holder to find just a player or any entity and follow it.
+	 *
 	 * @param player true to only find players, false if it doesn't matter
 	 * @param range range to scan for
 	 * @return Entity the Entity found or null if none found

@@ -48,6 +48,7 @@ public class EnchantmentTableCloseEvent extends InventoryCloseEvent implements C
 
 	/**
 	 * Returns the enchantmentTable which caused this event.
+	 *
 	 * @return enchantmentTable
 	 */
 	public EnchantmentTable getEnchantmentTable() {

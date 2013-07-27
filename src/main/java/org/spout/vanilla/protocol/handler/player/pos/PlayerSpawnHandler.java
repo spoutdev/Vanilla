@@ -30,8 +30,8 @@ import org.spout.api.entity.Entity;
 import org.spout.api.entity.EntityPrefab;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.ClientSession;
+import org.spout.api.protocol.MessageHandler;
 
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnMessage;

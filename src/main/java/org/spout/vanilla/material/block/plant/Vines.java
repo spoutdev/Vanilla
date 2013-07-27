@@ -102,6 +102,7 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 
 	/**
 	 * Sets whether a certain face is attached or not
+	 *
 	 * @param block of this material
 	 * @param face to attach to
 	 * @param attached whether or not to attach

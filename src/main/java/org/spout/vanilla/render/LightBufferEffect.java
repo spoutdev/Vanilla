@@ -82,11 +82,6 @@ public class LightBufferEffect implements BufferEffect {
 
 	/**
 	 * Compute the light for one vertex
-	 * @param chunkModel
-	 * @param x
-	 * @param y
-	 * @param z
-	 * @param lightBuffer
 	 */
 	private void generateLightOnVertices(ChunkSnapshotModel chunkModel, float x, float y, float z, TFloatArrayList lightBuffer, TFloatArrayList skylightBuffer) {
 		int xi = (int) x;

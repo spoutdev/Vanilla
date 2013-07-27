@@ -31,9 +31,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import org.spout.api.entity.Entity;
+import org.spout.api.event.entity.EntityCollideBlockEvent;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.flag.Flag;
@@ -48,9 +47,9 @@ public class TripWire extends GroundAttachable implements InitializableMaterial 
 	public static final int MAX_DISTANCE_SQUARED = MAX_DISTANCE * MAX_DISTANCE;
 
 	public TripWire(String name, int id) {
-		super(name, id, VanillaMaterialModels.TRIP_WIRE);
+		//TODO: Box Shape
+		super(name, id, VanillaMaterialModels.TRIP_WIRE, null);
 		this.setHardness(0.0f).setResistance(0.0f).setTransparent().setGhost(true);
-		//this.setCollisionShape(new BoxShape(1f, 1f, 1f));
 	}
 
 	@Override
@@ -81,8 +80,7 @@ public class TripWire extends GroundAttachable implements InitializableMaterial 
 
 	/**
 	 * Performs a null-check and a distance check on the two hooks
-	 * @param hook1
-	 * @param hook2
+	 *
 	 * @return True if validated, False if not
 	 */
 	private boolean validateHooks(Block hook1, Block hook2) {
@@ -91,6 +89,7 @@ public class TripWire extends GroundAttachable implements InitializableMaterial 
 
 	/**
 	 * Attempts to find a hook of this wire
+	 *
 	 * @param wire to search from
 	 * @param direction to search to
 	 * @return the block of the hook, or null if not find
@@ -124,6 +123,7 @@ public class TripWire extends GroundAttachable implements InitializableMaterial 
 
 	/**
 	 * Gets all the Hooks connected to this Trip Wire
+	 *
 	 * @param wire block
 	 * @return A list of attached hooks
 	 */
@@ -145,6 +145,7 @@ public class TripWire extends GroundAttachable implements InitializableMaterial 
 
 	/**
 	 * Tramples the wire, possibly causing hooks to get activated
+	 *
 	 * @param block to trample
 	 */
 	public void trample(Block block) {
@@ -154,8 +155,8 @@ public class TripWire extends GroundAttachable implements InitializableMaterial 
 	}
 
 	@Override
-	public void onCollided(Point colliderPoint, Point collidedPoint, Entity entity) {
-		super.onCollided(colliderPoint, collidedPoint, entity);
-		trample(collidedPoint.getBlock());
+	public void onCollided(EntityCollideBlockEvent event) {
+		super.onCollided(event);
+		trample(event.getEntity().getWorld().getBlock(event.getContactInfo().getNormal()));
 	}
 }

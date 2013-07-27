@@ -26,11 +26,10 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;
+import org.spout.api.event.entity.EntityCollideBlockEvent;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockSnapshot;
@@ -47,11 +46,11 @@ public abstract class PressurePlate extends AttachedRedstoneSource implements Dy
 	public static final int TICK_DELAY = 1000;
 	private static final EffectRange physicsRange = new ListEffectRange(new CubicEffectRange(1), new CuboidEffectRange(0, -2, 0, 0, -1, 0));
 
+	//TODO: Box Shape
 	public PressurePlate(String name, int id, String model) {
-		super(name, id, model);
-		this.setAttachable(BlockFace.BOTTOM).setHardness(0.5F).setResistance(0.8F).setTransparent();
-		this.setCollision(CollisionStrategy.SOLID);
-		//this.setCollisionShape(new BoxShape(1.0f, 0.03125f, 1.0f));
+		super(name, id, model, null);
+		//TODO Ghostable?
+		this.setAttachable(BlockFace.BOTTOM).setHardness(0.5F).setResistance(0.8F).setTransparent().setGhost(true);
 		//TODO: Create the box model and different up/down collision shapes
 		// UP height = 0.0625F
 		// DOWN height = 0.03125F
@@ -59,6 +58,7 @@ public abstract class PressurePlate extends AttachedRedstoneSource implements Dy
 
 	/**
 	 * Gets whether this pressure plate is pressed down
+	 *
 	 * @param block to get it of
 	 * @return True if pressed down, False if not
 	 */
@@ -82,6 +82,7 @@ public abstract class PressurePlate extends AttachedRedstoneSource implements Dy
 
 	/**
 	 * Sets whether this pressure plate is pressed down
+	 *
 	 * @param block to set it of
 	 * @param pressed whether it is pressed
 	 */
@@ -94,15 +95,16 @@ public abstract class PressurePlate extends AttachedRedstoneSource implements Dy
 	}
 
 	@Override
-	public void onCollided(Point colliderPoint, Point collidedPoint, Entity entity) {
-		super.onCollided(colliderPoint, collidedPoint, entity);
-		if (this.canTrigger(entity)) {
-			this.setPressed(collidedPoint.getBlock(), true);
+	public void onCollided(EntityCollideBlockEvent event) {
+		super.onCollided(event);
+		if (this.canTrigger(event.getEntity())) {
+			this.setPressed(event.getEntity().getWorld().getBlock(event.getContactInfo().getNormal()), true);
 		}
 	}
 
 	/**
 	 * Checks whether a given entity can trigger this pressure plate
+	 *
 	 * @param entity to check for
 	 * @return True if the pressure plate is triggered, False if not
 	 */

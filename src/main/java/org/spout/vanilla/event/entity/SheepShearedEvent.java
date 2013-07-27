@@ -28,7 +28,7 @@ package org.spout.vanilla.event.entity;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.entity.EntityEvent;
+import org.spout.api.event.entity.AbstractEntityEvent;
 import org.spout.api.exception.InvalidControllerException;
 import org.spout.api.inventory.ItemStack;
 
@@ -37,7 +37,7 @@ import org.spout.vanilla.component.entity.living.passive.Sheep;
 /**
  * Event which is called when a player shears a sheep.
  */
-public class SheepShearedEvent extends EntityEvent {
+public class SheepShearedEvent extends AbstractEntityEvent {
 	private static final HandlerList handlers = new HandlerList();
 	private ItemStack itemStack;
 

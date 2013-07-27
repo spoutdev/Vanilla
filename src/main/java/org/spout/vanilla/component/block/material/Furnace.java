@@ -35,10 +35,10 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.block.ViewedBlockComponent;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.event.block.FurnaceBurnEvent;
-import org.spout.vanilla.event.block.FurnaceSmeltEvent;
 import org.spout.vanilla.event.inventory.FurnaceCloseEvent;
 import org.spout.vanilla.event.inventory.FurnaceOpenEvent;
+import org.spout.vanilla.event.material.FurnaceBurnEvent;
+import org.spout.vanilla.event.material.FurnaceSmeltEvent;
 import org.spout.vanilla.inventory.block.FurnaceInventory;
 import org.spout.vanilla.inventory.window.block.FurnaceWindow;
 import org.spout.vanilla.inventory.window.prop.FurnaceProperty;
@@ -55,6 +55,7 @@ public class Furnace extends ViewedBlockComponent implements Container {
 
 	/**
 	 * Retrieve the maximum time to smelt something.
+	 *
 	 * @return The maximum time to smelt.
 	 */
 	public float getMaxSmeltTime() {
@@ -63,6 +64,7 @@ public class Furnace extends ViewedBlockComponent implements Container {
 
 	/**
 	 * Sets the maximum amount of time to smelt something.
+	 *
 	 * @param maxSmeltTime The maximum time to smelt.
 	 */
 	public void setMaxSmeltTime(float maxSmeltTime) {
@@ -71,6 +73,7 @@ public class Furnace extends ViewedBlockComponent implements Container {
 
 	/**
 	 * Retrieve the current smelting time.
+	 *
 	 * @return The current smelting time.
 	 */
 	public float getSmeltTime() {
@@ -79,6 +82,7 @@ public class Furnace extends ViewedBlockComponent implements Container {
 
 	/**
 	 * Sets the current smelting time.
+	 *
 	 * @param smeltTime The current smelting time.
 	 */
 	public void setSmeltTime(float smeltTime) {
@@ -102,6 +106,7 @@ public class Furnace extends ViewedBlockComponent implements Container {
 
 	/**
 	 * Retrieve the maximum fuel amount currently set in the furnace.
+	 *
 	 * @return The max fuel amount.
 	 */
 	//TODO: Better description anyone?
@@ -111,6 +116,7 @@ public class Furnace extends ViewedBlockComponent implements Container {
 
 	/**
 	 * Sets the maximum amount of fuel this furnace can hold.
+	 *
 	 * @param maxFuel The maximum amount of fuel.
 	 */
 	public void setMaxFuel(float maxFuel) {
@@ -119,6 +125,7 @@ public class Furnace extends ViewedBlockComponent implements Container {
 
 	/**
 	 * Retrieve the current amount of fuel in this furnace.
+	 *
 	 * @return The current amount of fuel.
 	 */
 	public float getFuel() {
@@ -127,6 +134,7 @@ public class Furnace extends ViewedBlockComponent implements Container {
 
 	/**
 	 * Set the current amount of fuel in this furnace.
+	 *
 	 * @param fuel The current amount of fuel.
 	 */
 	public void setFuel(float fuel) {
@@ -156,6 +164,7 @@ public class Furnace extends ViewedBlockComponent implements Container {
 
 	/**
 	 * Check if all the criteria for smelting is met.
+	 *
 	 * @return True if smelting can happen else false.
 	 */
 	public boolean canSmelt() {

@@ -31,13 +31,11 @@ import org.spout.api.inventory.ItemStack;
 public interface TimedCraftable {
 	/**
 	 * Gets the result of smelting the ingredient
-	 * @return
 	 */
 	public ItemStack getResult();
 
 	/**
 	 * Returns the time in seconds until this object is crafted
-	 * @return
 	 */
 	public float getCraftTime();
 }

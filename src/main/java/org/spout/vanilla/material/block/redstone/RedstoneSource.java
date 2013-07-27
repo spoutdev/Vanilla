@@ -33,13 +33,12 @@ import org.spout.api.material.block.BlockSnapshot;
 import org.spout.vanilla.data.RedstonePowerMode;
 
 /**
- * Defines a material that can supply redstone power to targets and solid blocks<br>
- * Redstone wire will automatically attach to this material
+ * Defines a material that can supply redstone power to targets and solid blocks<br> Redstone wire will automatically attach to this material
  */
 public interface RedstoneSource extends IndirectRedstoneSource {
 	/**
-	 * Gets how much redstone power this redstone source block provides to the direction given.<br>
-	 * This is direct power, which can power other solid blocks
+	 * Gets how much redstone power this redstone source block provides to the direction given.<br> This is direct power, which can power other solid blocks
+	 *
 	 * @param block of this redstone source
 	 * @param direction it provides power to
 	 * @param powerMode to use to get the power
@@ -48,8 +47,8 @@ public interface RedstoneSource extends IndirectRedstoneSource {
 	short getDirectRedstonePower(Block block, BlockFace direction, RedstonePowerMode powerMode);
 
 	/**
-	 * Gets if this redstone source block provides power to the direction given.<br>
-	 * This is direct power, which can power other solid blocks
+	 * Gets if this redstone source block provides power to the direction given.<br> This is direct power, which can power other solid blocks
+	 *
 	 * @param block of this redstone source
 	 * @param direction it provides power to
 	 * @param powerMode to use to get the power
@@ -59,6 +58,7 @@ public interface RedstoneSource extends IndirectRedstoneSource {
 
 	/**
 	 * Gets the amount of redstone power this material generates for itself
+	 *
 	 * @param state of the block
 	 * @return power strength
 	 */

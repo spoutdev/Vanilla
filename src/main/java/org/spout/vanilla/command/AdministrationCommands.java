@@ -28,6 +28,7 @@ package org.spout.vanilla.command;
 
 import gnu.trove.iterator.TLongIterator;
 import gnu.trove.list.linked.TLongLinkedList;
+
 import org.spout.api.Client;
 import org.spout.api.Engine;
 import org.spout.api.Server;
@@ -49,6 +50,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.scheduler.TaskPriority;
 import org.spout.api.util.concurrent.AtomicFloat;
+
 import org.spout.vanilla.ChatStyle;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
@@ -78,21 +80,20 @@ public class AdministrationCommands {
 		return plugin.getEngine();
 	}
 
-	@CommandDescription(aliases = "clear", usage = "[player] [item] [data]", desc = "Clears the target's inventory")
-	@Permissible("vanilla.command.clear")
+	@CommandDescription (aliases = "clear", usage = "[player] [item] [data]", desc = "Clears the target's inventory")
+	@Permissible ("vanilla.command.clear")
 	public void clear(CommandSource source, CommandArguments args) throws CommandException {
 		Player player = args.popPlayerOrMe("player", source);
 		Material filter = VanillaArgumentTypes.popMaterial("filter", args);
 		Integer data = args.popInteger("data");
 		args.assertCompletelyParsed();
 
-
 		PlayerInventory inv = player.get(PlayerInventory.class);
 		if (inv == null) {
 			throw new CommandException(player.getName() + " doesn't have a inventory!");
 		} else {
 			// Count the items and clear the inventory
-			Inventory[] inventories = new Inventory[]{inv.getMain(), inv.getQuickbar(), inv.getArmor()};
+			Inventory[] inventories = new Inventory[] {inv.getMain(), inv.getQuickbar(), inv.getArmor()};
 			int cleared = 0;
 			for (int k = 0; k < inventories.length; k++) {
 				for (int i = 0; i < inventories[k].size(); i++) {
@@ -111,8 +112,8 @@ public class AdministrationCommands {
 		}
 	}
 
-	@CommandDescription(aliases = {"give"}, usage = "[player] <block> [amount] [data]", desc = "Lets a player spawn items")
-	@Permissible("vanilla.command.give")
+	@CommandDescription (aliases = {"give"}, usage = "[player] <block> [amount] [data]", desc = "Lets a player spawn items")
+	@Permissible ("vanilla.command.give")
 	public void give(CommandSource source, CommandArguments args) throws CommandException {
 		Player player;
 		if (args.length() != 1) {
@@ -125,7 +126,6 @@ public class AdministrationCommands {
 		int data = args.popInteger("data");
 		args.assertCompletelyParsed();
 
-
 		PlayerInventory inventory = player.get(PlayerInventory.class);
 		if (inventory != null) {
 			inventory.add(new ItemStack(material, data, quantity));
@@ -137,8 +137,8 @@ public class AdministrationCommands {
 		}
 	}
 
-	@CommandDescription(aliases = {"deop"}, usage = "<player>", desc = "Revoke a players operator status")
-	@Permissible("vanilla.command.deop")
+	@CommandDescription (aliases = {"deop"}, usage = "<player>", desc = "Revoke a players operator status")
+	@Permissible ("vanilla.command.deop")
 	public void deop(CommandSource source, CommandArguments args) throws CommandException {
 		String playerName = args.popString("player");
 		args.assertCompletelyParsed();
@@ -159,8 +159,8 @@ public class AdministrationCommands {
 		}
 	}
 
-	@CommandDescription(aliases = {"op"}, usage = "<player>", desc = "Make a player an operator")
-	@Permissible("vanilla.command.op")
+	@CommandDescription (aliases = {"op"}, usage = "<player>", desc = "Make a player an operator")
+	@Permissible ("vanilla.command.op")
 	public void op(CommandSource source, CommandArguments args) throws CommandException {
 		String playerName = args.popString("player");
 		args.assertCompletelyParsed();
@@ -181,8 +181,8 @@ public class AdministrationCommands {
 		}
 	}
 
-	@CommandDescription(aliases = {"time"}, usage = "<add|set> <0-24000|day|night|dawn|dusk> [world]", desc = "Set the time of the server")
-	@Permissible("vanilla.command.time")
+	@CommandDescription (aliases = {"time"}, usage = "<add|set> <0-24000|day|night|dawn|dusk> [world]", desc = "Set the time of the server")
+	@Permissible ("vanilla.command.time")
 	public void time(CommandSource source, CommandArguments args) throws CommandException {
 		String relativeCheck = args.currentArgument("relative");
 		boolean relative;
@@ -224,8 +224,8 @@ public class AdministrationCommands {
 		}
 	}
 
-	@CommandDescription(aliases = {"gamemode", "gm"}, usage = "<0|1|2|survival|creative|adventure|s|c|a> [player] (0 = SURVIVAL, 1 = CREATIVE, 2 = ADVENTURE)", desc = "Change a player's game mode")
-	@Permissible("vanilla.command.gamemode")
+	@CommandDescription (aliases = {"gamemode", "gm"}, usage = "<0|1|2|survival|creative|adventure|s|c|a> [player] (0 = SURVIVAL, 1 = CREATIVE, 2 = ADVENTURE)", desc = "Change a player's game mode")
+	@Permissible ("vanilla.command.gamemode")
 	public void gamemode(CommandSource source, CommandArguments args) throws CommandException {
 		GameMode mode = VanillaArgumentTypes.popGameMode("gamemode", args);
 		Player player = args.popPlayerOrMe("player", source);
@@ -236,7 +236,6 @@ public class AdministrationCommands {
 			throw new CommandException("Invalid player!");
 		}
 
-
 		human.setGamemode(mode);
 
 		if (!player.equals(source)) {
@@ -246,8 +245,8 @@ public class AdministrationCommands {
 		}
 	}
 
-	@CommandDescription(aliases = "xp", usage = "[player] <amount>", desc = "Give/take experience from a player")
-	@Permissible("vanilla.command.xp")
+	@CommandDescription (aliases = "xp", usage = "[player] <amount>", desc = "Give/take experience from a player")
+	@Permissible ("vanilla.command.xp")
 	public void xp(CommandSource source, CommandArguments args) throws CommandException {
 		Player player = args.popPlayerOrMe("player", source);
 		int amount = args.popInteger("amount");
@@ -262,8 +261,8 @@ public class AdministrationCommands {
 		player.sendMessage(plugin.getPrefix() + ChatStyle.GREEN + "Your experience has been set to " + ChatStyle.WHITE + amount + ChatStyle.GREEN + ".");
 	}
 
-	@CommandDescription(aliases = "weather", usage = "<0|1|2|clear|rain|thunder> (0 = CLEAR, 1 = RAIN/SNOW, 2 = THUNDERSTORM) [world]", desc = "Changes the weather")
-	@Permissible("vanilla.command.weather")
+	@CommandDescription (aliases = "weather", usage = "<0|1|2|clear|rain|thunder> (0 = CLEAR, 1 = RAIN/SNOW, 2 = THUNDERSTORM) [world]", desc = "Changes the weather")
+	@Permissible ("vanilla.command.weather")
 	public void weather(CommandSource source, CommandArguments args) throws CommandException {
 		Weather weather = args.popEnumValue("weather", Weather.class);
 		World world = args.popWorld("world", source);
@@ -295,8 +294,8 @@ public class AdministrationCommands {
 		}
 	}
 
-	@CommandDescription(aliases = {"kill"}, usage = "[player]", desc = "Kill yourself or another player")
-	@Permissible("vanilla.command.kill")
+	@CommandDescription (aliases = {"kill"}, usage = "[player]", desc = "Kill yourself or another player")
+	@Permissible ("vanilla.command.kill")
 	public void kill(CommandSource source, CommandArguments args) throws CommandException {
 		Player player = args.popPlayerOrMe("player", source);
 		args.assertCompletelyParsed();
@@ -308,8 +307,8 @@ public class AdministrationCommands {
 		health.kill(HealthChangeCause.COMMAND);
 	}
 
-	@CommandDescription(aliases = {"version", "vr"}, usage = "", desc = "Print out the version information for Vanilla")
-	@Permissible("vanilla.command.version")
+	@CommandDescription (aliases = {"version", "vr"}, usage = "", desc = "Print out the version information for Vanilla")
+	@Permissible ("vanilla.command.version")
 	public void getVersion(CommandSource source, CommandArguments args) throws ArgumentParseException {
 		args.assertCompletelyParsed();
 
@@ -319,9 +318,9 @@ public class AdministrationCommands {
 		source.sendMessage("Powered by Spout " + getEngine().getVersion() + " (Implementing SpoutAPI " + getEngine().getAPIVersion() + ")");
 	}
 
-	@CommandDescription(aliases = {"biome"}, usage = "", desc = "Print out the name of the biome at the current location")
-	@Permissible("vanilla.command.biome")
-	@Filter(PlayerFilter.class)
+	@CommandDescription (aliases = {"biome"}, usage = "", desc = "Print out the name of the biome at the current location")
+	@Permissible ("vanilla.command.biome")
+	@Filter (PlayerFilter.class)
 	public void getBiomeName(CommandSource source, CommandArguments args) throws CommandException {
 		args.assertCompletelyParsed();
 
@@ -334,8 +333,8 @@ public class AdministrationCommands {
 		source.sendMessage(plugin.getPrefix() + ChatStyle.GREEN + "Current biome: " + ChatStyle.WHITE + (biome != null ? biome.getName() : "none"));
 	}
 
-	@CommandDescription(aliases = {"tps"}, usage = "", desc = "Print out the current engine ticks per second")
-	@Permissible("vanilla.command.tps")
+	@CommandDescription (aliases = {"tps"}, usage = "", desc = "Print out the current engine ticks per second")
+	@Permissible ("vanilla.command.tps")
 	public void getTPS(CommandSource source, CommandArguments args) throws ArgumentParseException {
 		args.assertCompletelyParsed();
 

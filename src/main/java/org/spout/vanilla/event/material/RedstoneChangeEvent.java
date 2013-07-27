@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.block;
+package org.spout.vanilla.event.material;
 
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.Cause;
@@ -47,11 +47,9 @@ public class RedstoneChangeEvent extends BlockEvent implements Cancellable {
 	}
 
 	/**
-	 * Gets the redstone power level before the block change occurred.
-	 * <p>
-	 * <p>Note: Because RedstoneChangeEvent occurs <i>before</i> the block
-	 * change event has finished, you can also inspect the block to find the
-	 * previous power.</p>
+	 * Gets the redstone power level before the block change occurred. <p> <p>Note: Because RedstoneChangeEvent occurs <i>before</i> the block change event has finished, you can also inspect the block to
+	 * find the previous power.</p>
+	 *
 	 * @return prev power
 	 */
 	public int getPreviousPower() {
@@ -59,12 +57,9 @@ public class RedstoneChangeEvent extends BlockEvent implements Cancellable {
 	}
 
 	/**
-	 * Gets the new power level the redstone source will have after this
-	 * block change finishes.
-	 * <p>
-	 * <p>Note: Because RedstoneChangeEvent occurs <i>before</i> the block
-	 * change event has finished, neighbor blocks may not yet report that they
-	 * are powered. To perform an event after a redstone change, use the scheduler.</p>
+	 * Gets the new power level the redstone source will have after this block change finishes. <p> <p>Note: Because RedstoneChangeEvent occurs <i>before</i> the block change event has finished, neighbor
+	 * blocks may not yet report that they are powered. To perform an event after a redstone change, use the scheduler.</p>
+	 *
 	 * @return new power level
 	 */
 	public int getNewPower() {
@@ -72,12 +67,9 @@ public class RedstoneChangeEvent extends BlockEvent implements Cancellable {
 	}
 
 	/**
-	 * Sets the new power level the redstone source will have after this
-	 * block change finishes.
-	 * <p>
-	 * <p>Note: Because RedstoneChangeEvent occurs <i>before</i> the block
-	 * change event has finished, neighbor blocks may not yet report that they
-	 * are powered. To perform an event after a redstone change, use the scheduler.</p>
+	 * Sets the new power level the redstone source will have after this block change finishes. <p> <p>Note: Because RedstoneChangeEvent occurs <i>before</i> the block change event has finished, neighbor
+	 * blocks may not yet report that they are powered. To perform an event after a redstone change, use the scheduler.</p>
+	 *
 	 * @param newCurrent new power level
 	 */
 	public void setNewPower(int newCurrent) {

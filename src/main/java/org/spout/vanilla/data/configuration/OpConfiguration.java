@@ -36,8 +36,7 @@ public class OpConfiguration {
 	private final YamlConfiguration config;
 
 	/**
-	 * Creates a new OpConfiguration and instantiates a YamlConfiguration<br>
-	 * containing the operators.
+	 * Creates a new OpConfiguration and instantiates a YamlConfiguration<br> containing the operators.
 	 */
 	public OpConfiguration(File dataFolder) {
 		config = new YamlConfiguration(new File(dataFolder, "ops.yml"));
@@ -45,6 +44,7 @@ public class OpConfiguration {
 
 	/**
 	 * Gets the operators.
+	 *
 	 * @return The operator-names as a List.
 	 */
 	public List<String> getOps() {
@@ -53,10 +53,10 @@ public class OpConfiguration {
 
 	/**
 	 * Sets a player as an operator.
+	 *
 	 * @param playerName Player to op/deop.
 	 * @param op If true, the player gets opped, if not, then deopped.
-	 * @return true if no exception occurred during saving the config, false if
-	 *         one occured.
+	 * @return true if no exception occurred during saving the config, false if one occured.
 	 */
 	public boolean setOp(String playerName, boolean op) {
 		List<String> list = getOps();
@@ -81,6 +81,7 @@ public class OpConfiguration {
 
 	/**
 	 * Checks whether the passed player is an operator.
+	 *
 	 * @param playerName The name of the player to check.
 	 * @return true if player is op, false when not.
 	 */
@@ -90,7 +91,6 @@ public class OpConfiguration {
 
 	/**
 	 * Saves the YamlConfiguration containing the operators.
-	 * @throws ConfigurationException
 	 */
 	public void save() throws ConfigurationException {
 		config.save();
@@ -98,7 +98,6 @@ public class OpConfiguration {
 
 	/**
 	 * Loads the config-values.
-	 * @throws ConfigurationException
 	 */
 	public void load() throws ConfigurationException {
 		config.load();

@@ -27,6 +27,7 @@
 package org.spout.vanilla.material.block.component;
 
 import org.spout.physics.collision.shape.BoxShape;
+
 import org.spout.vanilla.component.block.material.MonsterSpawner;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.VanillaBlockMaterial;

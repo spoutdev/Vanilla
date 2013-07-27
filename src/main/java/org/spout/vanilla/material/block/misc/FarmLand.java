@@ -62,8 +62,8 @@ public class FarmLand extends VanillaBlockMaterial implements InitializableMater
 	}
 
 	/**
-	 * Tests whether a certain farm land block is wet<br>
-	 * This wet state is set gradually if water is nearby
+	 * Tests whether a certain farm land block is wet<br> This wet state is set gradually if water is nearby
+	 *
 	 * @param block of the Farm land
 	 * @return True if wet, False if not
 	 */
@@ -72,8 +72,8 @@ public class FarmLand extends VanillaBlockMaterial implements InitializableMater
 	}
 
 	/**
-	 * Tests whether a certain farm land block has water nearby<br>
-	 * To obtain the wet state of the block, use {@link #isWet(org.spout.api.geo.cuboid.Block)}
+	 * Tests whether a certain farm land block has water nearby<br> To obtain the wet state of the block, use {@link #isWet(org.spout.api.geo.cuboid.Block)}
+	 *
 	 * @param block of the Farm land
 	 * @return True if water is nearby, False if not
 	 */
@@ -88,6 +88,7 @@ public class FarmLand extends VanillaBlockMaterial implements InitializableMater
 
 	/**
 	 * Tests whether a certain farm land block has crops nearby<br>
+	 *
 	 * @param block of the Farm land
 	 * @return True if crops are nearby, False if not
 	 */

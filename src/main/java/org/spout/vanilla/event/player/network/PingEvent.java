@@ -24,43 +24,26 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.entity;
+package org.spout.vanilla.event.player.network;
 
-import java.util.List;
-
-import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.ProtocolEvent;
-import org.spout.api.util.Parameter;
 
-/**
- * Event which is called when an Entity changes meta-data
- */
-public class EntityMetaChangeEvent extends ProtocolEvent {
+public class PingEvent extends ProtocolEvent {
 	private static final HandlerList handlers = new HandlerList();
-	private final List<Parameter<?>> parameters;
-	private final Entity entity;
+	private final int hash;
 
-	public EntityMetaChangeEvent(Entity e, List<Parameter<?>> parameters) {
-		this.entity = e;
-		this.parameters = parameters;
+	public PingEvent(int hash) {
+		this.hash = hash;
 	}
 
 	/**
-	 * Gets the updates meta data parameters of the Entity
-	 * @return parameter list
-	 */
-	public List<Parameter<?>> getParameters() {
-		return parameters;
-	}
-
-	/**
-	 * Gets the entity associated with this event.
+	 * Gets the Hash code for this ping message
 	 *
-	 * @return The entity associated with the event.
+	 * @return ping unique code
 	 */
-	public Entity getEntity() {
-		return entity;
+	public int getHash() {
+		return this.hash;
 	}
 
 	@Override

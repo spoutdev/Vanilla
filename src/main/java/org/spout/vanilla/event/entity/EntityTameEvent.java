@@ -29,12 +29,12 @@ package org.spout.vanilla.event.entity;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.entity.EntityEvent;
+import org.spout.api.event.entity.AbstractEntityEvent;
 
 /**
  * Event which is called when an Entity gets tamed
  */
-public class EntityTameEvent extends EntityEvent implements Cancellable {
+public class EntityTameEvent extends AbstractEntityEvent implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private Entity owner;
 
@@ -45,6 +45,7 @@ public class EntityTameEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Gets the owner of this entity
+	 *
 	 * @return The owner of the entity.
 	 */
 	public Entity getOwner() {
@@ -53,6 +54,7 @@ public class EntityTameEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Sets the owner of this entity.
+	 *
 	 * @param owner The owner of the entity.
 	 */
 	public void setOwner(Entity owner) {

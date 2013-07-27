@@ -71,8 +71,7 @@ public interface DamageCause<T> {
 		 */
 		FIREBALL,
 		/**
-		 * Damage due to getting hit by an
-		 * {@link org.spout.vanilla.component.entity.substance.projectile.Projectile}.
+		 * Damage due to getting hit by an {@link org.spout.vanilla.component.entity.substance.projectile.Projectile}.
 		 */
 		PROJECTILE,
 		/**
@@ -108,6 +107,7 @@ public interface DamageCause<T> {
 
 	/**
 	 * Gets the {@link DamageType} of the cause.
+	 *
 	 * @return type
 	 */
 	public DamageType getType();

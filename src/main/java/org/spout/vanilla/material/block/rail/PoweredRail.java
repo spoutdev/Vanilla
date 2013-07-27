@@ -81,6 +81,7 @@ public class PoweredRail extends RailBase implements RedstoneTarget {
 
 	/**
 	 * Gets if this block is powered
+	 *
 	 * @param block to get it of
 	 * @return True if powered, False if not
 	 */
@@ -90,6 +91,7 @@ public class PoweredRail extends RailBase implements RedstoneTarget {
 
 	/**
 	 * Sets if this block is powered
+	 *
 	 * @param block to set it of
 	 * @param powered Whether to power the block or not
 	 */

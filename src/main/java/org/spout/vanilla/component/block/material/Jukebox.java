@@ -67,6 +67,7 @@ public class Jukebox extends VanillaBlockComponent {
 
 	/**
 	 * Gets the item that is currently being played by this Jukebox
+	 *
 	 * @return Played item
 	 */
 	public ItemStack getPlayedItem() {
@@ -75,6 +76,7 @@ public class Jukebox extends VanillaBlockComponent {
 
 	/**
 	 * Sets the item that is currently being played by this Jukebox
+	 *
 	 * @param item to set to
 	 */
 	public void setPlayedItem(ItemStack item) {
@@ -88,6 +90,7 @@ public class Jukebox extends VanillaBlockComponent {
 
 	/**
 	 * Tests whether this Jukebox can play the material specified
+	 *
 	 * @param material to play
 	 * @return True if it can play it, False if not
 	 */
@@ -97,7 +100,7 @@ public class Jukebox extends VanillaBlockComponent {
 
 	/**
 	 * Tests whether this Jukebox can play the itemstack specified
-	 * 
+	 *
 	 * @param itemstack to play
 	 * @return True if it can play it, False if not
 	 */
@@ -107,6 +110,7 @@ public class Jukebox extends VanillaBlockComponent {
 
 	/**
 	 * Gets the current music this Jukebox plays
+	 *
 	 * @return Music
 	 */
 	public Music getMusic() {
@@ -127,7 +131,6 @@ public class Jukebox extends VanillaBlockComponent {
 
 	/**
 	 * Sets whether this Jukebox is playing or not
-	 * @param playing
 	 */
 	public void setPlaying(boolean playing) {
 		// This call is most likely useless, but might be useful once the client

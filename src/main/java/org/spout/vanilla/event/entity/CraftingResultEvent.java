@@ -29,14 +29,13 @@ package org.spout.vanilla.event.entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.entity.EntityEvent;
+import org.spout.api.event.entity.AbstractEntityEvent;
 import org.spout.api.inventory.ItemStack;
 
 /**
- * Event which is called when a furnace finishes smelting an object, or a CraftingTable finishes crafting, or a player finishes crafting
- * TODO implement event in CraftingInventory
+ * Event which is called when a furnace finishes smelting an object, or a CraftingTable finishes crafting, or a player finishes crafting TODO implement event in CraftingInventory
  */
-public class CraftingResultEvent extends EntityEvent implements Cancellable {
+public class CraftingResultEvent extends AbstractEntityEvent implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private final Player player;
 	private final ItemStack result;
@@ -49,6 +48,7 @@ public class CraftingResultEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Returns the player of this CraftingResultEvent
+	 *
 	 * @return player
 	 */
 	public Player getPlayer() {
@@ -57,6 +57,7 @@ public class CraftingResultEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Returns the result of this CraftingResultEvent
+	 *
 	 * @return result
 	 */
 	public ItemStack getResult() {

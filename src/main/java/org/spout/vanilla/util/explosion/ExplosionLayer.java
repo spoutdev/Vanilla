@@ -36,7 +36,7 @@ public class ExplosionLayer {
 	public ExplosionLayer(final ExplosionModelSpherical model) {
 		this.model = model;
 		this.index = 0;
-		this.slots = new ExplosionSlot[]{this.createSlot(0.0, 0.0, 0.0)};
+		this.slots = new ExplosionSlot[] {this.createSlot(0.0, 0.0, 0.0)};
 	}
 
 	public ExplosionLayer(ExplosionLayer previous) {
@@ -84,6 +84,7 @@ public class ExplosionLayer {
 
 	/**
 	 * Creates a new slot using a given direction
+	 *
 	 * @param dx is the delta x motion
 	 * @param dy is the delta y motion
 	 * @param dz is the delta z motion

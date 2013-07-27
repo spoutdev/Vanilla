@@ -29,10 +29,9 @@ package org.spout.vanilla.component.entity.player;
 import org.spout.api.entity.Player;
 import org.spout.api.math.GenericMath;
 
-import org.spout.vanilla.component.entity.VanillaEntityComponent;
-
 import org.spout.vanilla.ChatStyle;
-import org.spout.vanilla.event.player.network.PlayerPingEvent;
+import org.spout.vanilla.component.entity.VanillaEntityComponent;
+import org.spout.vanilla.event.player.network.PingEvent;
 
 /**
  * Component that pings periodically the client to see if it's still connected.
@@ -78,6 +77,7 @@ public class Ping extends VanillaEntityComponent {
 
 	/**
 	 * Gets the Player Ping in seconds
+	 *
 	 * @return player ping in seconds
 	 */
 	public float getPing() {
@@ -86,6 +86,7 @@ public class Ping extends VanillaEntityComponent {
 
 	/**
 	 * Re-sets the long timeout timer by validating the received hash code
+	 *
 	 * @param hash of the message sent to validate against
 	 */
 	public void response(int hash) {
@@ -117,6 +118,6 @@ public class Ping extends VanillaEntityComponent {
 		if (lastRequestCount >= pingTime.length) {
 			lastRequestCount = 0;
 		}
-		player.getNetworkSynchronizer().callProtocolEvent(new PlayerPingEvent(hash));
+		player.getNetworkSynchronizer().callProtocolEvent(new PingEvent(hash));
 	}
 }

@@ -36,7 +36,6 @@ import org.spout.vanilla.event.world.PlaySoundEffectEvent;
 
 public class SoundEffect extends Effect {
 	private static final long serialVersionUID = 1L;
-
 	private static final int SOUND_RANGE = 16;
 	private final String name;
 	private final float volume, pitch;
@@ -74,6 +73,7 @@ public class SoundEffect extends Effect {
 
 	/**
 	 * Gets this Sound Effect with the volume and pitch adjusted
+	 *
 	 * @param volume to set to
 	 * @param pitch to set to
 	 * @return a new sound effect with the new settings
@@ -84,6 +84,7 @@ public class SoundEffect extends Effect {
 
 	/**
 	 * Adds the amount of randomness in the pitch of this Sound
+	 *
 	 * @param amount of randomness to add
 	 * @return a new sound effect with the new settings
 	 */
@@ -102,6 +103,7 @@ public class SoundEffect extends Effect {
 
 	/**
 	 * Gets all the Players nearby a certain Point that can receive this Effect
+	 *
 	 * @param position of this Effect
 	 * @param ignore Entity to ignore
 	 * @return a Set of nearby Players

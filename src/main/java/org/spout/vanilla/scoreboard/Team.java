@@ -54,6 +54,7 @@ public class Team implements Named {
 
 	/**
 	 * Returns the name to display for this team.
+	 *
 	 * @return display name of this team
 	 */
 	public String getDisplayName() {
@@ -62,6 +63,7 @@ public class Team implements Named {
 
 	/**
 	 * Sets the name to be displayed for this team
+	 *
 	 * @param displayName for team
 	 * @return this team
 	 */
@@ -72,8 +74,8 @@ public class Team implements Named {
 	}
 
 	/**
-	 * Returns the {@link String} that prefaces the name of each player
-	 * on this team.
+	 * Returns the {@link String} that prefaces the name of each player on this team.
+	 *
 	 * @return prefix of players on this team
 	 */
 	public String getPrefix() {
@@ -82,6 +84,7 @@ public class Team implements Named {
 
 	/**
 	 * Sets the prefix of each player on this team.
+	 *
 	 * @param prefix of each player on the team
 	 * @return this team
 	 */
@@ -93,6 +96,7 @@ public class Team implements Named {
 
 	/**
 	 * Returns the {@link String} that come after each player's name.
+	 *
 	 * @return suffix for players
 	 */
 	public String getSuffix() {
@@ -101,6 +105,7 @@ public class Team implements Named {
 
 	/**
 	 * Sets the suffix for the players on this team.
+	 *
 	 * @param suffix for players
 	 * @return this team
 	 */
@@ -112,6 +117,7 @@ public class Team implements Named {
 
 	/**
 	 * Returns true if players on the same team cannot hurt each other.
+	 *
 	 * @return true if teammates can hurt each other
 	 */
 	public boolean isFriendlyFire() {
@@ -120,6 +126,7 @@ public class Team implements Named {
 
 	/**
 	 * Sets if players on the same team can hurt each other.
+	 *
 	 * @param friendlyFire true if teammates should be able to hurt each other.
 	 * @return this team
 	 */
@@ -131,6 +138,7 @@ public class Team implements Named {
 
 	/**
 	 * Returns a set of all the names of players on this team.
+	 *
 	 * @return names of players
 	 */
 	public Set<String> getPlayerNames() {
@@ -139,6 +147,7 @@ public class Team implements Named {
 
 	/**
 	 * Adds a name to the team.
+	 *
 	 * @param name to add
 	 * @return this team
 	 */
@@ -150,6 +159,7 @@ public class Team implements Named {
 
 	/**
 	 * Removes a name from the team
+	 *
 	 * @param name to add
 	 * @return this team
 	 */

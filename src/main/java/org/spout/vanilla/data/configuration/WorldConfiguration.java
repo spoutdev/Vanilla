@@ -58,8 +58,8 @@ public class WorldConfiguration extends YamlConfiguration {
 	}
 
 	/**
-	 * Gets the world configuration of a certain world<br>
-	 * Creates a new one if it doesn't exist
+	 * Gets the world configuration of a certain world<br> Creates a new one if it doesn't exist
+	 *
 	 * @param world of the configuration
 	 * @return the World configuration node
 	 */
@@ -68,8 +68,8 @@ public class WorldConfiguration extends YamlConfiguration {
 	}
 
 	/**
-	 * Gets the world configuration of a certain world<br>
-	 * Creates a new one if it doesn't exist
+	 * Gets the world configuration of a certain world<br> Creates a new one if it doesn't exist
+	 *
 	 * @param worldname of the configuration
 	 * @return the World configuration node
 	 */

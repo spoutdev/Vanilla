@@ -72,6 +72,7 @@ public abstract class Tool extends VanillaItemMaterial {
 
 	/**
 	 * Gets the type of tool
+	 *
 	 * @return tool type
 	 */
 	public ToolType getToolType() {

@@ -39,8 +39,8 @@ import org.spout.api.util.Parameter;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.component.entity.substance.Substance;
-import org.spout.vanilla.event.entity.EntityMetaChangeEvent;
-import org.spout.vanilla.event.entity.EntityStatusEvent;
+import org.spout.vanilla.event.entity.network.EntityMetaChangeEvent;
+import org.spout.vanilla.event.entity.network.EntityStatusEvent;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 
@@ -92,6 +92,7 @@ public abstract class MinecartBase extends Substance {
 
 	/**
 	 * The default block ID displayed inside this type of minecart, defaults to 0 for none/air.
+	 *
 	 * @return int id
 	 */
 	public int getMinecraftBlockID() {
@@ -100,7 +101,6 @@ public abstract class MinecartBase extends Substance {
 
 	/**
 	 * Sets the minecart to display the specified block.
-	 * @param snapshot
 	 */
 	public void setDisplayedBlock(BlockSnapshot snapshot) {
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();

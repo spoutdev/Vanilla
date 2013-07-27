@@ -39,7 +39,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.event.entity.EntityMetaChangeEvent;
+import org.spout.vanilla.event.entity.network.EntityMetaChangeEvent;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.object.ItemFrameProtocol;
 import org.spout.vanilla.util.PlayerUtil;

@@ -45,6 +45,7 @@ public abstract class WindowMessage extends VanillaMainChannelMessage {
 
 	/**
 	 * Gets the unique instance Id of the Window this Window Message is of
+	 *
 	 * @return Window instance Id
 	 */
 	public int getWindowInstanceId() {

@@ -58,6 +58,7 @@ public class ParticleEffectMessage extends VanillaMainChannelMessage {
 
 	/**
 	 * Name of the effect
+	 *
 	 * @return name
 	 */
 	public String getName() {
@@ -78,6 +79,7 @@ public class ParticleEffectMessage extends VanillaMainChannelMessage {
 
 	/**
 	 * X offset of the particle effect.
+	 *
 	 * @return xOffset
 	 */
 	public float getXOffset() {
@@ -86,6 +88,7 @@ public class ParticleEffectMessage extends VanillaMainChannelMessage {
 
 	/**
 	 * Y offset of the particle effect.
+	 *
 	 * @return yOffset
 	 */
 	public float getYOffset() {
@@ -94,6 +97,7 @@ public class ParticleEffectMessage extends VanillaMainChannelMessage {
 
 	/**
 	 * Z offset of the particle effect.
+	 *
 	 * @return zOffset
 	 */
 	public float getZOffset() {
@@ -102,6 +106,7 @@ public class ParticleEffectMessage extends VanillaMainChannelMessage {
 
 	/**
 	 * The number of particles to create
+	 *
 	 * @return amount
 	 */
 	public int getAmount() {
@@ -110,6 +115,7 @@ public class ParticleEffectMessage extends VanillaMainChannelMessage {
 
 	/**
 	 * The velocity given to the particles
+	 *
 	 * @return velocity
 	 */
 	public float getVelocity() {

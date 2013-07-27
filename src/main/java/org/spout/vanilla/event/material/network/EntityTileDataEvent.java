@@ -24,53 +24,66 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.player.network;
+package org.spout.vanilla.event.material.network;
 
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.ProtocolEvent;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.nbt.CompoundMap;
 
-public class PlayerListEvent extends ProtocolEvent {
+public class EntityTileDataEvent extends ProtocolEvent {
+	public static final byte SET_MONSTER_SPAWNER_CREATURE = 1;
 	private static final HandlerList handlers = new HandlerList();
-	private final long ping;
-	private final boolean online;
-	private final String playerDisplayName;
+	private final Block block;
+	private final byte action;
+	private final CompoundMap data;
 
-	public PlayerListEvent(String playerDisplayName, long pingDelayMS, boolean online) {
-		this.ping = pingDelayMS;
-		this.online = online;
-		this.playerDisplayName = playerDisplayName;
+	/**
+	 * Constructs a new Data event for the block specified
+	 *
+	 * @param block for the data
+	 * @param action to perform
+	 * @param data to use, max 3 elements
+	 */
+	public EntityTileDataEvent(Block block, byte action, CompoundMap data) {
+		this.block = block;
+		this.action = action;
+		this.data = data;
 	}
 
 	/**
-	 * Gets the name of the player that this event relates to
-	 * @return the player's name
+	 * Gets the Block the data is meant for
+	 *
+	 * @return Block
 	 */
-	public String getPlayerDisplayName() {
-		return this.playerDisplayName;
+	public Block getBlock() {
+		return this.block;
 	}
 
 	/**
-	 * Gets the player's online status
-	 * @return true if the player is online
+	 * Gets the action to perform
+	 *
+	 * @return action Id
 	 */
-	public boolean getOnline() {
-		return this.online;
+	public byte getAction() {
+		return this.action;
 	}
 
 	/**
-	 * Gets the network delay between the server and the player
-	 * @return true if the player is online
+	 * Gets the data to use
+	 *
+	 * @return data array
 	 */
-	public long getPingDelay() {
-		return this.ping;
+	public CompoundMap getData() {
+		return this.data;
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 
 	@Override
 	public HandlerList getHandlers() {
-		return handlers;
-	}
-
-	public static HandlerList getHandlerList() {
 		return handlers;
 	}
 }

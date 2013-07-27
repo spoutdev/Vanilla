@@ -45,8 +45,9 @@ import org.spout.vanilla.material.Toggleable;
 import org.spout.vanilla.material.block.AttachedRedstoneSource;
 
 public class Lever extends AttachedRedstoneSource implements Toggleable {
+	//TODO: Box Shape
 	public Lever(String name, int id) {
-		super(name, id, VanillaMaterialModels.LEVER);
+		super(name, id, VanillaMaterialModels.LEVER, null);
 		this.setAttachable(BlockFaces.NESWBT).setLiquidObstacle(false).setHardness(0.5F).setResistance(1.7F).setTransparent();
 	}
 

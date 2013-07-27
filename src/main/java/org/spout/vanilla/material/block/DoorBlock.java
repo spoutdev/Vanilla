@@ -32,8 +32,8 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
-
 import org.spout.physics.collision.shape.BoxShape;
+
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
@@ -88,6 +88,7 @@ public abstract class DoorBlock extends GroundAttachable implements Directional,
 
 	/**
 	 * Gets the top or face door block when either of the blocks is given
+	 *
 	 * @param doorBlock the top or bottom door block
 	 * @param top whether to get the top block, if false, gets the bottom block
 	 * @return the requested door half block

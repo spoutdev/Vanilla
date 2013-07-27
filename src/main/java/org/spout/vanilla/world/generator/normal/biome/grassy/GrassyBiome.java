@@ -35,7 +35,7 @@ import org.spout.vanilla.world.generator.normal.populator.GroundCoverPopulator.G
 public abstract class GrassyBiome extends NormalBiome {
 	public GrassyBiome(int biomeId) {
 		super(biomeId);
-		setTopCover(new GroundCoverPopulator.GroundCoverLayer[]{
+		setTopCover(new GroundCoverPopulator.GroundCoverLayer[] {
 				new GroundCoverUniformLayer(VanillaMaterials.GRASS, VanillaMaterials.DIRT, (byte) 1),
 				new GroundCoverVariableLayer(VanillaMaterials.DIRT, VanillaMaterials.DIRT, (byte) 1, (byte) 4)
 		});

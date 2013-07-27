@@ -33,12 +33,12 @@ import java.util.logging.Level;
 import org.spout.api.Client;
 import org.spout.api.Platform;
 import org.spout.api.Server;
-import org.spout.api.component.entity.NetworkComponent;
-import org.spout.api.component.entity.ObserverComponent;
 import org.spout.api.Spout;
 import org.spout.api.command.CommandManager;
 import org.spout.api.command.annotated.AnnotatedCommandExecutorFactory;
 import org.spout.api.command.filter.PlayerFilter;
+import org.spout.api.component.entity.NetworkComponent;
+import org.spout.api.component.entity.ObserverComponent;
 import org.spout.api.datatable.ManagedMap;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.EventManager;
@@ -56,9 +56,8 @@ import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.plugin.Plugin;
 import org.spout.api.plugin.PluginLogger;
-import org.spout.api.plugin.services.ServiceManager;
 import org.spout.api.plugin.services.ProtectionService;
-import org.spout.api.protocol.Protocol;
+import org.spout.api.plugin.services.ServiceManager;
 import org.spout.api.util.FlatIterator;
 
 import org.spout.vanilla.command.AdministrationCommands;
@@ -82,7 +81,6 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.enchantment.VanillaEnchantments;
 import org.spout.vanilla.protocol.LANThread;
-import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.rcon.RemoteConnectionCore;
 import org.spout.vanilla.protocol.rcon.RemoteConnectionServer;
 import org.spout.vanilla.scoreboard.ScoreboardListener;
@@ -193,7 +191,7 @@ public class VanillaPlugin extends Plugin {
 		getLogger().info("v" + getDescription().getVersion() + " enabled. Protocol: " + getDescription().getData("protocol"));
 	}
 
-	@SuppressWarnings("unused")
+	@SuppressWarnings ("unused")
 	private void setupRcon() {
 		if (getEngine().getPlatform() == Platform.SERVER) {
 			RemoteConnectionServer server = new RemoteConnectionServer(getLogger(), getDataFolder());
@@ -202,7 +200,7 @@ public class VanillaPlugin extends Plugin {
 		}
 	}
 
-	@SuppressWarnings("unused")
+	@SuppressWarnings ("unused")
 	private void closeRcon() {
 		getEngine().getLogger().info("Shutting down rcon connections");
 		if (rcon != null) {
@@ -281,7 +279,7 @@ public class VanillaPlugin extends Plugin {
 
 				// Add observer to spawn to keep loaded if desired
 				if (worldConfig.LOADED_SPAWN.getBoolean()) {
-					@SuppressWarnings("unchecked")
+					@SuppressWarnings ("unchecked")
 					Entity e = world.createAndSpawnEntity(spawn, LoadOption.LOAD_GEN, ObserverComponent.class);
 					e.setObserver(new FlatIterator(cx, 0, cz, 16, effectiveRadius));
 				}
@@ -315,6 +313,7 @@ public class VanillaPlugin extends Plugin {
 
 	/**
 	 * Gets the running instance of VanillaPlugin
+	 *
 	 * @return the running instance of VanillaPlugin
 	 */
 	public static VanillaPlugin getInstance() {
@@ -323,6 +322,7 @@ public class VanillaPlugin extends Plugin {
 
 	/**
 	 * Gets the configuration instance for Vanilla
+	 *
 	 * @return the configuration instance
 	 */
 	public VanillaConfiguration getConfig() {

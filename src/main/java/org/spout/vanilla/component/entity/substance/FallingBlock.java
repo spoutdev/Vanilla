@@ -51,7 +51,7 @@ public class FallingBlock extends Substance {
 		if (material == null) {
 			throw new IllegalArgumentException("Cannot set a null material for the FallingBlock");
 		}
-		if (this.material.equals(material)) {
+		if (material.equals(this.material)) {
 			return;
 		}
 		this.material = material;

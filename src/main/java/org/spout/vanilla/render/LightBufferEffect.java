@@ -107,10 +107,13 @@ public class LightBufferEffect implements BufferEffect {
 						int zChunk = zz >> Chunk.BLOCKS.BITS;
 						if (zChunk != zOld || chunk == null) {
 							chunk = chunkModel.getChunkFromBlock(xx, yy, zz);
+							if (chunk == null) continue;
 							blockLight = (VanillaCuboidLightBuffer) chunk.getLightBuffer(VanillaLighting.BLOCK_LIGHT.getId());
 							skyLight = (VanillaCuboidLightBuffer) chunk.getLightBuffer(VanillaLighting.SKY_LIGHT.getId());
 							zOld = zChunk;
 						}
+						// TODO fix light
+						if (blockLight == null || skyLight == null) continue;
 						BlockMaterial m = chunk.getBlockMaterial(xx, yy, zz);
 						if (!m.isOpaque()) {
 							light += blockLight.get(xx, yy, zz);

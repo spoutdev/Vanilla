@@ -24,8 +24,8 @@
 		<buildNumber>0</buildNumber>
 		<ciSystem>unknown</ciSystem>
 		<commit>unknown</commit>
-		<mainClass>${project.groupId}.${project.artifactId}.VanillaPlugin</mainClass>
-		<protocolClass>${project.groupId}.${project.artifactId}.protocol.VanillaProtocol</protocolClass>
+		<mainClass>${project.groupId}.${project.artifactId}.${project.name}Plugin</mainClass>
+		<protocolClass>${project.groupId}.${project.artifactId}.protocol.${project.name}Protocol</protocolClass>
 		<protocolVersion>61</protocolVersion>
 		<!-- See http://wiki.vg/Protocol_version_numbers -->
 	</properties>

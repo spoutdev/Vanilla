@@ -37,9 +37,32 @@ import org.spout.api.Engine;
 import org.spout.api.component.BaseComponentOwner;
 import org.spout.api.component.Component;
 import org.spout.api.component.entity.EntityComponent;
+import org.spout.api.component.entity.NetworkComponent;
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
 
 public class EntityMocker {
+	public static Player mockPlayer() {
+		Engine engine = EngineFaker.setupEngine();
+
+		final Player player = Mockito.mock(Player.class);
+		final EntityComponentAnswer componentHolder = new EntityComponentAnswer(player);
+		componentHolder.add(NetworkComponent.class);
+
+		//Set up component holder methods
+		Mockito.when(player.add(Matchers.argThat(new ClassOrSubclassMatcher<EntityComponent>(EntityComponent.class)))).thenAnswer(componentHolder);
+		Mockito.when(player.get(Matchers.argThat(new ClassOrSubclassMatcher<EntityComponent>(EntityComponent.class)))).thenAnswer(componentHolder);
+		Mockito.when(player.getExact(Matchers.argThat(new ClassOrSubclassMatcher<EntityComponent>(EntityComponent.class)))).thenAnswer(componentHolder);
+		Mockito.when(player.detach(Matchers.argThat(new ClassOrSubclassMatcher<EntityComponent>(EntityComponent.class)))).thenAnswer(componentHolder);
+		Mockito.when(player.getData()).thenReturn(componentHolder.getData());
+		Mockito.when(player.getEngine()).thenAnswer(new EntityEngineAnswer(engine));
+		//Set up entity tick
+		Mockito.doAnswer(new EntityTickAnswer(player)).when(player).onTick(Mockito.anyFloat());
+
+		//Set up event manager
+		return player;
+	}
+
 	public static Entity mockEntity() {
 		Engine engine = EngineFaker.setupEngine();
 

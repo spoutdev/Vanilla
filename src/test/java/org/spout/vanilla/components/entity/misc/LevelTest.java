@@ -29,6 +29,7 @@ package org.spout.vanilla.components.entity.misc;
 import org.junit.Test;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
 
 import org.spout.vanilla.EngineFaker;
 import org.spout.vanilla.EntityMocker;
@@ -44,8 +45,8 @@ public class LevelTest {
 
 	@Test
 	public void testLevelComponent() {
-		Entity entity = EntityMocker.mockEntity();
-		Level levelComponent = entity.add(Level.class);
+		Player player = EntityMocker.mockPlayer();
+		Level levelComponent = player.add(Level.class);
 		assertTrue(levelComponent.setExperience((short) 500));
 		short level = Level.convertXpToLevel((short) 500);
 		short xp = Level.convertLevelToXp(level);

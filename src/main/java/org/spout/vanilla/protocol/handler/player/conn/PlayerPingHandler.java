@@ -26,10 +26,12 @@
  */
 package org.spout.vanilla.protocol.handler.player.conn;
 
+import org.spout.api.protocol.ClientSession;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.ServerSession;
 
 import org.spout.vanilla.component.entity.player.Ping;
+import org.spout.vanilla.event.player.network.PingEvent;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerPingMessage;
 
 public class PlayerPingHandler extends MessageHandler<PlayerPingMessage> {
@@ -43,5 +45,14 @@ public class PlayerPingHandler extends MessageHandler<PlayerPingMessage> {
 		if (ping != null) {
 			ping.response(message.getPingId());
 		}
+	}
+
+	@Override
+	public void handleClient(ClientSession session, PlayerPingMessage message) {
+		if (!session.hasPlayer()) {
+			session.disconnect("Illegal packet!");
+			return;
+		}
+		session.getNetworkSynchronizer().callProtocolEvent(new PingEvent(message.getPingId()));
 	}
 }

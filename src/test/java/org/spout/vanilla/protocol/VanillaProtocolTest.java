@@ -124,7 +124,7 @@ import org.spout.vanilla.protocol.msg.world.chunk.ChunkDataMessage;
 import static org.spout.vanilla.protocol.VanillaChannelBufferUtilsTest.TEST_PARAMS;
 
 public class VanillaProtocolTest extends BaseProtocolTest {
-	private static final VanillaCodecLookupService CODEC_LOOKUP = new VanillaCodecLookupService();
+	private static final VanillaProtocol PROTOCOL = new VanillaProtocol();
 	static final boolean[] allFalse = new boolean[16];
 	static final byte[][] columnData = new byte[16][10240];
 	static final byte[] biomeData1 = new byte[256];
@@ -226,6 +226,6 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 	}
 
 	public VanillaProtocolTest() {
-		super(CODEC_LOOKUP, TEST_MESSAGES);
+		super(PROTOCOL.getCodecLookupService(), TEST_MESSAGES);
 	}
 }

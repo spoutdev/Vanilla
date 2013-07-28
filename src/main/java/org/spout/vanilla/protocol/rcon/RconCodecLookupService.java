@@ -26,8 +26,10 @@
  */
 package org.spout.vanilla.protocol.rcon;
 
+import org.spout.api.io.store.simple.MemoryStore;
 import org.spout.api.protocol.CodecLookupService;
 
+import org.spout.api.util.SyncedStringMap;
 import org.spout.vanilla.protocol.rcon.codec.AuthCodec;
 import org.spout.vanilla.protocol.rcon.codec.CommandCodec;
 import org.spout.vanilla.protocol.rcon.codec.CommandResponseCodec;
@@ -37,7 +39,7 @@ import org.spout.vanilla.protocol.rcon.codec.CommandResponseCodec;
  */
 public class RconCodecLookupService extends CodecLookupService {
 	public RconCodecLookupService() {
-		super(3);
+		super(RconCodecLookupService.class.getClassLoader(), new SyncedStringMap(null, new MemoryStore<Integer>(), 3, 3, "RconProtocol"), 3);
 		try {
 			bind(AuthCodec.class);
 			bind(CommandCodec.class);

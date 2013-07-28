@@ -55,7 +55,9 @@ public class Item extends Substance {
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ItemEntityProtocol());
 		PhysicsComponent physics = getOwner().getPhysics();
 		physics.activate(1f, new BoxShape(0.27f, 0.27f, 0.27f), false, true);
-		getOwner().add(Health.class).setMaxHealth(20);
+		if (getAttachedCount() == 1) {
+			getOwner().add(Health.class).setSpawnHealth(20);
+		}
 	}
 
 	@Override

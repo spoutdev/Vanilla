@@ -51,11 +51,9 @@ public class ItemFrameItem extends VanillaItemMaterial {
 
 		World world = block.getWorld();
 		Point pos = block.getPosition();
-		System.out.println("Position: " + pos);
 		Entity e = world.createEntity(new Point(world, pos.getBlockX(), pos.getBlockY(), pos.getBlockZ()), ItemFrame.class);
 		ItemFrame frame = e.add(ItemFrame.class);
 		frame.setOrientation(face);
-		System.out.println("Spawning");
 		world.spawnEntity(e);
 	}
 }

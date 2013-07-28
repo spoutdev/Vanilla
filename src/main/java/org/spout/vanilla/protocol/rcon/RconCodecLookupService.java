@@ -39,7 +39,7 @@ import org.spout.vanilla.protocol.rcon.codec.CommandResponseCodec;
  */
 public class RconCodecLookupService extends CodecLookupService {
 	public RconCodecLookupService() {
-		super(RconCodecLookupService.class.getClassLoader(), new SyncedStringMap(null, new MemoryStore<Integer>(), 3, 3, "RconProtocol"), 3);
+		super(RconCodecLookupService.class.getClassLoader(), SyncedStringMap.create(null, new MemoryStore<Integer>(), 3, 3, "RconProtocol"), 3);
 		try {
 			bind(AuthCodec.class);
 			bind(CommandCodec.class);

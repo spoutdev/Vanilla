@@ -32,6 +32,7 @@ import org.spout.api.event.player.Action;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
 import org.spout.api.math.VectorMath;
+import org.spout.physics.collision.shape.SphereShape;
 
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.misc.Effects;
@@ -234,12 +235,12 @@ public class PotionItem extends VanillaItemMaterial {
 	public void onInteract(Entity entity, Action action) {
 		if (this.isSplash()) {
 			Potion item = entity.getWorld().createEntity(entity.getPhysics().getPosition().add(0, 1.6f, 0)).add(Potion.class);
-			PhysicsComponent physics = item.getOwner().getPhysics();
-			//cene.setShape(6f, new SphereShape(0.3f)); // TODO: Correct this
-			physics.impulse(VectorMath.getDirection(entity.getPhysics().getRotation()).multiply(55)); //TODO: Need real parameters
 			item.setShooter(entity);
 			item.setPotion(this);
+			PhysicsComponent physics = item.getOwner().getPhysics();
+			physics.activate(1f, new SphereShape(0.3f), false, true);
 			entity.getWorld().spawnEntity(item.getOwner());
+			physics.impulse(VectorMath.getDirection(entity.getPhysics().getRotation()).multiply(55)); //TODO: Need real parameters
 		}
 	}
 

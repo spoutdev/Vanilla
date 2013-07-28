@@ -132,7 +132,7 @@ public class DispenserBlock extends VanillaBlockMaterial implements Directional,
 			if (facingBlock.getMaterial().getShape() != null) {
 				World world = facingBlock.getWorld();
 				Tnt tnt = world.createEntity(facingBlock.getPosition(), Tnt.class).add(Tnt.class);
-				tnt.getOwner().getPhysics().impulse(new Vector3(0.5D, 0.5D, 0.5D));
+				tnt.getOwner().getPhysics().force(new Vector3(0.5D, 0.5D, 0.5D));
 				world.spawnEntity(tnt.getOwner());
 				slot.addAmount(-1);
 				return true;

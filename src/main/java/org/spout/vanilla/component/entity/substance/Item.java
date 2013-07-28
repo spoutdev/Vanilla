@@ -55,8 +55,7 @@ public class Item extends Substance {
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ItemEntityProtocol());
 		PhysicsComponent physics = getOwner().getPhysics();
 		physics.activate(1f, new BoxShape(0.27f, 0.27f, 0.27f), false, true);
-		physics.
-				getOwner().add(Health.class).setMaxHealth(20);
+		getOwner().add(Health.class).setMaxHealth(20);
 	}
 
 	@Override
@@ -128,12 +127,12 @@ public class Item extends Substance {
 			throw new IllegalArgumentException("The dropped item can not be null or air!");
 		}
 		Entity entity = position.getWorld().createEntity(position, Item.class);
-		Item item = entity.add(Item.class);
+		Item item = entity.get(Item.class);
 		item.setUncollectableDelay(DROP_PICKUP_DELAY);
 		item.setItemStack(itemStack);
-		entity.getPhysics().impulse(velocity);
 		if (position.getChunk(LoadOption.NO_LOAD) != null) {
 			position.getWorld().spawnEntity(entity);
+			entity.getPhysics().force(velocity);
 		}
 		return item;
 	}

@@ -31,6 +31,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.player.Action;
 import org.spout.api.geo.World;
 import org.spout.api.math.VectorMath;
+import org.spout.physics.collision.shape.SphereShape;
 
 import org.spout.vanilla.component.entity.substance.Substance;
 import org.spout.vanilla.component.entity.substance.projectile.Projectile;
@@ -54,12 +55,12 @@ public abstract class ThrowItem extends VanillaItemMaterial {
 			World world = entity.getWorld();
 			Substance item = world.createEntity(entity.getPhysics().getPosition().add(0, 1.6f, 0), itemThrown).add(itemThrown);
 			PhysicsComponent physics = item.getOwner().getPhysics();
-			//physics.setShape(mass, new SphereShape(0.1f)); // TODO: Correct this
-			physics.impulse(VectorMath.getDirection(entity.getPhysics().getRotation()).multiply(250)); //TODO: Need real parameters
+			physics.activate(mass, new SphereShape(1f), false, true);
 			if (item instanceof Projectile) {
 				((Projectile) item).setShooter(entity);
 			}
 			world.spawnEntity(item.getOwner());
+			physics.force(VectorMath.getDirection(entity.getPhysics().getRotation()).multiply(250)); //TODO: Need real parameters
 		}
 	}
 }

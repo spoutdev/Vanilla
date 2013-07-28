@@ -48,10 +48,7 @@ import org.spout.vanilla.inventory.block.FurnaceInventory;
 import org.spout.vanilla.inventory.block.HopperInventory;
 import org.spout.vanilla.inventory.entity.EntityArmorInventory;
 import org.spout.vanilla.inventory.entity.EntityQuickbarInventory;
-import org.spout.vanilla.inventory.player.DropInventory;
-import org.spout.vanilla.inventory.player.PlayerCraftingInventory;
-import org.spout.vanilla.inventory.player.PlayerMainInventory;
-import org.spout.vanilla.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.inventory.player.*;
 import org.spout.vanilla.material.block.component.FurnaceBlock;
 import org.spout.vanilla.protocol.entity.creature.CreatureType;
 
@@ -212,6 +209,7 @@ public class VanillaData {
 	public static final DefaultedKey<PlayerMainInventory> MAIN_INVENTORY = new DefaultedKeyFactory<PlayerMainInventory>("main", PlayerMainInventory.class);
 	public static final DefaultedKey<PlayerCraftingInventory> CRAFTING_INVENTORY = new DefaultedKeyFactory<PlayerCraftingInventory>("crafting", PlayerCraftingInventory.class);
 	public static final DefaultedKey<PlayerQuickbar> QUICKBAR_INVENTORY = new DefaultedKeyFactory<PlayerQuickbar>("quickbar", PlayerQuickbar.class);
+	public static final DefaultedKey<PlayerArmorInventory> PLAYER_ARMOR_INVENTORY = new DefaultedKeyFactory<PlayerArmorInventory>("armor", PlayerArmorInventory.class);
 	public static final DefaultedKey<ChestInventory> ENDER_CHEST_INVENTORY = new DefaultedKeyFactory<ChestInventory>("ender_chest_inventory", ChestInventory.class);
 	public static final DefaultedKey<DropInventory> DROP_INVENTORY = new DefaultedKeyFactory<DropInventory>("drops", DropInventory.class);
 	public static final DefaultedKey<BrewingStandInventory> BREWING_STAND_INVENTORY = new DefaultedKeyFactory<BrewingStandInventory>("brewing_inventory", BrewingStandInventory.class);

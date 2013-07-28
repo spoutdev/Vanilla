@@ -82,7 +82,7 @@ public class PlayerInventory extends EntityInventory {
 	 * @return armor
 	 */
 	public ArmorInventory getArmor() {
-		return getData().get(VanillaData.ARMOR_INVENTORY);
+		return getData().get(VanillaData.PLAYER_ARMOR_INVENTORY);
 	}
 
 	/**

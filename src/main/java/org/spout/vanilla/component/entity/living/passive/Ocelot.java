@@ -68,7 +68,6 @@ public class Ocelot extends Animal implements Passive {
 	}
 
 	public byte getSkinId() {
-		System.out.println(getOwner().getData().get(VanillaData.OCELOT_SKIN));
 		return getOwner().getData().get(VanillaData.OCELOT_SKIN);
 	}
 

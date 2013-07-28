@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.data;
 
+import java.util.HashMap;
+
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyArray;
@@ -35,6 +37,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.data.effect.EntityEffectType;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
 import org.spout.vanilla.inventory.block.ChestInventory;
@@ -45,7 +48,6 @@ import org.spout.vanilla.inventory.block.HopperInventory;
 import org.spout.vanilla.inventory.entity.EntityArmorInventory;
 import org.spout.vanilla.inventory.entity.EntityQuickbarInventory;
 import org.spout.vanilla.inventory.player.DropInventory;
-import org.spout.vanilla.inventory.player.PlayerArmorInventory;
 import org.spout.vanilla.inventory.player.PlayerCraftingInventory;
 import org.spout.vanilla.inventory.player.PlayerMainInventory;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
@@ -102,7 +104,7 @@ public class VanillaData {
 	public static final DefaultedKey<Float> MAX_UPDATE_DELAY = new DefaultedKeyImpl<Float>("max_update_delay", 4f);
 	public static final DefaultedKey<Float> EFFECT_DURATION = new DefaultedKeyImpl<Float>("effect_duration", 9f);
 	//Entity data
-	public static final DefaultedKey<Integer> ATTACHED_COUNT = new DefaultedKeyImpl<Integer>("attached_count", 0);
+	public static final DefaultedKey<HashMap> ATTACHED_COUNT = new DefaultedKeyImpl<HashMap>("attached_count", new HashMap<Class<? extends VanillaEntityComponent>, Integer>());
 	public static final DefaultedKey<Boolean> IS_FALLING = new DefaultedKeyImpl<Boolean>("is_falling", false);
 	public static final DefaultedKey<Boolean> IS_ON_GROUND = new DefaultedKeyImpl<Boolean>("is_on_Ground", true);
 	public static final DefaultedKey<Boolean> IS_JUMPING = new DefaultedKeyImpl<Boolean>("is_jumping", false);
@@ -208,7 +210,6 @@ public class VanillaData {
 	public static final DefaultedKey<EntityQuickbarInventory> ENTITY_HELD_INVENTORY = new DefaultedKeyFactory<EntityQuickbarInventory>("held", EntityQuickbarInventory.class);
 	public static final DefaultedKey<PlayerMainInventory> MAIN_INVENTORY = new DefaultedKeyFactory<PlayerMainInventory>("main", PlayerMainInventory.class);
 	public static final DefaultedKey<PlayerCraftingInventory> CRAFTING_INVENTORY = new DefaultedKeyFactory<PlayerCraftingInventory>("crafting", PlayerCraftingInventory.class);
-	public static final DefaultedKey<PlayerArmorInventory> PLAYER_ARMOR_INVENTORY = new DefaultedKeyFactory<PlayerArmorInventory>("armor", PlayerArmorInventory.class);
 	public static final DefaultedKey<PlayerQuickbar> QUICKBAR_INVENTORY = new DefaultedKeyFactory<PlayerQuickbar>("quickbar", PlayerQuickbar.class);
 	public static final DefaultedKey<ChestInventory> ENDER_CHEST_INVENTORY = new DefaultedKeyFactory<ChestInventory>("ender_chest_inventory", ChestInventory.class);
 	public static final DefaultedKey<DropInventory> DROP_INVENTORY = new DefaultedKeyFactory<DropInventory>("drops", DropInventory.class);

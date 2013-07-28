@@ -59,7 +59,6 @@ public abstract class Living extends VanillaEntityComponent {
 		navigation.setDefaultExaminers(new VanillaBlockExaminer());
 		ai = holder.add(GoapAIComponent.class);
 		holder.add(Burn.class);
-		holder.setSavable(true);
 	}
 
 	public boolean isOnGround() {

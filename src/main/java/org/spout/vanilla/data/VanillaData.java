@@ -48,7 +48,11 @@ import org.spout.vanilla.inventory.block.FurnaceInventory;
 import org.spout.vanilla.inventory.block.HopperInventory;
 import org.spout.vanilla.inventory.entity.EntityArmorInventory;
 import org.spout.vanilla.inventory.entity.EntityQuickbarInventory;
-import org.spout.vanilla.inventory.player.*;
+import org.spout.vanilla.inventory.player.DropInventory;
+import org.spout.vanilla.inventory.player.PlayerArmorInventory;
+import org.spout.vanilla.inventory.player.PlayerCraftingInventory;
+import org.spout.vanilla.inventory.player.PlayerMainInventory;
+import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.block.component.FurnaceBlock;
 import org.spout.vanilla.protocol.entity.creature.CreatureType;
 

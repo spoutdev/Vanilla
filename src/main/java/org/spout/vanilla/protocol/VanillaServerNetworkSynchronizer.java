@@ -619,7 +619,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 		Point p = event.getPoint();
 		Quaternion rot = event.getRotation();
 		PlayerPositionLookMessage PPLMsg = new PlayerPositionLookMessage(p.getX(), p.getY() + STANCE, p.getZ(), p.getY(), rot.getYaw(), rot.getPitch(), true, VanillaBlockDataChannelMessage.CHANNEL_ID, getRepositionManager());
-		session.send(PPLMsg);
+		event.getMessages().add(PPLMsg);
 	}
 
 	@EventHandler (order = Order.LATEST)
@@ -664,8 +664,8 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 
 			Server server = (Server) session.getEngine();
 			PlayerLoginRequestMessage idMsg = new PlayerLoginRequestMessage(entityId, worldType.toString(), gamemode.getId(), (byte) dimension.getId(), difficulty.getId(), (byte) server.getMaxPlayers());
-			player.getSession().setState(State.GAME);
 			player.getSession().send(idMsg);
+			player.getSession().setState(State.GAME);
 		} else {
 			if (human != null) {
 				gamemode = human.getGameMode();
@@ -686,11 +686,10 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 		if (inv != null) {
 			inv.updateAll();
 		}
-		if (Spout.getPlatform() == Platform.SERVER) {
-			Point pos = world.getSpawnPoint().getPosition();
-			PlayerSpawnPositionMessage SPMsg = new PlayerSpawnPositionMessage((int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), getRepositionManager());
-			player.getSession().send(SPMsg);
-		}
+
+		Point pos = world.getSpawnPoint().getPosition();
+		PlayerSpawnPositionMessage SPMsg = new PlayerSpawnPositionMessage((int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), getRepositionManager());
+		player.getSession().send(SPMsg);
 		session.send(new PlayerHeldItemChangeMessage(player.add(PlayerInventory.class).getQuickbar().getSelectedSlot().getIndex()));
 		Sky sky;
 
@@ -713,7 +712,6 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 	public void finalizeTick() {
 		super.finalizeTick();
 		tickCounter++;
-
 		Point currentPosition = player.getPhysics().getPosition();
 
 		int y = currentPosition.getBlockY();
@@ -741,6 +739,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 				teleportPending = true;
 			}
 		}
+
 		//TODO: update chunk lists?
 		final int prevViewDistance = viewDistance;
 		final int currentViewDistance = player.getViewDistance() >> Chunk.BLOCKS.BITS;
@@ -748,18 +747,16 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 			viewDistance = currentViewDistance;
 		}
 
-		if (currentPosition != null) {
-			if (prevViewDistance != currentViewDistance || worldChanged || (!currentPosition.equals(lastChunkCheck) && currentPosition.getManhattanDistance(lastChunkCheck) > Chunk.BLOCKS.SIZE >> 1)) {
-				checkChunkUpdates(currentPosition);
-				lastChunkCheck = currentPosition;
-				worldChanged = false;
-			}
-			if (lastPosition == null || lastPosition.getWorld() != currentPosition.getWorld()) {
-				clearObservers();
-				worldChanged = true;
-				teleported = true;
-				teleportPending = true;
-			}
+		if (prevViewDistance != currentViewDistance || worldChanged || (!currentPosition.equals(lastChunkCheck) && currentPosition.getManhattanDistance(lastChunkCheck) > Chunk.BLOCKS.SIZE >> 1)) {
+			checkChunkUpdates(currentPosition);
+			lastChunkCheck = currentPosition;
+			worldChanged = false;
+		}
+		if (lastPosition == null || lastPosition.getWorld() != currentPosition.getWorld()) {
+			clearObservers();
+			worldChanged = true;
+			teleported = true;
+			teleportPending = true;
 		}
 
 		lastPosition = currentPosition;
@@ -793,16 +790,13 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 			resetChunks();
 			worldChanged(ep.getWorld());
 		} else if (!worldChanged) {
-
 			unsendable.clear();
-
 			for (Point p : chunkFreeQueue) {
 				if (initializedChunks.remove(p)) {
 					freeChunk(p);
 					activeChunks.remove(p);
 				}
 			}
-
 			chunkFreeQueue.clear();
 
 			int modifiedChunksPerTick = (!priorityChunkSendQueue.isEmpty() ? 4 : 1) * CHUNKS_PER_TICK;
@@ -894,7 +888,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 	private boolean shouldForce(int entityId) {
 		int hash = HASH_SEED;
 		hash += (hash << 5) + entityId;
-		hash += (hash << 5) + tickCounter++;
+		hash += (hash << 5) + tickCounter;
 		return (hash & FORCE_MASK) == 0 || (VanillaPlugin.getInstance().getEngine().debugMode() && getPlayer().get(ForceMessages.class) != null);
 	}
 
@@ -1091,9 +1085,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 		Player player = event.getPlayer();
 		Level level = player.get(Level.class);
 
-		if (level == null) {
-			event.getMessages().add(null);
-		} else {
+		if (level != null) {
 			event.getMessages().add(new PlayerExperienceMessage(level.getProgress(), level.getLevel(), event.getNewExp()));
 		}
 	}
@@ -1206,7 +1198,6 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 		public byte[] getChunkData(int[][] heights, BlockMaterial[][] materials, Point p, List<ProtocolEvent> updateEvents) {
 			switch (this) {
 				case CLIENT_SEL:
-					return getChunkFullColumn(heights, materials, p, updateEvents);
 				case FULL_COLUMN:
 					return getChunkFullColumn(heights, materials, p, updateEvents);
 				case HEIGHTMAP:

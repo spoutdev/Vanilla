@@ -53,7 +53,6 @@ public abstract class MinecartBase extends Substance {
 		if (getAttachedCount() == 1) {
 			getOwner().add(DeathDrops.class).addDrop(new ItemStack(VanillaMaterials.MINECART, 1));
 		}
-		getOwner().setSavable(true);
 	}
 
 	@Override

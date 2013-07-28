@@ -314,6 +314,7 @@ public class Health extends VanillaEntityComponent {
 	 */
 	public void setMaxHealth(int maxHealth) {
 		getData().put(VanillaData.MAX_HEALTH, maxHealth);
+		//TODO: Add event for max health change
 	}
 
 	/**
@@ -323,8 +324,7 @@ public class Health extends VanillaEntityComponent {
 	 */
 	public void setSpawnHealth(int maxHealth) {
 		this.setMaxHealth(maxHealth);
-		//Do not call setHealth yet, network has not been initialized if loading from file
-		getData().put(VanillaData.HEALTH, maxHealth);
+		this.setHealth(maxHealth, HealthChangeCause.SPAWN);
 	}
 
 	/**

@@ -67,8 +67,6 @@ import org.spout.vanilla.protocol.msg.player.PlayerGameStateMessage;
  * A component that identifies the entity as a Vanilla player.
  */
 public class Human extends Living {
-	public static final int SPAWN_HEALTH = 20;
-
 	@Override
 	public void onAttached() {
 		super.onAttached();
@@ -76,12 +74,8 @@ public class Human extends Living {
 		holder.add(PlayerItemCollector.class);
 		holder.add(Digging.class);
 		holder.getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new HumanEntityProtocol());
-		//Add height offset if loading from disk
-		//		if (holder instanceof Player) {
-		//			((Player) holder).teleport(holder.getTransform().getPosition().add(0, 1.85F, 0));
-		//		}
 		if (getAttachedCount() == 1) {
-			holder.add(Health.class).setSpawnHealth(SPAWN_HEALTH);
+			holder.add(Health.class).setSpawnHealth(20);
 		}
 		TextModelComponent textModel = getOwner().get(TextModelComponent.class);
 		if (textModel != null) {

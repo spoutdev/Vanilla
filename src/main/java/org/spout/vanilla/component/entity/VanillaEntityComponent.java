@@ -27,6 +27,7 @@
 package org.spout.vanilla.component.entity;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 import org.spout.api.component.entity.EntityComponent;
 import org.spout.api.util.Parameter;
@@ -36,9 +37,16 @@ import org.spout.vanilla.event.entity.network.EntityMetaChangeEvent;
 
 public class VanillaEntityComponent extends EntityComponent {
 	@Override
+	@SuppressWarnings("unchecked")
 	public void onAttached() {
-		//Tracks the number of times this component has been attached (i.e how many times it's been saved, then loaded. 1 = fresh entity)
-		getOwner().getData().put(VanillaData.ATTACHED_COUNT, getAttachedCount() + 1);
+		HashMap<Class<? extends VanillaEntityComponent>, Integer> map = getOwner().getData().get(VanillaData.ATTACHED_COUNT);
+		Integer count = map.get(getClass());
+		if (count == null) {
+			count = 0;
+		}
+		count++;
+		map.put(getClass(), count);
+		getOwner().getData().put(VanillaData.ATTACHED_COUNT, map);
 		getOwner().setSavable(true);
 	}
 
@@ -47,12 +55,15 @@ public class VanillaEntityComponent extends EntityComponent {
 	}
 
 	/**
-	 * A counter of how many times this component has been attached to an entity <p> Values > 1 indicate how many times this component has been saved to disk, and reloaded <p> Values == 1 indicate a new
-	 * component that has never been saved and loaded.
+	 * A counter of how many times this component has been attached to an entity
+	 * <p>
+	 * Values > 1 indicate how many times this component has been saved to disk, and reloaded
+	 * <p>
+	 * Values == 1 indicate a new component that has never been saved and loaded.
 	 *
 	 * @return attached count
 	 */
 	public final int getAttachedCount() {
-		return getOwner().getData().get(VanillaData.ATTACHED_COUNT);
+		return (Integer) getOwner().getData().get(VanillaData.ATTACHED_COUNT).get(getClass());
 	}
 }

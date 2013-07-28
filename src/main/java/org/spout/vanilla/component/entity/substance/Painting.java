@@ -51,7 +51,6 @@ public class Painting extends Substance {
 		if (getAttachedCount() == 1) {
 			getOwner().add(DeathDrops.class).addDrop(new ItemStack(VanillaMaterials.PAINTING, 1));
 		}
-		getOwner().setSavable(true);
 	}
 
 	@Override

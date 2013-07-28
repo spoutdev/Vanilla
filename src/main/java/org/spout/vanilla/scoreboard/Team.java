@@ -29,9 +29,12 @@ package org.spout.vanilla.scoreboard;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.spout.api.datatable.ManagedHashMap;
+import org.spout.api.datatable.ManagedMap;
 import org.spout.api.util.Named;
 
 import org.spout.vanilla.ChatStyle;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.scoreboard.TeamActionEvent;
 import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardTeamMessage;
 
@@ -41,13 +44,12 @@ import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardTeamMessage;
 public class Team implements Named {
 	private final Scoreboard scoreboard;
 	private final String name;
-	private String displayName = "";
-	private String prefix = "";
-	private String suffix = ChatStyle.RESET.toString();
-	private boolean friendlyFire = false;
+	private final ManagedMap data;
+
 	private final Set<String> playerNames = new HashSet<String>();
 
 	protected Team(Scoreboard scoreboard, String name) {
+		this.data = new ManagedHashMap();
 		this.scoreboard = scoreboard;
 		this.name = name;
 	}
@@ -58,19 +60,20 @@ public class Team implements Named {
 	 * @return display name of this team
 	 */
 	public String getDisplayName() {
-		return displayName;
+		return getData().get(VanillaData.DISPLAY_NAME);
 	}
 
 	/**
 	 * Sets the name to be displayed for this team
 	 *
 	 * @param displayName for team
-	 * @return this team
+	 * @param updateClients whether to update clients or not
 	 */
-	public Team setDisplayName(String displayName) {
-		this.displayName = displayName;
-		update();
-		return this;
+	public void setDisplayName(String displayName, boolean updateClients) {
+		getData().put(VanillaData.DISPLAY_NAME, displayName);
+		if (updateClients) {
+			update();
+		}
 	}
 
 	/**
@@ -79,19 +82,20 @@ public class Team implements Named {
 	 * @return prefix of players on this team
 	 */
 	public String getPrefix() {
-		return prefix;
+		return getData().get(VanillaData.PREFIX);
 	}
 
 	/**
 	 * Sets the prefix of each player on this team.
 	 *
 	 * @param prefix of each player on the team
-	 * @return this team
+	 * @param updateClients whether to update clients or not
 	 */
-	public Team setPrefix(String prefix) {
-		this.prefix = prefix;
-		update();
-		return this;
+	public void setPrefix(String prefix, boolean updateClients) {
+		getData().put(VanillaData.PREFIX, prefix);
+		if (updateClients) {
+			update();
+		}
 	}
 
 	/**
@@ -100,19 +104,20 @@ public class Team implements Named {
 	 * @return suffix for players
 	 */
 	public String getSuffix() {
-		return suffix;
+		return getData().get(VanillaData.SUFFIX);
 	}
 
 	/**
 	 * Sets the suffix for the players on this team.
 	 *
 	 * @param suffix for players
-	 * @return this team
+	 * @param updateClients whether to update clients or not
 	 */
-	public Team setSuffix(String suffix) {
-		this.suffix = suffix;
-		update();
-		return this;
+	public void setSuffix(String suffix, boolean updateClients) {
+		getData().put(VanillaData.SUFFIX, suffix);
+		if (updateClients) {
+			update();
+		}
 	}
 
 	/**
@@ -121,19 +126,36 @@ public class Team implements Named {
 	 * @return true if teammates can hurt each other
 	 */
 	public boolean isFriendlyFire() {
-		return friendlyFire;
+		return getData().get(VanillaData.FRIENDLY_FIRE);
 	}
 
 	/**
 	 * Sets if players on the same team can hurt each other.
 	 *
 	 * @param friendlyFire true if teammates should be able to hurt each other.
-	 * @return this team
 	 */
-	public Team setFriendlyFire(boolean friendlyFire) {
-		this.friendlyFire = friendlyFire;
+	public void setFriendlyFire(boolean friendlyFire) {
+		getData().put(VanillaData.FRIENDLY_FIRE, friendlyFire);
 		update();
-		return this;
+	}
+
+	/**
+	 * Returns true if players on the same team are able to see other invisible teammates.
+	 *
+	 * @return true if treammates can see each other when invisible
+	 */
+	public boolean canSeeFriendlyInvisibles() {
+		return getData().get(VanillaData.SEE_FRIENDLY_INVISIBLES);
+	}
+
+	/**
+	 * Sets if teammates should be able to see other invisible teammates.
+	 *
+	 * @param seeFriendlyInvisibles true if teammates should be able to see other invisible teammates
+	 */
+	public void setSeeFriendlyInvisibles(boolean seeFriendlyInvisibles) {
+		getData().put(VanillaData.SEE_FRIENDLY_INVISIBLES, seeFriendlyInvisibles);
+		update();
 	}
 
 	/**
@@ -176,5 +198,14 @@ public class Team implements Named {
 	@Override
 	public String getName() {
 		return name;
+	}
+
+	/**
+	 * Gets the {@link ManagedMap} containing the data for this Team.
+	 *
+	 * @return datatable
+	 */
+	public ManagedMap getData() {
+		return data;
 	}
 }

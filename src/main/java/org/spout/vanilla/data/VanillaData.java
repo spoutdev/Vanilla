@@ -38,6 +38,7 @@ import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
+import org.spout.vanilla.ChatStyle;
 import org.spout.vanilla.data.effect.EntityEffectType;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
 import org.spout.vanilla.inventory.block.ChestInventory;
@@ -217,4 +218,10 @@ public class VanillaData {
 	public static final DefaultedKey<DispenserInventory> DISPENSER_INVENTORY = new DefaultedKeyFactory<DispenserInventory>("dispenser_inventory", DispenserInventory.class);
 	public static final DefaultedKey<HopperInventory> HOPPER_INVENTORY = new DefaultedKeyFactory<HopperInventory>("hopper_inventory", HopperInventory.class);
 	public static final DefaultedKey<DropperInventory> DROPPER_INVENTORY = new DefaultedKeyFactory<DropperInventory>("dropper_inventory", DropperInventory.class);
+	// Team Data
+	public static final DefaultedKey<Boolean> SEE_FRIENDLY_INVISIBLES = new DefaultedKeyImpl<Boolean>("see_friendly_invisibles", false);
+	public static final DefaultedKey<Boolean> FRIENDLY_FIRE = new DefaultedKeyImpl<Boolean>("friendly_fire", false);
+	public static final DefaultedKey<String> DISPLAY_NAME = new DefaultedKeyImpl<String>("display_name", "");
+	public static final DefaultedKey<String> PREFIX = new DefaultedKeyImpl<String>("prefix", "");
+	public static final DefaultedKey<String> SUFFIX = new DefaultedKeyImpl<String>("suffix", ChatStyle.RESET.toString());
 }

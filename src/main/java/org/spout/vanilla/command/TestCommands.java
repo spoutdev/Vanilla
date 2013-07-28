@@ -106,6 +106,7 @@ import org.spout.vanilla.render.SkyRenderEffect;
 import org.spout.vanilla.scoreboard.Objective;
 import org.spout.vanilla.scoreboard.ObjectiveSlot;
 import org.spout.vanilla.scoreboard.Scoreboard;
+import org.spout.vanilla.scoreboard.Team;
 import org.spout.vanilla.util.explosion.ExplosionModels;
 import org.spout.vanilla.world.generator.normal.object.tree.BigTreeObject;
 import org.spout.vanilla.world.generator.object.RandomizableObject;
@@ -174,10 +175,10 @@ public class TestCommands {
 			throw new CommandException("You do not have an active scoreboard.");
 		}
 
-		scoreboard.createTeam("spoutdev")
-				.setDisplayName(ChatStyle.DARK_AQUA + "Spout")
-				.setPrefix(ChatStyle.GREEN.toString())
-				.addPlayerName(name);
+		Team t = scoreboard.createTeam("spoutdev");
+		t.setDisplayName(ChatStyle.DARK_AQUA + "Spout", false);
+		t.setPrefix(ChatStyle.GREEN.toString(), true);
+		t.addPlayerName(name);
 	}
 
 	@CommandDescription (aliases = "chunklight", usage = "", desc = "Tests lighting in current chunk")

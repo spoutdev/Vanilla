@@ -46,7 +46,7 @@ public class Witch extends Living implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.WITCH));
+		setEntityProtocol(new CreatureProtocol(CreatureType.WITCH));
 		DeathDrops dropComponent = getOwner().add(DeathDrops.class);
 		Random random = getRandom();
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.GLASS_BOTTLE, random.nextInt(6)));

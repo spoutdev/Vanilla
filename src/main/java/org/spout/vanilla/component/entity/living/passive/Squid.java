@@ -46,7 +46,7 @@ public class Squid extends Living implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.SQUID));
+		setEntityProtocol(new CreatureProtocol(CreatureType.SQUID));
 		Random random = getRandom();
 		DeathDrops dropComponent = getOwner().add(DeathDrops.class);
 		dropComponent.addDrop(new ItemStack(Dye.INK_SAC, random.nextInt(2) + 1));

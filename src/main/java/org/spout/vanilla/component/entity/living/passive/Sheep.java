@@ -61,7 +61,7 @@ public class Sheep extends Animal implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SheepEntityProtocol());
+		setEntityProtocol(new SheepEntityProtocol());
 		DeathDrops dropComponent = getOwner().add(DeathDrops.class);
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.WOOL, 1));
 		dropComponent.addXpDrop((short) (getRandom().nextInt(3) + 1));

@@ -44,7 +44,7 @@ public class Wolf extends Animal implements Neutral {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new WolfEntityProtocol());
+		setEntityProtocol(new WolfEntityProtocol());
 		if (getAttachedCount() == 1) {
 			getOwner().add(Health.class).setSpawnHealth(8);
 		}

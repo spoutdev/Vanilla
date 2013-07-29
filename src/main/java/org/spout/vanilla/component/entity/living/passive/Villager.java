@@ -50,7 +50,7 @@ public class Villager extends Ageable implements Container, Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new VillagerEntityProtocol());
+		setEntityProtocol(new VillagerEntityProtocol());
 
 		if (getAttachedCount() == 1) {
 			getOwner().add(Health.class).setSpawnHealth(20);

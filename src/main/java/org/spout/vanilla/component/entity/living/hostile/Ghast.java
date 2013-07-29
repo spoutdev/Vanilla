@@ -47,7 +47,7 @@ public class Ghast extends Living implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new GhastEntityProtocol());
+		setEntityProtocol(new GhastEntityProtocol());
 		DeathDrops dropComponent = getOwner().add(DeathDrops.class);
 		Random random = getRandom();
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.GUNPOWDER, random.nextInt(2)));

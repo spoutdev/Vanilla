@@ -42,7 +42,7 @@ public class Potion extends Substance implements Projectile {
 
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new PotionEntityProtocol());
+		setEntityProtocol(new PotionEntityProtocol());
 	}
 
 	@Override

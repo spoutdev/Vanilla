@@ -44,7 +44,7 @@ public class EnderPearl extends Substance implements Projectile {
 
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.ENDER_PEARL));
+		setEntityProtocol(new ObjectEntityProtocol(ObjectType.ENDER_PEARL));
 		super.onAttached();
 	}
 

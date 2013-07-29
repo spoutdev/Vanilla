@@ -34,7 +34,7 @@ public class Lightning extends Substance {
 
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new LightningEntityProtocol());
+		setEntityProtocol(new LightningEntityProtocol());
 	}
 
 	@Override

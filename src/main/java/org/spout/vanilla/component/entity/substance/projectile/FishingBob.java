@@ -38,7 +38,7 @@ public class FishingBob extends Substance implements Projectile {
 
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.FISHING_BOB));
+		setEntityProtocol(new ObjectEntityProtocol(ObjectType.FISHING_BOB));
 		super.onAttached();
 	}
 

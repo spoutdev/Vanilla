@@ -69,7 +69,7 @@ public class Tnt extends Substance {
 
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.PRIMED_TNT));
+		setEntityProtocol(new ObjectEntityProtocol(ObjectType.PRIMED_TNT));
 		holder = getOwner();
 		super.onAttached();
 		//TODO: Correct mass

@@ -47,7 +47,7 @@ public class Wither extends Living implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new WitherEntityProtocol());
+		setEntityProtocol(new WitherEntityProtocol());
 		getOwner().add(DeathDrops.class).addDrop(new ItemStack(VanillaMaterials.NETHER_STAR, 1)).addXpDrop((short) 50);
 		if (getAttachedCount() == 1) {
 			getOwner().add(Health.class).setSpawnHealth(300);

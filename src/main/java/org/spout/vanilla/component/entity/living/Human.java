@@ -73,7 +73,7 @@ public class Human extends Living {
 		Entity holder = getOwner();
 		holder.add(PlayerItemCollector.class);
 		holder.add(Digging.class);
-		holder.getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new HumanEntityProtocol());
+		setEntityProtocol(new HumanEntityProtocol());
 		if (getAttachedCount() == 1) {
 			holder.add(Health.class).setSpawnHealth(20);
 		}

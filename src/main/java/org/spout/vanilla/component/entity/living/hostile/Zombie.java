@@ -57,7 +57,7 @@ public class Zombie extends Living implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ZombieEntityProtocol());
+		setEntityProtocol(new ZombieEntityProtocol());
 		getOwner().add(DeathDrops.class).addDrop(new ItemStack(VanillaMaterials.ROTTEN_FLESH, getRandom().nextInt(2))).addXpDrop((short) 5);
 		getOwner().add(EntityInventory.class);
 		getOwner().add(EntityItemCollector.class);

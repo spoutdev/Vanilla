@@ -47,7 +47,7 @@ public class Pig extends Animal {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new PigEntityProtocol());
+		setEntityProtocol(new PigEntityProtocol());
 		DeathDrops dropComponent = getOwner().add(DeathDrops.class);
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.RAW_PORKCHOP, getRandom().nextInt(2) + 1));
 		dropComponent.addXpDrop((short) (getRandom().nextInt(3) + 1));

@@ -44,7 +44,7 @@ public class MagmaCube extends Living implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new MagmaCubeEntityProtocol());
+		setEntityProtocol(new MagmaCubeEntityProtocol());
 		getOwner().add(DeathDrops.class).addDrop(new ItemStack(VanillaMaterials.MAGMA_CREAM, getRandom().nextInt(1)));
 		if (getAttachedCount() == 1) {
 			int spawnHealth = 1;

@@ -59,7 +59,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.IntVector3;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
-import org.spout.api.protocol.EntityProtocol;
+import org.spout.vanilla.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.ServerNetworkSynchronizer;
 import org.spout.api.protocol.Session;
@@ -77,6 +77,7 @@ import org.spout.api.util.set.concurrent.TSyncIntHashSet;
 import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.VanillaNetworkComponent;
 import org.spout.vanilla.component.block.material.Sign;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.living.Human;
@@ -877,7 +878,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 	@Override
 	public void syncEntity(Entity e, Transform liveTransform, boolean spawn, boolean destroy, boolean update) {
 		super.syncEntity(e, liveTransform, spawn, destroy, update);
-		EntityProtocol ep = e.getNetwork().getEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID);
+		EntityProtocol ep = ((VanillaNetworkComponent) e.getNetwork()).getEntityProtocol();
 		if (ep != null) {
 			List<Message> messages = new ArrayList<Message>();
 			// Sync using vanilla protocol

@@ -52,7 +52,7 @@ public class Item extends Substance {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ItemEntityProtocol());
+		setEntityProtocol(new ItemEntityProtocol());
 		PhysicsComponent physics = getOwner().getPhysics();
 		physics.activate(1f, new BoxShape(0.27f, 0.27f, 0.27f), false, true);
 		if (getAttachedCount() == 1) {

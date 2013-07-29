@@ -48,7 +48,7 @@ public class IronGolem extends Living implements Utility {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.IRON_GOLEM)); //Index 16 (byte): Unknown, example: 1
+		setEntityProtocol(new CreatureProtocol(CreatureType.IRON_GOLEM)); //Index 16 (byte): Unknown, example: 1
 		DeathDrops dropComponent = getOwner().add(DeathDrops.class);
 		Random random = getRandom();
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.IRON_INGOT, random.nextInt(2) + 3));

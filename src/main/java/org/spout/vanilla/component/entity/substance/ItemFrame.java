@@ -50,7 +50,7 @@ public class ItemFrame extends Substance {
 
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ItemFrameProtocol());
+		setEntityProtocol(new ItemFrameProtocol());
 	}
 
 	@Override

@@ -42,7 +42,7 @@ public class EnderDragon extends Living implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new EnderDragonEntityProtocol());
+		setEntityProtocol(new EnderDragonEntityProtocol());
 		if (getAttachedCount() == 1) {
 			getOwner().add(Health.class).setSpawnHealth(200);
 		}

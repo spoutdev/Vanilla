@@ -30,10 +30,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import org.spout.api.component.entity.EntityComponent;
+import org.spout.api.entity.Player;
 import org.spout.api.util.Parameter;
+import org.spout.vanilla.component.VanillaNetworkComponent;
 
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.entity.network.EntityMetaChangeEvent;
+import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
 
 public class VanillaEntityComponent extends EntityComponent {
 	@Override
@@ -48,6 +51,16 @@ public class VanillaEntityComponent extends EntityComponent {
 		map.put(getClass(), count);
 		getOwner().getData().put(VanillaData.ATTACHED_COUNT, map);
 		getOwner().setSavable(true);
+
+		// Players initialized in initializeSession
+		if (!(getOwner() instanceof Player)) {
+			getOwner().add(VanillaEntityComponent.class);
+		}
+	}
+	
+	protected void setEntityProtocol(VanillaEntityProtocol p) {
+		if (!(getOwner().getNetwork() instanceof VanillaNetworkComponent)) return;
+		((VanillaNetworkComponent) getOwner().getNetwork()).setEntityProtocol(p);
 	}
 
 	protected void setMetadata(Parameter<?>... p) {

@@ -71,7 +71,7 @@ public class Boat extends Substance {
 
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BoatObjectEntityProtocol());
+		setEntityProtocol(new BoatObjectEntityProtocol());
 		super.onAttached();
 	}
 

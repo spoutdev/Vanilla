@@ -51,7 +51,7 @@ public class Skeleton extends Living implements Hostile {
 		super.onAttached();
 		Random random = getRandom();
 
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SkeletonEntityProtocol());
+		setEntityProtocol(new SkeletonEntityProtocol());
 		getOwner().add(EntityInventory.class);
 		getOwner().add(EntityItemCollector.class);
 

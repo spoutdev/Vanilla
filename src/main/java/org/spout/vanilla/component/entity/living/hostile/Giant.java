@@ -42,7 +42,7 @@ public class Giant extends Living implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.GIANT));
+		setEntityProtocol(new CreatureProtocol(CreatureType.GIANT));
 		if (getAttachedCount() == 1) {
 			getOwner().add(Health.class).setSpawnHealth(100);
 		}

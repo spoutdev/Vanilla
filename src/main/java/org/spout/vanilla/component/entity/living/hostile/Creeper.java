@@ -51,7 +51,7 @@ public class Creeper extends Living implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreeperEntityProtocol());
+		setEntityProtocol(new CreeperEntityProtocol());
 		getOwner().add(DeathDrops.class).addDrop(new ItemStack(VanillaMaterials.GUNPOWDER, getRandom().nextInt(2))).addXpDrop((short) 5);
 		PhysicsComponent physics = getOwner().getPhysics();
 		physics.activate(2f, new BoxShape(1f, 2f, 1f), false, true);

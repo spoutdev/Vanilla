@@ -47,7 +47,7 @@ public class Painting extends Substance {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new PaintingEntityProtocol());
+		setEntityProtocol(new PaintingEntityProtocol());
 		if (getAttachedCount() == 1) {
 			getOwner().add(DeathDrops.class).addDrop(new ItemStack(VanillaMaterials.PAINTING, 1));
 		}

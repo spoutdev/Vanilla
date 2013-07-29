@@ -41,7 +41,7 @@ public class Ocelot extends Animal implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new OcelotEntityProtocol());
+		setEntityProtocol(new OcelotEntityProtocol());
 
 		if (getAttachedCount() == 1) {
 			getOwner().add(Health.class).setSpawnHealth(10);

@@ -39,7 +39,7 @@ public class XPBottle extends Substance implements Projectile {
 
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.EXP_BOTTLE));
+		setEntityProtocol(new ObjectEntityProtocol(ObjectType.EXP_BOTTLE));
 		super.onAttached();
 	}
 

@@ -50,7 +50,7 @@ public class CaveSpider extends Living implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.CAVE_SPIDER));
+		setEntityProtocol(new CreatureProtocol(CreatureType.CAVE_SPIDER));
 		DeathDrops dropComponent = getOwner().add(DeathDrops.class);
 		Random random = getRandom();
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.STRING, random.nextInt(2)));

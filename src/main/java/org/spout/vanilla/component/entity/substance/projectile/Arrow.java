@@ -40,7 +40,7 @@ public class Arrow extends Substance implements Projectile {
 
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ArrowObjectEntityProtocol());
+		setEntityProtocol(new ArrowObjectEntityProtocol());
 		super.onAttached();
 	}
 

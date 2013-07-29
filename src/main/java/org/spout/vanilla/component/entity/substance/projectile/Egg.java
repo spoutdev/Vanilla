@@ -44,7 +44,7 @@ public class Egg extends Substance implements Projectile {
 
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.EGG));
+		setEntityProtocol(new ObjectEntityProtocol(ObjectType.EGG));
 		super.onAttached();
 	}
 

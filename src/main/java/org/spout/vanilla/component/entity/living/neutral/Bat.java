@@ -42,7 +42,7 @@ public class Bat extends Living implements Neutral {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BatEntityProtocol());
+		setEntityProtocol(new BatEntityProtocol());
 		if (getAttachedCount() == 1) {
 			getOwner().add(Health.class).setSpawnHealth(6);
 		}

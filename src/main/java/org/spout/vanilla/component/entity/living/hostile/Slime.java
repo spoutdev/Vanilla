@@ -42,7 +42,7 @@ public class Slime extends Living implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SlimeEntityProtocol());
+		setEntityProtocol(new SlimeEntityProtocol());
 		if (getAttachedCount() == 1) {
 			int spawnHealth = 1;
 			if (getSize() == 2) {

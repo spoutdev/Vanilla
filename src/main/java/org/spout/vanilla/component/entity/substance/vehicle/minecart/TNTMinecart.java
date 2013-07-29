@@ -38,7 +38,7 @@ public class TNTMinecart extends Minecart {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new MinecartObjectEntityProtocol(ObjectType.MINECART));
+		setEntityProtocol(new MinecartObjectEntityProtocol(ObjectType.MINECART));
 		if (getAttachedCount() == 1) {
 			getOwner().add(DeathDrops.class).addDrop(new ItemStack(VanillaMaterials.TNT, 1));
 		}

@@ -49,7 +49,7 @@ public class Enderman extends Living implements Neutral {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new EndermanEntityProtocol());
+		setEntityProtocol(new EndermanEntityProtocol());
 
 		//Physics
 		PhysicsComponent physics = getOwner().getPhysics();

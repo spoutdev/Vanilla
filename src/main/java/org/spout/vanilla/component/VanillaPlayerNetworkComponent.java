@@ -1,10 +1,10 @@
 /*
- * This file is part of Vanilla.
+ * This file is part of Spout.
  *
  * Copyright (c) 2011 Spout LLC <http://www.spout.org/>
- * Vanilla is licensed under the Spout License Version 1.
+ * Spout is licensed under the Spout License Version 1.
  *
- * Vanilla is free software: you can redistribute it and/or modify it under
+ * Spout is free software: you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
  * Software Foundation, either version 3 of the License, or (at your option)
  * any later version.
@@ -13,7 +13,7 @@
  * software, incorporating those changes, under the terms of the MIT license,
  * as described in the Spout License Version 1.
  *
- * Vanilla is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Spout is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for
  * more details.
@@ -24,19 +24,13 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.entity.substance;
+package org.spout.vanilla.component;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
-import org.spout.vanilla.protocol.entity.object.ObjectType;
+import org.spout.api.component.entity.NetworkComponent;
+import org.spout.vanilla.protocol.EntityProtocol;
+import org.spout.vanilla.protocol.EntityProtocolStore;
 
-/**
- * A component that identifies the entity as an EnderCrystal.
- */
-public class EnderCrystal extends Substance {
-	@Override
-	public void onAttached() {
-		setEntityProtocol(new ObjectEntityProtocol(ObjectType.ENDER_CRYSTAL));
-		super.onAttached();
-	}
+public abstract class VanillaPlayerNetworkComponent extends VanillaNetworkComponent {
+	// TODO move VanillaNetworkSynchronizer
+
 }

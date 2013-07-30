@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 	<url>http://www.spout.org</url>
 	<inceptionYear>2011</inceptionYear>
-	<description>Vanilla is a plugin for the Spout voxel game platform that provides vanilla Minecraft 1.5.2 functionality and gameplay.</description>
+	<description>Vanilla is a plugin for the Spout voxel game platform that provides vanilla Minecraft 1.6.2 functionality and gameplay.</description>
 
 	<!-- Parent information -->
 	<parent>

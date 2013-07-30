@@ -36,8 +36,8 @@ import org.spout.vanilla.data.GameMode;
 
 public class PlayerAbilityUpdateEvent extends ProtocolEvent implements PlayerEvent {
 	private static final HandlerList handlers = new HandlerList();
-	private final byte flyingSpeed;
-	private final byte walkingSpeed;
+	private final float flyingSpeed;
+	private final float walkingSpeed;
 	private final boolean godMode;
 	private final boolean isFlying;
 	private final boolean canFly;
@@ -58,11 +58,11 @@ public class PlayerAbilityUpdateEvent extends ProtocolEvent implements PlayerEve
 		creativeMode = human.getGameMode() == GameMode.CREATIVE;
 	}
 
-	public byte getFlyingSpeed() {
+	public float getFlyingSpeed() {
 		return flyingSpeed;
 	}
 
-	public byte getWalkingSpeed() {
+	public float getWalkingSpeed() {
 		return walkingSpeed;
 	}
 

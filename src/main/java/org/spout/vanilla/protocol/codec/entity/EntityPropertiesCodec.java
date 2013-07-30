@@ -27,33 +27,45 @@
 package org.spout.vanilla.protocol.codec.entity;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.protocol.msg.entity.EntityActionMessage;
+import org.spout.api.util.ChannelBufferUtils;
+import org.spout.vanilla.protocol.msg.entity.EntityPropertiesMessage;
 
-public final class EntityActionCodec extends MessageCodec<EntityActionMessage> {
-	public EntityActionCodec() {
-		super(EntityActionMessage.class, 0x13);
+public class EntityPropertiesCodec extends MessageCodec<EntityPropertiesMessage> {
+
+	public EntityPropertiesCodec() {
+		super(EntityPropertiesMessage.class, 0x2C);
 	}
 
 	@Override
-	public EntityActionMessage decode(ChannelBuffer buffer) throws IOException {
-		int id = buffer.readInt();
-		int action = buffer.readUnsignedByte();
-		int jumpBoost = buffer.readInt();
-		return new EntityActionMessage(id, action, jumpBoost);
+	public EntityPropertiesMessage decode(ChannelBuffer buffer) throws IOException {
+		int entityID = buffer.readInt();
+		int amount = buffer.readInt();
+		System.out.println(amount);
+		EntityPropertiesMessage msg = new EntityPropertiesMessage(entityID);
+		Map<EntityPropertiesCodec,Double> map = new HashMap<EntityPropertiesCodec, Double>();
+		for (int i = 1; i <= amount; i++) {
+			msg.addProperty(EntityPropertiesMessage.EntityProperties.getByName(ChannelBufferUtils.readString(buffer)), buffer.readDouble());
+		}
+		return msg;
 	}
-
 	@Override
-	public ChannelBuffer encode(EntityActionMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(10);
+	public ChannelBuffer encode(EntityPropertiesMessage message) throws IOException {
+		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		buffer.writeInt(message.getEntityId());
-		buffer.writeByte(message.getAction());
-		buffer.writeInt(message.getJumpBoost());
+		Map<EntityPropertiesMessage.EntityProperties, Double> map = message.getProperties();
+		buffer.writeInt(map.size());
+		for (Map.Entry<EntityPropertiesMessage.EntityProperties, Double> value: map.entrySet()) {
+			ChannelBufferUtils.writeString(buffer, value.getKey().toString());
+			buffer.writeDouble(value.getValue());
+		}
 		return buffer;
 	}
 }

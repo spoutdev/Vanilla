@@ -62,7 +62,8 @@ public class Water extends Liquid implements DynamicMaterial, InitializableMater
 
 	@Override
 	public void initialize() {
-		this.setFlowDelay(VanillaConfiguration.WATER_DELAY.getInt());
+		// TODO: Configurations can not be stored in non-linked ConfigurationHolders
+		//this.setFlowDelay(VanillaConfiguration.WATER_DELAY.getInt());
 	}
 
 	@Override

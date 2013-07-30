@@ -34,9 +34,9 @@ import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
 public class PlayerAbilityMessage extends VanillaMainChannelMessage {
 	private final boolean godMode, isFlying, canFly, creativeMode;
-	private final byte flyingSpeed, walkingSpeed;
+	private float flyingSpeed, walkingSpeed;
 
-	public PlayerAbilityMessage(boolean godMode, boolean isFlying, boolean canFly, boolean creativeMode, byte flyingSpeed, byte walkingSpeed) {
+	public PlayerAbilityMessage(boolean godMode, boolean isFlying, boolean canFly, boolean creativeMode, float flyingSpeed, float walkingSpeed) {
 		this.godMode = godMode;
 		// TODO - is this required?  If canFly == false and isFlying == true, then client can't disable flight
 		this.isFlying = isFlying && canFly;
@@ -62,11 +62,11 @@ public class PlayerAbilityMessage extends VanillaMainChannelMessage {
 		return creativeMode;
 	}
 
-	public byte getFlyingSpeed() {
+	public float getFlyingSpeed() {
 		return flyingSpeed;
 	}
 
-	public byte getWalkingSpeed() {
+	public float getWalkingSpeed() {
 		return walkingSpeed;
 	}
 

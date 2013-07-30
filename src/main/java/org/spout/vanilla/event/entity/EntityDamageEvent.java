@@ -44,17 +44,17 @@ public class EntityDamageEvent extends EntityHealthChangeEvent {
 	private boolean hasSendHurtMessage = true;
 	private final Cause<?> cause;
 
-	public EntityDamageEvent(Entity e, int damage) {
+	public EntityDamageEvent(Entity e, float damage) {
 		super(e, HealthChangeCause.DAMAGE, -damage);
 		this.cause = new NullDamageCause(DamageType.UNKNOWN);
 	}
 
-	public EntityDamageEvent(Entity e, int damage, Cause<?> cause) {
+	public EntityDamageEvent(Entity e, float damage, Cause<?> cause) {
 		super(e, HealthChangeCause.DAMAGE, -damage);
 		this.cause = cause;
 	}
 
-	public EntityDamageEvent(Entity e, int damage, Cause<?> cause, boolean sendHurtMessage) {
+	public EntityDamageEvent(Entity e, float damage, Cause<?> cause, boolean sendHurtMessage) {
 		super(e, HealthChangeCause.DAMAGE, -damage);
 		this.cause = cause;
 		this.hasSendHurtMessage = sendHurtMessage;
@@ -109,7 +109,7 @@ public class EntityDamageEvent extends EntityHealthChangeEvent {
 	 *
 	 * @return The damage to the health component.
 	 */
-	public int getDamage() {
+	public float getDamage() {
 		return -getChange();
 	}
 
@@ -118,7 +118,7 @@ public class EntityDamageEvent extends EntityHealthChangeEvent {
 	 *
 	 * @param damage The amount of damage dealt.
 	 */
-	public void setDamage(int damage) {
+	public void setDamage(float damage) {
 		setChange(-damage);
 	}
 

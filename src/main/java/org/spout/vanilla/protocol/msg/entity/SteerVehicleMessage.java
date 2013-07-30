@@ -24,43 +24,50 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.netcache.protocol;
+package org.spout.vanilla.protocol.msg.entity;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
-public class ChunkCacheMessage extends VanillaMainChannelMessage {
-	private final byte[] data;
+public class SteerVehicleMessage extends VanillaMainChannelMessage {
 
-	public ChunkCacheMessage(byte[] data) {
-		this.data = data;
+	private final float sideways, forward;
+	private final boolean jump, unmount;
+
+	public SteerVehicleMessage(float sideways, float forward, boolean jump, boolean unmount) {
+		this.sideways = sideways;
+		this.forward = forward;
+		this.jump = jump;
+		this.unmount = unmount;
 	}
 
-	public byte[] getData() {
-		return data;
+	public float getSideways() {
+		return sideways;
 	}
 
-	public String getChannel() {
-		return ChunkCacheCodec.channelName;
+	public boolean isUnmount() {
+		return unmount;
+	}
+
+	public boolean isJumping() {
+		return jump;
+	}
+
+	public float getForward() {
+		return forward;
 	}
 
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("hashes", data)
+				.append("sideways", this.getSideways())
+				.append("unmount", this.isUnmount())
+				.append("jump", this.isJumping())
+				.append("forward", this.getForward())
 				.toString();
-	}
-
-	@Override
-	public int hashCode() {
-		return new HashCodeBuilder(39, 45)
-				.append(data)
-				.toHashCode();
 	}
 
 	@Override
@@ -71,9 +78,11 @@ public class ChunkCacheMessage extends VanillaMainChannelMessage {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final ChunkCacheMessage other = (ChunkCacheMessage) obj;
-		return new EqualsBuilder()
-				.append(data, other.data)
+		final SteerVehicleMessage other = (SteerVehicleMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.getSideways(), other.getSideways())
+				.append(this.isUnmount(), other.isUnmount())
+				.append(this.isJumping(), other.isJumping())
+				.append(this.getForward(), other.getForward())
 				.isEquals();
-	}
-}
+	}}

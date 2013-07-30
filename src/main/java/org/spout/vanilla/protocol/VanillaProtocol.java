@@ -61,9 +61,11 @@ import org.spout.vanilla.protocol.codec.entity.EntityEquipmentCodec;
 import org.spout.vanilla.protocol.codec.entity.EntityInitializeCodec;
 import org.spout.vanilla.protocol.codec.entity.EntityItemDataCodec;
 import org.spout.vanilla.protocol.codec.entity.EntityMetadataCodec;
+import org.spout.vanilla.protocol.codec.entity.EntityPropertiesCodec;
 import org.spout.vanilla.protocol.codec.entity.EntityRelativePositionCodec;
 import org.spout.vanilla.protocol.codec.entity.EntityStatusCodec;
 import org.spout.vanilla.protocol.codec.entity.EntityTileDataCodec;
+import org.spout.vanilla.protocol.codec.entity.SteerVehicleCodec;
 import org.spout.vanilla.protocol.codec.entity.effect.EntityEffectCodec;
 import org.spout.vanilla.protocol.codec.entity.effect.EntityRemoveEffectCodec;
 import org.spout.vanilla.protocol.codec.entity.pos.EntityHeadYawCodec;
@@ -147,9 +149,11 @@ import org.spout.vanilla.protocol.handler.entity.EntityMetadataHandler;
 import org.spout.vanilla.protocol.handler.entity.EntityMobHandler;
 import org.spout.vanilla.protocol.handler.entity.EntityObjectHandler;
 import org.spout.vanilla.protocol.handler.entity.EntityPaintingHandler;
+import org.spout.vanilla.protocol.handler.entity.EntityPropertiesHandler;
 import org.spout.vanilla.protocol.handler.entity.EntityStatusHandler;
 import org.spout.vanilla.protocol.handler.entity.EntityThunderboltHandler;
 import org.spout.vanilla.protocol.handler.entity.EntityTileDataHandler;
+import org.spout.vanilla.protocol.handler.entity.SteerVehicleHandler;
 import org.spout.vanilla.protocol.handler.entity.effect.EntityRemoveEffectHandler;
 import org.spout.vanilla.protocol.handler.entity.pos.EntityHeadYawHandler;
 import org.spout.vanilla.protocol.handler.entity.pos.EntityRelativePositionHandler;
@@ -274,6 +278,7 @@ public class VanillaProtocol extends Protocol {
 		/* 0x18 */ registerPacket(EntityMobCodec.class, new EntityMobHandler());
 		/* 0x19 */ registerPacket(EntityPaintingCodec.class, new EntityPaintingHandler());
 		/* 0x1A */ registerPacket(EntityExperienceOrbCodec.class, new EntityExperienceOrbHandler());
+		/* 0x1B */ registerPacket(SteerVehicleCodec.class, new SteerVehicleHandler());
 		/* 0x1C */ registerPacket(EntityVelocityCodec.class, new EntityVelocityHandler());
 		/* 0x1D */ registerPacket(EntityDestroyCodec.class, new EntityDestroyHandler());
 		/* 0x1E */ registerPacket(EntityInitializeCodec.class, new EntityInitializeHandler()); //TODO the meaning of this packet is basically that the entity did not move/look since the last such packet. We need to implement this!
@@ -288,6 +293,7 @@ public class VanillaProtocol extends Protocol {
 		/* 0x29 */ registerPacket(EntityEffectCodec.class, new EntityEffectHandler());
 		/* 0x2A */ registerPacket(EntityRemoveEffectCodec.class, new EntityRemoveEffectHandler());
 		/* 0x2B */ registerPacket(PlayerExperienceCodec.class, new PlayerExperienceHandler());
+		/* 0x2C */ registerPacket(EntityPropertiesCodec.class, new EntityPropertiesHandler());
 		/* 0x33 */ registerPacket(ChunkDataCodec.class, new ChunkDataHandler()); //TODO rename on the minecraft protocol page
 		/* 0x34 */ registerPacket(BlockBulkCodec.class, new BlockBulkHandler());
 		/* 0x35 */ registerPacket(BlockChangeCodec.class, new BlockChangeHandler());

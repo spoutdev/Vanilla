@@ -96,7 +96,7 @@ public class Hunger extends VanillaEntityComponent {
 			case PROXY:
 			case SERVER:
 				final Health healthComponent = human.getHealth();
-				final int health = healthComponent.getHealth();
+				final float health = healthComponent.getHealth();
 				final int hunger = getHunger();
 
 				//Timer when eating. Sends a Enting done if the player eated the food the whole time.
@@ -121,7 +121,7 @@ public class Hunger extends VanillaEntityComponent {
 				if (health < 20 && hunger > 17) {
 					timer -= dt;
 					if (timer <= 0) {
-						healthComponent.heal(1, HealCause.REGENERATION);
+						healthComponent.heal(1.0f, HealCause.REGENERATION);
 						timer = TIMER_START;
 					}
 				}
@@ -131,7 +131,7 @@ public class Hunger extends VanillaEntityComponent {
 				if (hunger <= 0) {
 					timer -= dt;
 					if (timer <= 0) {
-						healthComponent.damage(1, new NullDamageCause(DamageType.STARVATION));
+						healthComponent.damage(1.0f, new NullDamageCause(DamageType.STARVATION));
 						timer = TIMER_START;
 					}
 				}

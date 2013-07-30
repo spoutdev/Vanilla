@@ -55,7 +55,7 @@ public class BeaconCodec extends MessageCodec<BeaconMessage> implements Named {
 
 	@Override
 	public ChannelBuffer encode(BeaconMessage msg) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(8);
+		ChannelBuffer buffer = ChannelBuffers.buffer(9);
 		buffer.writeInt(msg.getPrimaryEffect());
 		buffer.writeInt(msg.getSecondaryEffect());
 		return buffer;

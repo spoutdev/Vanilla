@@ -56,7 +56,8 @@ public class Lava extends Liquid implements InitializableMaterial {
 
 	@Override
 	public void initialize() {
-		this.setFlowDelay(VanillaConfiguration.LAVA_DELAY.getInt());
+		// TODO: Configurations can not be stored in non-linked ConfigurationHolders
+		// this.setFlowDelay(VanillaConfiguration.LAVA_DELAY.getInt());
 	}
 
 	@Override

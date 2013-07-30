@@ -101,7 +101,7 @@ public abstract class BaseProtocolTest {
 			}
 		}
 		for (MessageCodec<?> codec : codecLookup.getCodecs()) {
-			assertTrue("Opcode " + codec.getOpcode() + " not tested", testedOpcodes.contains(codec.getOpcode()));
+			assertTrue("Opcode " + codec.getOpcode() + " not tested for class: " + codec.getClass().toString(), testedOpcodes.contains(codec.getOpcode()));
 		}
 	}
 }

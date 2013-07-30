@@ -24,26 +24,39 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.entity.creature;
+package org.spout.vanilla.protocol.codec.entity;
 
-import java.util.List;
+import java.io.IOException;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.util.Parameter;
+import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.buffer.ChannelBuffers;
 
-import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.api.protocol.MessageCodec;
 
-public class EnderDragonEntityProtocol extends CreatureProtocol {
-	public final static int HEALTH_INDEX = 16; // The MC metadata index to determine the Dragon's health
+import org.spout.vanilla.protocol.msg.entity.SteerVehicleMessage;
 
-	public EnderDragonEntityProtocol() {
-		super(CreatureType.ENDER_DRAGON);
+public class SteerVehicleCodec extends MessageCodec<SteerVehicleMessage> {
+
+	public SteerVehicleCodec() {
+		super(SteerVehicleMessage.class, 0x1B);
 	}
 
 	@Override
-	public List<Parameter<?>> getSpawnParameters(Entity entity) {
-		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Float>(Parameter.TYPE_INT, HEALTH_INDEX, entity.add(Health.class).getHealth()));
-		return parameters;
+	public SteerVehicleMessage decode(ChannelBuffer buffer) throws IOException {
+		float sideways = buffer.readFloat();
+		float forward = buffer.readFloat();
+		boolean jump = buffer.readByte() != 0;
+		boolean unmount = buffer.readByte() != 0;
+		return new SteerVehicleMessage(sideways, forward, jump, unmount);
+	}
+
+	@Override
+	public ChannelBuffer encode(SteerVehicleMessage message) throws IOException {
+		ChannelBuffer buffer = ChannelBuffers.buffer(11);
+		buffer.writeFloat(message.getSideways());
+		buffer.writeFloat(message.getForward());
+		buffer.writeByte(message.isJumping() ? 1 : 0);
+		buffer.writeByte(message.isUnmount() ? 1 : 0);
+		return buffer;
 	}
 }

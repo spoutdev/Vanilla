@@ -46,29 +46,29 @@ public class HealthTest {
 		Health health = entity.add(Health.class);
 
 		health.setMaxHealth(15);
-		assertEquals(15, health.getMaxHealth());
-		assertEquals(1, health.getHealth());
+		assertEquals(15.0f, health.getMaxHealth(), 0.0f);
+		assertEquals(1.0f, health.getHealth(), 0.0f);
 
 		health.setSpawnHealth(20);
-		assertEquals(20, health.getMaxHealth());
-		assertEquals(20, health.getHealth());
+		assertEquals(20.0f, health.getMaxHealth(), 0.0f);
+		assertEquals(20.0f, health.getHealth(), 0.0f);
 
-		health.damage(1);
-		assertEquals(19, health.getHealth());
+		health.damage(1.0f);
+		assertEquals(19.0f, health.getHealth(), 0.0f);
 
 		health.kill(HealthChangeCause.DAMAGE);
-		assertEquals(0, health.getHealth());
+		assertEquals(0.0f, health.getHealth(), 0.0f);
 		assertTrue(health.isDead());
 
-		health.heal(5);
-		assertEquals(5, health.getHealth());
+		health.heal(5.0f);
+		assertEquals(5.0f, health.getHealth(), 0.0f);
 		assertFalse(health.isDead());
 
 		health.setDeathTicks(30);
 		assertEquals(30, health.getDeathTicks());
 		assertTrue(health.isDying());
 
-		health.setHealth(-1, HealthChangeCause.UNKNOWN);
+		health.setHealth(-1.0f, HealthChangeCause.UNKNOWN);
 		assertTrue(health.hasInfiniteHealth());
 
 	}

@@ -78,7 +78,7 @@ public class ScoreboardListener implements Listener {
 		}
 
 		Player player = (Player) entity;
-		evaluateCriteria(player.getName(), player.get(Health.class).getHealth() + event.getChange(), false, Objective.CRITERIA_HEALTH);
+		evaluateCriteria(player.getName(),(int) (player.get(Health.class).getHealth() + event.getChange()), false, Objective.CRITERIA_HEALTH);
 	}
 
 	private void evaluateCriteria(String key, int value, boolean add, String... criteria) {

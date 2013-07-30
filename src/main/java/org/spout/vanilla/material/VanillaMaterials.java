@@ -90,6 +90,7 @@ import org.spout.vanilla.material.block.misc.TripWire;
 import org.spout.vanilla.material.block.misc.TripWireHook;
 import org.spout.vanilla.material.block.misc.Web;
 import org.spout.vanilla.material.block.misc.WoodButton;
+import org.spout.vanilla.material.block.ore.CoalBlock;
 import org.spout.vanilla.material.block.ore.CoalOre;
 import org.spout.vanilla.material.block.ore.DiamondBlock;
 import org.spout.vanilla.material.block.ore.DiamondOre;
@@ -104,6 +105,7 @@ import org.spout.vanilla.material.block.ore.LapisLazuliBlock;
 import org.spout.vanilla.material.block.ore.LapisLazuliOre;
 import org.spout.vanilla.material.block.ore.MelonBlock;
 import org.spout.vanilla.material.block.ore.NetherQuartzOre;
+import org.spout.vanilla.material.block.solid.Carpet;
 import org.spout.vanilla.material.block.ore.QuartzBlock;
 import org.spout.vanilla.material.block.ore.RedstoneOre;
 import org.spout.vanilla.material.block.piston.PistonBlock;
@@ -148,6 +150,8 @@ import org.spout.vanilla.material.block.solid.CauldronBlock;
 import org.spout.vanilla.material.block.solid.ClayBlock;
 import org.spout.vanilla.material.block.solid.Cobblestone;
 import org.spout.vanilla.material.block.solid.CraftingTable;
+import org.spout.vanilla.material.block.solid.HardenedClay;
+import org.spout.vanilla.material.block.solid.RotationalSolid;
 import org.spout.vanilla.material.block.solid.Dirt;
 import org.spout.vanilla.material.block.solid.DoubleSlab;
 import org.spout.vanilla.material.block.solid.Endstone;
@@ -174,6 +178,7 @@ import org.spout.vanilla.material.block.solid.SilverfishStone;
 import org.spout.vanilla.material.block.solid.SnowBlock;
 import org.spout.vanilla.material.block.solid.SoulSand;
 import org.spout.vanilla.material.block.solid.Sponge;
+import org.spout.vanilla.material.block.solid.StainedClay;
 import org.spout.vanilla.material.block.solid.Stone;
 import org.spout.vanilla.material.block.solid.StoneBrick;
 import org.spout.vanilla.material.block.solid.Wool;
@@ -198,14 +203,17 @@ import org.spout.vanilla.material.item.armor.chain.ChainLeggings;
 import org.spout.vanilla.material.item.armor.diamond.DiamondBoots;
 import org.spout.vanilla.material.item.armor.diamond.DiamondChestplate;
 import org.spout.vanilla.material.item.armor.diamond.DiamondHelmet;
+import org.spout.vanilla.material.item.armor.diamond.DiamondHorseArmor;
 import org.spout.vanilla.material.item.armor.diamond.DiamondLeggings;
 import org.spout.vanilla.material.item.armor.gold.GoldBoots;
 import org.spout.vanilla.material.item.armor.gold.GoldChestplate;
 import org.spout.vanilla.material.item.armor.gold.GoldHelmet;
+import org.spout.vanilla.material.item.armor.gold.GoldHorseArmor;
 import org.spout.vanilla.material.item.armor.gold.GoldLeggings;
 import org.spout.vanilla.material.item.armor.iron.IronBoots;
 import org.spout.vanilla.material.item.armor.iron.IronChestplate;
 import org.spout.vanilla.material.item.armor.iron.IronHelmet;
+import org.spout.vanilla.material.item.armor.iron.IronHorseArmor;
 import org.spout.vanilla.material.item.armor.iron.IronLeggings;
 import org.spout.vanilla.material.item.armor.leather.LeatherBoots;
 import org.spout.vanilla.material.item.armor.leather.LeatherCap;
@@ -240,6 +248,7 @@ import org.spout.vanilla.material.item.misc.GlowstoneDust;
 import org.spout.vanilla.material.item.misc.ItemFrameItem;
 import org.spout.vanilla.material.item.misc.MagmaCream;
 import org.spout.vanilla.material.item.misc.MusicDisc;
+import org.spout.vanilla.material.item.misc.NameTag;
 import org.spout.vanilla.material.item.misc.NetherWartItem;
 import org.spout.vanilla.material.item.misc.PaintingItem;
 import org.spout.vanilla.material.item.misc.Sign;
@@ -319,6 +328,7 @@ public final class VanillaMaterials {
 	public static final EmeraldBlock EMERALD_BLOCK = new EmeraldBlock("Emerald Block", 133);
 	public static final LapisLazuliBlock LAPIS_LAZULI_BLOCK = new LapisLazuliBlock("Lapis Lazuli Block", 22);
 	public static final QuartzBlock QUARTZ_BLOCK = QuartzBlock.QUARTZ_BLOCK;
+	public static final CoalBlock COAL_BLOCK = new CoalBlock("Block of Coal", 173);
 	// == Plants ==
 	public static final TallGrass TALL_GRASS = TallGrass.TALL_GRASS;
 	public static final TallGrass FERN = TallGrass.FERN;
@@ -438,6 +448,10 @@ public final class VanillaMaterials {
 	public static final RedstoneBlock REDSTONE_BLOCK = new RedstoneBlock("Block of Redstone", 152);
 	public static final HopperBlock HOPPER = new HopperBlock("Hopper", 154);
 	public static final DropperBlock DROPPER = new DropperBlock("Dropper", 158);
+	public static final StainedClay STAINED_CLAY = StainedClay.WHITE_STAINED_CLAY;
+	public static final RotationalSolid HAY_BALE = new RotationalSolid("Hay Bale", 170, VanillaMaterialModels.HAY_BALE);
+	public static final Carpet CARPET = Carpet.WHITE_CARPET;
+	public static final HardenedClay HARDENED_CLAY = new HardenedClay("Hardened Clay", 172);
 	/*
 	 * Items
 	 */
@@ -495,12 +509,17 @@ public final class VanillaMaterials {
 	public static final IronBoots IRON_BOOTS = new IronBoots("Iron Boots", 309, (short) 196);
 	public static final DiamondBoots DIAMOND_BOOTS = new DiamondBoots("Diamond Boots", 313, (short) 430);
 	public static final GoldBoots GOLD_BOOTS = new GoldBoots("Gold Boots", 317, (short) 92);
+	// == Horse Armor ==
+	public static final IronHorseArmor IRON_HORSE_ARMOR = new IronHorseArmor("Iron Horse Armor", 417);
+	public static final GoldHorseArmor GOLD_HORSE_ARMOR = new GoldHorseArmor("Gold Horse Armor", 418);
+	public static final DiamondHorseArmor DIAMOND_HORSE_ARMOR = new DiamondHorseArmor("Diamond Horse Armor", 419);
 	// == Other tool, weapon and equipment ==
 	public static final FlintAndSteel FLINT_AND_STEEL = new FlintAndSteel("Flint and Steel", 259, (short) 64);
 	public static final Bow BOW = new Bow("Bow", 261, (short) 385);
 	public static final VanillaItemMaterial ARROW = new VanillaItemMaterial("Arrow", 262, null);
 	public static final FishingRod FISHING_ROD = new FishingRod("Fishing Rod", 346, (short) 65);
 	public static final CarrotOnAStick CARROT_ON_A_STICK = new CarrotOnAStick("Carrot on a Stick", 398, (short) 26);
+	public static final VanillaItemMaterial LEASH = new VanillaItemMaterial("Leash", 420, null);
 	// == Buckets=
 	public static final EmptyBucket BUCKET = new EmptyBucket("Bucket", 325);
 	public static final FullBucket WATER_BUCKET = new FullBucket("Water Bucket", 326, WATER);
@@ -623,6 +642,7 @@ public final class VanillaMaterials {
 	public static final EnchantedBook ENCHANTED_BOOK = new EnchantedBook("Enchanted Book", 403);
 	public static final VanillaItemMaterial NETHER_BRICK_ITEM = new VanillaItemMaterial("Nether Brick (Item)", 405, null);
 	public static final PotionItem POTION = PotionItem.WATER_BOTTLE;
+	public static final NameTag NAME_TAG = new NameTag("Name Tag", 421, null);
 	private static boolean initialized = false;
 	private final static AtomicShortArray conversionTable = new AtomicShortArray(Short.MAX_VALUE);
 	private final static TShortObjectHashMap<Material> reverseTable = new TShortObjectHashMap<Material>(500);

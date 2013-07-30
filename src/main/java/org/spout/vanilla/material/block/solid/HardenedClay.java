@@ -24,26 +24,18 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.entity.creature;
+package org.spout.vanilla.material.block.solid;
 
-import java.util.List;
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
+import org.spout.vanilla.data.tool.ToolType;
+import org.spout.vanilla.material.block.Solid;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.util.Parameter;
-
-import org.spout.vanilla.component.entity.misc.Health;
-
-public class EnderDragonEntityProtocol extends CreatureProtocol {
-	public final static int HEALTH_INDEX = 16; // The MC metadata index to determine the Dragon's health
-
-	public EnderDragonEntityProtocol() {
-		super(CreatureType.ENDER_DRAGON);
+public class HardenedClay extends Solid {
+	public HardenedClay(String name, int id) {
+		super(name, id, VanillaMaterialModels.HARDENED_CLAY);
+		this.setHardness(0.5F).setResistance(30.0f); // TODO: Should have 'greater resistance'
+		this.addMiningType(ToolType.PICKAXE);
 	}
 
-	@Override
-	public List<Parameter<?>> getSpawnParameters(Entity entity) {
-		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Float>(Parameter.TYPE_INT, HEALTH_INDEX, entity.add(Health.class).getHealth()));
-		return parameters;
-	}
+	// TODO: This block is immune to fire/fire spread
 }

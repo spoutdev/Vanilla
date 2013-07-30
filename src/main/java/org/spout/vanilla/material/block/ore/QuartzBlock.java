@@ -26,15 +26,22 @@
  */
 package org.spout.vanilla.material.block.ore;
 
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.data.tool.ToolLevel;
 import org.spout.vanilla.data.tool.ToolType;
+import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.Solid;
 
-public class QuartzBlock extends Solid {
+public class QuartzBlock extends Solid implements Directional {
 	public static final QuartzBlock QUARTZ_BLOCK = new QuartzBlock("Block of Quartz", VanillaMaterialModels.QUARTZ);
 	public static final QuartzBlock CHISELED_QUARTZ_BLOCK = new QuartzBlock("Chiseled Quartz Block", QuartzBlockType.CHISELED, QUARTZ_BLOCK, VanillaMaterialModels.CHISELED_QUARTZ);
 	public static final QuartzBlock PILLAR_QUARTZ = new QuartzBlock("Pillar Quartz Block", QuartzBlockType.PILLAR, QUARTZ_BLOCK, VanillaMaterialModels.PILLAR_QUARTZ);
+	private static final BlockFaces DIRECTION_OPPOS = new BlockFaces(BlockFace.BOTTOM, BlockFace.NORTH, BlockFace.EAST);
+	private static final BlockFaces DIRECTION_FACES = new BlockFaces(BlockFace.TOP, BlockFace.SOUTH, BlockFace.WEST, BlockFace.THIS);
+	private static final byte directionMask = 0x6;
 	private final QuartzBlockType type;
 
 	private QuartzBlock(String name, String model) {
@@ -56,6 +63,23 @@ public class QuartzBlock extends Solid {
 	@Override
 	public QuartzBlock getParentMaterial() {
 		return (QuartzBlock) super.getParentMaterial();
+	}
+
+	@Override
+	public BlockFace getFacing(Block block) {
+		QuartzBlock qBlock = (QuartzBlock) block;
+		if (qBlock.getType() == QuartzBlockType.PILLAR) {
+			return DIRECTION_FACES.get(block.getDataField(directionMask));
+		}
+		return BlockFace.THIS;
+	}
+
+	@Override
+	public void setFacing(Block block, BlockFace facing) {
+		QuartzBlock qBlock = (QuartzBlock) block;
+		if (qBlock.getType() == QuartzBlockType.PILLAR) {
+			block.setDataField(directionMask, DIRECTION_FACES.indexOf(facing, 0));
+		}
 	}
 
 	public static enum QuartzBlockType {

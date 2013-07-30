@@ -43,7 +43,6 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.GenericMath;
-import org.spout.api.math.Vector3;
 import org.spout.api.scheduler.TaskPriority;
 
 import org.spout.vanilla.VanillaPlugin;
@@ -55,17 +54,12 @@ import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Directional;
-import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.component.FurnaceBlock;
 import org.spout.vanilla.material.block.plant.Sapling;
 import org.spout.vanilla.material.item.misc.Coal;
 
-public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable, Burnable, Directional {
-	private static final BlockFaces DIRECTION_OPPOS = new BlockFaces(BlockFace.BOTTOM, BlockFace.NORTH, BlockFace.EAST);
-	private static final BlockFaces DIRECTION_FACES = new BlockFaces(BlockFace.TOP, BlockFace.SOUTH, BlockFace.WEST, BlockFace.THIS);
+public class Log extends RotationalSolid implements DynamicMaterial, Fuel, TimedCraftable, Burnable {
 	private static final short dataMask = 0x0003;
-	private static final short directionMask = 0x00C;
 	public static final short aliveMask = 0x0100;
 	public static final short heightMask = 0x0600;
 	private static final EffectRange dynamicRange = new CuboidEffectRange(-4, 0, -4, 4, 8, 4);
@@ -139,19 +133,6 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 	}
 
 	@Override
-	public BlockFace getFacing(Block block) {
-		return DIRECTION_FACES.get(block.getDataField(directionMask));
-	}
-
-	@Override
-	public void setFacing(Block block, BlockFace facing) {
-		if (DIRECTION_OPPOS.contains(facing)) {
-			facing = facing.getOpposite();
-		}
-		block.setDataField(directionMask, DIRECTION_FACES.indexOf(facing, 0));
-	}
-
-	@Override
 	public boolean onDestroy(Block block, Cause<?> cause) {
 		if (super.onDestroy(block, cause)) {
 			LeafDecayTask decay = new LeafDecayTask(block, cause);
@@ -159,12 +140,6 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 			return true;
 		}
 		return false;
-	}
-
-	@Override
-	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
-		super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause);
-		this.setFacing(block, against);
 	}
 
 	@Override

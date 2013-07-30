@@ -24,26 +24,33 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.entity.creature;
+package org.spout.vanilla.protocol.handler.entity;
 
-import java.util.List;
+import org.spout.api.protocol.MessageHandler;
+import org.spout.api.protocol.ServerSession;
+import org.spout.vanilla.component.entity.living.Human;
+import org.spout.vanilla.protocol.msg.entity.SteerVehicleMessage;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.util.Parameter;
+public final class SteerVehicleHandler extends MessageHandler<SteerVehicleMessage> {
+	public void handleServer(ServerSession session, SteerVehicleMessage message) {
+		if (!session.hasPlayer()) {
+			return;
+		}
 
-import org.spout.vanilla.component.entity.misc.Health;
+		Human player = session.getPlayer().get(Human.class);
+		if (!player.isRiding()) {
+			return;
+		}
+		if (message.isUnmount()) {
+			player.setRiding(false);
+			// TODO: detach the player from the entity it's riding
+			return;
+		}
 
-public class EnderDragonEntityProtocol extends CreatureProtocol {
-	public final static int HEALTH_INDEX = 16; // The MC metadata index to determine the Dragon's health
-
-	public EnderDragonEntityProtocol() {
-		super(CreatureType.ENDER_DRAGON);
-	}
-
-	@Override
-	public List<Parameter<?>> getSpawnParameters(Entity entity) {
-		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Float>(Parameter.TYPE_INT, HEALTH_INDEX, entity.add(Health.class).getHealth()));
-		return parameters;
+		if (message.isJumping()) {
+			player.setJumping(true);
+			// TODO: set the ridden entity as jumping also if possible
+		}
+		// TODO: handle movement onto the entity
 	}
 }

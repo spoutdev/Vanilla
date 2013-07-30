@@ -27,6 +27,7 @@
 package org.spout.vanilla.protocol;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 import org.spout.api.inventory.ItemStack;
@@ -53,8 +54,10 @@ import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityInitializeMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityItemDataMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityPropertiesMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityTileDataMessage;
+import org.spout.vanilla.protocol.msg.entity.SteerVehicleMessage;
 import org.spout.vanilla.protocol.msg.entity.effect.EntityEffectMessage;
 import org.spout.vanilla.protocol.msg.entity.effect.EntityRemoveEffectMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityHeadYawMessage;
@@ -120,6 +123,11 @@ import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.world.block.SignMessage;
 import org.spout.vanilla.protocol.msg.world.chunk.ChunkBulkMessage;
 import org.spout.vanilla.protocol.msg.world.chunk.ChunkDataMessage;
+import org.spout.vanilla.protocol.netcache.protocol.ChunkCacheMessage;
+import org.spout.vanilla.protocol.plugin.BeaconMessage;
+import org.spout.vanilla.protocol.plugin.CommandBlockMessage;
+import org.spout.vanilla.protocol.plugin.RegisterPluginChannelMessage;
+import org.spout.vanilla.protocol.plugin.UnregisterPluginChannelMessage;
 
 import static org.spout.vanilla.protocol.VanillaChannelBufferUtilsTest.TEST_PARAMS;
 
@@ -152,7 +160,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new PlayerTabCompleteMessage("behindcursor"),
 			new PlayerBedMessage(0, 3, 42, 42, 42, NullRepositionManager.getInstance()),
 			new EntityAnimationMessage(1234, (byte) Animation.DAMAGE_ANIMATION.getId()),
-			new EntityActionMessage(5, 2),
+			new EntityActionMessage(5, 2, 1),
 			new PlayerSpawnMessage(24, "risaccess1", 8000, 28, 900, 0, 0, 89, new ArrayList<Parameter<?>>()),
 			new PlayerCollectItemMessage(1234, 5678),
 			new EntityObjectMessage(1, (byte) 1, 200, 175, 132, 50, (short) 62, (short) 56, (short) 78, (byte) 44, (byte) 42, NullRepositionManager.getInstance()),
@@ -167,7 +175,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new EntityTeleportMessage(1, 2, 3, 4, 5, 6),
 			new EntityHeadYawMessage(45, 3),
 			new EntityStatusMessage(1, (byte) 2),
-			new EntityAttachEntityMessage(1, 2),
+			new EntityAttachEntityMessage(1, 2, false),
 			new EntityMetadataMessage(1, TEST_PARAMS),
 			new EntityEffectMessage(1, (byte) 1, (byte) 1, (short) 34),
 			new EntityRemoveEffectMessage(1, (byte) 1),
@@ -208,7 +216,14 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new ScoreboardScoreMessage("item", false, "boardName", 5),
 			new ScoreboardDisplayMessage((byte) 1, "name"),
 			new ScoreboardTeamMessage("teamName", (byte) 0, "displayName", "prefix", "suffix", false, null),
-			new BlockBreakAnimationMessage(1, 1, 1, 1, (byte) 2, NullRepositionManager.getInstance())
+			new BlockBreakAnimationMessage(1, 1, 1, 1, (byte) 2, NullRepositionManager.getInstance()),
+			new SteerVehicleMessage(0.5f, 0.6f, false, false),
+			new EntityPropertiesMessage(15),
+			new BeaconMessage(1, 3), // represent potion effect IDs to be added
+			new CommandBlockMessage(0, 1, 2, "who"),
+			new RegisterPluginChannelMessage(Arrays.asList(new String[]{"test"})),
+			new UnregisterPluginChannelMessage(Arrays.asList(new String[]{"test"})),
+			new ChunkCacheMessage(new byte[] {1})
 	};
 
 	static {

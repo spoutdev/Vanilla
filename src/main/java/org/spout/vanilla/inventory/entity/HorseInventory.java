@@ -24,26 +24,10 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.entity.creature;
+package org.spout.vanilla.inventory.entity;
 
-import java.util.List;
+import org.spout.api.inventory.Inventory;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.util.Parameter;
+public class HorseInventory extends Inventory {
 
-import org.spout.vanilla.component.entity.misc.Health;
-
-public class EnderDragonEntityProtocol extends CreatureProtocol {
-	public final static int HEALTH_INDEX = 16; // The MC metadata index to determine the Dragon's health
-
-	public EnderDragonEntityProtocol() {
-		super(CreatureType.ENDER_DRAGON);
-	}
-
-	@Override
-	public List<Parameter<?>> getSpawnParameters(Entity entity) {
-		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Float>(Parameter.TYPE_INT, HEALTH_INDEX, entity.add(Health.class).getHealth()));
-		return parameters;
-	}
 }

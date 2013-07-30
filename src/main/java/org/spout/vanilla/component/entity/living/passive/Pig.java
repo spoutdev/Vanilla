@@ -27,14 +27,13 @@
 package org.spout.vanilla.component.entity.living.passive;
 
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.util.Parameter;
 
+import org.spout.api.util.Parameter;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.ai.action.FollowMaterialHolderAction;
 import org.spout.vanilla.ai.goal.FollowMaterialHolderGoal;
 import org.spout.vanilla.ai.sensor.NearbyMaterialHolderSensor;
 import org.spout.vanilla.component.entity.living.Animal;
-import org.spout.vanilla.component.entity.living.Passive;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.data.VanillaData;
@@ -44,7 +43,7 @@ import org.spout.vanilla.protocol.entity.creature.PigEntityProtocol;
 /**
  * A component that identifies the entity as a Pig.
  */
-public class Pig extends Animal implements Passive {
+public class Pig extends Animal {
 	@Override
 	public void onAttached() {
 		super.onAttached();

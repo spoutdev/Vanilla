@@ -34,7 +34,7 @@ import org.spout.api.util.Parameter;
 import org.spout.vanilla.component.entity.living.passive.Pig;
 
 public class PigEntityProtocol extends CreatureProtocol {
-	public final static int SADDLE_INDEX = 16; // The MC metadata index for determining if the pig is saddled or not.
+	public final static int SADDLE_INDEX = 16; // The MC metadata index for determining if the creature is saddled or not.
 
 	public PigEntityProtocol() {
 		super(CreatureType.PIG);
@@ -43,7 +43,7 @@ public class PigEntityProtocol extends CreatureProtocol {
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, SADDLE_INDEX, (byte) (entity.add(Pig.class).isSaddled() ? 1 : 0)));
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, SADDLE_INDEX, (byte) (entity.get(Pig.class).isSaddled() ? 1 : 0)));
 		return parameters;
 	}
 }

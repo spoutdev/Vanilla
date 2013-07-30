@@ -26,6 +26,9 @@
  */
 package org.spout.vanilla.protocol.plugin;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.spout.api.util.SpoutToStringStyle;
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
 public class BeaconMessage extends VanillaMainChannelMessage {
@@ -42,5 +45,28 @@ public class BeaconMessage extends VanillaMainChannelMessage {
 
 	public int getSecondaryEffect() {
 		return secondary;
+	}
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("primary", primary)
+				.append("secondary", secondary)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final BeaconMessage other = (BeaconMessage) obj;
+		return new EqualsBuilder()
+				.append(primary, other.primary)
+				.append(secondary, other.secondary)
+				.isEquals();
 	}
 }

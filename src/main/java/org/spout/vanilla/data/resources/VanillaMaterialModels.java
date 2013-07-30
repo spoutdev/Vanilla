@@ -125,6 +125,23 @@ public class VanillaMaterialModels {
 	public static final String WOOL_GREEN = "model://Vanilla/materials/block/solid/greenwool/greenwool.spm";
 	public static final String WOOL_RED = "model://Vanilla/materials/block/solid/redwool/redwool.spm";
 	public static final String WOOL_BLACK = "model://Vanilla/materials/block/solid/blackwool/blackwool.spm";
+	// Carpet
+	public static final String CARPET_WHITE = null;
+	public static final String CARPET_ORANGE = null;
+	public static final String CARPET_MAGENTA = null;
+	public static final String CARPET_LIGHTBLUE = null;
+	public static final String CARPET_YELLOW = null;
+	public static final String CARPET_LIME = null;
+	public static final String CARPET_PINK = null;
+	public static final String CARPET_GRAY = null;
+	public static final String CARPET_SILVER = null;
+	public static final String CARPET_CYAN = null;
+	public static final String CARPET_PURPLE = null;
+	public static final String CARPET_BLUE = null;
+	public static final String CARPET_BROWN = null;
+	public static final String CARPET_GREEN = null;
+	public static final String CARPET_RED = null;
+	public static final String CARPET_BLACK = null;
 	// Stone Brick
 	public static final String STONE_BRICK = "model://Vanilla/materials/block/solid/stonebrick/stonebrick.spm";
 	public static final String STONE_BRICK_MOSSY = "model://Vanilla/materials/block/solid/mossystonebrick/mossystonebrick.spm";
@@ -217,4 +234,25 @@ public class VanillaMaterialModels {
 	public static final String FLOWER_POT_CACTUS = null;
 	public static final String FLOWER_POT_DEAD_BUSH = null;
 	public static final String FLOWER_POT_FERN = null;
+
+	public static final String HAY_BALE = null;
+	public static final String CARPET = null;
+	public static final String HARDENED_CLAY = null;
+	// Stained Clay Colors
+	public static final String STAINED_CLAY_WHITE = null;
+	public static final String STAINED_CLAY_ORANGE = null;
+	public static final String STAINED_CLAY_MAGENTA = null;
+	public static final String STAINED_CLAY_LIGHTBLUE = null;
+	public static final String STAINED_CLAY_YELLOW = null;
+	public static final String STAINED_CLAY_LIME = null;
+	public static final String STAINED_CLAY_PINK = null;
+	public static final String STAINED_CLAY_GRAY = null;
+	public static final String STAINED_CLAY_SILVER = null;
+	public static final String STAINED_CLAY_CYAN = null;
+	public static final String STAINED_CLAY_PURPLE = null;
+	public static final String STAINED_CLAY_BLUE = null;
+	public static final String STAINED_CLAY_BROWN = null;
+	public static final String STAINED_CLAY_GREEN = null;
+	public static final String STAINED_CLAY_RED = null;
+	public static final String STAINED_CLAY_BLACK = null;
 }

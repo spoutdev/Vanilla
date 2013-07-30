@@ -303,7 +303,7 @@ public class Health extends VanillaEntityComponent {
 	 *
 	 * @return the maximum health
 	 */
-	public int getMaxHealth() {
+	public float getMaxHealth() {
 		return getData().get(VanillaData.MAX_HEALTH);
 	}
 
@@ -312,7 +312,7 @@ public class Health extends VanillaEntityComponent {
 	 *
 	 * @param maxHealth to set to
 	 */
-	public void setMaxHealth(int maxHealth) {
+	public void setMaxHealth(float maxHealth) {
 		getData().put(VanillaData.MAX_HEALTH, maxHealth);
 		//TODO: Add event for max health change
 	}
@@ -322,7 +322,7 @@ public class Health extends VanillaEntityComponent {
 	 *
 	 * @param maxHealth of this health component
 	 */
-	public void setSpawnHealth(int maxHealth) {
+	public void setSpawnHealth(float maxHealth) {
 		this.setMaxHealth(maxHealth);
 		this.setHealth(maxHealth, HealthChangeCause.SPAWN);
 	}
@@ -332,7 +332,7 @@ public class Health extends VanillaEntityComponent {
 	 *
 	 * @return the health value
 	 */
-	public int getHealth() {
+	public float getHealth() {
 		return getData().get(VanillaData.HEALTH);
 	}
 
@@ -342,7 +342,7 @@ public class Health extends VanillaEntityComponent {
 	 * @param health hitpoints value to set to
 	 * @param cause of the change
 	 */
-	public void setHealth(int health, HealthChangeCause cause) {
+	public void setHealth(float health, HealthChangeCause cause) {
 		EntityHealthChangeEvent event = new EntityHealthChangeEvent(getOwner(), cause, health - getHealth());
 		getEngine().getEventManager().callEvent(event);
 		if (!event.isCancelled()) {
@@ -369,7 +369,7 @@ public class Health extends VanillaEntityComponent {
 	 *
 	 * @param amount amount the entity will be healed by
 	 */
-	public void heal(int amount) {
+	public void heal(float amount) {
 		heal(amount, HealCause.UNKNOWN);
 	}
 
@@ -379,7 +379,7 @@ public class Health extends VanillaEntityComponent {
 	 * @param amount amount the entity will be healed by
 	 * @param cause cause of this entity being healed
 	 */
-	public void heal(int amount, HealCause cause) {
+	public void heal(float amount, HealCause cause) {
 		EntityHealEvent event = new EntityHealEvent(getOwner(), amount, cause);
 		EntityHealEvent healEvent = getOwner().getEngine().getEventManager().callEvent(event);
 		if (!healEvent.isCancelled()) {
@@ -402,7 +402,7 @@ public class Health extends VanillaEntityComponent {
 	 * @return True if the entity is dead (Health less than 0) else false.
 	 */
 	public boolean isDead() {
-		return getHealth() == 0;
+		return getHealth() <= 0.0f;
 	}
 
 	/**
@@ -440,7 +440,7 @@ public class Health extends VanillaEntityComponent {
 	 *
 	 * @param amount amount the entity will be damaged by, can be modified based on armor and enchantments
 	 */
-	public void damage(int amount) {
+	public void damage(float amount) {
 		damage(amount, new NullDamageCause(DamageCause.DamageType.UNKNOWN));
 	}
 
@@ -450,7 +450,7 @@ public class Health extends VanillaEntityComponent {
 	 * @param amount amount the entity will be damaged by, can be modified based on armor and enchantments
 	 * @param cause cause of this entity being damaged
 	 */
-	public void damage(int amount, DamageCause<?> cause) {
+	public void damage(float amount, DamageCause<?> cause) {
 		damage(amount, cause, true);
 	}
 
@@ -461,7 +461,7 @@ public class Health extends VanillaEntityComponent {
 	 * @param cause cause of this entity being damaged
 	 * @param sendHurtMessage whether to send the hurt packet to all players online
 	 */
-	public void damage(int amount, DamageCause<?> cause, boolean sendHurtMessage) {
+	public void damage(float amount, DamageCause<?> cause, boolean sendHurtMessage) {
 		Cause<?> eventCause;
 		if (cause instanceof Cause<?>) {
 			eventCause = (Cause<?>) cause;
@@ -513,6 +513,6 @@ public class Health extends VanillaEntityComponent {
 	 * @return true if entity has infinite health
 	 */
 	public boolean hasInfiniteHealth() {
-		return getHealth() == -1;
+		return getHealth() == -1.0f;
 	}
 }

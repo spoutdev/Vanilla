@@ -43,7 +43,7 @@ public class WitherEntityProtocol extends CreatureProtocol {
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, HEALTH_INDEX, entity.add(Health.class).getHealth()));
+		parameters.add(new Parameter<Float>(Parameter.TYPE_FLOAT, HEALTH_INDEX, entity.add(Health.class).getHealth()));
 		return parameters;
 	}
 }

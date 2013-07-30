@@ -44,14 +44,16 @@ public final class EntityAttachEntityCodec extends MessageCodec<EntityAttachEnti
 	public EntityAttachEntityMessage decode(ChannelBuffer buffer) throws IOException {
 		int id = buffer.readInt();
 		int vehicle = buffer.readInt();
-		return new EntityAttachEntityMessage(id, vehicle);
+		byte leashed = buffer.readByte();
+		return new EntityAttachEntityMessage(id, vehicle, leashed == 1);
 	}
 
 	@Override
 	public ChannelBuffer encode(EntityAttachEntityMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(8);
+		ChannelBuffer buffer = ChannelBuffers.buffer(10);
 		buffer.writeInt(message.getEntityId());
 		buffer.writeInt(message.getVehicle());
+		buffer.writeByte(message.isLeashed() ? 1 : 0);
 		return buffer;
 	}
 }

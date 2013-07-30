@@ -42,7 +42,7 @@ public final class PlayerHealthCodec extends MessageCodec<PlayerHealthMessage> {
 
 	@Override
 	public PlayerHealthMessage decode(ChannelBuffer buffer) throws IOException {
-		short health = buffer.readShort();
+		float health = buffer.readFloat();
 		short food = buffer.readShort();
 		float foodSaturation = buffer.readFloat();
 		return new PlayerHealthMessage(health, food, foodSaturation);
@@ -50,8 +50,8 @@ public final class PlayerHealthCodec extends MessageCodec<PlayerHealthMessage> {
 
 	@Override
 	public ChannelBuffer encode(PlayerHealthMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(8);
-		buffer.writeShort(message.getHealth());
+		ChannelBuffer buffer = ChannelBuffers.buffer(11);
+		buffer.writeFloat(message.getHealth());
 		buffer.writeShort(message.getFood());
 		buffer.writeFloat(message.getFoodSaturation());
 		return buffer;

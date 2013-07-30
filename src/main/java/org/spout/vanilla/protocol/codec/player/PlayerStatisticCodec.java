@@ -43,15 +43,15 @@ public final class PlayerStatisticCodec extends MessageCodec<PlayerStatisticMess
 	@Override
 	public PlayerStatisticMessage decode(ChannelBuffer buffer) throws IOException {
 		int id = buffer.readInt();
-		byte amount = buffer.readByte();
+		int amount = buffer.readInt();
 		return new PlayerStatisticMessage(id, amount);
 	}
 
 	@Override
 	public ChannelBuffer encode(PlayerStatisticMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(5);
+		ChannelBuffer buffer = ChannelBuffers.buffer(9);
 		buffer.writeInt(message.getId());
-		buffer.writeByte(message.getAmount());
+		buffer.writeInt(message.getAmount());
 		return buffer;
 	}
 }

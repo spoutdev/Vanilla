@@ -51,10 +51,10 @@ import org.spout.api.protocol.Session;
 import org.spout.api.protocol.reposition.RepositionManager;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.VanillaPlayerNetworkComponent;
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.component.entity.player.Ping;
 import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.protocol.VanillaServerNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionMessage;
 
 public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMessage> {
@@ -100,10 +100,10 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 		final Point newPosition = rmInverse.convert(rawPosition);
 		final Point position = holder.getPhysics().getPosition();
 
-		if (!(session.getNetworkSynchronizer() instanceof VanillaServerNetworkSynchronizer)) {
+		if (!(holder.getNetwork() instanceof VanillaPlayerNetworkComponent)) {
 			throw new IllegalStateException("Using Vanilla Protocol without using VanillaNetworkSynchronizer");
 		}
-		VanillaServerNetworkSynchronizer sync = (VanillaServerNetworkSynchronizer) session.getNetworkSynchronizer();
+		VanillaPlayerNetworkComponent sync = (VanillaPlayerNetworkComponent) holder.getNetwork();
 		if (sync.isTeleportPending()) {
 			if (position.getX() == newPosition.getX() && position.getZ() == newPosition.getZ() && Math.abs(position.getY() - newPosition.getY()) < 16) {
 				sync.clearTeleportPending();

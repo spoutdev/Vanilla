@@ -29,9 +29,11 @@ package org.spout.vanilla.component.entity.living;
 import org.spout.api.ai.goap.GoapAIComponent;
 import org.spout.api.component.entity.NavigationComponent;
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.ai.examiner.VanillaBlockExaminer;
+import org.spout.vanilla.component.AbstractVanillaNetworkComponent;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.component.entity.misc.Burn;
 import org.spout.vanilla.component.entity.misc.Drowning;
@@ -59,6 +61,9 @@ public abstract class Living extends VanillaEntityComponent {
 		navigation.setDefaultExaminers(new VanillaBlockExaminer());
 		ai = holder.add(GoapAIComponent.class);
 		holder.add(Burn.class);
+		if (!(holder instanceof Player)) {
+			holder.add(AbstractVanillaNetworkComponent.class);
+		}
 	}
 
 	public boolean isOnGround() {

@@ -51,6 +51,7 @@ import org.spout.api.util.Named;
 
 import org.spout.vanilla.ChatStyle;
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.VanillaPlayerNetworkComponent;
 import org.spout.vanilla.protocol.codec.auth.EncryptionKeyRequestCodec;
 import org.spout.vanilla.protocol.codec.auth.EncryptionKeyResponseCodec;
 import org.spout.vanilla.protocol.codec.entity.EntityActionCodec;
@@ -412,7 +413,7 @@ public class VanillaProtocol extends Protocol {
 
 	@Override
 	public void initializeServerSession(ServerSession session) {
-		session.setNetworkSynchronizer(new VanillaServerNetworkSynchronizer(session));
+		session.getPlayer().add(VanillaPlayerNetworkComponent.class);
 
 		List<MessageCodec<?>> dynamicCodecList = new ArrayList<MessageCodec<?>>();
 		for (Pair<Integer, String> item : getDynamicallyRegisteredPackets()) {
@@ -429,7 +430,7 @@ public class VanillaProtocol extends Protocol {
 
 	@Override
 	public void initializeClientSession(ClientSession session) {
-		session.setNetworkSynchronizer(new VanillaClientNetworkSynchronizer(session));
+		session.getPlayer().add(VanillaPlayerNetworkComponent.class);
 
 		List<MessageCodec<?>> dynamicCodecList = new ArrayList<MessageCodec<?>>();
 		for (Pair<Integer, String> item : getDynamicallyRegisteredPackets()) {

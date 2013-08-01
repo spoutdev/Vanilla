@@ -38,7 +38,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import gnu.trove.set.TIntSet;
 
-import org.spout.api.Platform;
 import org.spout.api.Server;
 import org.spout.api.Spout;
 import org.spout.api.component.BlockComponentOwner;
@@ -154,6 +153,7 @@ import org.spout.vanilla.protocol.msg.player.PlayerTimeMessage;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerListMessage;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerLoginRequestMessage;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerPingMessage;
+import org.spout.vanilla.protocol.msg.player.pos.PlayerLookMessage;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionLookMessage;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerRespawnMessage;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnPositionMessage;
@@ -633,7 +633,12 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 		worldChanged(event.getWorld());
 	}
 
+	/**
+	 * Sent as the initial login process if first is true, otherwise handled as a normal world change.
+	 * @param world
+	 */
 	private void worldChanged(World world) {
+		// TODO: this needs to be re-written to either be only about world-changes, or to handle first connection completely in the if statement.
 		WorldConfigurationNode node = VanillaConfiguration.WORLDS.get(world);
 		maxY = node.MAX_Y.getInt() & (~Chunk.BLOCKS.MASK);
 		minY = node.MIN_Y.getInt() & (~Chunk.BLOCKS.MASK);
@@ -652,6 +657,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 		int entityId = player.getId();
 
 		if (first) {
+			//  MC Packet Order: 0x01 Ligin, 0xFA Custom (ServerTypeName), 0x06 SpawnPos, 0xCA PlayerAbilities, 0x10 BlockSwitch
 			first = false;
 			if (human != null && human.getAttachedCount() > 1) {
 				gamemode = human.getGameMode();
@@ -675,6 +681,10 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 			player.getSession().send(new PlayerRespawnMessage(dimension.getId(), difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
 		}
 
+		Point pos = world.getSpawnPoint().getPosition();
+		PlayerSpawnPositionMessage SPMsg = new PlayerSpawnPositionMessage((int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), getRepositionManager());
+		player.getSession().send(SPMsg);
+
 		if (human != null) {
 			if (first) {
 				human.setGamemode(gamemode, false);
@@ -682,15 +692,14 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 			human.updateAbilities();
 		}
 
+		session.send(new PlayerHeldItemChangeMessage(player.add(PlayerInventory.class).getQuickbar().getSelectedSlot().getIndex()));
+
+		// Vanilla Only, MC does not send full inventory update on world change, nor on first connect
 		PlayerInventory inv = player.get(PlayerInventory.class);
 		if (inv != null) {
 			inv.updateAll();
 		}
-
-		Point pos = world.getSpawnPoint().getPosition();
-		PlayerSpawnPositionMessage SPMsg = new PlayerSpawnPositionMessage((int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), getRepositionManager());
-		player.getSession().send(SPMsg);
-		session.send(new PlayerHeldItemChangeMessage(player.add(PlayerInventory.class).getQuickbar().getSelectedSlot().getIndex()));
+		// TODO: Send scoreboard data here
 		Sky sky;
 
 		switch (dimension) {
@@ -704,6 +713,12 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 				sky = world.add(NormalSky.class);
 		}
 		sky.updatePlayer(player);
+		// TODO: notify all connected players of login PacketChat 'using: server'
+		// TODO: Send player all nearby players
+		this.sendPosition(); // Send LookAndPosition
+		sky.updatePlayer(player);
+		// TODO: Handle custom texture packs
+		// TODO: Send any player effects
 	}
 
 	private int lastY = Integer.MIN_VALUE;

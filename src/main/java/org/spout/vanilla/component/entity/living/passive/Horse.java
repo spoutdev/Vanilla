@@ -29,10 +29,10 @@ package org.spout.vanilla.component.entity.living.passive;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.living.Animal;
 import org.spout.vanilla.component.entity.living.Passive;
 import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.component.VanillaNetworkComponent;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.entity.creature.HorseEntityProtocol;
 
@@ -40,7 +40,7 @@ public class Horse extends Animal implements Passive {
 
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new HorseEntityProtocol());
+		((VanillaNetworkComponent) getOwner().getNetwork()).setEntityProtocol(new HorseEntityProtocol());
 		if (getAttachedCount() == 1) {
 			getOwner().add(Health.class).setSpawnHealth(22);
 		}

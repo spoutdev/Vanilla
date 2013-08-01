@@ -35,7 +35,6 @@ import org.spout.api.protocol.ServerSession;
 import org.spout.api.protocol.event.PositionSendEvent;
 
 import org.spout.vanilla.component.entity.living.Human;
-import org.spout.vanilla.protocol.VanillaServerNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerLookMessage;
 
 public final class PlayerLookHandler extends MessageHandler<PlayerLookMessage> {

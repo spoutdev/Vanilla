@@ -123,11 +123,7 @@ public class SoundEffect extends Effect {
 	}
 
 	public void play(Player player, Point position, float volume, float pitch) {
-		//TODO Fix this, these should NEVER BE NULL
-		if (player == null || player.getSession() == null | player.getSession().getNetworkSynchronizer() == null) {
-			return;
-		}
-		player.getSession().getNetworkSynchronizer().callProtocolEvent(new PlaySoundEffectEvent(position, this, volume, pitch));
+		player.getNetwork().callProtocolEvent(new PlaySoundEffectEvent(position, this, volume, pitch), player);
 	}
 
 	public void play(Collection<Player> players, Point position, float volume, float pitch) {

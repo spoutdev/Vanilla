@@ -72,8 +72,8 @@ import org.spout.vanilla.util.PlayerUtil;
 public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBlockPlacementMessage> {
 	private void refreshClient(Player player, Block clickedBlock, BlockFace clickedFace, RepositionManager rm) {
 		// refresh the client just in case it assumed something
-		player.getSession().send(new BlockChangeMessage(clickedBlock, rm));
-		player.getSession().send(new BlockChangeMessage(clickedBlock.translate(clickedFace), rm));
+		player.getNetwork().getSession().send(new BlockChangeMessage(clickedBlock, rm));
+		player.getNetwork().getSession().send(new BlockChangeMessage(clickedBlock.translate(clickedFace), rm));
 		Slot held = PlayerUtil.getHeldSlot(player);
 		if (held != null) {
 			held.set(held.get());
@@ -86,7 +86,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 			return;
 		}
 		Player player = session.getPlayer();
-		RepositionManager rm = player.getNetworkSynchronizer().getRepositionManager();
+		RepositionManager rm = player.getNetwork().getRepositionManager();
 		RepositionManager rmInverse = rm.getInverse();
 		message = message.convert(rmInverse);
 

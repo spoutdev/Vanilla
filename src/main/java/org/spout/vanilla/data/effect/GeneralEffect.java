@@ -76,7 +76,7 @@ public class GeneralEffect extends Effect {
 	}
 
 	public void play(Player player, Point position, int data) {
-		player.getSession().getNetworkSynchronizer().callProtocolEvent(new PlayParticleEffectEvent(position, this, data));
+		player.getNetwork().callProtocolEvent(new PlayParticleEffectEvent(position, this, data), player);
 	}
 
 	public void play(Collection<Player> players, Point position, int data) {

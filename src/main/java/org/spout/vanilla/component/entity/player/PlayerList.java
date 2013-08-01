@@ -83,7 +83,7 @@ public class PlayerList extends VanillaEntityComponent {
 				temp.add(name);
 				Long oldPing = players.put(name, ping);
 				if (oldPing == null || !oldPing.equals(ping)) {
-					player.getNetworkSynchronizer().callProtocolEvent(new ListPingEvent(name, ping, true));
+					player.getNetwork().callProtocolEvent(new ListPingEvent(name, ping, true));
 				}
 			}
 		}
@@ -91,7 +91,7 @@ public class PlayerList extends VanillaEntityComponent {
 		while (itr.hasNext()) {
 			String name = itr.next();
 			if (!temp.contains(name)) {
-				player.getNetworkSynchronizer().callProtocolEvent(new ListPingEvent(name, 0L, false));
+				player.getNetwork().callProtocolEvent(new ListPingEvent(name, 0L, false));
 				itr.remove();
 			}
 		}

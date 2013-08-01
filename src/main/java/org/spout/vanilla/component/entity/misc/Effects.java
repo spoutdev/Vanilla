@@ -73,7 +73,7 @@ public class Effects extends VanillaEntityComponent {
 				health.heal(amount);
 				return;
 		}
-		player.getNetworkSynchronizer().callProtocolEvent(new EntityEffectEvent(player, effect));
+		player.getNetwork().callProtocolEvent(new EntityEffectEvent(player, effect));
 		effects.add(effect);
 	}
 
@@ -88,7 +88,7 @@ public class Effects extends VanillaEntityComponent {
 		}
 
 		// send the update
-		player.getNetworkSynchronizer().callProtocolEvent(new EntityRemoveEffectEvent(player, type));
+		player.getNetwork().callProtocolEvent(new EntityRemoveEffectEvent(player, type));
 
 		// look up the effect with this type and remove it
 		Iterator<EntityEffect> i = effects.iterator();

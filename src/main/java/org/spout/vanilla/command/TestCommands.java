@@ -57,8 +57,8 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
-import org.spout.api.protocol.ServerNetworkSynchronizer;
 import org.spout.api.protocol.event.ChunkSendEvent;
+import org.spout.api.protocol.event.PositionSendEvent;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.ChatStyle;
@@ -241,7 +241,7 @@ public class TestCommands {
 
 		BigTreeObject tree = new BigTreeObject();
 		tree.placeObject(pos.getWorld(), pos.getBlockX(), pos.getBlockY(), pos.getBlockZ());
-		player.teleport(pos.add(new Vector3(0, 50, 0)));
+		player.getPhysics().setPosition(pos.add(new Vector3(0, 50, 0)));
 	}
 
 	// TODO - There needs to be a method that guarantees unique data values on a per-server basis
@@ -297,7 +297,7 @@ public class TestCommands {
 			throw new CommandException("by cannot be greater than ty");
 		}
 		for (ProtocolEvent e : m.drawRectangle(i, bx, by, tx, ty, col)) {
-			player.getNetworkSynchronizer().callProtocolEvent(e);
+			player.getNetwork().callProtocolEvent(e);
 		}
 	}
 
@@ -317,7 +317,7 @@ public class TestCommands {
 		Map m = (Map) i.getMaterial();
 		int col = args.popInteger("col");
 		for (ProtocolEvent e : m.flood(i, col)) {
-			player.getNetworkSynchronizer().callProtocolEvent(e);
+			player.getNetwork().callProtocolEvent(e);
 		}
 	}
 
@@ -327,7 +327,7 @@ public class TestCommands {
 	@Filter (PlayerFilter.class)
 	public void respawn(Player player, CommandArguments args) throws CommandException {
 		args.assertCompletelyParsed();
-		((ServerNetworkSynchronizer) player.getNetworkSynchronizer()).forceRespawn();
+		player.getNetwork().forceRespawn();
 	}
 
 	@CommandDescription (aliases = "sun", usage = "<x> <y> <z>", desc = "Sets the sun direction.")
@@ -382,7 +382,7 @@ public class TestCommands {
 	@Filter (PlayerFilter.class)
 	public void resetPosition(Player player, CommandArguments args) throws CommandException {
 		args.assertCompletelyParsed();
-		((VanillaServerNetworkSynchronizer) player.getNetworkSynchronizer()).sendPosition();
+		player.getNetwork().callProtocolEvent(new PositionSendEvent(player.getId(), player.getPhysics().getPosition(), player.getPhysics().getRotation()), player);
 	}
 
 	@CommandDescription (aliases = "torch", desc = "Place a torch.")
@@ -558,7 +558,7 @@ public class TestCommands {
 				throw new CommandException("You cannot resend chunks in client mode.");
 			}
 			if (action.contains("resendall")) {
-				Set<Chunk> chunks = ((ServerNetworkSynchronizer) player.getNetworkSynchronizer()).getActiveChunks();
+				Set<Chunk> chunks = player.getNetwork().getActiveChunks();
 				for (Chunk c : chunks) {
 					player.getNetwork().callProtocolEvent(new ChunkSendEvent(c, true));
 				}

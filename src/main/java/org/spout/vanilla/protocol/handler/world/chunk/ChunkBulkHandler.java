@@ -45,7 +45,7 @@ public class ChunkBulkHandler extends MessageHandler<ChunkBulkMessage> {
 		}
 		Player player = session.getPlayer();
 		World world = player.getEngine().getDefaultWorld();//player.getWorld();
-		RepositionManager rm = player.getNetworkSynchronizer().getRepositionManager();
+		RepositionManager rm = player.getNetwork().getRepositionManager();
 
 		for (int c = 0; c < message.getX().length; c++) {
 			int baseX = message.getX()[c] << Chunk.BLOCKS.BITS;

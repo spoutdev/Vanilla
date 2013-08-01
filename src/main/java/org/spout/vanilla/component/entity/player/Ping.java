@@ -118,6 +118,6 @@ public class Ping extends VanillaEntityComponent {
 		if (lastRequestCount >= pingTime.length) {
 			lastRequestCount = 0;
 		}
-		player.getNetworkSynchronizer().callProtocolEvent(new PingEvent(hash));
+		player.getNetwork().callProtocolEvent(new PingEvent(hash));
 	}
 }

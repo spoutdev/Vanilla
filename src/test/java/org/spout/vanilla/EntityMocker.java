@@ -64,6 +64,7 @@ public class EntityMocker {
 	}
 
 	public static Entity mockEntity() {
+		// TODO: this is broken, please fix.
 		Engine engine = EngineFaker.setupEngine();
 
 		final Entity entity = Mockito.mock(Entity.class);

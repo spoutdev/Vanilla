@@ -76,6 +76,7 @@ public abstract class BaseProtocolTest {
 				encoded = codec.encodeToServer(message);
 				decoded = codec.decodeFromClient(encoded);
 			} catch (Throwable t) {
+				t.printStackTrace();
 				fail("Failed (C -> S) for: " + message.getClass().getName() + ", " + message);
 				return;
 			}
@@ -84,6 +85,7 @@ public abstract class BaseProtocolTest {
 				encoded = codec.encodeToClient(message);
 				decoded = codec.decodeFromServer(encoded);
 			} catch (Throwable t) {
+				t.printStackTrace();
 				fail("Failed (S -> C) for: " + message.getClass().getName() + ", " + message);
 				return;
 			}

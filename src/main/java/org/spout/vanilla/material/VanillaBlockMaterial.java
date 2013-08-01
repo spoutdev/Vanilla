@@ -443,7 +443,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	public static void playBlockAction(Block block, byte arg1, byte arg2) {
 		BlockActionEvent event = new BlockActionEvent(block, block.getMaterial(), arg1, arg2);
 		for (Player player : block.getChunk().getObservingPlayers()) {
-			player.getNetworkSynchronizer().callProtocolEvent(event);
+			player.getNetwork().callProtocolEvent(event, player);
 		}
 	}
 

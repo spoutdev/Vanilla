@@ -38,7 +38,7 @@ import org.spout.api.command.CommandManager;
 import org.spout.api.command.annotated.AnnotatedCommandExecutorFactory;
 import org.spout.api.command.filter.PlayerFilter;
 import org.spout.api.component.entity.NetworkComponent;
-import org.spout.api.component.entity.ObserverComponent;
+import org.spout.api.component.entity.PlayerNetworkComponent;
 import org.spout.api.datatable.ManagedMap;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.EventManager;
@@ -95,7 +95,7 @@ import org.spout.vanilla.world.lighting.VanillaLighting;
 
 public class VanillaPlugin extends Plugin {
 	public static final int MINECRAFT_PROTOCOL_ID = 74;
-	public static final int VANILLA_PROTOCOL_ID = NetworkComponent.getProtocolId("org.spout.vanilla.plugin.protocol");
+	public static final int VANILLA_PROTOCOL_ID = PlayerNetworkComponent.getProtocolId("org.spout.vanilla.plugin.protocol");
 	protected static VanillaPlugin instance;
 	private VanillaConfiguration config;
 	private RemoteConnectionCore rcon;
@@ -280,7 +280,8 @@ public class VanillaPlugin extends Plugin {
 				// Add observer to spawn to keep loaded if desired
 				if (worldConfig.LOADED_SPAWN.getBoolean()) {
 					@SuppressWarnings ("unchecked")
-					Entity e = world.createAndSpawnEntity(spawn, LoadOption.LOAD_GEN, ObserverComponent.class);
+					Entity e = world.createAndSpawnEntity(spawn, LoadOption.LOAD_GEN, NetworkComponent.class);
+					e.get(NetworkComponent.class).setObserver(true);
 					e.setObserver(new FlatIterator(cx, 0, cz, 16, effectiveRadius));
 				}
 			}

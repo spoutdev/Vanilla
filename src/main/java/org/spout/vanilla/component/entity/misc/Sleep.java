@@ -75,7 +75,7 @@ public class Sleep extends VanillaEntityComponent {
 		skipNight = false;
 		occupy(false);
 		bed = null;
-		player.getNetworkSynchronizer().callProtocolEvent(new EntityAnimationEvent(player, Animation.LEAVE_BED));
+		player.getNetwork().callProtocolEvent(new EntityAnimationEvent(player, Animation.LEAVE_BED));
 	}
 
 	/**

@@ -27,10 +27,12 @@
 package org.spout.vanilla.protocol.handler.player.pos;
 
 import org.spout.api.entity.Player;
+import org.spout.api.geo.discrete.Transform;
 import org.spout.api.math.QuaternionMath;
 import org.spout.api.protocol.ClientSession;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.ServerSession;
+import org.spout.api.protocol.event.PositionSendEvent;
 
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.protocol.VanillaServerNetworkSynchronizer;
@@ -46,7 +48,8 @@ public final class PlayerLookHandler extends MessageHandler<PlayerLookMessage> {
 		//First look packet is to login/receive terrain, is not a valid rotation
 		if (session.getDataMap().get("first_login", 0) == 0) {
 			session.getDataMap().put("first_login", 1);
-			((VanillaServerNetworkSynchronizer) session.getPlayer().getNetworkSynchronizer()).sendPosition();
+			Transform transform = session.getPlayer().getPhysics().getTransform();
+			session.getPlayer().getNetwork().callProtocolEvent(new PositionSendEvent(session.getPlayer().getId(), transform.getPosition(), transform.getRotation()), session.getPlayer());
 			return;
 		}
 

@@ -118,7 +118,7 @@ public class Human extends Living {
 				viewDistance = config.NORMAL_VIEW_DISTANCE.getInt();
 				break;
 		}
-		getOwner().setViewDistance(viewDistance * Chunk.BLOCKS.SIZE);
+		getOwner().getNetwork().setSyncDistance(viewDistance);
 	}
 
 	public boolean isAdventure() {
@@ -383,7 +383,7 @@ public class Human extends Living {
 		if (!updateClient || !(getOwner() instanceof Player)) {
 			return;
 		}
-		((Player) getOwner()).getNetworkSynchronizer().callProtocolEvent(new PlayerAbilityUpdateEvent((Player) getOwner()));
+		((Player) getOwner()).getNetwork().callProtocolEvent(new PlayerAbilityUpdateEvent((Player) getOwner()));
 	}
 
 	public void updateAbilities() {

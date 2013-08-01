@@ -45,7 +45,7 @@ public class BlockChangeHandler extends MessageHandler<BlockChangeMessage> {
 
 		Player player = session.getPlayer();
 		World world = player.getWorld();
-		RepositionManager rm = player.getNetworkSynchronizer().getRepositionManager();
+		RepositionManager rm = player.getNetwork().getRepositionManager();
 
 		int x = rm.convertX(message.getX());
 		int y = rm.convertY(message.getY());

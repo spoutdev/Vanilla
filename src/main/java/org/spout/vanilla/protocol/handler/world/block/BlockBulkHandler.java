@@ -46,7 +46,7 @@ public class BlockBulkHandler extends MessageHandler<BlockBulkMessage> {
 
 		Player player = session.getPlayer();
 		World world = player.getWorld();
-		RepositionManager rm = player.getNetworkSynchronizer().getRepositionManager();
+		RepositionManager rm = player.getNetwork().getRepositionManager();
 		int baseX = message.getChunkX() << Chunk.BLOCKS.BITS;
 		int baseZ = message.getChunkZ() << Chunk.BLOCKS.BITS;
 

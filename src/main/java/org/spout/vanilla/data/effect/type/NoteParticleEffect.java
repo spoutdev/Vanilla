@@ -44,6 +44,6 @@ public class NoteParticleEffect extends GeneralEffect {
 	@Override
 	public void play(Player player, Point position, int note) {
 		Block block = position.getWorld().getBlock(position);
-		player.getSession().getNetworkSynchronizer().callProtocolEvent(new BlockActionEvent(block, VanillaMaterials.NOTEBLOCK, (byte) 0, (byte) note));
+		player.getNetwork().callProtocolEvent(new BlockActionEvent(block, VanillaMaterials.NOTEBLOCK, (byte) 0, (byte) note));
 	}
 }

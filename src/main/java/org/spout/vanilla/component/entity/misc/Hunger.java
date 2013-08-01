@@ -102,7 +102,7 @@ public class Hunger extends VanillaEntityComponent {
 				//Timer when eating. Sends a Enting done if the player eated the food the whole time.
 				if (eatingTimer != 0f) {
 					if (eatingTimer >= 1.5f) {
-						((Player) getOwner()).getSession().send(new EntityStatusMessage(getOwner().getId(), EntityStatusMessage.EATING_ACCEPTED));
+						((Player) getOwner()).getNetwork().getSession().send(new EntityStatusMessage(getOwner().getId(), EntityStatusMessage.EATING_ACCEPTED));
 						if (foodEating.get() != null) {
 							if (foodEating.get().getMaterial() instanceof Food) {
 								((Food) foodEating.get().getMaterial()).onEat(getOwner(), foodEating);
@@ -312,7 +312,7 @@ public class Hunger extends VanillaEntityComponent {
 
 	public void reload() {
 		if (getOwner().getEngine() instanceof Server) {
-			getPlayer().getNetworkSynchronizer().callProtocolEvent(new PlayerHealthEvent(getPlayer()));
+			getPlayer().getNetwork().callProtocolEvent(new PlayerHealthEvent(getPlayer()));
 		}
 	}
 

@@ -53,6 +53,6 @@ public class PlayerPingHandler extends MessageHandler<PlayerPingMessage> {
 			session.disconnect("Illegal packet!");
 			return;
 		}
-		session.getNetworkSynchronizer().callProtocolEvent(new PingEvent(message.getPingId()));
+		session.getPlayer().getNetwork().callProtocolEvent(new PingEvent(message.getPingId()), session.getPlayer());
 	}
 }

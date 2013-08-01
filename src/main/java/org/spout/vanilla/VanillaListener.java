@@ -97,7 +97,7 @@ public class VanillaListener implements Listener {
 		player.add(Sleep.class);
 		player.add(Hunger.class);
 		player.add(Level.class);
-		player.getSession().setUncaughtExceptionHandler(new PasteExceptionHandler(player.getSession()));
+		player.getNetwork().getSession().setUncaughtExceptionHandler(new PasteExceptionHandler(player.getNetwork().getSession()));
 		Sky sky = player.getWorld().get(Sky.class);
 		if (sky != null) {
 			sky.updatePlayer(player);

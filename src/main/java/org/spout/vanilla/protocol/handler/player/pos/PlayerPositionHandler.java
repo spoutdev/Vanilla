@@ -89,7 +89,7 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 			return;
 		}
 		final Player holder = session.getPlayer();
-		final RepositionManager rmInverse = holder.getNetworkSynchronizer().getRepositionManager().getInverse();
+		final RepositionManager rmInverse = holder.getNetwork().getRepositionManager().getInverse();
 
 		Ping ping = holder.get(Ping.class);
 		if (ping != null) {

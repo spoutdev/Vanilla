@@ -78,7 +78,7 @@ public class PlayerHandshakeHandler extends MessageHandler<PlayerHandshakeMessag
 		}
 	}
 
-	private final static SecureRandom random = new SecureRandom();
+	private static final SecureRandom random = new SecureRandom();
 
 	static {
 		synchronized (random) {

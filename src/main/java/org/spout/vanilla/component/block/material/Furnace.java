@@ -50,8 +50,8 @@ import org.spout.vanilla.material.VanillaMaterials;
  * Represents a furnace in a world.
  */
 public class Furnace extends ViewedBlockComponent implements Container {
-	public final float MAX_FUEL_INCREMENT = 12.5f;
-	public final float MAX_SMELT_TIME_INCREMENT = 9f;
+	public static final float MAX_FUEL_INCREMENT = 12.5f;
+	public static final float MAX_SMELT_TIME_INCREMENT = 9f;
 
 	/**
 	 * Retrieve the maximum time to smelt something.

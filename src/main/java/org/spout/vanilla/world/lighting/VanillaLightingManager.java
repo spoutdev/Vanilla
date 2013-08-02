@@ -53,7 +53,7 @@ import org.spout.api.util.list.IntVector4ExpandableFIFO;
 import org.spout.api.util.set.TInt10TripleSet;
 
 public abstract class VanillaLightingManager extends LightingManager<VanillaCuboidLightBuffer> {
-	private final static BlockFace[] allFaces = BlockFaces.NESWBT.toArray();
+	private static final BlockFace[] allFaces = BlockFaces.NESWBT.toArray();
 
 	public VanillaLightingManager(String name) {
 		super(name);
@@ -479,7 +479,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		resolve(light, material, height, boundary, true);
 	}
 
-	private final static Comparator<Chunk> chunkSorter = new Comparator<Chunk>() {
+	private static final Comparator<Chunk> chunkSorter = new Comparator<Chunk>() {
 		@Override
 		public int compare(Chunk c1, Chunk c2) {
 			int genDiff = c1.getGenerationIndex() - c2.getGenerationIndex();

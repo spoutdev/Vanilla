@@ -35,9 +35,9 @@ import org.spout.vanilla.component.entity.living.neutral.Wolf;
 import org.spout.vanilla.component.entity.misc.Health;
 
 public class WolfEntityProtocol extends CreatureProtocol {
-	public final static int SIT_TAME_RED_EYES_INDEX = 16; // The MC metadata index for determining if the wolf is tamed, has red eyes, or is sitting.
-	public final static int OWNER_INDEX = 17; // The MC metadata index for the owner's name.
-	public final static int HEALTH_INDEX = 18; // The MC metadata index for the health of the wolf;
+	public static final int SIT_TAME_RED_EYES_INDEX = 16; // The MC metadata index for determining if the wolf is tamed, has red eyes, or is sitting.
+	public static final int OWNER_INDEX = 17; // The MC metadata index for the owner's name.
+	public static final int HEALTH_INDEX = 18; // The MC metadata index for the health of the wolf;
 
 	public WolfEntityProtocol() {
 		super(CreatureType.WOLF);

@@ -49,7 +49,7 @@ import org.spout.vanilla.material.item.potion.PotionItem;
  * Component that represents a Brewing Stand in the world.
  */
 public class BrewingStand extends ViewedBlockComponent implements Container {
-	private final float BREW_TIME_INCREMENT = 20f;
+	private static final float BREW_TIME_INCREMENT = 20f;
 	private ItemStack input;
 
 	@Override

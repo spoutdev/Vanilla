@@ -39,7 +39,7 @@ import org.spout.vanilla.util.RedstoneUtil;
 
 public class RedstoneLamp extends Solid implements InitializableMaterial, RedstoneTarget {
 	private final boolean on;
-	private final static EffectRange effectRange = new CubicEffectRange(2);
+	private static final EffectRange effectRange = new CubicEffectRange(2);
 
 	public RedstoneLamp(String name, int id, boolean on, String model) {
 		super(name, id, model);

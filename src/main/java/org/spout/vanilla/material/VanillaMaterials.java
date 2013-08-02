@@ -644,8 +644,8 @@ public final class VanillaMaterials {
 	public static final PotionItem POTION = PotionItem.WATER_BOTTLE;
 	public static final NameTag NAME_TAG = new NameTag("Name Tag", 421, null);
 	private static boolean initialized = false;
-	private final static AtomicShortArray conversionTable = new AtomicShortArray(Short.MAX_VALUE);
-	private final static TShortObjectHashMap<Material> reverseTable = new TShortObjectHashMap<Material>(500);
+	private static final AtomicShortArray conversionTable = new AtomicShortArray(Short.MAX_VALUE);
+	private static final TShortObjectHashMap<Material> reverseTable = new TShortObjectHashMap<Material>(500);
 	//Special
 	private static final VanillaIceCreamBlock VANILLA_ICE_CREAM_BLOCK = new VanillaIceCreamBlock("Vanilla Ice Cream", 1); //Stone ID so people don't kill Official clients spawning this.
 

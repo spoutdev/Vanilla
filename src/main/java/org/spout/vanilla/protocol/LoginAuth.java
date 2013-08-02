@@ -43,10 +43,10 @@ import org.spout.api.scheduler.TaskPriority;
 import org.spout.vanilla.VanillaPlugin;
 
 public class LoginAuth implements Runnable {
-	private final static String URLBase = "http://session.minecraft.net/game/checkserver.jsp?";
-	private final static String userPrefix = "user=";
-	private final static String idPrefix = "&serverId=";
-	private final static String authString = "YES";
+	private static final String URLBase = "http://session.minecraft.net/game/checkserver.jsp?";
+	private static final String userPrefix = "user=";
+	private static final String idPrefix = "&serverId=";
+	private static final String authString = "YES";
 	private final Session session;
 	private final String name;
 	private final Runnable runnable;

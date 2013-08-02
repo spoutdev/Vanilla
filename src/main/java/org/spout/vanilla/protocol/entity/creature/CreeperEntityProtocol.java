@@ -34,8 +34,8 @@ import org.spout.api.util.Parameter;
 import org.spout.vanilla.component.entity.living.hostile.Creeper;
 
 public class CreeperEntityProtocol extends CreatureProtocol {
-	public final static int STATE_INDEX = 16; // The MC metadata index to determine the fuse.
-	public final static int CHARGE_INDEX = 17; // The MC metadata index to determine if the creeper is charged.
+	public static final int STATE_INDEX = 16; // The MC metadata index to determine the fuse.
+	public static final int CHARGE_INDEX = 17; // The MC metadata index to determine if the creeper is charged.
 
 	public CreeperEntityProtocol() {
 		super(CreatureType.CREEPER);

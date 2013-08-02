@@ -34,8 +34,8 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.Parameter;
 
 public class EndermanEntityProtocol extends CreatureProtocol {
-	public final static int ITEM_ID_INDEX = 16; // The MC metadata index for the item in the Enderman's hand.
-	public final static int ITEM_DATA_INDEX = 17; // The MC metadata indexfor the item data in the Enderman's hand.
+	public static final int ITEM_ID_INDEX = 16; // The MC metadata index for the item in the Enderman's hand.
+	public static final int ITEM_DATA_INDEX = 17; // The MC metadata indexfor the item data in the Enderman's hand.
 
 	public EndermanEntityProtocol() {
 		super(CreatureType.ENDERMAN);

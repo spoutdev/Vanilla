@@ -34,7 +34,7 @@ import org.spout.api.util.Parameter;
 import org.spout.vanilla.component.entity.living.hostile.WitherSkeleton;
 
 public class SkeletonEntityProtocol extends CreatureProtocol {
-	public final static int TYPE_INDEX = 13; // The MC metadata index for determining the type of the skeleton
+	public static final int TYPE_INDEX = 13; // The MC metadata index for determining the type of the skeleton
 
 	public SkeletonEntityProtocol() {
 		super(CreatureType.SKELETON);

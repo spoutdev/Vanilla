@@ -38,7 +38,6 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.GenericMath;
 
 import org.spout.vanilla.data.Climate;
-import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;

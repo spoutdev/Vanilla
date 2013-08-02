@@ -53,7 +53,7 @@ public class Sapling extends GroundAttachable implements Growing, Spreading, Pla
 	public static final Sapling SPRUCE = new Sapling("Spruce Sapling", 1, DEFAULT);
 	public static final Sapling BIRCH = new Sapling("Birch Sapling", 2, DEFAULT);
 	public static final Sapling JUNGLE = new Sapling("Jungle Sapling", 3, DEFAULT);
-	public final float BURN_TIME = 5;
+	public static final float BURN_TIME = 5;
 	private static final short dataMask = 0x3;
 	private static final int GROWTH_MASK = 0x8;
 

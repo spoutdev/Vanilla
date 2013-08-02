@@ -41,7 +41,7 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class JukeboxBlock extends VanillaBlockMaterial implements Fuel {
-	public final float BURN_TIME = 15;
+	public static final float BURN_TIME = 15;
 
 	public JukeboxBlock(String name, int id) {
 		super(name, id, VanillaMaterialModels.JUKEBOX, new BoxShape(1, 1, 1), Jukebox.class);

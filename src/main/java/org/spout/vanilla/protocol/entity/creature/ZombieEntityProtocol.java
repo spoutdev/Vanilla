@@ -32,7 +32,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
 public class ZombieEntityProtocol extends CreatureProtocol {
-	public final static int TYPE_INDEX = 16; // The MC metadata index determining if this zombie was a villager or not
+	public static final int TYPE_INDEX = 16; // The MC metadata index determining if this zombie was a villager or not
 
 	public ZombieEntityProtocol() {
 		super(CreatureType.ZOMBIE);

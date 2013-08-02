@@ -30,7 +30,7 @@ import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public class Stick extends VanillaItemMaterial implements Fuel {
-	public final float BURN_TIME = 15;
+	public static final float BURN_TIME = 15;
 
 	public Stick(String name, int id) {
 		super(name, id, null);

@@ -67,7 +67,7 @@ public class Log extends RotationalSolid implements DynamicMaterial, Fuel, Timed
 	public static final Log SPRUCE = new Log("Spruce Wood", 1, DEFAULT, Sapling.SPRUCE, VanillaMaterialModels.LOG_SPRUCE);
 	public static final Log BIRCH = new Log("Birch Wood", 2, DEFAULT, Sapling.BIRCH, VanillaMaterialModels.LOG_BIRCH);
 	public static final Log JUNGLE = new Log("Jungle Wood", 3, DEFAULT, Sapling.JUNGLE, VanillaMaterialModels.LOG_JUNGLE);
-	public final float BURN_TIME = 15;
+	public static final float BURN_TIME = 15;
 	private final Sapling sapling;
 
 	private Log(String name, Sapling sapling, String model) {
@@ -199,8 +199,8 @@ public class Log extends RotationalSolid implements DynamicMaterial, Fuel, Timed
 	}
 
 	private static class LeafDecayTask implements Runnable {
-		private final static int SCAN_RADIUS = 5;
-		private final static int LOG_SCAN_RANGE = 4;
+		private static final int SCAN_RADIUS = 5;
+		private static final int LOG_SCAN_RANGE = 4;
 		private final List<Block> blocks = new ArrayList<Block>(SCAN_RADIUS * SCAN_RADIUS * SCAN_RADIUS);
 		private final Region r;
 		private final Cause<?> cause;

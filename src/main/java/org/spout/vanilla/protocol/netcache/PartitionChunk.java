@@ -27,7 +27,7 @@
 package org.spout.vanilla.protocol.netcache;
 
 public class PartitionChunk {
-	static public void copyToChunkData(byte[] chunkData, int blockNum, byte[] partition, int dataLength) {
+	public static void copyToChunkData(byte[] chunkData, int blockNum, byte[] partition, int dataLength) {
 
 		int j = blockNum << 11;
 
@@ -44,7 +44,7 @@ public class PartitionChunk {
 		}
 	}
 
-	static public void copyFromChunkData(byte[] chunkData, int blockNum, byte[] partition, int dataLength) {
+	public static void copyFromChunkData(byte[] chunkData, int blockNum, byte[] partition, int dataLength) {
 
 		int j = blockNum << 11;
 
@@ -57,7 +57,7 @@ public class PartitionChunk {
 		}
 	}
 
-	static public long getHash(byte[] chunkData, int blockNum, int base) {
+	public static long getHash(byte[] chunkData, int blockNum, int base) {
 		int p = blockNum * 8 + base;
 		long hash = 0;
 		hash = hash << 8 | (((long) chunkData[p++]) & 0xFFL);
@@ -71,7 +71,7 @@ public class PartitionChunk {
 		return hash;
 	}
 
-	static public void setHash(byte[] chunkData, int blockNum, long hash, int base) {
+	public static void setHash(byte[] chunkData, int blockNum, long hash, int base) {
 		int p = blockNum * 8 + base;
 		chunkData[p++] = (byte) (hash >> 56);
 		chunkData[p++] = (byte) (hash >> 48);
@@ -83,7 +83,7 @@ public class PartitionChunk {
 		chunkData[p++] = (byte) (hash >> 0);
 	}
 
-	static public int getInt(byte[] chunkData, int blockNum, int base) {
+	public static int getInt(byte[] chunkData, int blockNum, int base) {
 		int p = blockNum * 4 + base;
 		int hash = 0;
 		hash = hash << 8 | (((int) chunkData[p++]) & 0xFF);
@@ -93,7 +93,7 @@ public class PartitionChunk {
 		return hash;
 	}
 
-	static public void setInt(byte[] chunkData, int blockNum, int hash, int base) {
+	public static void setInt(byte[] chunkData, int blockNum, int hash, int base) {
 		int p = blockNum * 4 + base;
 		chunkData[p++] = (byte) (hash >> 24);
 		chunkData[p++] = (byte) (hash >> 16);

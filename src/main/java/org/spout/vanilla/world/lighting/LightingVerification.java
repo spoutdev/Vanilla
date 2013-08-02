@@ -43,7 +43,7 @@ import org.spout.api.util.bytebit.ByteBitSet;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
 public class LightingVerification {
-	private final static BlockFace[] allFaces = BlockFaces.NESWBT.toArray();
+	private static final BlockFace[] allFaces = BlockFaces.NESWBT.toArray();
 
 	public static boolean checkAll(World w, boolean breakOnError) {
 		Collection<Region> regions = w.getRegions();
@@ -365,7 +365,7 @@ public class LightingVerification {
 		Spout.getLogger().info(getCuboid(localLight, localMaterials));
 	}
 
-	private final static String[] layers = new String[] {"Bottom", "Middle", "Top"};
+	private static final String[] layers = new String[] {"Bottom", "Middle", "Top"};
 
 	private static String getCuboid(int[][][] light, BlockMaterial[][][] material) {
 		StringBuilder sb = new StringBuilder();

@@ -120,7 +120,7 @@ public class PasteExceptionHandler implements UncaughtExceptionHandler {
 	}
 
 	private static class PasteBinAPI {
-		private final static String pasteURL = "http://www.pastebin.com/api/api_post.php";
+		private static final String pasteURL = "http://www.pastebin.com/api/api_post.php";
 		private String token;
 		private final String devkey;
 

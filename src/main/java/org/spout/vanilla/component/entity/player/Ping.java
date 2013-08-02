@@ -38,8 +38,8 @@ import org.spout.vanilla.event.player.network.PingEvent;
  */
 public class Ping extends VanillaEntityComponent {
 	private Player player;
-	private final float timeout = 30;
-	private final int repeatRate = 8;
+	private static final float timeout = 30;
+	private static final int repeatRate = 8;
 	private final long[] pingTime = new long[repeatRate];
 	private final int[] pingHash = new int[repeatRate];
 	private float pingTimer = timeout;

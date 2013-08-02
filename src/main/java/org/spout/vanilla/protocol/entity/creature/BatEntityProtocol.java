@@ -34,7 +34,7 @@ import org.spout.api.util.Parameter;
 import org.spout.vanilla.component.entity.living.neutral.Bat;
 
 public class BatEntityProtocol extends CreatureProtocol {
-	public final static int HANGING_INDEX = 16; // The MC metadata index to determine if the bat is hanging.
+	public static final int HANGING_INDEX = 16; // The MC metadata index to determine if the bat is hanging.
 
 	public BatEntityProtocol() {
 		super(CreatureType.BAT);

@@ -40,7 +40,7 @@ import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.util.RedstoneUtil;
 
 public class NoteBlockBlock extends VanillaBlockMaterial implements Fuel, RedstoneTarget {
-	public final float BURN_TIME = 15;
+	public static final float BURN_TIME = 15;
 
 	public NoteBlockBlock(String name, int id) {
 		super(name, id, VanillaMaterialModels.NOTE_BLOCK, new BoxShape(1, 1, 1), NoteBlock.class);

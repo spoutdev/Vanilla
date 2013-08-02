@@ -34,7 +34,7 @@ import org.spout.api.util.Parameter;
 import org.spout.vanilla.component.entity.living.hostile.Ghast;
 
 public class GhastEntityProtocol extends CreatureProtocol {
-	public final static int RED_EYES = 16; // The MC metadata index to determine ghast with red eyes.
+	public static final int RED_EYES = 16; // The MC metadata index to determine ghast with red eyes.
 
 	public GhastEntityProtocol() {
 		super(CreatureType.GHAST);

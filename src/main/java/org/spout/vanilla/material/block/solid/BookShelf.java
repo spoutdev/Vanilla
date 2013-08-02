@@ -40,7 +40,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 
 public class BookShelf extends Solid implements Fuel, InitializableMaterial, Burnable {
-	public final float BURN_TIME = 15;
+	public static final float BURN_TIME = 15;
 
 	public BookShelf(String name, int id) {
 		super(name, id, VanillaMaterialModels.BOOK_SHELF);

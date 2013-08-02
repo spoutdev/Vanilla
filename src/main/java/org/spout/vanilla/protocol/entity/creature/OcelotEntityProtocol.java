@@ -34,9 +34,9 @@ import org.spout.api.util.Parameter;
 import org.spout.vanilla.component.entity.living.passive.Ocelot;
 
 public class OcelotEntityProtocol extends CreatureProtocol {
-	public final static int SIT_TAME_INDEX = 16; // The MC metadata index for determining whether the ocelot is tamed or sitting.
-	public final static int OWNER_INDEX = 17; // The MC metadata index for the owner's name of the ocelot.
-	public final static int SKIN_INDEX = 18; // The MC metadata index for the ocelots texture.
+	public static final int SIT_TAME_INDEX = 16; // The MC metadata index for determining whether the ocelot is tamed or sitting.
+	public static final int OWNER_INDEX = 17; // The MC metadata index for the owner's name of the ocelot.
+	public static final int SKIN_INDEX = 18; // The MC metadata index for the ocelots texture.
 
 	public OcelotEntityProtocol() {
 		super(CreatureType.OCELOT);

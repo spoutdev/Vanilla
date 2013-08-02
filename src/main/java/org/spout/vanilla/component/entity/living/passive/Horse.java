@@ -28,14 +28,12 @@ package org.spout.vanilla.component.entity.living.passive;
 
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.living.Animal;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.entity.creature.HorseEntityProtocol;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class Horse extends Animal {
 

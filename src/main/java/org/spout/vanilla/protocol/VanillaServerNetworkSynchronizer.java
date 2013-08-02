@@ -153,7 +153,6 @@ import org.spout.vanilla.protocol.msg.player.PlayerTimeMessage;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerListMessage;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerLoginRequestMessage;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerPingMessage;
-import org.spout.vanilla.protocol.msg.player.pos.PlayerLookMessage;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionLookMessage;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerRespawnMessage;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnPositionMessage;
@@ -1310,7 +1309,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 				return false;
 			}
 			for (String arg : args) {
-				if (arg.toLowerCase().equals(in.toLowerCase())) {
+				if (arg.equalsIgnoreCase(in)) {
 					return true;
 				}
 			}

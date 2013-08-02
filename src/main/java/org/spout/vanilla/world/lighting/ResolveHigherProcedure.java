@@ -38,7 +38,7 @@ import org.spout.api.util.set.TInt10Procedure;
 import org.spout.api.util.set.TInt10TripleSet;
 
 public class ResolveHigherProcedure extends TInt10Procedure {
-	private final static BlockFace[] allFaces = BlockFaces.NESWBT.toArray();
+	private static final BlockFace[] allFaces = BlockFaces.NESWBT.toArray();
 	private final TInt10TripleSet[] dirtySets;
 	private final ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light;
 	private final ImmutableCuboidBlockMaterialBuffer material;

@@ -34,7 +34,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 
 public class MushroomBlock extends Solid implements Fuel, InitializableMaterial {
-	public final float BURN_TIME = 15;
+	public static final float BURN_TIME = 15;
 
 	public MushroomBlock(String name, int id) {
 		super(name, id, VanillaMaterialModels.MUSHROOM_BLOCK);

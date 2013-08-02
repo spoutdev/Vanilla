@@ -33,7 +33,6 @@ import org.spout.api.datatable.ManagedHashMap;
 import org.spout.api.datatable.ManagedMap;
 import org.spout.api.util.Named;
 
-import org.spout.vanilla.ChatStyle;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.scoreboard.TeamActionEvent;
 import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardTeamMessage;

@@ -59,8 +59,9 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.Session.State;
 import org.spout.api.protocol.event.ChunkFreeEvent;
 import org.spout.api.protocol.event.ChunkSendEvent;
+import org.spout.api.protocol.event.EntitySyncEvent;
 import org.spout.api.protocol.event.PositionSendEvent;
-import org.spout.api.protocol.event.UpdateBlockEvent;
+import org.spout.api.protocol.event.BlockUpdateEvent;
 import org.spout.api.protocol.event.WorldChangeProtocolEvent;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.FlatIterator;
@@ -578,7 +579,7 @@ public abstract class VanillaPlayerNetworkComponent extends PlayerNetworkCompone
 	}
 
 	@EventHandler
-	public void onBlockUpdate(UpdateBlockEvent event) {
+	public void onBlockUpdate(BlockUpdateEvent event) {
 		BlockMaterial material = event.getChunk().getBlockMaterial(event.getX(), event.getY(), event.getZ());
 		short data = event.getChunk().getBlockData(event.getX(), event.getY(), event.getZ());
 		short id = getMinecraftId(material);
@@ -619,11 +620,6 @@ public abstract class VanillaPlayerNetworkComponent extends PlayerNetworkCompone
 			}
 		}
 		super.finalizeRun(live);
-	}
-
-	@Override
-	public void preSnapshot(Transform live) {
-		super.preSnapshot(live);
 
 		Long key;
 		while ((key = this.emptyColumns.poll()) != null) {
@@ -639,9 +635,14 @@ public abstract class VanillaPlayerNetworkComponent extends PlayerNetworkCompone
 	}
 
 	@Override
-	public void syncEntity(Entity e, Transform liveTransform, boolean spawn, boolean destroy, boolean update) {
-		super.syncEntity(e, liveTransform, spawn, destroy, update);
+	public void syncEntity(EntitySyncEvent event) {
+		super.syncEntity(event);
+		Entity e = event.getEntity();
 		if (!(e.getNetwork() instanceof VanillaNetworkComponent)) return;
+		Transform liveTransform = event.getTransform();
+		boolean spawn = event.shouldAdd();
+		boolean destroy = event.shouldRemove();
+		boolean update = event.shouldSync();
 		EntityProtocol ep = ((VanillaNetworkComponent) e.getNetwork()).getEntityProtocol();
 		if (ep != null) {
 			List<Message> messages = new ArrayList<Message>();

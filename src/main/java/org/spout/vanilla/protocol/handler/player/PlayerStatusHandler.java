@@ -35,6 +35,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.ServerSession;
+import org.spout.api.protocol.event.EntitySyncEvent;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.living.Human;
@@ -49,7 +50,7 @@ public class PlayerStatusHandler extends MessageHandler<PlayerStatusMessage> {
 		if (message.getStatus() == PlayerStatusMessage.INITIAL_SPAWN) {
 			if (PlayerConnectEvent.getHandlerList().getRegisteredListeners().length > 0) {
 				// TODO: get correct view distance
-				VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(new PlayerConnectEvent(session, (String) session.getDataMap().get("username"), 10 * 16));
+				VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(new PlayerConnectEvent(session, (String) session.getDataMap().get("username"), 10));
 			}
 			if (VanillaPlugin.getInstance().getEngine().debugMode()) {
 				Spout.getLogger().info("Login took " + (System.currentTimeMillis() - session.getDataMap().get(VanillaProtocol.LOGIN_TIME)) + " ms");
@@ -84,7 +85,7 @@ public class PlayerStatusHandler extends MessageHandler<PlayerStatusMessage> {
 				if (player == otherPlayer) {
 					continue;
 				}
-				otherPlayer.getNetwork().syncEntity(player, spawn, true, false, false);
+				otherPlayer.getNetwork().callProtocolEvent(new EntitySyncEvent(player, spawn, true, false, false), player);
 			}
 		}
 	}

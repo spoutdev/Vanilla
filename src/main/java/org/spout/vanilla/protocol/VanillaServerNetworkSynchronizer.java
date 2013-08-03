@@ -663,7 +663,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 			} else {
 				gamemode = data.get(VanillaData.GAMEMODE);
 				if (human != null) {
-					human.setGamemode(gamemode);
+					human.setGamemode(gamemode, false);
 				}
 			}
 

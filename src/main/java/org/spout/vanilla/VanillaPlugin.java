@@ -281,8 +281,7 @@ public class VanillaPlugin extends Plugin {
 				if (worldConfig.LOADED_SPAWN.getBoolean()) {
 					@SuppressWarnings ("unchecked")
 					Entity e = world.createAndSpawnEntity(spawn, LoadOption.LOAD_GEN, NetworkComponent.class);
-					e.get(NetworkComponent.class).setObserver(true);
-					e.setObserver(new FlatIterator(cx, 0, cz, 16, effectiveRadius));
+					e.get(NetworkComponent.class).setObserver(new FlatIterator(cx, 0, cz, 16, effectiveRadius));
 				}
 			}
 

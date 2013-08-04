@@ -668,9 +668,10 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 			}
 
 			Server server = (Server) session.getEngine();
+			player.getSession().setState(State.GAME);
 			PlayerLoginRequestMessage idMsg = new PlayerLoginRequestMessage(entityId, worldType.toString(), gamemode.getId(), (byte) dimension.getId(), difficulty.getId(), (byte) server.getMaxPlayers());
 			player.getSession().send(idMsg);
-			player.getSession().setState(State.GAME);
+
 		} else {
 			if (human != null) {
 				gamemode = human.getGameMode();
@@ -685,9 +686,6 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 		player.getSession().send(SPMsg);
 
 		if (human != null) {
-			if (first) {
-				human.setGamemode(gamemode, false);
-			}
 			human.updateAbilities();
 		}
 

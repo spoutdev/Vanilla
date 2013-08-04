@@ -48,6 +48,8 @@ import org.spout.vanilla.inventory.block.FurnaceInventory;
 import org.spout.vanilla.inventory.block.HopperInventory;
 import org.spout.vanilla.inventory.entity.EntityArmorInventory;
 import org.spout.vanilla.inventory.entity.EntityQuickbarInventory;
+import org.spout.vanilla.inventory.entity.HorseInventory;
+import org.spout.vanilla.inventory.entity.VillagerInventory;
 import org.spout.vanilla.inventory.player.DropInventory;
 import org.spout.vanilla.inventory.player.PlayerArmorInventory;
 import org.spout.vanilla.inventory.player.PlayerCraftingInventory;
@@ -223,6 +225,8 @@ public class VanillaData {
 	public static final DefaultedKey<DispenserInventory> DISPENSER_INVENTORY = new DefaultedKeyFactory<DispenserInventory>("dispenser_inventory", DispenserInventory.class);
 	public static final DefaultedKey<HopperInventory> HOPPER_INVENTORY = new DefaultedKeyFactory<HopperInventory>("hopper_inventory", HopperInventory.class);
 	public static final DefaultedKey<DropperInventory> DROPPER_INVENTORY = new DefaultedKeyFactory<DropperInventory>("dropper_inventory", DropperInventory.class);
+	public static final DefaultedKey<VillagerInventory> VILLAGER_INVENTORY = new DefaultedKeyFactory<VillagerInventory>("villager_inventory", VillagerInventory.class);
+	public static final DefaultedKey<HorseInventory> HORSE_INVENTORY = new DefaultedKeyFactory<HorseInventory>("horse_inventory", HorseInventory.class);
 	// Team Data
 	public static final DefaultedKey<Boolean> SEE_FRIENDLY_INVISIBLES = new DefaultedKeyImpl<Boolean>("see_friendly_invisibles", false);
 	public static final DefaultedKey<Boolean> FRIENDLY_FIRE = new DefaultedKeyImpl<Boolean>("friendly_fire", false);

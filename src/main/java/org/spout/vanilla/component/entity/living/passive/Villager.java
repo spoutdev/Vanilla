@@ -37,6 +37,7 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.living.Ageable;
 import org.spout.vanilla.component.entity.living.Passive;
 import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.player.CraftingInventory;
 import org.spout.vanilla.inventory.window.Window;
 import org.spout.vanilla.protocol.entity.creature.VillagerEntityProtocol;
@@ -71,7 +72,7 @@ public class Villager extends Ageable implements Container, Passive {
 
 	@Override
 	public CraftingInventory getInventory() {
-		return null;
+		return getOwner().getData().get(VanillaData.VILLAGER_INVENTORY);
 	}
 
 	/**

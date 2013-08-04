@@ -29,14 +29,17 @@ package org.spout.vanilla.component.entity.living.passive;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 
+import org.spout.api.inventory.Container;
+import org.spout.api.inventory.Inventory;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.living.Animal;
 import org.spout.vanilla.component.entity.living.Passive;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.inventory.entity.HorseInventory;
 import org.spout.vanilla.protocol.entity.creature.HorseEntityProtocol;
 
-public class Horse extends Animal implements Passive {
+public class Horse extends Animal implements Container, Passive {
 
 	@Override
 	public void onAttached() {
@@ -105,6 +108,11 @@ public class Horse extends Animal implements Passive {
 	 */
 	public byte getHorseTypeId() {
 		return 0;
+	}
+
+	@Override
+	public HorseInventory getInventory() {
+		return getOwner().getData().get(VanillaData.HORSE_INVENTORY);
 	}
 
 	public enum Variant {

@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 	<url>http://www.spout.org</url>
 	<inceptionYear>2011</inceptionYear>
-	<description>Vanilla is a plugin for the Spout voxel game platform that provides vanilla Minecraft 1.6.2 functionality and gameplay.</description>
+	<description>Minecraft functionality and gameplay for the Spout voxel game platform.</description>
 
 	<!-- Parent information -->
 	<parent>
@@ -79,17 +79,19 @@
 
 	<!-- Project dependencies -->
 	<dependencies>
+		<!-- Include in final JAR -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.2.4</version>
+			<scope>compile</scope>
+		</dependency>
 		<!-- Provided by third-party -->
 		<dependency>
 			<groupId>org.spout</groupId>
 			<artifactId>spout-api</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>2.2.4</version>
 		</dependency>
 		<!-- Testing only -->
 		<dependency>
@@ -230,32 +232,40 @@
 					</archive>
 				</configuration>
 			</plugin>
-			<!-- Shade plugin -->
+			<!-- Dependency addition plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
-				<version>1.7.1</version>
+				<version>2.1</version>
 				<executions>
 					<execution>
+						<configuration>
+							<minimizeJar>true</minimizeJar>
+							<relocations>
+								<relocation>
+									<pattern>com.google.gson</pattern>
+									<shadedPattern>${project.groupId}.lib.gson</shadedPattern>
+								</relocation>
+							</relocations>
+							<filters>
+								<filter>
+									<artifact>*:*</artifact>
+									<excludes>
+										<exclude>lib/**</exclude>
+										<exclude>templates/**</exclude>
+										<exclude>META-INF/*.xml</exclude>
+										<exclude>META-INF/*.txt</exclude>
+										<exclude>**/LICENSE</exclude>
+										<exclude>**/NOTICE</exclude>
+										<exclude>**/DEPENDENCIES</exclude>
+									</excludes>
+								</filter>
+							</filters>
+						</configuration>
 						<phase>package</phase>
 						<goals>
 							<goal>shade</goal>
 						</goals>
-						<configuration>
-							<relocations>
-								<relocation>
-									<pattern>com.google.gson</pattern>
-								</relocation>
-							</relocations>
-							<artifactSet>
-								<excludes>
-									<exclude>junit:junit</exclude>
-									<exclude>org.spout:spoutapi</exclude>
-									<exclude>org.powermock:powermock-api-mockito</exclude>
-									<exclude>org.powermock:powermock-module-junit4</exclude>
-								</excludes>
-							</artifactSet>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>

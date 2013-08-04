@@ -26,8 +26,32 @@
  */
 package org.spout.vanilla.inventory.entity;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.Material;
+import org.spout.vanilla.event.entity.network.EntityEquipmentEvent;
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.item.armor.HorseArmor;
+import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
 
 public class HorseInventory extends Inventory {
+	public static final int SADDLE_SLOT = 0;
+	public static final int ARMOR_SLOT = 1;
 
+	@Override
+	public boolean canSet(int slot, ItemStack item) {
+		if (item != null) {
+			Material material = item.getMaterial();
+			switch (slot) {
+				case SADDLE_SLOT:
+					return material.isMaterial(VanillaMaterials.SADDLE);
+				case ARMOR_SLOT:
+					return material instanceof HorseArmor;
+				default:
+					return false;
+			}
+		}
+		return true;
+	}
 }

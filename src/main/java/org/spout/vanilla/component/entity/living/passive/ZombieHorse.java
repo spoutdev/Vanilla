@@ -32,7 +32,7 @@ public class ZombieHorse extends Horse {
 
 	@Override
 	public Variant getVariant() {
-		return null;
+		return Variant.NONE;
 	}
 
 	@Override

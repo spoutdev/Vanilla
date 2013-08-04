@@ -32,7 +32,7 @@ public class SkeletonHorse extends Horse {
 
 	@Override
 	public Variant getVariant() {
-		return Variant.WHITE;
+		return Variant.NONE;
 	}
 
 	@Override

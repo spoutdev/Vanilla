@@ -39,7 +39,7 @@ public class Donkey extends Horse {
 
 	@Override
 	public Variant getVariant() {
-		return Variant.WHITE;
+		return Variant.NONE;
 	}
 
 	@Override

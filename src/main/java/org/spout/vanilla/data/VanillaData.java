@@ -179,6 +179,9 @@ public class VanillaData {
 	public static final DefaultedKey<Byte> HELD_MATERIAL_DATA = new DefaultedKeyImpl<Byte>("held_material_data", (byte) 0);
 	// Bat
 	public static final DefaultedKey<Boolean> HANGING = new DefaultedKeyImpl<Boolean>("hanging", false);
+	// Horse
+	public static final DefaultedKey<Integer> TEMPER = new DefaultedKeyImpl<Integer>("temper", 5);
+	public static final DefaultedKey<Integer> VARIANT = new DefaultedKeyImpl<Integer>("variant", 0);
 	//Sky specific
 	public static final DefaultedKey<Long> MAX_TIME = new DefaultedKeyImpl<Long>("max_time", 24000L);
 	public static final DefaultedKey<Long> TIME_RATE = new DefaultedKeyImpl<Long>("time_rate", 1L);

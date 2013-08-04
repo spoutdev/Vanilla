@@ -32,6 +32,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.Client;
+import org.spout.api.Platform;
+import org.spout.api.Spout;
 import org.spout.api.component.widget.RenderPartPacksComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
@@ -355,12 +357,14 @@ public class Health extends VanillaEntityComponent {
 
 		// Special cases
 		Entity owner = getOwner();
-		if (owner instanceof Player) {
-			owner.getNetwork().callProtocolEvent(new PlayerHealthEvent((Player) getOwner()));
-		} else if (owner instanceof EnderDragon || owner instanceof Wither) {
-			java.util.List<Parameter<?>> params = new ArrayList<Parameter<?>>(1);
-			params.add(new Parameter<Short>(Parameter.TYPE_SHORT, 16, (short) health));
-			owner.getNetwork().callProtocolEvent(new EntityMetaChangeEvent(owner, params));
+		if (Spout.getPlatform() == Platform.SERVER) {
+			if (owner instanceof Player) {
+				owner.getNetwork().callProtocolEvent(new PlayerHealthEvent((Player) getOwner()));
+			} else if (owner instanceof EnderDragon || owner instanceof Wither) {
+				java.util.List<Parameter<?>> params = new ArrayList<Parameter<?>>(1);
+				params.add(new Parameter<Short>(Parameter.TYPE_SHORT, 16, (short) health));
+				owner.getNetwork().callProtocolEvent(new EntityMetaChangeEvent(owner, params));
+			}
 		}
 	}
 

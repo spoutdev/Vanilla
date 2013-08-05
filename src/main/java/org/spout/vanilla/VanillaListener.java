@@ -88,6 +88,8 @@ public class VanillaListener implements Listener {
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
+		// TODO: this must here, because when health gets updated on first attach, protocol event uses hunger too. Sleaker?
+		player.add(Hunger.class);
 		player.add(Human.class).setName(player.getName());
 		player.add(PlayerInventory.class);
 		player.add(WindowHolder.class);
@@ -95,7 +97,6 @@ public class VanillaListener implements Listener {
 		player.add(Ping.class);
 		player.add(PlayerItemCollector.class);
 		player.add(Sleep.class);
-		player.add(Hunger.class);
 		player.add(Level.class);
 		player.getNetwork().getSession().setUncaughtExceptionHandler(new PasteExceptionHandler(player.getNetwork().getSession()));
 		Sky sky = player.getWorld().get(Sky.class);

@@ -179,7 +179,7 @@ import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
 import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
 import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
 
-public abstract class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implements VanillaNetworkComponent, Listener {
+public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implements VanillaNetworkComponent, Listener {
 	private EntityProtocol protocol;
 
 	/**

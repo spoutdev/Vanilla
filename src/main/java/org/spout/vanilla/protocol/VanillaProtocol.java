@@ -38,6 +38,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.command.Command;
 import org.spout.api.command.CommandArguments;
+import org.spout.api.component.entity.PlayerNetworkComponent;
 import org.spout.api.exception.ArgumentParseException;
 import org.spout.api.exception.UnknownPacketException;
 import org.spout.api.map.DefaultedKey;
@@ -412,9 +413,17 @@ public class VanillaProtocol extends Protocol {
 	}
 
 	@Override
-	public void initializeServerSession(ServerSession session) {
-		session.getPlayer().add(VanillaPlayerNetworkComponent.class);
+	public Class<? extends PlayerNetworkComponent> getServerNetworkComponent(ServerSession session) {
+		return VanillaPlayerNetworkComponent.class;
+	}
 
+	@Override
+	public Class<? extends PlayerNetworkComponent> getClientNetworkComponent(ClientSession session) {
+		return VanillaPlayerNetworkComponent.class;
+	}
+
+	@Override
+	public void initializeServerSession(ServerSession session) {
 		List<MessageCodec<?>> dynamicCodecList = new ArrayList<MessageCodec<?>>();
 		for (Pair<Integer, String> item : getDynamicallyRegisteredPackets()) {
 			MessageCodec<?> codec = getCodecLookupService().find(item.getLeft());
@@ -430,8 +439,6 @@ public class VanillaProtocol extends Protocol {
 
 	@Override
 	public void initializeClientSession(ClientSession session) {
-		session.getPlayer().add(VanillaPlayerNetworkComponent.class);
-
 		List<MessageCodec<?>> dynamicCodecList = new ArrayList<MessageCodec<?>>();
 		for (Pair<Integer, String> item : getDynamicallyRegisteredPackets()) {
 			MessageCodec<?> codec = getCodecLookupService().find(item.getLeft());

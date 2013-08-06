@@ -123,17 +123,7 @@ public class EntityMocker {
 
 		@Override
 		protected void attachComponent(Class<? extends Component> key, Component component, boolean attach) throws Exception {
-			if (component.attachTo(entity)) {
-				components.put(key, component);
-				if (attach) {
-					try {
-						component.onAttached();
-					} catch (Exception e) {
-						components.remove(key);
-						throw e;
-					}
-				}
-			}
+			super.attachComponent(key, component, attach);
 		}
 
 		@SuppressWarnings("unchecked")

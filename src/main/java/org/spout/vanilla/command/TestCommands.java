@@ -38,6 +38,7 @@ import org.spout.api.command.annotated.CommandDescription;
 import org.spout.api.command.annotated.Filter;
 import org.spout.api.command.annotated.Flag;
 import org.spout.api.command.annotated.Permissible;
+import org.spout.api.command.annotated.Platforms;
 import org.spout.api.command.filter.PlayerFilter;
 import org.spout.api.component.Component;
 import org.spout.api.component.entity.InteractComponent;
@@ -322,7 +323,7 @@ public class TestCommands {
 
 	@CommandDescription (aliases = "respawn", usage = "", desc = "Forces the client to respawn")
 	@Permissible ("vanilla.command.debug")
-	@org.spout.api.command.annotated.Platform (Platform.SERVER)
+	@Platforms (Platform.SERVER)
 	@Filter (PlayerFilter.class)
 	public void respawn(Player player, CommandArguments args) throws CommandException {
 		args.assertCompletelyParsed();

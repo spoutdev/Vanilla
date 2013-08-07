@@ -28,6 +28,7 @@ package org.spout.vanilla;
 
 import org.spout.api.Client;
 import org.spout.api.Platform;
+import org.spout.api.Spout;
 import org.spout.api.component.entity.CameraComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.event.EventHandler;
@@ -38,10 +39,12 @@ import org.spout.api.event.block.BlockChangeEvent;
 import org.spout.api.event.engine.EngineStartEvent;
 import org.spout.api.event.entity.EntityHiddenEvent;
 import org.spout.api.event.entity.EntityShownEvent;
+import org.spout.api.event.player.ClientPlayerConnectedEvent;
 import org.spout.api.event.player.PlayerJoinEvent;
 import org.spout.api.event.server.permissions.PermissionNodeEvent;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockSnapshot;
+import org.spout.vanilla.component.VanillaPlayerNetworkComponent;
 
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
@@ -94,7 +97,8 @@ public class VanillaListener implements Listener {
 		player.add(PlayerInventory.class);
 		player.add(WindowHolder.class);
 		player.add(PlayerList.class);
-		player.add(Ping.class);
+		// TODO: Connection times out when using Spout Protocol because no Ping Message; need a Ping component client-side that somehow updates server
+		if (player.getNetwork() instanceof VanillaPlayerNetworkComponent) player.add(Ping.class);
 		player.add(PlayerItemCollector.class);
 		player.add(Sleep.class);
 		player.add(Level.class);
@@ -123,21 +127,28 @@ public class VanillaListener implements Listener {
 		HUD.setupHUD();
 		HUD.openHUD();
 
-		player.add(Human.class);
+		((Client) player.getEngine()).getInputManager().addInputExecutor(new VanillaInputExecutor(player));
 
 		// Remove Head and default Camera
 		player.detach(EntityHead.class);
 		player.detach(CameraComponent.class);
 
 		player.add(PlayerHead.class);
+	}
+
+	@EventHandler
+	public void onClientConnect(ClientPlayerConnectedEvent event) {
+		if (plugin.getEngine().getPlatform() != Platform.CLIENT) {
+			return;
+		}
+		Player player = ((Client) plugin.getEngine()).getPlayer();
+
+		player.add(Human.class);
 		player.add(PlayerInventory.class);
 		player.add(WindowHolder.class);
 		player.add(Health.class);
 		player.add(Hunger.class);
 		player.add(PlayerInteract.class).setRange(5f);
-
-		((Client) player.getEngine()).getInputManager().addInputExecutor(new VanillaInputExecutor(player));
-		player.add(PlayerHead.class);
 
 		if (VanillaConfiguration.ONLINE_MODE.getBoolean()) {
 			String username = VanillaConfiguration.USERNAME.getString();

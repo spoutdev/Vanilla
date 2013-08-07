@@ -42,6 +42,7 @@ import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector3;
 import org.spout.api.math.VectorMath;
 import org.spout.api.util.Parameter;
+import org.spout.physics.collision.shape.BoxShape;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
@@ -82,6 +83,7 @@ public class Human extends Living {
 			textModel.setSize(0.5f);
 			textModel.setTranslation(new Vector3(0, 3f, 0));
 		}
+		//holder.getPhysics().activate(1, new BoxShape(1f, 2.3f, 1f), false, true);
 	}
 
 	public byte getArrowsInBody() {

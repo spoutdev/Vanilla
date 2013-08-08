@@ -97,7 +97,7 @@ public class VanillaPlugin extends Plugin {
 	public static final int MINECRAFT_PROTOCOL_ID = 74;
 	public static final int VANILLA_PROTOCOL_ID = PlayerNetworkComponent.getProtocolId("org.spout.vanilla.plugin.protocol");
 	protected static VanillaPlugin instance;
-	private VanillaConfiguration config;
+	protected VanillaConfiguration config;
 	private RemoteConnectionCore rcon;
 	//Client only
 	//TODO Remove, seriously not secure.

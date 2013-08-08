@@ -26,22 +26,28 @@
  */
 package org.spout.vanilla.components.entity.misc;
 
+import java.io.IOException;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import org.spout.api.entity.Entity;
 
 import org.spout.vanilla.EntityMocker;
+import org.spout.vanilla.TestVanilla;
 import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.event.cause.HealthChangeCause;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 public class HealthTest {
-
 	@Test
-	public void testHealthComponent() {
+	public void testHealthComponent() throws IOException {
+		TestVanilla.init();
+		VanillaConfiguration config = TestVanilla.getInstance().getConfig();
+		VanillaConfiguration.PLAYER_SURVIVAL_ENABLE_HEALTH.setConfiguration(config);
+
 		Entity entity = EntityMocker.mockEntity();
 		Health health = entity.add(Health.class);
 

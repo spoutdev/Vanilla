@@ -57,6 +57,7 @@ import org.spout.api.math.Vector2;
 import org.spout.api.render.RenderMaterial;
 import org.spout.api.util.flag.Flag;
 import org.spout.api.util.flag.FlagBundle;
+
 import org.spout.physics.collision.shape.CollisionShape;
 
 import org.spout.vanilla.VanillaPlugin;

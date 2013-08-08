@@ -27,7 +27,6 @@
 package org.spout.vanilla.component.entity.living.passive;
 
 public class Mule extends Donkey {
-
 	@Override
 	public void onAttached() {
 		super.onAttached();

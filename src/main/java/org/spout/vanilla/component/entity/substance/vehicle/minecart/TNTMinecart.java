@@ -28,7 +28,6 @@ package org.spout.vanilla.component.entity.substance.vehicle.minecart;
 
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.object.ObjectType;

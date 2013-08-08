@@ -54,7 +54,6 @@ public class StainedClay extends Solid {
 		super((short) 0x000F, name, 159, model);
 		this.color = WoolColor.WHITE;
 		this.setHardness(0.5F).setResistance(30.0f);
-
 	}
 
 	private StainedClay(String name, Wool.WoolColor color, StainedClay parent, String model) {

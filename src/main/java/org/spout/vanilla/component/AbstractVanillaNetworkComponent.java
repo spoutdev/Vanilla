@@ -27,6 +27,7 @@
 package org.spout.vanilla.component;
 
 import org.spout.api.component.entity.NetworkComponent;
+
 import org.spout.vanilla.protocol.EntityProtocol;
 
 public class AbstractVanillaNetworkComponent extends NetworkComponent implements VanillaNetworkComponent {
@@ -51,5 +52,4 @@ public class AbstractVanillaNetworkComponent extends NetworkComponent implements
 	public void setEntityProtocol(EntityProtocol protocol) {
 		this.protocol = protocol;
 	}
-
 }

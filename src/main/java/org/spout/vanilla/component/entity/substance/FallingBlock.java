@@ -35,7 +35,6 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.entity.object.FallingBlockProtocol;
 import org.spout.vanilla.protocol.entity.object.ObjectType;
 

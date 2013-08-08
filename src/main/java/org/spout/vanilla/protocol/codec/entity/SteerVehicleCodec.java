@@ -36,7 +36,6 @@ import org.spout.api.protocol.MessageCodec;
 import org.spout.vanilla.protocol.msg.entity.SteerVehicleMessage;
 
 public class SteerVehicleCodec extends MessageCodec<SteerVehicleMessage> {
-
 	public SteerVehicleCodec() {
 		super(SteerVehicleMessage.class, 0x1B);
 	}

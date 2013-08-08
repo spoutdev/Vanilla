@@ -52,8 +52,6 @@
  */
 package org.spout.vanilla;
 
-import static org.junit.Assert.fail;
-
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -61,9 +59,11 @@ import java.lang.reflect.Modifier;
 import java.util.List;
 
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.rules.ErrorCollector;
+
 import org.spout.api.util.ReflectionUtils;
+
+import static org.junit.Assert.fail;
 
 public class SerializableTest {
 	@Rule
@@ -103,7 +103,8 @@ public class SerializableTest {
 								try {
 									fail("Unserializable field " + f.getName() + " found in " + superclazz.getName());
 								} catch (Throwable t) {
-									collector.addError(t);;
+									collector.addError(t);
+									;
 								}
 							}
 						}

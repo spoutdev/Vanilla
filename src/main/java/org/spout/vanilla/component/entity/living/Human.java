@@ -33,7 +33,6 @@ import org.spout.api.component.entity.TextModelComponent;
 import org.spout.api.data.Data;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
-import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.ItemStack;
@@ -42,9 +41,7 @@ import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector3;
 import org.spout.api.math.VectorMath;
 import org.spout.api.util.Parameter;
-import org.spout.physics.collision.shape.BoxShape;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.misc.Digging;
 import org.spout.vanilla.component.entity.misc.EntityHead;

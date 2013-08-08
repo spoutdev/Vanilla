@@ -44,7 +44,6 @@ public class Team implements Named {
 	private final Scoreboard scoreboard;
 	private final String name;
 	private final ManagedMap data;
-
 	private final Set<String> playerNames = new HashSet<String>();
 
 	protected Team(Scoreboard scoreboard, String name) {

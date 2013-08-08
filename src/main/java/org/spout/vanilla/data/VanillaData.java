@@ -37,8 +37,8 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.ChatStyle;
+import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.data.effect.EntityEffectType;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
 import org.spout.vanilla.inventory.block.ChestInventory;

@@ -26,17 +26,19 @@
  */
 package org.spout.vanilla.protocol.entity.creature;
 
+import java.util.List;
+
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
-import org.spout.vanilla.component.entity.living.passive.Horse;
 
-import java.util.List;
+import org.spout.vanilla.component.entity.living.passive.Horse;
 
 public class HorseEntityProtocol extends CreatureProtocol {
 	public static final int TYPE_INDEX = 19; // MC Data index for horse type
 	public static final int VARIANT_INDEX = 20; // MC Data index for horse variant & marking
 	public static final int OWNER_INDEX = 21; // MC Data index for owner's name
 	public static final int ARMOR_TYPE_INDEX = 22; // MC Data index for amount of armor type the horse currently wears, None 0, Iron 1, Gold 2, Diamond 3
+
 	public HorseEntityProtocol() {
 		super(CreatureType.HORSE);
 	}

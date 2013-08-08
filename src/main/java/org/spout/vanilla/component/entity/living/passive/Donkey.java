@@ -27,7 +27,6 @@
 package org.spout.vanilla.component.entity.living.passive;
 
 public class Donkey extends Horse {
-
 	@Override
 	public void onAttached() {
 		super.onAttached();
@@ -35,7 +34,8 @@ public class Donkey extends Horse {
 	}
 
 	@Override
-	public void setVariant(Variant variant) { }
+	public void setVariant(Variant variant) {
+	}
 
 	@Override
 	public Variant getVariant() {
@@ -43,14 +43,16 @@ public class Donkey extends Horse {
 	}
 
 	@Override
-	public void setMarking(Marking marking) { }
+	public void setMarking(Marking marking) {
+	}
 
 	public Marking getMarking() {
 		return Marking.NONE;
 	}
 
 	@Override
-	public void setVariantAndMarking(Variant variant, Marking marking) { }
+	public void setVariantAndMarking(Variant variant, Marking marking) {
+	}
 
 	@Override
 	public byte getHorseTypeId() {

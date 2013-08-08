@@ -33,6 +33,7 @@ import org.spout.api.inventory.Slot;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.physics.collision.shape.BoxShape;
 
 import org.spout.vanilla.data.resources.VanillaMaterialModels;

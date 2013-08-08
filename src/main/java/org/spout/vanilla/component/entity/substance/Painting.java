@@ -34,7 +34,6 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.data.PaintingType;
 import org.spout.vanilla.data.VanillaData;

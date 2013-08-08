@@ -31,9 +31,9 @@ import org.spout.api.event.entity.EntityCollideEntityEvent;
 import org.spout.api.event.entity.EntityCollideEvent;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
+
 import org.spout.physics.collision.shape.BoxShape;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.ai.action.ActionAttack;
 import org.spout.vanilla.ai.goal.AttackPlayerGoal;
 import org.spout.vanilla.ai.sensor.NearbyComponentsSensor;

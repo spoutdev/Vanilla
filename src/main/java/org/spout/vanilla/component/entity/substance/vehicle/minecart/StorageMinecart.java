@@ -33,7 +33,6 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyFactory;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.inventory.block.ChestInventory;

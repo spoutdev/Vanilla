@@ -528,7 +528,6 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 		}
 	}
 
-
 	@Override
 	public void processCommand(String command, String... args) {
 		PreCommandEvent event = VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(new PreCommandEvent(this, command, args));

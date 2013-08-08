@@ -37,7 +37,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.util.SpoutToStringStyle;
 
 public class EntityPropertiesMessage extends EntityMessage {
-
 	private final Map<EntityProperties, Double> properties = new HashMap<EntityProperties, Double>();
 
 	public EntityPropertiesMessage(int id) {
@@ -48,14 +47,14 @@ public class EntityPropertiesMessage extends EntityMessage {
 		properties.put(property, value);
 	}
 
-	public Map<EntityProperties,Double> getProperties() {
+	public Map<EntityProperties, Double> getProperties() {
 		return Collections.unmodifiableMap(properties);
 	}
 
 	@Override
 	public String toString() {
 		ToStringBuilder stringBuilder = new ToStringBuilder(this, SpoutToStringStyle.INSTANCE).append("id", this.getEntityId());
-		for (Map.Entry<EntityPropertiesMessage.EntityProperties, Double> value: properties.entrySet()) {
+		for (Map.Entry<EntityPropertiesMessage.EntityProperties, Double> value : properties.entrySet()) {
 			stringBuilder.append("entityProperties", value.getKey().getName());
 			stringBuilder.append("value", value.getValue());
 		}
@@ -71,11 +70,11 @@ public class EntityPropertiesMessage extends EntityMessage {
 			return false;
 		}
 		final EntityPropertiesMessage other = (EntityPropertiesMessage) obj;
-		EqualsBuilder equalsBuilder =  new org.apache.commons.lang3.builder.EqualsBuilder()
+		EqualsBuilder equalsBuilder = new org.apache.commons.lang3.builder.EqualsBuilder()
 				.append(this.getEntityId(), other.getEntityId());
 		if (this.properties.size() == other.properties.size()) {
-			Iterator<Map.Entry<EntityProperties,Double>> iterator = other.properties.entrySet().iterator();
-			for (Map.Entry<EntityPropertiesMessage.EntityProperties, Double> value: properties.entrySet()) {
+			Iterator<Map.Entry<EntityProperties, Double>> iterator = other.properties.entrySet().iterator();
+			for (Map.Entry<EntityPropertiesMessage.EntityProperties, Double> value : properties.entrySet()) {
 				Map.Entry<EntityProperties, Double> otherValue = iterator.next();
 				equalsBuilder.append(value.getKey(), otherValue.getKey());
 				equalsBuilder.append(value.getValue(), otherValue.getValue());
@@ -95,9 +94,9 @@ public class EntityPropertiesMessage extends EntityMessage {
 		GENERIC_ATTACKDAMAGE("generic.attackDamage", 2.0),
 		HORSE_JUMPSTRENGTH("horse.jumpStrength", 0.7),
 		ZOMBIE_SPAWNREINFORCEMENTS("zombie.spawnReinforcements", 0);
-
 		private final String name;
 		private final double defaultValue;
+
 		EntityProperties(String name, double defaultValue) {
 			this.name = name;
 			this.defaultValue = defaultValue;

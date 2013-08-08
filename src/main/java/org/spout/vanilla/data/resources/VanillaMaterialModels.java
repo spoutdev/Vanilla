@@ -234,7 +234,6 @@ public class VanillaMaterialModels {
 	public static final String FLOWER_POT_CACTUS = null;
 	public static final String FLOWER_POT_DEAD_BUSH = null;
 	public static final String FLOWER_POT_FERN = null;
-
 	public static final String HAY_BALE = null;
 	public static final String CARPET = null;
 	public static final String HARDENED_CLAY = null;

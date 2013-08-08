@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.component.entity.substance;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.entity.object.XPOrbEntityProtocol;
 

@@ -30,7 +30,6 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.entity.EntityCollideEvent;
 import org.spout.api.geo.discrete.Point;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.substance.Substance;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.item.potion.PotionItem;

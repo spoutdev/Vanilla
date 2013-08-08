@@ -29,8 +29,7 @@ package org.spout.vanilla.material.block.ore;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.Solid;
 
-public class CoalBlock extends Solid implements Fuel{
-
+public class CoalBlock extends Solid implements Fuel {
 	public CoalBlock(String name, int id) {
 		super(name, id, null);
 	}

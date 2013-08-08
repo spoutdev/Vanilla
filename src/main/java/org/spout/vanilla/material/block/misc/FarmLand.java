@@ -35,6 +35,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
+
 import org.spout.physics.collision.shape.BoxShape;
 
 import org.spout.vanilla.data.resources.VanillaMaterialModels;

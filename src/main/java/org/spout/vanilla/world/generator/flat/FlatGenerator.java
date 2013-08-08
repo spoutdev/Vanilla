@@ -31,8 +31,8 @@ import java.util.Random;
 import org.spout.api.generator.LayeredWorldGenerator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
-import org.spout.vanilla.component.VanillaPlayerNetworkComponent;
 
+import org.spout.vanilla.component.VanillaPlayerNetworkComponent;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.VanillaGenerator;
 

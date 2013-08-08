@@ -29,7 +29,6 @@ package org.spout.vanilla.component;
 import org.spout.vanilla.protocol.EntityProtocol;
 
 public interface VanillaNetworkComponent {
-
 	/**
 	 * Returns the {@link EntityProtocol} for this type of entity
 	 *
@@ -43,5 +42,4 @@ public interface VanillaNetworkComponent {
 	 * @param protocol The protocol to set
 	 */
 	void setEntityProtocol(EntityProtocol protocol);
-    
 }

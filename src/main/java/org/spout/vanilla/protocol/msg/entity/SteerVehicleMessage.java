@@ -33,7 +33,6 @@ import org.spout.api.util.SpoutToStringStyle;
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
 public class SteerVehicleMessage extends VanillaMainChannelMessage {
-
 	private final float sideways, forward;
 	private final boolean jump, unmount;
 
@@ -85,4 +84,5 @@ public class SteerVehicleMessage extends VanillaMainChannelMessage {
 				.append(this.isJumping(), other.isJumping())
 				.append(this.getForward(), other.getForward())
 				.isEquals();
-	}}
+	}
+}

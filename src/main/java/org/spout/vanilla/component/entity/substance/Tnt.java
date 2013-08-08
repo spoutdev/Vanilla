@@ -28,7 +28,6 @@ package org.spout.vanilla.component.entity.substance;
 
 import org.spout.api.entity.Entity;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;

@@ -29,6 +29,7 @@ package org.spout.vanilla.inventory.entity;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
+
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.armor.HorseArmor;
 

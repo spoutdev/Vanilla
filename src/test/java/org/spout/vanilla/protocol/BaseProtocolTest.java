@@ -30,7 +30,6 @@ import java.io.IOException;
 
 import gnu.trove.set.TIntSet;
 import gnu.trove.set.hash.TIntHashSet;
-
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.junit.Test;
 
@@ -66,7 +65,7 @@ public abstract class BaseProtocolTest {
 	}
 
 	@Test
-	@SuppressWarnings({"unchecked", "rawtypes"})
+	@SuppressWarnings ({"unchecked", "rawtypes"})
 	public void testMessageEncoding() throws IOException {
 		for (Message message : testMessages) {
 			MessageCodec codec = codecLookup.find(message.getClass());

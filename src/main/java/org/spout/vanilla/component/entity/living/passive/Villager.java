@@ -33,7 +33,6 @@ import org.spout.api.event.entity.EntityInteractEvent;
 import org.spout.api.event.player.PlayerInteractEntityEvent;
 import org.spout.api.inventory.Container;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.living.Ageable;
 import org.spout.vanilla.component.entity.living.Passive;
 import org.spout.vanilla.component.entity.misc.Health;

@@ -32,7 +32,6 @@ import org.spout.api.event.entity.EntityCollideEvent;
 import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.discrete.Point;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.living.passive.Chicken;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.component.entity.substance.Substance;

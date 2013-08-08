@@ -30,6 +30,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.GenericMath;
+
 import org.spout.physics.collision.shape.BoxShape;
 import org.spout.physics.collision.shape.CollisionShape;
 

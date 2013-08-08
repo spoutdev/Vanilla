@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.component.entity.substance.vehicle.minecart;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.object.ObjectType;
 import org.spout.vanilla.protocol.entity.object.vehicle.MinecartObjectEntityProtocol;

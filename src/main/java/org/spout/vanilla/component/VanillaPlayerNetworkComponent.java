@@ -26,13 +26,14 @@
  */
 package org.spout.vanilla.component;
 
-import gnu.trove.set.TIntSet;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import org.spout.api.Platform;
+
+import gnu.trove.set.TIntSet;
+
 import org.spout.api.Server;
 import org.spout.api.Spout;
 import org.spout.api.component.BlockComponentOwner;
@@ -57,11 +58,11 @@ import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.Session.State;
+import org.spout.api.protocol.event.BlockUpdateEvent;
 import org.spout.api.protocol.event.ChunkFreeEvent;
 import org.spout.api.protocol.event.ChunkSendEvent;
 import org.spout.api.protocol.event.EntitySyncEvent;
 import org.spout.api.protocol.event.PositionSendEvent;
-import org.spout.api.protocol.event.BlockUpdateEvent;
 import org.spout.api.protocol.event.WorldChangeProtocolEvent;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.FlatIterator;
@@ -69,6 +70,7 @@ import org.spout.api.util.hashing.IntPairHashed;
 import org.spout.api.util.map.concurrent.TSyncIntPairObjectHashMap;
 import org.spout.api.util.set.concurrent.TSyncIntHashSet;
 import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.block.material.Sign;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
@@ -82,8 +84,6 @@ import org.spout.vanilla.component.world.sky.Sky;
 import org.spout.vanilla.component.world.sky.TheEndSky;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.Dimension;
-import static org.spout.vanilla.data.Dimension.NETHER;
-import static org.spout.vanilla.data.Dimension.THE_END;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.Weather;
@@ -166,6 +166,7 @@ import org.spout.vanilla.protocol.msg.world.ExplosionMessage;
 import org.spout.vanilla.protocol.msg.world.SoundEffectMessage;
 import org.spout.vanilla.protocol.msg.world.block.BlockActionMessage;
 import org.spout.vanilla.protocol.msg.world.block.BlockBreakAnimationMessage;
+import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.world.block.SignMessage;
 import org.spout.vanilla.protocol.msg.world.chunk.ChunkDataMessage;
 import org.spout.vanilla.protocol.reposition.VanillaRepositionManager;
@@ -177,7 +178,6 @@ import org.spout.vanilla.world.lighting.VanillaLighting;
 
 import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
 import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
-import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
 
 public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implements VanillaNetworkComponent, Listener {
 	private EntityProtocol protocol;
@@ -221,34 +221,33 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 	private int stepY = 160;
 	private int offsetY = 0;
 	private final VanillaRepositionManager vpm = new VanillaRepositionManager();
-	
 	private boolean teleported = false;
 	private boolean teleportPending = false;
 
 	static {
- 		int i = 0;
- 		for (int c = 0; c < Chunk.BLOCKS.VOLUME; c++) { // blocks
- 			SOLID_CHUNK_DATA[i] = SOLID_BLOCK_ID;
- 			AIR_CHUNK_DATA[i++] = 0;
- 		}
- 		for (int c = 0; c < Chunk.BLOCKS.HALF_VOLUME; c++) { // block data
- 			SOLID_CHUNK_DATA[i] = 0x00;
- 			AIR_CHUNK_DATA[i++] = 0x00;
- 		}
- 		for (int c = 0; c < Chunk.BLOCKS.HALF_VOLUME; c++) { // block light
- 			SOLID_CHUNK_DATA[i] = 0x00;
- 			AIR_CHUNK_DATA[i++] = 0x00;
- 		}
- 		for (int c = 0; c < Chunk.BLOCKS.HALF_VOLUME; c++) { // sky light
- 			SOLID_CHUNK_DATA[i] = 0x00;
- 			AIR_CHUNK_DATA[i++] = (byte) 0xFF;
- 		}
- 	}
+		int i = 0;
+		for (int c = 0; c < Chunk.BLOCKS.VOLUME; c++) { // blocks
+			SOLID_CHUNK_DATA[i] = SOLID_BLOCK_ID;
+			AIR_CHUNK_DATA[i++] = 0;
+		}
+		for (int c = 0; c < Chunk.BLOCKS.HALF_VOLUME; c++) { // block data
+			SOLID_CHUNK_DATA[i] = 0x00;
+			AIR_CHUNK_DATA[i++] = 0x00;
+		}
+		for (int c = 0; c < Chunk.BLOCKS.HALF_VOLUME; c++) { // block light
+			SOLID_CHUNK_DATA[i] = 0x00;
+			AIR_CHUNK_DATA[i++] = 0x00;
+		}
+		for (int c = 0; c < Chunk.BLOCKS.HALF_VOLUME; c++) { // sky light
+			SOLID_CHUNK_DATA[i] = 0x00;
+			AIR_CHUNK_DATA[i++] = (byte) 0xFF;
+		}
+	}
 
 	@Override
 	public void onAttached() {
- 		// The minimum block distance is a radius for sending chunks before login/respawn
- 		// It needs to be > 0 for reliable login and preventing falling through the world
+		// The minimum block distance is a radius for sending chunks before login/respawn
+		// It needs to be > 0 for reliable login and preventing falling through the world
 		setRepositionManager(vpm);
 		Spout.getEventManager().registerEvents(this, VanillaPlugin.getInstance());
 	}
@@ -299,7 +298,6 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 		this.activeChunksT.clear();
 		this.initChunks.clear();
 	}
-
 
 	private void initChunkRaw(Point p) {
 		int x = p.getChunkX();
@@ -479,7 +477,6 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 		event.getMessages().add(PPLMsg);
 	}
 
-
 	@EventHandler (order = Order.LATEST)
 	public void onWorldChangeLatest(WorldChangeProtocolEvent event) {
 		event.getMessages().clear();
@@ -493,8 +490,6 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 
 	/**
 	 * Sent as the initial login process if first is true, otherwise handled as a normal world change.
-	 *
-	 * @param world
 	 */
 	private void worldChanged(World world) {
 		// TODO: this needs to be re-written to either be only about world-changes, or to handle first connection completely in the if statement.
@@ -593,7 +588,7 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 	private int lastY = Integer.MIN_VALUE;
 
 	@Override
-	public void finalizeRun(Transform live) {		
+	public void finalizeRun(Transform live) {
 		Point currentPosition = live.getPosition();
 
 		int y = currentPosition.getBlockY();
@@ -638,7 +633,9 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 	public void syncEntity(EntitySyncEvent event) {
 		super.syncEntity(event);
 		Entity e = event.getEntity();
-		if (!(e.getNetwork() instanceof VanillaNetworkComponent)) return;
+		if (!(e.getNetwork() instanceof VanillaNetworkComponent)) {
+			return;
+		}
 		Transform liveTransform = event.getTransform();
 		boolean spawn = event.shouldAdd();
 		boolean destroy = event.shouldRemove();
@@ -689,7 +686,10 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 	}
 
 	public enum ChunkInit {
-		CLIENT_SEL, FULL_COLUMN, HEIGHTMAP, EMPTY_COLUMN;
+		CLIENT_SEL,
+		FULL_COLUMN,
+		HEIGHTMAP,
+		EMPTY_COLUMN;
 
 		public static ChunkInit getChunkInit(String init) {
 			if (init == null) {
@@ -861,10 +861,6 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 			return false;
 		}
 	}
-
-
-
-
 
 	@EventHandler
 	public void onEntityTileData(EntityTileDataEvent event) {

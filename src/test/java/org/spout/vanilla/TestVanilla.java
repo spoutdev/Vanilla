@@ -27,8 +27,9 @@
 package org.spout.vanilla;
 
 import java.io.File;
+
 import org.spout.api.plugin.PluginDescriptionFile;
-import static org.spout.vanilla.VanillaPlugin.instance;
+
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
 
 public class TestVanilla extends VanillaPlugin {
@@ -37,7 +38,6 @@ public class TestVanilla extends VanillaPlugin {
 		TestVanilla v = new TestVanilla();
 		v.initialize(null, EngineFaker.setupEngine(), new PluginDescriptionFile("Vanilla", "1", "", ""), dir, null, null);
 		v.onEnable();
-
 	}
 
 	@Override
@@ -45,8 +45,7 @@ public class TestVanilla extends VanillaPlugin {
 		instance = this;
 		config = new VanillaConfiguration(getDataFolder());
 	}
-	
+
 	public static void init() {
 	}
-	
 }

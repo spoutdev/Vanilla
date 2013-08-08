@@ -30,18 +30,16 @@ import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 
 import org.spout.api.inventory.Container;
-import org.spout.api.inventory.Inventory;
-import org.spout.vanilla.VanillaPlugin;
+
+import org.spout.vanilla.component.VanillaNetworkComponent;
 import org.spout.vanilla.component.entity.living.Animal;
 import org.spout.vanilla.component.entity.living.Passive;
 import org.spout.vanilla.component.entity.misc.Health;
-import org.spout.vanilla.component.VanillaNetworkComponent;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.entity.HorseInventory;
 import org.spout.vanilla.protocol.entity.creature.HorseEntityProtocol;
 
 public class Horse extends Animal implements Container, Passive {
-
 	@Override
 	public void onAttached() {
 		((VanillaNetworkComponent) getOwner().getNetwork()).setEntityProtocol(new HorseEntityProtocol());
@@ -74,6 +72,7 @@ public class Horse extends Animal implements Container, Passive {
 
 	/**
 	 * Affects how close to being tamed the horse is
+	 *
 	 * @return temper
 	 */
 	public int getTemper() {

@@ -33,7 +33,6 @@ import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.solid.Wool.WoolColor;
 
 public class Carpet extends Solid implements Burnable {
-
 	public static final Carpet WHITE_CARPET = new Carpet("White Carpet", VanillaMaterialModels.CARPET);
 	public static final Carpet ORANGE_CARPET = new Carpet("Orange Carpet", WoolColor.ORANGE, WHITE_CARPET, VanillaMaterialModels.CARPET_ORANGE);
 	public static final Carpet MAGENTA_CARPET = new Carpet("Magenta Carpet", WoolColor.MAGENTA, WHITE_CARPET, VanillaMaterialModels.CARPET_MAGENTA);
@@ -50,7 +49,6 @@ public class Carpet extends Solid implements Burnable {
 	public static final Carpet GREEN_CARPET = new Carpet("Green Carpet", WoolColor.GREEN, WHITE_CARPET, VanillaMaterialModels.CARPET_GREEN);
 	public static final Carpet RED_CARPET = new Carpet("Red Carpet", WoolColor.RED, WHITE_CARPET, VanillaMaterialModels.CARPET_RED);
 	public static final Carpet BLACK_CARPET = new Carpet("Black Carpet", WoolColor.BLACK, WHITE_CARPET, VanillaMaterialModels.CARPET_BLACK);
-
 	private final WoolColor color;
 
 	private Carpet(String name, String model) {

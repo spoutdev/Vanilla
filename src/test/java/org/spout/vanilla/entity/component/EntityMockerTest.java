@@ -27,15 +27,6 @@
 package org.spout.vanilla.entity.component;
 
 import org.junit.Test;
-import org.mockito.Mockito;
-
-import org.spout.api.entity.Entity;
-import org.spout.api.entity.Player;
-
-import org.spout.vanilla.EntityMocker;
-import org.spout.vanilla.component.entity.misc.Level;
-
-import static org.junit.Assert.assertTrue;
 
 public class EntityMockerTest {
 	@Test

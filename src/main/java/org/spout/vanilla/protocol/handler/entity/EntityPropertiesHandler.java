@@ -28,10 +28,10 @@ package org.spout.vanilla.protocol.handler.entity;
 
 import org.spout.api.protocol.ClientSession;
 import org.spout.api.protocol.MessageHandler;
+
 import org.spout.vanilla.protocol.msg.entity.EntityPropertiesMessage;
 
 public class EntityPropertiesHandler extends MessageHandler<EntityPropertiesMessage> {
-
 	@Override
 	public void handleClient(ClientSession session, EntityPropertiesMessage message) {
 		super.handleClient(session, message);

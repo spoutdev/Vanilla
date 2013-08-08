@@ -32,12 +32,13 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
-
 import org.spout.api.util.ChannelBufferUtils;
+
 import org.spout.vanilla.protocol.msg.player.PlayerChatMessage;
 
 public final class PlayerChatCodec extends MessageCodec<PlayerChatMessage> {
 	private static final JsonParser parser = new JsonParser();
+
 	public PlayerChatCodec() {
 		super(PlayerChatMessage.class, 0x03);
 	}

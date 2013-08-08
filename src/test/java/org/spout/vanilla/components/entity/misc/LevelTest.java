@@ -28,15 +28,7 @@ package org.spout.vanilla.components.entity.misc;
 
 import org.junit.Test;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.entity.Player;
-
 import org.spout.vanilla.EngineFaker;
-import org.spout.vanilla.EntityMocker;
-import org.spout.vanilla.component.entity.misc.Level;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class LevelTest {
 	static {

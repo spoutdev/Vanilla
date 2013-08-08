@@ -36,7 +36,6 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.event.entity.network.EntityMetaChangeEvent;
 import org.spout.vanilla.material.Fuel;

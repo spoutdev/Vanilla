@@ -44,7 +44,6 @@ import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
 
 public class TrappedChestBlock extends AbstractChestBlock implements RedstoneSource {
-
 	public TrappedChestBlock(String name, int id) {
 		super(name, id, Chest.class, VanillaMaterialModels.TRAPPED_CHEST);
 		this.setHardness(2.5F).setResistance(4.2F).setTransparent();

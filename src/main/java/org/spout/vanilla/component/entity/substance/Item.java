@@ -33,9 +33,9 @@ import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector3;
+
 import org.spout.physics.collision.shape.BoxShape;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;

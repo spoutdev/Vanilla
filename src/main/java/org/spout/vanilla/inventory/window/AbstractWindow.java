@@ -35,7 +35,6 @@ import org.spout.api.Engine;
 import org.spout.api.Platform;
 import org.spout.api.ServerOnly;
 import org.spout.api.entity.Player;
-import org.spout.api.event.ProtocolEvent;
 import org.spout.api.event.cause.PlayerCause;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.InventoryViewer;

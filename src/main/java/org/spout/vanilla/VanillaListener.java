@@ -46,8 +46,8 @@ import org.spout.api.event.server.permissions.PermissionNodeEvent;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockSnapshot;
 import org.spout.api.util.access.BanType;
-import org.spout.vanilla.component.VanillaPlayerNetworkComponent;
 
+import org.spout.vanilla.component.VanillaPlayerNetworkComponent;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.component.entity.living.Human;
@@ -105,7 +105,9 @@ public class VanillaListener implements Listener {
 		player.add(WindowHolder.class);
 		player.add(PlayerList.class);
 		// TODO: Connection times out when using Spout Protocol because no Ping Message; need a Ping component client-side that somehow updates server
-		if (player.getNetwork() instanceof VanillaPlayerNetworkComponent) player.add(Ping.class);
+		if (player.getNetwork() instanceof VanillaPlayerNetworkComponent) {
+			player.add(Ping.class);
+		}
 		player.add(PlayerItemCollector.class);
 		player.add(Sleep.class);
 		player.add(Level.class);

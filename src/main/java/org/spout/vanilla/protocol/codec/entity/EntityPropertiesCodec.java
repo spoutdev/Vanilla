@@ -34,12 +34,11 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
-
 import org.spout.api.util.ChannelBufferUtils;
+
 import org.spout.vanilla.protocol.msg.entity.EntityPropertiesMessage;
 
 public class EntityPropertiesCodec extends MessageCodec<EntityPropertiesMessage> {
-
 	public EntityPropertiesCodec() {
 		super(EntityPropertiesMessage.class, 0x2C);
 	}
@@ -50,19 +49,20 @@ public class EntityPropertiesCodec extends MessageCodec<EntityPropertiesMessage>
 		int amount = buffer.readInt();
 		System.out.println(amount);
 		EntityPropertiesMessage msg = new EntityPropertiesMessage(entityID);
-		Map<EntityPropertiesCodec,Double> map = new HashMap<EntityPropertiesCodec, Double>();
+		Map<EntityPropertiesCodec, Double> map = new HashMap<EntityPropertiesCodec, Double>();
 		for (int i = 1; i <= amount; i++) {
 			msg.addProperty(EntityPropertiesMessage.EntityProperties.getByName(ChannelBufferUtils.readString(buffer)), buffer.readDouble());
 		}
 		return msg;
 	}
+
 	@Override
 	public ChannelBuffer encode(EntityPropertiesMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		buffer.writeInt(message.getEntityId());
 		Map<EntityPropertiesMessage.EntityProperties, Double> map = message.getProperties();
 		buffer.writeInt(map.size());
-		for (Map.Entry<EntityPropertiesMessage.EntityProperties, Double> value: map.entrySet()) {
+		for (Map.Entry<EntityPropertiesMessage.EntityProperties, Double> value : map.entrySet()) {
 			ChannelBufferUtils.writeString(buffer, value.getKey().toString());
 			buffer.writeDouble(value.getValue());
 		}

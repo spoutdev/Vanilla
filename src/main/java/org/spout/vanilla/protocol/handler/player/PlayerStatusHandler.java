@@ -27,24 +27,34 @@
 package org.spout.vanilla.protocol.handler.player;
 
 import java.util.Set;
+import org.spout.api.Server;
 
 import org.spout.api.Spout;
+import org.spout.api.datatable.ManagedMap;
 import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerConnectEvent;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.ServerSession;
+import org.spout.api.protocol.Session;
 import org.spout.api.protocol.event.EntitySyncEvent;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.living.Human;
+import org.spout.vanilla.data.Difficulty;
+import org.spout.vanilla.data.Dimension;
+import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.WorldType;
 import org.spout.vanilla.event.cause.HealthChangeCause;
 import org.spout.vanilla.event.player.PlayerRespawnEvent;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.msg.player.PlayerStatusMessage;
+import org.spout.vanilla.protocol.msg.player.conn.PlayerLoginRequestMessage;
 
 public class PlayerStatusHandler extends MessageHandler<PlayerStatusMessage> {
+
 	@Override
 	public void handleServer(ServerSession session, PlayerStatusMessage message) {
 		if (message.getStatus() == PlayerStatusMessage.INITIAL_SPAWN) {
@@ -55,6 +65,28 @@ public class PlayerStatusHandler extends MessageHandler<PlayerStatusMessage> {
 			if (VanillaPlugin.getInstance().getEngine().debugMode()) {
 				Spout.getLogger().info("Login took " + (System.currentTimeMillis() - session.getDataMap().get(VanillaProtocol.LOGIN_TIME)) + " ms");
 			}
+			final ManagedMap data = session.getPlayer().getWorld().getData();
+			final Human human = session.getPlayer().add(Human.class);
+			GameMode gamemode = null;
+			Difficulty difficulty = data.get(VanillaData.DIFFICULTY);
+			Dimension dimension = data.get(VanillaData.DIMENSION);
+			WorldType worldType = data.get(VanillaData.WORLD_TYPE);
+
+			int entityId = session.getPlayer().getId();
+
+			//  MC Packet Order: 0x01 Login, 0xFA Custom (ServerTypeName), 0x06 SpawnPos, 0xCA PlayerAbilities, 0x10 BlockSwitch
+			if (human != null && human.getAttachedCount() > 1) {
+				gamemode = human.getGameMode();
+			} else {
+				gamemode = data.get(VanillaData.GAMEMODE);
+				if (human != null) {
+					human.setGamemode(gamemode);
+				}
+			}
+
+			Server server = (Server) session.getEngine();
+			PlayerLoginRequestMessage idMsg = new PlayerLoginRequestMessage(entityId, worldType.toString(), gamemode.getId(), (byte) dimension.getId(), difficulty.getId(), (byte) server.getMaxPlayers());
+			session.send(true, idMsg);
 		} else if (message.getStatus() == PlayerStatusMessage.RESPAWN) {
 			if (!session.hasPlayer()) {
 				return;

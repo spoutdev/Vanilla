@@ -507,23 +507,8 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 		Dimension dimension = data.get(VanillaData.DIMENSION);
 		WorldType worldType = data.get(VanillaData.WORLD_TYPE);
 
-		int entityId = getOwner().getId();
-
 		if (first) {
-			//  MC Packet Order: 0x01 Ligin, 0xFA Custom (ServerTypeName), 0x06 SpawnPos, 0xCA PlayerAbilities, 0x10 BlockSwitch
 			first = false;
-			if (human != null && human.getAttachedCount() > 1) {
-				gamemode = human.getGameMode();
-			} else {
-				gamemode = data.get(VanillaData.GAMEMODE);
-				if (human != null) {
-					human.setGamemode(gamemode);
-				}
-			}
-
-			Server server = (Server) getSession().getEngine();
-			PlayerLoginRequestMessage idMsg = new PlayerLoginRequestMessage(entityId, worldType.toString(), gamemode.getId(), (byte) dimension.getId(), difficulty.getId(), (byte) server.getMaxPlayers());
-			getSession().send(idMsg);
 		} else {
 			if (human != null) {
 				gamemode = human.getGameMode();

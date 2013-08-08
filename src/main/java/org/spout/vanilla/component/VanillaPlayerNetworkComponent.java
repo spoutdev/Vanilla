@@ -57,7 +57,7 @@ import org.spout.api.math.IntVector3;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
-import org.spout.api.protocol.Session.State;
+import org.spout.api.protocol.Session;
 import org.spout.api.protocol.event.BlockUpdateEvent;
 import org.spout.api.protocol.event.ChunkFreeEvent;
 import org.spout.api.protocol.event.ChunkSendEvent;
@@ -175,7 +175,6 @@ import org.spout.vanilla.scoreboard.Team;
 import org.spout.vanilla.world.generator.biome.VanillaBiome;
 import org.spout.vanilla.world.lighting.VanillaCuboidLightBuffer;
 import org.spout.vanilla.world.lighting.VanillaLighting;
-
 import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
 import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
 
@@ -523,7 +522,6 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 			}
 
 			Server server = (Server) getSession().getEngine();
-			getSession().setState(State.GAME);
 			PlayerLoginRequestMessage idMsg = new PlayerLoginRequestMessage(entityId, worldType.toString(), gamemode.getId(), (byte) dimension.getId(), difficulty.getId(), (byte) server.getMaxPlayers());
 			getSession().send(idMsg);
 		} else {
@@ -589,6 +587,9 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 
 	@Override
 	public void finalizeRun(Transform live) {
+		if (first) {
+			getSession().setState(Session.State.GAME);
+		}
 		Point currentPosition = live.getPosition();
 
 		int y = currentPosition.getBlockY();

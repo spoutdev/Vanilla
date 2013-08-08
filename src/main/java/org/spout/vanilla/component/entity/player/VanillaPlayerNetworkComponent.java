@@ -621,6 +621,10 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 		if (!(e.getNetwork() instanceof VanillaNetworkProtocol)) {
 			return;
 		}
+		// Do not synchronize a Player to itself - this causes bugs
+		if (this.getOwner() == e) {
+			return;
+		}
 		Transform liveTransform = event.getTransform();
 		boolean spawn = event.shouldAdd();
 		boolean destroy = event.shouldRemove();
@@ -759,7 +763,6 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 		}
 
 		public static byte[] getChunkFullData(Chunk c, List<ProtocolEvent> updateEvents) {
-
 			VanillaContainer container = new VanillaContainer();
 			c.fillBlockContainer(container);
 			c.fillBlockComponentContainer(container);

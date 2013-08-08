@@ -32,6 +32,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+import org.spout.vanilla.data.configuration.VanillaConfiguration;
 
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
@@ -56,7 +57,7 @@ public class Lava extends Liquid implements InitializableMaterial {
 	@Override
 	public void initialize() {
 		// TODO: Configurations can not be stored in non-linked ConfigurationHolders
-		// this.setFlowDelay(VanillaConfiguration.LAVA_DELAY.getInt());
+		this.setFlowDelay(VanillaConfiguration.LAVA_DELAY.getInt());
 	}
 
 	@Override
@@ -153,5 +154,10 @@ public class Lava extends Liquid implements InitializableMaterial {
 	@Override
 	public VanillaItemMaterial getContainerMaterial() {
 		return VanillaMaterials.LAVA_BUCKET;
+	}
+
+	@Override
+	public boolean hasPhysics() {
+		return super.hasPhysics() && VanillaConfiguration.LAVA_PHYSICS.getBoolean();
 	}
 }

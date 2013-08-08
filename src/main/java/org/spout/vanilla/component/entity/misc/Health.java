@@ -132,6 +132,9 @@ public class Health extends VanillaEntityComponent {
 	@SuppressWarnings ("incomplete-switch")
 	@Override
 	public void onTick(float dt) {
+		if (!VanillaConfiguration.PLAYER_SURVIVAL_ENABLE_HEALTH.getBoolean()) {
+			return;
+		}
 		switch (getEngine().getPlatform()) {
 			case PROXY:
 			case SERVER:
@@ -272,7 +275,7 @@ public class Health extends VanillaEntityComponent {
 					Item.drop(entityPosition, stack, Vector3.ZERO);
 				}
 			}
-			if (dropComponent.getXpDrop() > 0) {
+			if (dropComponent.getXpDrop() > 0 && VanillaConfiguration.PLAYER_SURVIVAL_ENABLE_XP.getBoolean()) {
 				org.spout.api.geo.discrete.Point pos = getOwner().getPhysics().getPosition();
 
 				XPOrb xporb = pos.getWorld().createEntity(pos, XPOrb.class).add(XPOrb.class);
@@ -315,6 +318,9 @@ public class Health extends VanillaEntityComponent {
 	 * @param maxHealth to set to
 	 */
 	public void setMaxHealth(float maxHealth) {
+		if (!VanillaConfiguration.PLAYER_SURVIVAL_ENABLE_HEALTH.getBoolean()) {
+			return;
+		}
 		getData().put(VanillaData.MAX_HEALTH, maxHealth);
 		//TODO: Add event for max health change
 	}
@@ -325,6 +331,9 @@ public class Health extends VanillaEntityComponent {
 	 * @param maxHealth of this health component
 	 */
 	public void setSpawnHealth(float maxHealth) {
+		if (!VanillaConfiguration.PLAYER_SURVIVAL_ENABLE_HEALTH.getBoolean()) {
+			return;
+		}
 		this.setMaxHealth(maxHealth);
 		this.setHealth(maxHealth, HealthChangeCause.SPAWN);
 	}
@@ -345,6 +354,9 @@ public class Health extends VanillaEntityComponent {
 	 * @param cause of the change
 	 */
 	public void setHealth(float health, HealthChangeCause cause) {
+		if (!VanillaConfiguration.PLAYER_SURVIVAL_ENABLE_HEALTH.getBoolean()) {
+			return;
+		}
 		EntityHealthChangeEvent event = new EntityHealthChangeEvent(getOwner(), cause, health - getHealth());
 		getEngine().getEventManager().callEvent(event);
 		if (!event.isCancelled()) {
@@ -384,6 +396,9 @@ public class Health extends VanillaEntityComponent {
 	 * @param cause cause of this entity being healed
 	 */
 	public void heal(float amount, HealCause cause) {
+		if (!VanillaConfiguration.PLAYER_SURVIVAL_ENABLE_HEALTH.getBoolean()) {
+			return;
+		}
 		EntityHealEvent event = new EntityHealEvent(getOwner(), amount, cause);
 		EntityHealEvent healEvent = getOwner().getEngine().getEventManager().callEvent(event);
 		if (!healEvent.isCancelled()) {
@@ -433,6 +448,9 @@ public class Health extends VanillaEntityComponent {
 	 * @param deathTicks the amount of death ticks.
 	 */
 	public void setDeathTicks(int deathTicks) {
+		if (!VanillaConfiguration.PLAYER_SURVIVAL_ENABLE_HEALTH.getBoolean()) {
+			return;
+		}
 		if (deathTicks > DEATH_TIME_TICKS) {
 			deathTicks = DEATH_TIME_TICKS;
 		}
@@ -466,6 +484,9 @@ public class Health extends VanillaEntityComponent {
 	 * @param sendHurtMessage whether to send the hurt packet to all players online
 	 */
 	public void damage(float amount, DamageCause<?> cause, boolean sendHurtMessage) {
+		if (!VanillaConfiguration.PLAYER_SURVIVAL_ENABLE_HEALTH.getBoolean()) {
+			return;
+		}
 		Cause<?> eventCause;
 		if (cause instanceof Cause<?>) {
 			eventCause = (Cause<?>) cause;
@@ -508,6 +529,9 @@ public class Health extends VanillaEntityComponent {
 	 * Sets whether this entity has a death animation or not.
 	 */
 	public void setDeathAnimation(boolean hasDeathAnimation) {
+		if (!VanillaConfiguration.PLAYER_SURVIVAL_ENABLE_HEALTH.getBoolean()) {
+			return;
+		}
 		getData().put(VanillaData.HAS_DEATH_ANIMATION, hasDeathAnimation);
 	}
 

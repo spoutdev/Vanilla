@@ -41,6 +41,7 @@ import org.spout.api.math.IntVector3;
 
 import org.spout.vanilla.data.Dimension;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
@@ -76,7 +77,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 
 	@Override
 	public boolean canCreate(Block block, short data, Cause<?> cause) {
-		if (super.canCreate(block, data, cause)) {
+		if (super.canCreate(block, data, cause) && VanillaConfiguration.FIRE_PHYSICS.getBoolean()) {
 			BlockMaterial mat;
 			for (BlockFace face : BlockFaces.BTNSWE) {
 				mat = block.translate(face).getMaterial();

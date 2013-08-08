@@ -115,4 +115,9 @@ public class Cactus extends StackGrowingBase implements TimedCraftable {
 	public boolean grow(Block block, Material material) {
 		return false; //Cannot grow cactus with any materials
 	}
+
+	@Override
+	public boolean hasPhysics() {
+		return super.hasPhysics() && VanillaConfiguration.CACTUS_PHYSICS.getBoolean();
+	}
 }

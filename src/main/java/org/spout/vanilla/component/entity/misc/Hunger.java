@@ -37,6 +37,7 @@ import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.component.entity.player.HUD;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.event.cause.HealCause;
 import org.spout.vanilla.event.cause.NullDamageCause;
@@ -70,7 +71,7 @@ public class Hunger extends VanillaEntityComponent {
 
 	@Override
 	public boolean canTick() {
-		return !human.isCreative() && !human.getHealth().isDead();
+		return !human.isCreative() && !human.getHealth().isDead() && VanillaConfiguration.PLAYER_SURVIVAL_ENABLE_HUNGER.getBoolean();
 	}
 
 	@SuppressWarnings ("incomplete-switch")

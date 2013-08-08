@@ -38,6 +38,7 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.GenericMath;
 
 import org.spout.vanilla.data.Climate;
+import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -62,7 +63,7 @@ public class Water extends Liquid implements DynamicMaterial, InitializableMater
 	@Override
 	public void initialize() {
 		// TODO: Configurations can not be stored in non-linked ConfigurationHolders
-		//this.setFlowDelay(VanillaConfiguration.WATER_DELAY.getInt());
+		this.setFlowDelay(VanillaConfiguration.WATER_DELAY.getInt());
 	}
 
 	@Override
@@ -166,5 +167,10 @@ public class Water extends Liquid implements DynamicMaterial, InitializableMater
 				}
 			}
 		}
+	}
+
+	@Override
+	public boolean hasPhysics() {
+		return super.hasPhysics() && VanillaConfiguration.WATER_PHYSICS.getBoolean();
 	}
 }

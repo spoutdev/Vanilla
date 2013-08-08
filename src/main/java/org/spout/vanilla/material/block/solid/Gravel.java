@@ -27,6 +27,7 @@
 package org.spout.vanilla.material.block.solid;
 
 import org.spout.vanilla.data.Instrument;
+import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.drops.SwitchDrops;
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
@@ -53,5 +54,10 @@ public class Gravel extends SolidMoving implements InitializableMaterial {
 	@Override
 	public Instrument getInstrument() {
 		return Instrument.SNARE_DRUM;
+	}
+
+	@Override
+	public boolean hasPhysics() {
+		return super.hasPhysics() && VanillaConfiguration.GRAVEL_PHYSICS.getBoolean();
 	}
 }

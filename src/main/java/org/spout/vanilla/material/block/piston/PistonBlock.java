@@ -37,6 +37,7 @@ import org.spout.api.math.Vector3;
 import org.spout.physics.collision.shape.BoxShape;
 
 import org.spout.vanilla.data.MoveReaction;
+import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -72,7 +73,7 @@ public class PistonBlock extends VanillaBlockMaterial implements Directional, Re
 
 	@Override
 	public boolean hasPhysics() {
-		return true;
+		return super.hasPhysics() && VanillaConfiguration.PISTON_PHYSICS.getBoolean();
 	}
 
 	@Override

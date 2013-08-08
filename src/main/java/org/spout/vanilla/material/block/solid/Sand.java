@@ -29,6 +29,7 @@ package org.spout.vanilla.material.block.solid;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.data.Instrument;
+import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.data.tool.ToolType;
@@ -57,5 +58,10 @@ public class Sand extends SolidMoving implements TimedCraftable {
 	@Override
 	public Instrument getInstrument() {
 		return Instrument.SNARE_DRUM;
+	}
+
+	@Override
+	public boolean hasPhysics() {
+		return super.hasPhysics() && VanillaConfiguration.SAND_PHYSICS.getBoolean();
 	}
 }

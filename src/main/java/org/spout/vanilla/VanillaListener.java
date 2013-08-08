@@ -28,6 +28,7 @@ package org.spout.vanilla;
 
 import org.spout.api.Client;
 import org.spout.api.Platform;
+import org.spout.api.Server;
 import org.spout.api.Spout;
 import org.spout.api.component.entity.CameraComponent;
 import org.spout.api.entity.Player;
@@ -44,11 +45,13 @@ import org.spout.api.event.player.PlayerJoinEvent;
 import org.spout.api.event.server.permissions.PermissionNodeEvent;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockSnapshot;
+import org.spout.api.util.access.BanType;
 import org.spout.vanilla.component.VanillaPlayerNetworkComponent;
 
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.component.entity.living.Human;
+import org.spout.vanilla.component.entity.living.hostile.EnderDragon;
 import org.spout.vanilla.component.entity.misc.EntityHead;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.component.entity.misc.Hunger;
@@ -67,8 +70,12 @@ import org.spout.vanilla.component.entity.player.hud.VanillaExpBar;
 import org.spout.vanilla.component.entity.player.hud.VanillaHunger;
 import org.spout.vanilla.component.entity.player.hud.VanillaQuickbar;
 import org.spout.vanilla.component.world.sky.Sky;
+import org.spout.vanilla.data.Difficulty;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
+import org.spout.vanilla.event.entity.EntityDeathEvent;
 import org.spout.vanilla.event.material.RedstoneChangeEvent;
+import org.spout.vanilla.event.player.PlayerDeathEvent;
 import org.spout.vanilla.input.VanillaInputExecutor;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.protocol.ClientAuthentification;
@@ -206,6 +213,27 @@ public class VanillaListener implements Listener {
 	public void onEntityShow(EntityShownEvent event) {
 		if (event.getEntity() instanceof Player) {
 			event.getHiddenFrom().get(PlayerList.class).force();
+		}
+	}
+
+	@EventHandler
+	public void onDeath(EntityDeathEvent event) {
+		EnderDragon get = event.getEntity().get(EnderDragon.class);
+		if (get != null) {
+			if (VanillaConfiguration.END_CREDITS.getBoolean()) {
+				// TODO: do awesome end credit stuff
+			}
+		}
+	}
+
+	@EventHandler
+	public void onDeath(PlayerDeathEvent event) {
+		if (Spout.getPlatform() != Platform.SERVER) {
+			return;
+		}
+		Difficulty difficulty = event.getPlayer().getData().get(VanillaData.DIFFICULTY);
+		if (difficulty == Difficulty.HARDCORE) {
+			((Server) Spout.getEngine()).getAccessManager().ban(BanType.PLAYER, event.getPlayer().getName(), true, "Banned from server. Reason: Death on hardcore.");
 		}
 	}
 }

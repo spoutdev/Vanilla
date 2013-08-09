@@ -54,7 +54,7 @@ public class FlatGenerator extends LayeredWorldGenerator implements VanillaGener
 		final int x = 16 - random.nextInt(32);
 		final int z = 16 - random.nextInt(32);
 		int y = VanillaPlayerNetworkComponent.WORLD_HEIGHT - 1;
-		for (; world.getBlockMaterial(x, y, z).getShape() != null; y--) {
+		for (; world.getBlockMaterial(x, y, z).getShape() == null; y--) {
 		}
 		return new Point(world, x, y + 1.5f, z);
 	}

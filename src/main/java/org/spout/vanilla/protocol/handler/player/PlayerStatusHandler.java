@@ -54,23 +54,22 @@ import org.spout.vanilla.protocol.msg.player.PlayerStatusMessage;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerLoginRequestMessage;
 
 public class PlayerStatusHandler extends MessageHandler<PlayerStatusMessage> {
-
 	@Override
 	public void handleServer(ServerSession session, PlayerStatusMessage message) {
+		final Server server = session.getEngine();
+
 		if (message.getStatus() == PlayerStatusMessage.INITIAL_SPAWN) {
-			if (PlayerConnectEvent.getHandlerList().getRegisteredListeners().length > 0) {
-				// TODO: get correct view distance
-				VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(new PlayerConnectEvent(session, (String) session.getDataMap().get("username"), 10));
-			}
-			if (VanillaPlugin.getInstance().getEngine().debugMode()) {
-				Spout.getLogger().info("Login took " + (System.currentTimeMillis() - session.getDataMap().get(VanillaProtocol.LOGIN_TIME)) + " ms");
+			server.getEventManager().callEvent(new PlayerConnectEvent(session, (String) session.getDataMap().get("username"), 10));
+			if (server.debugMode()) {
+				server.getLogger().info("Login took " + (System.currentTimeMillis() - session.getDataMap().get(VanillaProtocol.LOGIN_TIME)) + " ms");
 			}
 			final ManagedMap data = session.getPlayer().getWorld().getData();
 			final Human human = session.getPlayer().add(Human.class);
-			GameMode gamemode = null;
-			Difficulty difficulty = data.get(VanillaData.DIFFICULTY);
-			Dimension dimension = data.get(VanillaData.DIMENSION);
-			WorldType worldType = data.get(VanillaData.WORLD_TYPE);
+			final Difficulty difficulty = data.get(VanillaData.DIFFICULTY);
+			final Dimension dimension = data.get(VanillaData.DIMENSION);
+			final WorldType worldType = data.get(VanillaData.WORLD_TYPE);
+
+			GameMode gamemode;
 
 			int entityId = session.getPlayer().getId();
 
@@ -83,18 +82,14 @@ public class PlayerStatusHandler extends MessageHandler<PlayerStatusMessage> {
 					human.setGamemode(gamemode);
 				}
 			}
-
-			Server server = (Server) session.getEngine();
 			PlayerLoginRequestMessage idMsg = new PlayerLoginRequestMessage(entityId, worldType.toString(), gamemode.getId(), (byte) dimension.getId(), difficulty.getId(), (byte) server.getMaxPlayers());
 			session.send(true, idMsg);
+			session.setState(Session.State.GAME);
 		} else if (message.getStatus() == PlayerStatusMessage.RESPAWN) {
-			if (!session.hasPlayer()) {
-				return;
-			}
 			Player player = session.getPlayer();
 			Point point = player.getWorld().getSpawnPoint().getPosition();
 			if (PlayerRespawnEvent.getHandlerList().getRegisteredListeners().length > 0) {
-				PlayerRespawnEvent event = VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(new PlayerRespawnEvent(player, point));
+				PlayerRespawnEvent event = server.getEventManager().callEvent(new PlayerRespawnEvent(player, point));
 
 				if (event.isCancelled()) {
 					return;
@@ -104,10 +99,8 @@ public class PlayerStatusHandler extends MessageHandler<PlayerStatusMessage> {
 			//Set position for the server
 			player.getPhysics().setPosition(point);
 			player.getNetwork().forceRespawn();
-			Human human = player.get(Human.class);
-			if (human != null) {
-				human.getHealth().setHealth(human.getHealth().getMaxHealth(), HealthChangeCause.SPAWN);
-			}
+			Human human = player.add(Human.class);
+			human.getHealth().setHealth(human.getHealth().getMaxHealth(), HealthChangeCause.SPAWN);
 
 			final Transform spawn = new Transform(player.getPhysics().getTransform());
 			spawn.setPosition(point);

@@ -33,7 +33,7 @@ import org.spout.api.entity.Player;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.ai.examiner.VanillaBlockExaminer;
-import org.spout.vanilla.component.AbstractVanillaNetworkComponent;
+import org.spout.vanilla.component.entity.VanillaNetworkComponent;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.component.entity.misc.Burn;
 import org.spout.vanilla.component.entity.misc.Drowning;
@@ -62,7 +62,7 @@ public abstract class Living extends VanillaEntityComponent {
 		ai = holder.add(GoapAIComponent.class);
 		holder.add(Burn.class);
 		if (!(holder instanceof Player)) {
-			holder.add(AbstractVanillaNetworkComponent.class);
+			holder.add(VanillaNetworkComponent.class);
 		}
 	}
 

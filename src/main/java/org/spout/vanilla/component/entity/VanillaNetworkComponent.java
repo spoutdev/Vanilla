@@ -24,22 +24,33 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component;
+package org.spout.vanilla.component.entity;
+
+import org.spout.api.component.entity.NetworkComponent;
 
 import org.spout.vanilla.protocol.EntityProtocol;
+import org.spout.vanilla.protocol.VanillaNetworkProtocol;
 
-public interface VanillaNetworkComponent {
+public class VanillaNetworkComponent extends NetworkComponent implements VanillaNetworkProtocol {
+	private EntityProtocol protocol;
+
 	/**
 	 * Returns the {@link EntityProtocol} for this type of entity
 	 *
 	 * @return The entity protocol for the specified id.
 	 */
-	EntityProtocol getEntityProtocol();
+	@Override
+	public EntityProtocol getEntityProtocol() {
+		return protocol;
+	}
 
 	/**
 	 * Registers the {@code protocol} as the Entity's protocol
 	 *
 	 * @param protocol The protocol to set
 	 */
-	void setEntityProtocol(EntityProtocol protocol);
+	@Override
+	public void setEntityProtocol(EntityProtocol protocol) {
+		this.protocol = protocol;
+	}
 }

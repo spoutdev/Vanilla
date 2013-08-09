@@ -33,7 +33,7 @@ import org.spout.api.component.entity.EntityComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.component.VanillaNetworkComponent;
+import org.spout.vanilla.protocol.VanillaNetworkProtocol;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.entity.network.EntityMetaChangeEvent;
 import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
@@ -54,15 +54,15 @@ public class VanillaEntityComponent extends EntityComponent {
 
 		// Players initialized in initializeSession
 		if (!(getOwner() instanceof Player)) {
-			getOwner().add(VanillaEntityComponent.class);
+			getOwner().add(VanillaNetworkComponent.class);
 		}
 	}
 
 	protected void setEntityProtocol(VanillaEntityProtocol p) {
-		if (!(getOwner().getNetwork() instanceof VanillaNetworkComponent)) {
+		if (!(getOwner().getNetwork() instanceof VanillaNetworkProtocol)) {
 			return;
 		}
-		((VanillaNetworkComponent) getOwner().getNetwork()).setEntityProtocol(p);
+		((VanillaNetworkProtocol) getOwner().getNetwork()).setEntityProtocol(p);
 	}
 
 	protected void setMetadata(Parameter<?>... p) {

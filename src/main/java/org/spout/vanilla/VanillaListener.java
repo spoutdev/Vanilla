@@ -47,7 +47,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockSnapshot;
 import org.spout.api.util.access.BanType;
 
-import org.spout.vanilla.component.VanillaPlayerNetworkComponent;
+import org.spout.vanilla.component.entity.player.VanillaPlayerNetworkComponent;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.component.entity.living.Human;

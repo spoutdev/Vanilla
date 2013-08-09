@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component;
+package org.spout.vanilla.component.entity.player;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,7 +34,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import gnu.trove.set.TIntSet;
 
-import org.spout.api.Server;
 import org.spout.api.Spout;
 import org.spout.api.component.BlockComponentOwner;
 import org.spout.api.component.entity.PlayerNetworkComponent;
@@ -128,6 +127,7 @@ import org.spout.vanilla.inventory.window.DefaultWindow;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.component.TileMaterial;
 import org.spout.vanilla.protocol.EntityProtocol;
+import org.spout.vanilla.protocol.VanillaNetworkProtocol;
 import org.spout.vanilla.protocol.container.VanillaContainer;
 import org.spout.vanilla.protocol.msg.VanillaBlockDataChannelMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
@@ -147,7 +147,6 @@ import org.spout.vanilla.protocol.msg.player.PlayerHealthMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerHeldItemChangeMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerTimeMessage;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerListMessage;
-import org.spout.vanilla.protocol.msg.player.conn.PlayerLoginRequestMessage;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerPingMessage;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionLookMessage;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerRespawnMessage;
@@ -178,7 +177,7 @@ import org.spout.vanilla.world.lighting.VanillaLighting;
 import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
 import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
 
-public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implements VanillaNetworkComponent, Listener {
+public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implements VanillaNetworkProtocol, Listener {
 	private EntityProtocol protocol;
 
 	/**
@@ -619,14 +618,14 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 	public void syncEntity(EntitySyncEvent event) {
 		super.syncEntity(event);
 		Entity e = event.getEntity();
-		if (!(e.getNetwork() instanceof VanillaNetworkComponent)) {
+		if (!(e.getNetwork() instanceof VanillaNetworkProtocol)) {
 			return;
 		}
 		Transform liveTransform = event.getTransform();
 		boolean spawn = event.shouldAdd();
 		boolean destroy = event.shouldRemove();
 		boolean update = event.shouldSync();
-		EntityProtocol ep = ((VanillaNetworkComponent) e.getNetwork()).getEntityProtocol();
+		EntityProtocol ep = ((VanillaNetworkProtocol) e.getNetwork()).getEntityProtocol();
 		if (ep != null) {
 			List<Message> messages = new ArrayList<Message>();
 			// Sync using vanilla protocol

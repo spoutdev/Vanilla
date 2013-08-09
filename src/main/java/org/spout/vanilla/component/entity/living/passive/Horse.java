@@ -31,7 +31,7 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 
 import org.spout.api.inventory.Container;
 
-import org.spout.vanilla.component.VanillaNetworkComponent;
+import org.spout.vanilla.protocol.VanillaNetworkProtocol;
 import org.spout.vanilla.component.entity.living.Animal;
 import org.spout.vanilla.component.entity.living.Passive;
 import org.spout.vanilla.component.entity.misc.Health;
@@ -42,7 +42,7 @@ import org.spout.vanilla.protocol.entity.creature.HorseEntityProtocol;
 public class Horse extends Animal implements Container, Passive {
 	@Override
 	public void onAttached() {
-		((VanillaNetworkComponent) getOwner().getNetwork()).setEntityProtocol(new HorseEntityProtocol());
+		((VanillaNetworkProtocol) getOwner().getNetwork()).setEntityProtocol(new HorseEntityProtocol());
 		if (getAttachedCount() == 1) {
 			getOwner().add(Health.class).setSpawnHealth(22);
 		}

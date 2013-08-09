@@ -52,7 +52,7 @@ import org.spout.api.util.Named;
 
 import org.spout.vanilla.ChatStyle;
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.VanillaPlayerNetworkComponent;
+import org.spout.vanilla.component.entity.player.VanillaPlayerNetworkComponent;
 import org.spout.vanilla.protocol.codec.auth.EncryptionKeyRequestCodec;
 import org.spout.vanilla.protocol.codec.auth.EncryptionKeyResponseCodec;
 import org.spout.vanilla.protocol.codec.entity.EntityActionCodec;

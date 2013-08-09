@@ -688,7 +688,7 @@ public abstract class Window extends AbstractWindow {
 			case PROXY:
 			case SERVER:
 				QuickbarInventory quickbar = getPlayerInventory().getQuickbar();
-				debug("[Window - " + title + "] Slot changed: " + slot + " = " + item);
+				//debug("[Window - " + title + "] Slot changed: " + slot + " = " + item);
 				//callProtocolEvent(new WindowSlotEvent(this, inventory, slots.revert(slot), item));
 				reload();
 				// Update the held item

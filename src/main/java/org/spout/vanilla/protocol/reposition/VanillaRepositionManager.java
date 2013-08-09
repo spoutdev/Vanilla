@@ -71,4 +71,8 @@ public class VanillaRepositionManager extends RepositionManagerImpl {
 		this.offset = offset;
 		inverse.offset = -offset;
 	}
+
+	public int getOffset() {
+		return offset;
+	}
 }

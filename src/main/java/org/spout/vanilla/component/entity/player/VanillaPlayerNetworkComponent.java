@@ -61,7 +61,7 @@ import org.spout.api.protocol.event.BlockUpdateEvent;
 import org.spout.api.protocol.event.ChunkFreeEvent;
 import org.spout.api.protocol.event.ChunkSendEvent;
 import org.spout.api.protocol.event.EntitySyncEvent;
-import org.spout.api.protocol.event.PositionSendEvent;
+import org.spout.api.protocol.event.EntityUpdateEvent;
 import org.spout.api.protocol.event.WorldChangeProtocolEvent;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.FlatIterator;
@@ -211,14 +211,14 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 	private final TSyncIntPairObjectHashMap<TSyncIntHashSet> initChunks = new TSyncIntPairObjectHashMap<TSyncIntHashSet>();
 	private final ConcurrentLinkedQueue<Long> emptyColumns = new ConcurrentLinkedQueue<Long>();
 	// TODO rename -> activeColumns
-	private final TSyncIntPairHashSet activeChunksT = new TSyncIntPairHashSet();
+	private final TSyncIntPairHashSet activeColumns = new TSyncIntPairHashSet();
 	private final Object initChunkLock = new Object();
 	private final ChunkInit chunkInit = ChunkInit.getChunkInit(VanillaConfiguration.CHUNK_INIT.getString("client"));
 	private int minY = 0;
 	private int maxY = 256;
 	private int stepY = 160;
 	private int offsetY = 0;
-	private final VanillaRepositionManager vpm = new VanillaRepositionManager();
+	private final VanillaRepositionManager vrm = new VanillaRepositionManager();
 	private boolean teleported = false;
 	private boolean teleportPending = false;
 
@@ -246,7 +246,7 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 	public void onAttached() {
 		// The minimum block distance is a radius for sending chunks before login/respawn
 		// It needs to be > 0 for reliable login and preventing falling through the world
-		setRepositionManager(vpm);
+		setRepositionManager(vrm);
 		Spout.getEventManager().registerEvents(this, VanillaPlugin.getInstance());
 	}
 
@@ -293,7 +293,7 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 	protected void resetChunks() {
 		super.resetChunks();
 		this.emptyColumns.clear();
-		this.activeChunksT.clear();
+		this.activeColumns.clear();
 		this.initChunks.clear();
 	}
 
@@ -378,10 +378,10 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 
 	@Override
 	protected boolean canSendChunk(Chunk c) {
-		if (activeChunksT.contains(c.getX(), c.getZ())) {
+		if (activeColumns.contains(c.getX(), c.getZ())) {
 			return true;
 		}
-		Collection<Chunk> chunks = chunkInit.getChunks(c);
+		Collection<Chunk> chunks = chunkInit.getChunks(c, vrm);
 		if (chunks == null) {
 			return false;
 		}
@@ -408,7 +408,7 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 
 		List<ProtocolEvent> events = new ArrayList<ProtocolEvent>();
 
-		if (activeChunksT.add(x, z)) {
+		if (activeColumns.add(x, z)) {
 			Point p = c.getBase();
 			int[][] heights = getColumnHeights(p);
 			BlockMaterial[][] materials = getColumnTopmostMaterials(p);
@@ -435,7 +435,7 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 			ChunkDataMessage CCMsg = new ChunkDataMessage(x, z, true, new boolean[16], packetChunkData, biomeData, getSession(), getRepositionManager());
 			getSession().send(CCMsg);
 
-			chunks = chunkInit.getChunks(c);
+			chunks = chunkInit.getChunks(c, vrm);
 		}
 
 		if (chunks == null || !chunks.contains(c)) {
@@ -468,9 +468,10 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 	}
 
 	@EventHandler
-	public void onPositionSend(PositionSendEvent event) {
-		Point p = event.getPoint();
-		Quaternion rot = event.getRotation();
+	public void onPositionSend(EntityUpdateEvent event) {
+		if (event.getAction() != EntityUpdateEvent.UpdateAction.TRANSFORM) return;
+		Point p = event.getTransform().getPosition();
+		Quaternion rot = event.getTransform().getRotation();
 		PlayerPositionLookMessage PPLMsg = new PlayerPositionLookMessage(p.getX(), p.getY() + STANCE, p.getZ(), p.getY(), rot.getYaw(), rot.getPitch(), true, VanillaBlockDataChannelMessage.CHANNEL_ID, getRepositionManager());
 		event.getMessages().add(PPLMsg);
 	}
@@ -549,7 +550,7 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 		sky.updatePlayer((Player) getOwner());
 		// TODO: notify all connected players of login PacketChat 'using: server'
 		// TODO: Send player all nearby players
-		this.sendPosition(); // Send LookAndPosition
+		//this.sendPosition(); // Send LookAndPosition
 		sky.updatePlayer((Player) getOwner());
 		// TODO: Handle custom texture packs
 		// TODO: Send any player effects
@@ -587,7 +588,7 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 				int steps = (cY - ((maxY + minY) >> 1)) / stepY;
 
 				offsetY -= steps * stepY;
-				vpm.setOffset(offsetY);
+				vrm.setOffset(offsetY);
 				cY = getRepositionManager().convertY(y);
 
 				if (cY >= maxY) {
@@ -596,7 +597,7 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 					offsetY += stepY;
 				}
 
-				vpm.setOffset(offsetY);
+				vrm.setOffset(offsetY);
 			}
 		}
 		super.finalizeRun(live);
@@ -608,7 +609,7 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 			TIntSet column = initChunks.get(x, z);
 			if (column != null && column.isEmpty()) {
 				column = initChunks.remove(x, z);
-				activeChunksT.remove(x, z);
+				activeColumns.remove(x, z);
 				getSession().send(new ChunkDataMessage(x, z, true, null, null, null, true, getSession(), getRepositionManager()));
 			}
 		}
@@ -703,24 +704,26 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 			}
 		}
 
-		public Collection<Chunk> getChunks(final Chunk c) {
+		public Collection<Chunk> getChunks(final Chunk c, VanillaRepositionManager vpm) {
 			if (this.sendColumn()) {
-				final int x = c.getX();
-				final int z = c.getZ();
+				final int chunkX = c.getX();
+				final int chunkZ = c.getZ();
 				final int height = WORLD_HEIGHT >> Chunk.BLOCKS.BITS;
 				List<Chunk> chunks = new ArrayList<Chunk>(height);
 				List<Vector3> ungenerated = new ArrayList<Vector3>(height);
 				for (int y = 0; y < height; y++) {
-					Chunk cc = c.getWorld().getChunk(x, y, z, LoadOption.LOAD_ONLY);
+					int chunkY = vpm.convertChunkY(y);
+					Chunk cc = c.getWorld().getChunk(chunkX, chunkY, chunkZ, LoadOption.LOAD_ONLY);
 					if (cc == null) {
+						System.out.println("Chunk is null. Cannot send.");
 						c.getRegion().getTaskManager().scheduleSyncDelayedTask(VanillaPlugin.getInstance(), new Runnable() {
 							public void run() {
 								for (int y = 0; y < height; y++) {
-									c.getWorld().getChunk(x, y, z, LoadOption.LOAD_GEN);
+									c.getWorld().getChunk(chunkX, y, chunkZ, LoadOption.LOAD_GEN);
 								}
 							}
 						});
-						ungenerated.add(new Vector3(x, y, z));
+						ungenerated.add(new Vector3(chunkX, chunkY, chunkZ));
 					} else {
 						chunks.add(cc);
 					}

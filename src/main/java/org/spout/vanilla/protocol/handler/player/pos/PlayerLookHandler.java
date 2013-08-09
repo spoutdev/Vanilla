@@ -29,10 +29,11 @@ package org.spout.vanilla.protocol.handler.player.pos;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.math.QuaternionMath;
+import org.spout.api.math.Vector3;
 import org.spout.api.protocol.ClientSession;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.ServerSession;
-import org.spout.api.protocol.event.PositionSendEvent;
+import org.spout.api.protocol.event.EntityUpdateEvent;
 
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerLookMessage;
@@ -40,15 +41,12 @@ import org.spout.vanilla.protocol.msg.player.pos.PlayerLookMessage;
 public final class PlayerLookHandler extends MessageHandler<PlayerLookMessage> {
 	@Override
 	public void handleServer(ServerSession session, PlayerLookMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		//First look packet is to login/receive terrain, is not a valid rotation
 		if (session.getDataMap().get("first_login", 0) == 0) {
 			session.getDataMap().put("first_login", 1);
 			Transform transform = session.getPlayer().getPhysics().getTransform();
-			session.getPlayer().getNetwork().callProtocolEvent(new PositionSendEvent(session.getPlayer().getId(), transform.getPosition(), transform.getRotation()), session.getPlayer());
+			Player player = session.getPlayer();
+			player.getNetwork().callProtocolEvent(new EntityUpdateEvent(player.getId(), transform, EntityUpdateEvent.UpdateAction.TRANSFORM, player.getNetwork().getRepositionManager()), player);
 			return;
 		}
 
@@ -64,10 +62,6 @@ public final class PlayerLookHandler extends MessageHandler<PlayerLookMessage> {
 
 	@Override
 	public void handleClient(ClientSession session, PlayerLookMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		Player holder = session.getPlayer();
 
 		holder.getPhysics().setRotation(QuaternionMath.rotation(message.getPitch(), message.getYaw(), 0));

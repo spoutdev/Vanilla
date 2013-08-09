@@ -53,13 +53,14 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.event.ChunkSendEvent;
-import org.spout.api.protocol.event.PositionSendEvent;
+import org.spout.api.protocol.event.EntityUpdateEvent;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.ChatStyle;
@@ -382,7 +383,7 @@ public class TestCommands {
 	@Filter (PlayerFilter.class)
 	public void resetPosition(Player player, CommandArguments args) throws CommandException {
 		args.assertCompletelyParsed();
-		player.getNetwork().callProtocolEvent(new PositionSendEvent(player.getId(), player.getPhysics().getPosition(), player.getPhysics().getRotation()), player);
+		player.getNetwork().callProtocolEvent(new EntityUpdateEvent(player.getId(), new Transform(player.getPhysics().getPosition(), player.getPhysics().getRotation(), Vector3.ONE), EntityUpdateEvent.UpdateAction.TRANSFORM, player.getNetwork().getRepositionManager()), player);
 	}
 
 	@CommandDescription (aliases = "torch", desc = "Place a torch.")

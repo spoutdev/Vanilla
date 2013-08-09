@@ -38,13 +38,13 @@ public abstract class VanillaBiomeGenerator extends BiomeGenerator implements Va
 	private int highestChunkY = 15;
 
 	@Override
-	public void generate(CuboidBlockMaterialBuffer blockData, int chunkX, int chunkY, int chunkZ, World world) {
-		if (chunkY > highestChunkY) {
+	public void generate(CuboidBlockMaterialBuffer blockData, World world) {
+		if (blockData.getBaseChunkY() > highestChunkY) {
 			blockData.flood(VanillaMaterials.AIR);
-		} else if (chunkY < lowestChunkY) {
+		} else if (blockData.getBaseChunkY() < lowestChunkY) {
 			blockData.flood(VanillaMaterials.BEDROCK);
 		} else {
-			super.generate(blockData, chunkX, chunkY, chunkZ, world);
+			super.generate(blockData, world);
 		}
 	}
 

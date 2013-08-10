@@ -26,29 +26,12 @@
  */
 package org.spout.vanilla.material.item.misc;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.event.player.Action;
-import org.spout.api.inventory.Slot;
-
 import org.spout.vanilla.component.entity.substance.projectile.EnderPearl;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.item.ThrowItem;
-import org.spout.vanilla.util.PlayerUtil;
+import org.spout.vanilla.material.item.ThrownItem;
 
-public class EnderPearlItem extends ThrowItem {
+public class EnderPearlItem extends ThrownItem {
 	public EnderPearlItem(String name, int id) {
 		super(name, id, EnderPearl.class);
 		this.setMaxStackSize(16);
-	}
-
-	@Override
-	public void onInteract(Entity entity, Action type) {
-		super.onInteract(entity, type, 10f);
-		if (type == Action.RIGHT_CLICK) {
-			Slot slot = PlayerUtil.getHeldSlot(entity);
-			if (!PlayerUtil.isCostSuppressed(entity) && slot != null && slot.get() != null && VanillaMaterials.ENDER_PEARL.equals(slot.get().getMaterial())) {
-				slot.addAmount(-1);
-			}
-		}
 	}
 }

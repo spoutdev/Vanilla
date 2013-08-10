@@ -29,13 +29,16 @@ package org.spout.vanilla.component.entity.substance.vehicle.minecart;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.spout.api.component.entity.PhysicsComponent;
 import org.spout.api.event.entity.EntityInteractEvent;
 import org.spout.api.event.player.PlayerInteractEntityEvent;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockSnapshot;
+import org.spout.api.math.Vector3;
 import org.spout.api.util.Parameter;
 
+import org.spout.physics.collision.shape.BoxShape;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.component.entity.substance.Substance;
@@ -53,6 +56,8 @@ public abstract class MinecartBase extends Substance {
 		if (getAttachedCount() == 1) {
 			getOwner().add(DeathDrops.class).addDrop(new ItemStack(VanillaMaterials.MINECART, 1));
 		}
+		PhysicsComponent physics = getOwner().getPhysics();
+		physics.activate(1f, new BoxShape(0.98f, 0.49f, 0.7f), false, true);
 	}
 
 	@Override
@@ -77,6 +82,12 @@ public abstract class MinecartBase extends Substance {
 					}
 			}
 		}
+	}
+
+	@Override
+	public void onTick(float dt) {
+		super.onTick(dt);
+		getOwner().getPhysics().setMovementVelocity(new Vector3(0.2, 0.0, 0.0));
 	}
 
 	protected void onDestroy() {

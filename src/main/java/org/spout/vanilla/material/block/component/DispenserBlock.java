@@ -73,7 +73,8 @@ import org.spout.vanilla.material.item.bucket.FullBucket;
 import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.material.item.misc.SpawnEgg;
 import org.spout.vanilla.material.item.potion.PotionItem;
-import org.spout.vanilla.material.item.vehicle.minecart.MinecartItem;
+import org.spout.vanilla.material.item.vehicle.BoatItem;
+import org.spout.vanilla.material.item.vehicle.MinecartItem;
 import org.spout.vanilla.util.PlayerUtil;
 import org.spout.vanilla.util.RedstoneUtil;
 
@@ -140,7 +141,7 @@ public class DispenserBlock extends VanillaBlockMaterial implements Directional,
 			}
 		} else if (item.getMaterial() instanceof SpawnEgg) {
 			if (facingBlock.getMaterial().getShape() != null) {
-				Entity entity = facingBlock.getWorld().createEntity(facingBlock.getPosition(), ((SpawnEgg) item.getMaterial()).getComponent());
+				Entity entity = facingBlock.getWorld().createEntity(facingBlock.getPosition(), ((SpawnEgg) item.getMaterial()).getSpawnedComponent());
 				entity.getPhysics().translate(new Vector3(0.5D, 0.5D, 0.5D));
 				facingBlock.getWorld().spawnEntity(entity);
 				slot.addAmount(-1);
@@ -203,13 +204,12 @@ public class DispenserBlock extends VanillaBlockMaterial implements Directional,
 			}
 		} else if (item.getMaterial() instanceof MinecartItem) {
 			if (facingBlock.getMaterial() instanceof RailBase) {
-				MinecartItem mineItem = (MinecartItem) item.getMaterial();
-				MinecartBase minecart = block.getWorld().createEntity(facingBlock.getPosition(), mineItem.getSpawnedEntity()).add(mineItem.getSpawnedEntity());
-				facingBlock.getWorld().spawnEntity(minecart.getOwner());
+				MinecartItem<?> mineItem = (MinecartItem<?>) item.getMaterial();
+				mineItem.spawnEntity(facingBlock, Vector3.ZERO);
 				slot.addAmount(-1);
 				return true;
 			}
-		} else if (item.getMaterial().equals(VanillaMaterials.BOAT)) {
+		} else if (item.getMaterial() instanceof BoatItem) {
 			Point placePos;
 			if (facingBlock.getMaterial() instanceof Water) {
 				placePos = facingBlock.getPosition().add(.5f, 1f, .5f);
@@ -218,7 +218,7 @@ public class DispenserBlock extends VanillaBlockMaterial implements Directional,
 			} else {
 				return false;
 			}
-			Boat boat = block.getWorld().createEntity(placePos, Boat.class).add(Boat.class);
+			Boat boat = ((BoatItem) item.getMaterial()).spawnEntity(placePos);
 			block.getWorld().spawnEntity(boat.getOwner());
 			slot.addAmount(-1);
 			return true;

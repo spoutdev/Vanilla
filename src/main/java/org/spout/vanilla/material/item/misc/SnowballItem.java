@@ -26,29 +26,12 @@
  */
 package org.spout.vanilla.material.item.misc;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.event.player.Action;
-import org.spout.api.inventory.Slot;
-
 import org.spout.vanilla.component.entity.substance.projectile.Snowball;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.item.ThrowItem;
-import org.spout.vanilla.util.PlayerUtil;
+import org.spout.vanilla.material.item.ThrownItem;
 
-public class SnowballItem extends ThrowItem {
+public class SnowballItem extends ThrownItem {
 	public SnowballItem(String name, int id) {
 		super(name, id, Snowball.class);
 		this.setMaxStackSize(16);
-	}
-
-	@Override
-	public void onInteract(Entity entity, Action type) {
-		super.onInteract(entity, type);
-		if (type == Action.RIGHT_CLICK) {
-			Slot slot = PlayerUtil.getHeldSlot(entity);
-			if (!PlayerUtil.isCostSuppressed(entity) && slot != null && slot.get() != null && VanillaMaterials.SNOWBALL.equals(slot.get().getMaterial())) {
-				slot.addAmount(-1);
-			}
-		}
 	}
 }

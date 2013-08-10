@@ -29,7 +29,7 @@ package org.spout.vanilla.material.item;
 import org.spout.api.component.entity.PhysicsComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.Action;
-import org.spout.api.geo.World;
+import org.spout.api.math.Vector3;
 import org.spout.api.math.VectorMath;
 
 import org.spout.physics.collision.shape.SphereShape;
@@ -37,12 +37,45 @@ import org.spout.physics.collision.shape.SphereShape;
 import org.spout.vanilla.component.entity.substance.Substance;
 import org.spout.vanilla.component.entity.substance.projectile.Projectile;
 
-public abstract class ThrowItem extends VanillaItemMaterial {
-	private final Class<? extends Substance> itemThrown;
+/**
+ * Represents an Item that can be thrown away at a speed by right-click interaction.
+ * After throwing, one count of the selected item is removed from the thrower its selected
+ * slot, if the thrower is not suppressing this cost of shooting the item.
+ */
+public abstract class ThrownItem extends EntitySpawnItem<Substance> {
+	private float launchForce = 250.0f;
 
-	public ThrowItem(String name, int id, Class<? extends Substance> itemThrown) {
+	public ThrownItem(String name, int id, Class<? extends Substance> itemThrown) {
 		super(name, id, null);
-		this.itemThrown = itemThrown;
+		this.setSpawnedComponent(itemThrown);
+	}
+
+	/**
+	 * Gets the force at which Entities are thrown away
+	 * 
+	 * @return launchForce
+	 */
+	public float getLaunchForce() {
+		return this.launchForce;
+	}
+
+	/**
+	 * Sets the force at which Entities are thrown away
+	 * 
+	 * @param launchForce to set to
+	 */
+	public void setLaunchForce(float launchForce) {
+		this.launchForce = launchForce;
+	}
+
+	/**
+	 * Called after an Entity was just spawned and is ready to be thrown
+	 * 
+	 * @param spawnedComponent of the Entity that was spawned
+	 * @param thrower of the Spawned Component
+	 */
+	public void onThrown(Substance spawnedComponent, Entity thrower) {
+		this.handleSelectionRemove(thrower);
 	}
 
 	@Override
@@ -53,15 +86,14 @@ public abstract class ThrowItem extends VanillaItemMaterial {
 	public void onInteract(Entity entity, Action type, float mass) {
 		super.onInteract(entity, type);
 		if (type == Action.RIGHT_CLICK) {
-			World world = entity.getWorld();
-			Substance item = world.createEntity(entity.getPhysics().getPosition().add(0, 1.6f, 0), itemThrown).add(itemThrown);
+			Substance item = this.spawnEntity(entity, new Vector3(0, 1.6f, 0));
 			PhysicsComponent physics = item.getOwner().getPhysics();
 			physics.activate(mass, new SphereShape(1f), false, true);
 			if (item instanceof Projectile) {
 				((Projectile) item).setShooter(entity);
 			}
-			world.spawnEntity(item.getOwner());
-			physics.force(VectorMath.getDirection(entity.getPhysics().getRotation()).multiply(250)); //TODO: Need real parameters
+			physics.force(VectorMath.getDirection(entity.getPhysics().getRotation()).multiply(getLaunchForce()));
+			this.onThrown(item, entity);
 		}
 	}
 }

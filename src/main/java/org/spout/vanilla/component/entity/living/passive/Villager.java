@@ -36,10 +36,13 @@ import org.spout.api.inventory.Container;
 import org.spout.vanilla.component.entity.living.Ageable;
 import org.spout.vanilla.component.entity.living.Passive;
 import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.component.entity.misc.MetadataComponent;
+import org.spout.vanilla.data.Metadata;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.player.CraftingInventory;
 import org.spout.vanilla.inventory.window.Window;
-import org.spout.vanilla.protocol.entity.creature.VillagerEntityProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureType;
 
 /**
  * A component that identifies the entity as a Villager.
@@ -50,15 +53,21 @@ public class Villager extends Ageable implements Container, Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		setEntityProtocol(new VillagerEntityProtocol());
+		setEntityProtocol(new CreatureProtocol(CreatureType.VILLAGER));
 
 		if (getAttachedCount() == 1) {
 			getOwner().add(Health.class).setSpawnHealth(20);
 		}
+
+		// Set default villager type of 5
+		getOwner().getData().put(VanillaData.ENTITY_CATEGORY, (byte) 5);
+
+		// Add metadata for villager type index
+		getOwner().add(MetadataComponent.class).addMeta(Metadata.TYPE_BYTE, 16, VanillaData.ENTITY_CATEGORY);
 	}
 
 	@Override
-	public void onInteract(final EntityInteractEvent event) {
+	public void onInteract(final EntityInteractEvent<?> event) {
 		if (event instanceof PlayerInteractEntityEvent) {
 			final PlayerInteractEntityEvent pie = (PlayerInteractEntityEvent) event;
 			final Player player = (Player) pie.getEntity();
@@ -80,6 +89,6 @@ public class Villager extends Ageable implements Container, Passive {
 	 * @return int
 	 */
 	public int getVillagerTypeID() {
-		return 5; // Generic Villager ID.
+		return getOwner().getData().get(VanillaData.ENTITY_CATEGORY);
 	}
 }

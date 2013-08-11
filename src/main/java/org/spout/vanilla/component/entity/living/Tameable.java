@@ -24,26 +24,44 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.entity.creature;
+package org.spout.vanilla.component.entity.living;
 
-import java.util.List;
+/**
+ * An Entity that may/can be tamed and has an owner after being tamed
+ */
+public interface Tameable {
+	/**
+	 * Gets whether this Entity is tamed
+	 * 
+	 * @return True if tamed, False if not (and wild)
+	 */
+	public boolean isTamed();
 
-import org.spout.api.entity.Entity;
-import org.spout.api.util.Parameter;
+	/**
+	 * Sets whether this Entity is tamed
+	 * 
+	 * @param tamed state to set to
+	 */
+	public void setTamed(boolean tamed);
 
-import org.spout.vanilla.component.entity.misc.Health;
+	/**
+	 * Gets whether this Entity can actually be tamed (right now)
+	 * 
+	 * @return True if it can be tamed, False if not
+	 */
+	public boolean canBeTamed();
 
-public class EnderDragonEntityProtocol extends CreatureProtocol {
-	public static final int HEALTH_INDEX = 16; // The MC metadata index to determine the Dragon's health
+	/**
+	 * Gets the name of the (Player) owner of this Entity
+	 * 
+	 * @return Name of the owner
+	 */
+	public String getOwnerName();
 
-	public EnderDragonEntityProtocol() {
-		super(CreatureType.ENDER_DRAGON);
-	}
-
-	@Override
-	public List<Parameter<?>> getSpawnParameters(Entity entity) {
-		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Float>(Parameter.TYPE_INT, HEALTH_INDEX, entity.add(Health.class).getHealth()));
-		return parameters;
-	}
+	/**
+	 * Sets the name of the (Player) owner of this Entity
+	 * 
+	 * @param owner to set to
+	 */
+	public void setOwnerName(String owner);
 }

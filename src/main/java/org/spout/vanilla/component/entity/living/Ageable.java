@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.component.entity.living;
 
-import org.spout.api.util.Parameter;
-
+import org.spout.vanilla.component.entity.misc.MetadataComponent;
+import org.spout.vanilla.data.Metadata;
 import org.spout.vanilla.data.VanillaData;
 
 public abstract class Ageable extends Living {
@@ -43,6 +43,19 @@ public abstract class Ageable extends Living {
 		} else if (age > 0) {
 			setAge(age - dt);
 		}
+
+		// Add metadata associated with the age in ticks
+		getOwner().add(MetadataComponent.class).addMeta(new Metadata<Integer>(Metadata.TYPE_INT, 12) {
+			@Override
+			public Integer getValue() {
+				return (int) (getAge() * 20.0f);
+			}
+
+			@Override
+			public void setValue(Integer value) {
+				setAge((float) value / 20.0f);
+			}
+		});
 	}
 
 	/**
@@ -61,6 +74,5 @@ public abstract class Ageable extends Living {
 	 */
 	public void setAge(float age) {
 		getData().put(VanillaData.AGE, Math.max(MIN_AGE, Math.min(age, MAX_AGE)));
-		setMetadata(new Parameter<Integer>(Parameter.TYPE_INT, 12, (int) (age * 20)));
 	}
 }

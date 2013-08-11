@@ -24,24 +24,20 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.entity.creature;
+package org.spout.vanilla.component.entity.substance.vehicle.minecart;
 
-import java.util.List;
+import org.spout.api.material.BlockMaterial;
+import org.spout.vanilla.component.entity.substance.vehicle.MinecartBase;
+import org.spout.vanilla.material.VanillaMaterials;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.util.Parameter;
-
-public class ZombieEntityProtocol extends CreatureProtocol {
-	public static final int TYPE_INDEX = 16; // The MC metadata index determining if this zombie was a villager or not
-
-	public ZombieEntityProtocol() {
-		super(CreatureType.ZOMBIE);
+public class RideableMinecart extends MinecartBase {
+	@Override
+	public void onAttached() {
+		super.onAttached();
 	}
 
 	@Override
-	public List<Parameter<?>> getSpawnParameters(Entity entity) {
-		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, TYPE_INDEX, 1));
-		return parameters;
+	public BlockMaterial getDefaultDisplayedBlock() {
+		return VanillaMaterials.AIR;
 	}
 }

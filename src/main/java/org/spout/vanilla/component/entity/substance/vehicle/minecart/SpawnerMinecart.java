@@ -26,20 +26,19 @@
  */
 package org.spout.vanilla.component.entity.substance.vehicle.minecart;
 
+import org.spout.api.material.BlockMaterial;
+import org.spout.vanilla.component.entity.substance.vehicle.MinecartBase;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.entity.object.ObjectType;
-import org.spout.vanilla.protocol.entity.object.vehicle.MinecartObjectEntityProtocol;
 
 public class SpawnerMinecart extends MinecartBase {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		setEntityProtocol(new MinecartObjectEntityProtocol(ObjectType.MINECART));
 		//TODO: Verify proper network/protocol settings
 	}
 
 	@Override
-	public int getMinecraftBlockID() {
-		return VanillaMaterials.MONSTER_SPAWNER.getMinecraftId();
+	public BlockMaterial getDefaultDisplayedBlock() {
+		return VanillaMaterials.MONSTER_SPAWNER;
 	}
 }

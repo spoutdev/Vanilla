@@ -75,7 +75,6 @@ public class Burn extends VanillaEntityComponent {
 			setFireTick(0f);
 			setFireHurting(false);
 		}
-		living.sendMetaData();
 		if (isFireHurting()) {
 			if (internalTimer >= 1.0f) {
 				health.damage(1, new NullDamageCause(DamageCause.DamageType.BURN));
@@ -83,9 +82,6 @@ public class Burn extends VanillaEntityComponent {
 			}
 		}
 		setFireTick(getFireTick() - dt);
-		if (getFireTick() <= 0) {
-			living.sendMetaData();
-		}
 		internalTimer += dt;
 	}
 
@@ -125,7 +121,6 @@ public class Burn extends VanillaEntityComponent {
 	public void setOnFire(float time, boolean hurt) {
 		setFireTick(time);
 		setFireHurting(hurt);
-		living.sendMetaData();
 	}
 
 	/**

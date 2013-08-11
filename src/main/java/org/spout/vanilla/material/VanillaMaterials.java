@@ -38,7 +38,7 @@ import org.spout.api.material.MaterialRegistry;
 import org.spout.api.util.map.concurrent.AtomicShortArray;
 
 import org.spout.vanilla.component.entity.substance.vehicle.minecart.HopperMinecart;
-import org.spout.vanilla.component.entity.substance.vehicle.minecart.Minecart;
+import org.spout.vanilla.component.entity.substance.vehicle.minecart.RideableMinecart;
 import org.spout.vanilla.component.entity.substance.vehicle.minecart.PoweredMinecart;
 import org.spout.vanilla.component.entity.substance.vehicle.minecart.StorageMinecart;
 import org.spout.vanilla.component.entity.substance.vehicle.minecart.TNTMinecart;
@@ -526,7 +526,7 @@ public final class VanillaMaterials {
 	public static final LavaBucket LAVA_BUCKET = new LavaBucket("Lava Bucket", 327);
 	public static final VanillaItemMaterial MILK_BUCKET = new VanillaItemMaterial("Milk", 335, null);
 	// == Minecarts ==
-	public static final MinecartItem<Minecart> MINECART = new MinecartItem<>("Minecart", 328, Minecart.class);
+	public static final MinecartItem<RideableMinecart> MINECART = new MinecartItem<>("Minecart", 328, RideableMinecart.class);
 	public static final MinecartItem<StorageMinecart> MINECART_CHEST = new MinecartItem<>("Minecart with Chest", 342, StorageMinecart.class);
 	public static final MinecartItem<PoweredMinecart> MINECART_FURNACE = new MinecartItem<>("Minecart with Furnace", 343, PoweredMinecart.class);
 	public static final MinecartItem<TNTMinecart> MINECART_TNT = new MinecartItem<>("Minecart with TNT", 407, TNTMinecart.class);

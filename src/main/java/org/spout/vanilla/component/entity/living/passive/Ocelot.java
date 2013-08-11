@@ -28,38 +28,76 @@ package org.spout.vanilla.component.entity.living.passive;
 
 import org.spout.vanilla.component.entity.living.Animal;
 import org.spout.vanilla.component.entity.living.Passive;
+import org.spout.vanilla.component.entity.living.Tameable;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.component.entity.misc.MetadataComponent;
+import org.spout.vanilla.data.Metadata;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.protocol.entity.creature.OcelotEntityProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureType;
 
 /**
  * A component that identifies the entity as a Ocelot.
  */
-public class Ocelot extends Animal implements Passive {
+public class Ocelot extends Animal implements Passive, Tameable {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		setEntityProtocol(new OcelotEntityProtocol());
+		setEntityProtocol(new CreatureProtocol(CreatureType.OCELOT));
 
 		if (getAttachedCount() == 1) {
 			getOwner().add(Health.class).setSpawnHealth(10);
 		}
 		getOwner().add(DeathDrops.class).addXpDrop((short) (getRandom().nextInt(3) + 1));
+
+		// Add ocelot metadata
+		MetadataComponent metadata = getOwner().add(MetadataComponent.class);
+		metadata.addMeta(new Metadata<Byte>(Metadata.TYPE_BYTE, 16) {
+			@Override
+			public Byte getValue() {
+				byte data = 0;
+				if (isSitting()) {
+					data |= 0x01;
+				}
+				if (isTamed()) {
+					data |= 0x04;
+				}
+				return data;
+			}
+
+			@Override
+			public void setValue(Byte value) {
+				int data = value.intValue();
+				setSitting((data & 0x01) == 0x01);
+				setTamed((data & 0x04) == 0x04);
+			}
+		});
+		metadata.addMeta(Metadata.TYPE_STRING, 17, VanillaData.OWNER);
+		metadata.addMeta(Metadata.TYPE_BYTE, 18, VanillaData.OCELOT_SKIN);
 	}
 
+	@Override
+	public boolean canBeTamed() {
+		return true;
+	}
+
+	@Override
 	public boolean isTamed() {
 		return getOwner().getData().get(VanillaData.TAMED);
 	}
 
+	@Override
 	public void setTamed(boolean tamed) {
 		getOwner().getData().put(VanillaData.TAMED, tamed);
 	}
 
+	@Override
 	public String getOwnerName() {
 		return getOwner().getData().get(VanillaData.OWNER);
 	}
 
+	@Override
 	public void setOwnerName(String owner) {
 		if (isTamed()) {
 			getOwner().getData().put(VanillaData.OWNER, owner);

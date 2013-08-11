@@ -39,8 +39,12 @@ import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.misc.EntityItemCollector;
 import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.component.entity.misc.MetadataComponent;
+import org.spout.vanilla.data.Metadata;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.entity.creature.SkeletonEntityProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureType;
 
 /**
  * A component that identifies the entity as a Skeleton.
@@ -51,7 +55,7 @@ public class Skeleton extends Living implements Hostile {
 		super.onAttached();
 		Random random = getRandom();
 
-		setEntityProtocol(new SkeletonEntityProtocol());
+		setEntityProtocol(new CreatureProtocol(CreatureType.SKELETON));
 		getOwner().add(EntityInventory.class);
 		getOwner().add(EntityItemCollector.class);
 
@@ -70,6 +74,14 @@ public class Skeleton extends Living implements Hostile {
 			getOwner().add(Health.class).setSpawnHealth(20);
 		}
 
-		//TODO: There's 2 kind of damage for Skele's : Sword & Bow
+		// Default category of 0
+		getOwner().getData().put(VanillaData.ENTITY_CATEGORY, (byte) 0);
+
+		// Add metadata for Entity category
+		getOwner().add(MetadataComponent.class).addMeta(Metadata.TYPE_BYTE, 13, VanillaData.ENTITY_CATEGORY);
+	}
+
+	public byte getTypeId() {
+		return getOwner().getData().get(VanillaData.ENTITY_CATEGORY);
 	}
 }

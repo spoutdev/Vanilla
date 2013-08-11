@@ -27,24 +27,23 @@
 package org.spout.vanilla.component.entity.substance.vehicle.minecart;
 
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.component.entity.misc.DeathDrops;
+import org.spout.vanilla.component.entity.substance.vehicle.MinecartBase;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.entity.object.ObjectType;
-import org.spout.vanilla.protocol.entity.object.vehicle.MinecartObjectEntityProtocol;
 
-public class TNTMinecart extends Minecart {
+public class TNTMinecart extends MinecartBase {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		setEntityProtocol(new MinecartObjectEntityProtocol(ObjectType.MINECART));
 		if (getAttachedCount() == 1) {
 			getOwner().add(DeathDrops.class).addDrop(new ItemStack(VanillaMaterials.TNT, 1));
 		}
 	}
 
 	@Override
-	public int getMinecraftBlockID() {
-		return VanillaMaterials.TNT.getMinecraftId();
+	public BlockMaterial getDefaultDisplayedBlock() {
+		return VanillaMaterials.TNT;
 	}
 }

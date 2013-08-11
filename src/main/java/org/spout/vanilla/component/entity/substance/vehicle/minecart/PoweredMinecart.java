@@ -34,14 +34,14 @@ import org.spout.api.event.entity.EntityInteractEvent;
 import org.spout.api.event.player.PlayerInteractEntityEvent;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.entity.misc.DeathDrops;
+import org.spout.vanilla.component.entity.substance.vehicle.MinecartBase;
 import org.spout.vanilla.event.entity.network.EntityMetaChangeEvent;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.entity.object.ObjectType;
-import org.spout.vanilla.protocol.entity.object.vehicle.MinecartObjectEntityProtocol;
 import org.spout.vanilla.util.PlayerUtil;
 
 public class PoweredMinecart extends MinecartBase {
@@ -51,7 +51,6 @@ public class PoweredMinecart extends MinecartBase {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		setEntityProtocol(new MinecartObjectEntityProtocol(ObjectType.MINECART));
 		if (getAttachedCount() == 1) {
 			getOwner().add(DeathDrops.class).addDrop(new ItemStack(VanillaMaterials.FURNACE, 1));
 		}
@@ -84,7 +83,7 @@ public class PoweredMinecart extends MinecartBase {
 	}
 
 	@Override
-	public void onInteract(final EntityInteractEvent event) {
+	public void onInteract(final EntityInteractEvent<?> event) {
 		if (event instanceof PlayerInteractEntityEvent) {
 			final PlayerInteractEntityEvent pie = (PlayerInteractEntityEvent) event;
 			final Player player = (Player) pie.getEntity();
@@ -110,7 +109,7 @@ public class PoweredMinecart extends MinecartBase {
 	}
 
 	@Override
-	public int getMinecraftBlockID() {
-		return VanillaMaterials.FURNACE.getMinecraftId();
+	public BlockMaterial getDefaultDisplayedBlock() {
+		return VanillaMaterials.FURNACE;
 	}
 }

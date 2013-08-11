@@ -33,6 +33,7 @@ import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyArray;
 import org.spout.api.map.DefaultedKeyFactory;
 import org.spout.api.map.DefaultedKeyImpl;
+import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
@@ -123,6 +124,7 @@ public class VanillaData {
 	public static final DefaultedKey<Float> FIRE_TICK = new DefaultedKeyImpl<Float>("is_on_fire", 0.0f);
 	public static final DefaultedKey<Boolean> FIRE_HURT = new DefaultedKeyImpl<Boolean>("fire_hurt", false);
 	public static final DefaultedKey<Boolean> IS_CUSTOM_NAME_VISIBLE = new DefaultedKeyImpl<Boolean>("is_custom_name_visible", false);
+	public static final DefaultedKey<Float> DURABILITY = new DefaultedKeyImpl<Float>("durability", 0.0f);
 	//Human-specific
 	public static final DefaultedKey<Boolean> IS_SPRINTING = new DefaultedKeyImpl<Boolean>("is_sprinting", false);
 	public static final DefaultedKey<Boolean> IS_SNEAKING = new DefaultedKeyImpl<Boolean>("is_sneaking", false);
@@ -135,6 +137,7 @@ public class VanillaData {
 	public static final DefaultedKey<Byte> ARROWS_IN_BODY = new DefaultedKeyImpl<Byte>("arrows_in_body", (byte) 0);
 	//Creature-specific
 	public static final DefaultedKey<Integer> LINE_OF_SIGHT = new DefaultedKeyImpl<Integer>("line_of_sight", 1);
+	public static final DefaultedKey<Byte> ENTITY_CATEGORY = new DefaultedKeyImpl<Byte>("category", (byte) 0);
 	//Item-specific
 	public static final DefaultedKey<Number> UNCOLLECTABLE_TICKS = new DefaultedKeyImpl<Number>("uncollectable_ticks", (long) 0);
 	// Arrow-specific
@@ -184,6 +187,12 @@ public class VanillaData {
 	// Horse
 	public static final DefaultedKey<Integer> TEMPER = new DefaultedKeyImpl<Integer>("temper", 5);
 	public static final DefaultedKey<Integer> VARIANT = new DefaultedKeyImpl<Integer>("variant", 0);
+	// Minecart Specific
+	public static final DefaultedKey<Integer> MINECART_SHAKE_DIR = new DefaultedKeyImpl<Integer>("shakingDirection", 1);
+	public static final DefaultedKey<Integer> MINECART_SHAKE_FORCE = new DefaultedKeyImpl<Integer>("shakingForce", 0);
+	public static final DefaultedKey<Short> MINECART_BLOCK_ID = new DefaultedKeyImpl<Short>("displayblockid", (short) 0);
+	public static final DefaultedKey<Short> MINECART_BLOCK_DATA = new DefaultedKeyImpl<Short>("displayblockdata", (short) 0);
+	public static final DefaultedKey<Integer> MINECART_BLOCK_OFFSET = new DefaultedKeyImpl<Integer>("displayblockoffset", 9);
 	//Sky specific
 	public static final DefaultedKey<Long> MAX_TIME = new DefaultedKeyImpl<Long>("max_time", 24000L);
 	public static final DefaultedKey<Long> TIME_RATE = new DefaultedKeyImpl<Long>("time_rate", 1L);

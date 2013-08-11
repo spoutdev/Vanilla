@@ -35,7 +35,6 @@ import org.spout.api.protocol.reposition.RepositionManager;
 
 import org.spout.vanilla.component.entity.substance.projectile.Potion;
 import org.spout.vanilla.protocol.entity.BasicEntityProtocol;
-import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityObjectMessage;
 
 public class PotionEntityProtocol extends BasicEntityProtocol {
@@ -45,10 +44,9 @@ public class PotionEntityProtocol extends BasicEntityProtocol {
 
 	@Override
 	public List<Message> getSpawnMessages(Entity entity, RepositionManager rm) {
+		List<Message> messages = new ArrayList<>();
 		Potion potion = entity.add(Potion.class);
-		List<Message> messages = new ArrayList<Message>();
 		messages.add(new EntityObjectMessage(entity, (byte) typeId, potion.getPotion().getData(), rm));
-		messages.add(new EntityMetadataMessage(entity.getId(), getSpawnParameters(entity)));
 		return messages;
 	}
 }

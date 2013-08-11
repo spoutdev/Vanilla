@@ -46,12 +46,12 @@ import org.spout.vanilla.component.entity.substance.projectile.Potion;
 import org.spout.vanilla.component.entity.substance.projectile.Snowball;
 import org.spout.vanilla.component.entity.substance.projectile.XPBottle;
 import org.spout.vanilla.component.entity.substance.vehicle.Boat;
-import org.spout.vanilla.component.entity.substance.vehicle.minecart.Minecart;
+import org.spout.vanilla.component.entity.substance.vehicle.minecart.RideableMinecart;
 
 public enum ObjectType {
 	BOAT(1, Boat.class),
 	ITEM(2, Item.class),
-	MINECART(10, Minecart.class),
+	MINECART(10, RideableMinecart.class),
 	PRIMED_TNT(50, Tnt.class),
 	ENDER_CRYSTAL(51, EnderCrystal.class),
 	ARROW(60, Arrow.class),

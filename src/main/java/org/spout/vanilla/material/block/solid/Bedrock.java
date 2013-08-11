@@ -36,7 +36,7 @@ import org.spout.vanilla.material.block.Solid;
 public class Bedrock extends Solid {
 	public Bedrock(String name, int id) {
 		super(name, id, VanillaMaterialModels.BEDROCK);
-		this.setResistance(6000000.0F).setHardness(-1.0F);
+		this.setResistance(18000000.0F).setHardness(-1.0F);
 		getDrops().DEFAULT.clear();
 	}
 

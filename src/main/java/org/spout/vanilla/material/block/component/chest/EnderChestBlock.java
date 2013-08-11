@@ -32,5 +32,6 @@ import org.spout.vanilla.data.resources.VanillaMaterialModels;
 public class EnderChestBlock extends AbstractChestBlock {
 	public EnderChestBlock(String name, int id) {
 		super(name, id, EnderChest.class, VanillaMaterialModels.ENDER_CHEST);
+		this.setResistance(3000.0F);
 	}
 }

@@ -50,7 +50,7 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Openable, Reds
 	public TrapDoor(String name, int id) {
 		//TODO: Box Shape
 		super(name, id, VanillaMaterialModels.TRAP_DOOR, null);
-		this.setAttachable(BlockFaces.NESW).setHardness(3.0F).setResistance(5.0F).setTransparent();
+		this.setAttachable(BlockFaces.NESW).setHardness(3.0F).setResistance(15.0F).setTransparent();
 	}
 
 	@Override

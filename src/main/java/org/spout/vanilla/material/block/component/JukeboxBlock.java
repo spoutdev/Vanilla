@@ -46,7 +46,7 @@ public class JukeboxBlock extends VanillaBlockMaterial implements Fuel {
 
 	public JukeboxBlock(String name, int id) {
 		super(name, id, VanillaMaterialModels.JUKEBOX, new BoxShape(1, 1, 1), Jukebox.class);
-		this.setHardness(2.0F).setResistance(10.0F);
+		this.setHardness(2.0F).setResistance(30.0F);
 	}
 
 	@Override

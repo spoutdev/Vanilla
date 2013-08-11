@@ -32,5 +32,6 @@ import org.spout.vanilla.material.block.Solid;
 public class Sponge extends Solid {
 	public Sponge(String name, int id) {
 		super(name, id, VanillaMaterialModels.SPONGE);
+		this.setResistance(3.0F);
 	}
 }

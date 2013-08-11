@@ -56,7 +56,7 @@ public class PistonBlock extends VanillaBlockMaterial implements Directional, Re
 	public PistonBlock(String name, int id, boolean sticky) {
 		super(name, id, null, new BoxShape(1, 1, 1));
 		this.sticky = sticky;
-		this.setHardness(0.5F).setResistance(0.8F).setTransparent();
+		this.setHardness(0.5F).setResistance(2.5F).setTransparent();
 	}
 
 	@Override

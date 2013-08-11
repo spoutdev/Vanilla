@@ -52,7 +52,7 @@ public class FurnaceBlock extends VanillaBlockMaterial implements Directional {
 	public FurnaceBlock(String name, int id, FurnaceBlock parent, boolean burning, String model) {
 		super(name, id, BURNING_FLAG, parent, model, new BoxShape(1, 1, 1), Furnace.class);
 		this.burning = burning;
-		this.setHardness(3.5F).setResistance(5.8F);
+		this.setHardness(3.5F).setResistance(17.5F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 

@@ -41,7 +41,7 @@ import org.spout.vanilla.material.block.Directional;
 public class PistonExtension extends VanillaBlockMaterial implements Directional {
 	public PistonExtension(String name, int id) {
 		super(name, id, null, new BoxShape(1, 1, 1));
-		this.setHardness(0.5F).setResistance(0.8F).setTransparent();
+		this.setHardness(0.5F).setResistance(2.5F).setTransparent();
 	}
 
 	@Override

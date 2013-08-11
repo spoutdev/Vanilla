@@ -32,7 +32,7 @@ import org.spout.vanilla.material.block.Stairs;
 public class BrickStairs extends Stairs {
 	public BrickStairs(String name, int id) {
 		super(name, id, null);
-		this.setHardness(5.0F).setResistance(8.3F);
+		this.setHardness(5.0F).setResistance(30.0F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 }

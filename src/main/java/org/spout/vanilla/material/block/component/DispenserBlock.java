@@ -83,7 +83,7 @@ public class DispenserBlock extends VanillaBlockMaterial implements Directional,
 
 	public DispenserBlock(String name, int id) {
 		super(name, id, VanillaMaterialModels.DISPENSER, new BoxShape(1, 1, 1), Dispenser.class);
-		this.setHardness(3.5F).setResistance(5.8F);
+		this.setHardness(3.5F).setResistance(17.5F);
 	}
 
 	@Override

@@ -36,7 +36,7 @@ import org.spout.vanilla.material.block.Ore;
 public class NetherQuartzOre extends Ore implements InitializableMaterial {
 	public NetherQuartzOre(String name, int id) {
 		super(name, id, VanillaMaterialModels.NETHER_QUARTZ_ORE);
-		this.setHardness(3.0F).setResistance(5.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
+		this.setHardness(3.0F).setResistance(15.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
 	}
 
 	@Override

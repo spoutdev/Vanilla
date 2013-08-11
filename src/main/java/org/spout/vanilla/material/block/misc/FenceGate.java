@@ -51,7 +51,7 @@ public class FenceGate extends VanillaBlockMaterial implements Openable, Redston
 	public FenceGate(String name, int id) {
 		//TODO: Box Shape
 		super(name, id, VanillaMaterialModels.FENCE_GATE, null);
-		this.setHardness(2.0F).setResistance(3.0F).setTransparent();
+		this.setHardness(2.0F).setResistance(15.0F).setTransparent();
 	}
 
 	@Override

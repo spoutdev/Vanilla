@@ -32,7 +32,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 public class MelonStem extends Stem implements InitializableMaterial {
 	public MelonStem(String name, int id) {
 		super(name, id);
-		this.setHardness(0.3F);
+		this.setHardness(0.3F).setResistance(0.0F);
 	}
 
 	@Override

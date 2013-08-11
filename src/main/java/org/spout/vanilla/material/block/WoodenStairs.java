@@ -39,7 +39,7 @@ public class WoodenStairs extends Stairs implements Fuel, Burnable {
 
 	public WoodenStairs(String name, int id) {
 		super(name, id, null);
-		this.setHardness(2.0F).setResistance(10.0F);
+		this.setHardness(2.0F).setResistance(15.0F);
 	}
 
 	@Override

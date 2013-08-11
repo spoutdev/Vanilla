@@ -32,7 +32,7 @@ import org.spout.vanilla.material.block.Stairs;
 public class QuartzStairs extends Stairs {
 	public QuartzStairs(String name, int id) {
 		super(name, id, null);
-		this.setHardness(2.0F).setResistance(10.0F);
+		this.setHardness(2.0F).setResistance(4.0F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 }

@@ -47,7 +47,7 @@ public class LilyPad extends GroundAttachable {
 	public LilyPad(String name, int id) {
 		//TODO: Box Shape
 		super(name, id, null, null);
-		this.setHardness(0.0F).setResistance(0.3F).setTransparent();
+		this.setHardness(0.0F).setResistance(0.0F).setTransparent();
 	}
 
 	@Override

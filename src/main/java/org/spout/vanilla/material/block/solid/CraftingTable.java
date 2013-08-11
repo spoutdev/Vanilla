@@ -41,7 +41,7 @@ import org.spout.vanilla.material.block.Solid;
 public class CraftingTable extends Solid {
 	public CraftingTable(String name, int id) {
 		super(name, id, VanillaMaterialModels.CRAFTING_TABLE);
-		this.setHardness(4.2F);
+		this.setHardness(4.2F).setResistance(12.5F);
 	}
 
 	@Override

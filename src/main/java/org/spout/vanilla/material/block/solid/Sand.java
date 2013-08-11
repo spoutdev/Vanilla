@@ -41,7 +41,7 @@ import org.spout.vanilla.material.block.component.FurnaceBlock;
 public class Sand extends SolidMoving implements TimedCraftable {
 	public Sand(String name, int id) {
 		super(name, id, VanillaMaterialModels.SAND);
-		this.setHardness(0.5F).setResistance(0.8F).setStepSound(SoundEffects.STEP_SAND);
+		this.setHardness(0.5F).setResistance(2.5F).setStepSound(SoundEffects.STEP_SAND);
 		this.addMiningType(ToolType.SPADE);
 	}
 

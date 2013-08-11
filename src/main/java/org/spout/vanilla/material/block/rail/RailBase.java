@@ -42,7 +42,7 @@ import org.spout.vanilla.util.MinecartTrackLogic;
 public abstract class RailBase extends GroundAttachable {
 	public RailBase(String name, int id) {
 		super(name, id, null, new BoxShape(1f, 0.125f, 1.0f));
-		this.setLiquidObstacle(false).setHardness(0.7F).setResistance(1.2F).setTransparent();
+		this.setLiquidObstacle(false).setHardness(0.7F).setResistance(3.5F).setTransparent();
 	}
 
 	/**

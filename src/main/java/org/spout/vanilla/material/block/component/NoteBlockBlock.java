@@ -45,7 +45,7 @@ public class NoteBlockBlock extends VanillaBlockMaterial implements Fuel, Redsto
 
 	public NoteBlockBlock(String name, int id) {
 		super(name, id, VanillaMaterialModels.NOTE_BLOCK, new BoxShape(1, 1, 1), NoteBlock.class);
-		this.setHardness(0.8F).setResistance(1.3F);
+		this.setHardness(0.8F).setResistance(4.0F);
 	}
 
 	@Override

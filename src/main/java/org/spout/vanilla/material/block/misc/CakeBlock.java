@@ -38,7 +38,7 @@ import org.spout.vanilla.material.block.Solid;
 public class CakeBlock extends Solid {
 	public CakeBlock(String name, int id) {
 		super(name, id, VanillaMaterialModels.CAKE_BLOCK);
-		this.setHardness(0.5F).setResistance(0.8F).setTransparent();
+		this.setHardness(0.5F).setResistance(2.5F).setTransparent();
 		this.getDrops().clear();
 	}
 

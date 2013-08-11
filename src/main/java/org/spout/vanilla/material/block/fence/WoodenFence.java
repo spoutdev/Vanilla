@@ -41,7 +41,7 @@ public class WoodenFence extends Fence implements Fuel, Burnable {
 
 	public WoodenFence(String name, int id) {
 		super(name, id, VanillaMaterialModels.WOODEN_FENCE);
-		this.setResistance(5.0F);
+		this.setResistance(15.0F);
 	}
 
 	@Override

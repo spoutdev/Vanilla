@@ -42,7 +42,7 @@ import org.spout.vanilla.data.resources.VanillaMaterialModels;
 public class ChestBlock extends AbstractChestBlock {
 	public ChestBlock(String name, int id) {
 		super(name, id, Chest.class, VanillaMaterialModels.CHEST);
-		this.setHardness(2.5F).setResistance(4.2F).setTransparent();
+		this.setHardness(2.5F).setResistance(12.5F).setTransparent();
 	}
 
 	/**

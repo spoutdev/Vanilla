@@ -32,14 +32,14 @@ import org.spout.api.event.player.PlayerInteractEntityEvent;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyFactory;
+import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
+import org.spout.vanilla.component.entity.substance.vehicle.MinecartBase;
 import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.inventory.window.block.chest.ChestWindow;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.entity.object.ObjectType;
-import org.spout.vanilla.protocol.entity.object.vehicle.MinecartObjectEntityProtocol;
 
 public class StorageMinecart extends MinecartBase {
 	public static final DefaultedKey<ChestInventory> CHEST_INVENTORY = new DefaultedKeyFactory<ChestInventory>("chest_inventory", ChestInventory.class);
@@ -47,7 +47,6 @@ public class StorageMinecart extends MinecartBase {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		setEntityProtocol(new MinecartObjectEntityProtocol(ObjectType.MINECART));
 		if (getAttachedCount() == 1) {
 			getOwner().add(DeathDrops.class).addDrop(new ItemStack(VanillaMaterials.CHEST, 1));
 		}
@@ -58,7 +57,7 @@ public class StorageMinecart extends MinecartBase {
 	}
 
 	@Override
-	public void onInteract(final EntityInteractEvent event) {
+	public void onInteract(final EntityInteractEvent<?> event) {
 		if (event instanceof PlayerInteractEntityEvent) {
 			final PlayerInteractEntityEvent pie = (PlayerInteractEntityEvent) event;
 			final Player player = (Player) pie.getEntity();
@@ -81,7 +80,7 @@ public class StorageMinecart extends MinecartBase {
 	}
 
 	@Override
-	public int getMinecraftBlockID() {
-		return VanillaMaterials.CHEST.getMinecraftId();
+	public BlockMaterial getDefaultDisplayedBlock() {
+		return VanillaMaterials.CHEST;
 	}
 }

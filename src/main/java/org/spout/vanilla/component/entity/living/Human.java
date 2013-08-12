@@ -40,15 +40,16 @@ import org.spout.api.inventory.Slot;
 import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector3;
 import org.spout.api.math.VectorMath;
-import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.misc.Digging;
 import org.spout.vanilla.component.entity.misc.EntityHead;
 import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.component.entity.misc.MetadataComponent;
 import org.spout.vanilla.component.entity.misc.PlayerItemCollector;
 import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.data.Metadata;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.ViewDistance;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
@@ -81,6 +82,9 @@ public class Human extends Living {
 			textModel.setTranslation(new Vector3(0, 3f, 0));
 		}
 		//holder.getPhysics().activate(1, new BoxShape(1f, 2.3f, 1f), false, true);
+
+		// Add metadata associated with the amount of arrows attached to the body
+		holder.add(MetadataComponent.class).addMeta(Metadata.TYPE_BYTE, 10, VanillaData.ARROWS_IN_BODY);
 	}
 
 	public byte getArrowsInBody() {
@@ -89,7 +93,6 @@ public class Human extends Living {
 
 	public void setArrowsInBody(byte amount) {
 		getData().put(VanillaData.ARROWS_IN_BODY, amount);
-		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 10, amount));
 	}
 
 	public ViewDistance getViewDistance() {
@@ -138,7 +141,6 @@ public class Human extends Living {
 
 	public void setSprinting(boolean isSprinting) {
 		getOwner().getData().put(VanillaData.IS_SPRINTING, isSprinting);
-		sendMetaData();
 	}
 
 	public boolean isFalling() {

@@ -26,12 +26,6 @@
  */
 package org.spout.vanilla.protocol.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.spout.api.entity.Entity;
-import org.spout.api.util.Parameter;
-
 public abstract class BasicEntityProtocol extends VanillaEntityProtocol {
 	protected final int typeId;
 
@@ -41,9 +35,5 @@ public abstract class BasicEntityProtocol extends VanillaEntityProtocol {
 
 	public int getTypeId() {
 		return typeId;
-	}
-
-	public List<Parameter<?>> getSpawnParameters(Entity entity) {
-		return new ArrayList<Parameter<?>>();
 	}
 }

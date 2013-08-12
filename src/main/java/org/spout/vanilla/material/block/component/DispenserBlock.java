@@ -54,7 +54,7 @@ import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.component.entity.substance.Tnt;
 import org.spout.vanilla.component.entity.substance.projectile.Arrow;
 import org.spout.vanilla.component.entity.substance.vehicle.Boat;
-import org.spout.vanilla.component.entity.substance.vehicle.minecart.MinecartBase;
+import org.spout.vanilla.component.entity.substance.vehicle.MinecartBase;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.data.effect.Effect;
 import org.spout.vanilla.data.effect.store.GeneralEffects;

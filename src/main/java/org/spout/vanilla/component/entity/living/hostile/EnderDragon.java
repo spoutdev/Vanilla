@@ -26,13 +26,18 @@
  */
 package org.spout.vanilla.component.entity.living.hostile;
 
+import org.spout.api.util.Parameter;
 import org.spout.vanilla.component.entity.living.Hostile;
 import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.misc.Damage;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.component.entity.misc.MetadataComponent;
 import org.spout.vanilla.data.Difficulty;
-import org.spout.vanilla.protocol.entity.creature.EnderDragonEntityProtocol;
+import org.spout.vanilla.data.Metadata;
+import org.spout.vanilla.event.cause.HealthChangeCause;
+import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureType;
 
 /**
  * A component that identifies the entity as an EnderDragon.
@@ -41,7 +46,7 @@ public class EnderDragon extends Living implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		setEntityProtocol(new EnderDragonEntityProtocol());
+		setEntityProtocol(new CreatureProtocol(CreatureType.ENDER_DRAGON));
 		if (getAttachedCount() == 1) {
 			getOwner().add(Health.class).setSpawnHealth(200);
 		}
@@ -51,5 +56,18 @@ public class EnderDragon extends Living implements Hostile {
 		damage.getDamageLevel(Difficulty.NORMAL).setAmount(5);
 		damage.getDamageLevel(Difficulty.HARD).setAmount(7);
 		damage.getDamageLevel(Difficulty.HARDCORE).setAmount(damage.getDamageLevel(Difficulty.HARD).getAmount());
+
+		// Add metadata for Enderdragon health
+		getOwner().add(MetadataComponent.class).addMeta(new Metadata<Float>(Parameter.TYPE_FLOAT, 16) {
+			@Override
+			public Float getValue() {
+				return getOwner().add(Health.class).getHealth();
+			}
+
+			@Override
+			public void setValue(Float value) {
+				getOwner().add(Health.class).setHealth(value, HealthChangeCause.UNKNOWN);
+			}
+		});
 	}
 }

@@ -27,7 +27,6 @@
 package org.spout.vanilla.component.entity.living.passive;
 
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.ai.action.FollowMaterialHolderAction;
 import org.spout.vanilla.ai.goal.FollowMaterialHolderGoal;
@@ -35,9 +34,11 @@ import org.spout.vanilla.ai.sensor.NearbyMaterialHolderSensor;
 import org.spout.vanilla.component.entity.living.Animal;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.component.entity.misc.MetadataComponent;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.entity.creature.PigEntityProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureType;
 
 /**
  * A component that identifies the entity as a Pig.
@@ -46,7 +47,7 @@ public class Pig extends Animal {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		setEntityProtocol(new PigEntityProtocol());
+		setEntityProtocol(new CreatureProtocol(CreatureType.PIG));
 		DeathDrops dropComponent = getOwner().add(DeathDrops.class);
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.RAW_PORKCHOP, getRandom().nextInt(2) + 1));
 		dropComponent.addXpDrop((short) (getRandom().nextInt(3) + 1));
@@ -59,6 +60,9 @@ public class Pig extends Animal {
 		getAI().registerSensor(materialHolderSensor);
 		getAI().registerGoal(new FollowMaterialHolderGoal(getAI()));
 		getAI().registerAction(new FollowMaterialHolderAction(getAI()));
+
+		// Add metadata for saddled state
+		getOwner().add(MetadataComponent.class).addBoolMeta(16, VanillaData.SADDLED);
 	}
 
 	public boolean isSaddled() {
@@ -67,6 +71,5 @@ public class Pig extends Animal {
 
 	public void setSaddled(boolean saddled) {
 		getOwner().getData().put(VanillaData.SADDLED, saddled);
-		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, saddled ? (byte) 1 : 0));
 	}
 }

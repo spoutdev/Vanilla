@@ -46,10 +46,10 @@ import org.spout.vanilla.component.entity.living.hostile.Spider;
 import org.spout.vanilla.component.entity.living.hostile.Witch;
 import org.spout.vanilla.component.entity.living.hostile.Wither;
 import org.spout.vanilla.component.entity.living.hostile.Zombie;
-import org.spout.vanilla.component.entity.living.neutral.Bat;
 import org.spout.vanilla.component.entity.living.neutral.Enderman;
 import org.spout.vanilla.component.entity.living.neutral.PigZombie;
 import org.spout.vanilla.component.entity.living.neutral.Wolf;
+import org.spout.vanilla.component.entity.living.passive.Bat;
 import org.spout.vanilla.component.entity.living.passive.Chicken;
 import org.spout.vanilla.component.entity.living.passive.Cow;
 import org.spout.vanilla.component.entity.living.passive.Horse;
@@ -92,6 +92,7 @@ public enum CreatureType {
 	WITHER(64, Wither.class, "WitherBoss"),
 	WOLF(95, Wolf.class, "Wolf"),
 	ZOMBIE(54, Zombie.class, "Zombie");
+
 	private final int id;
 	private final Class<? extends Living> componentType;
 	private final String name;

@@ -24,26 +24,37 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.entity.creature;
+package org.spout.vanilla.component.entity.living.passive;
 
-import java.util.List;
-
-import org.spout.api.entity.Entity;
-import org.spout.api.util.Parameter;
-
+import org.spout.vanilla.component.entity.living.Living;
+import org.spout.vanilla.component.entity.living.Passive;
 import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.component.entity.misc.MetadataComponent;
+import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureType;
 
-public class WitherEntityProtocol extends CreatureProtocol {
-	public static final int HEALTH_INDEX = 16; // The MC metadata index to determine the Wither's health
+/**
+ * A component that identifies the entity as a Bat.
+ */
+public class Bat extends Living implements Passive {
+	@Override
+	public void onAttached() {
+		super.onAttached();
+		setEntityProtocol(new CreatureProtocol(CreatureType.BAT));
+		if (getAttachedCount() == 1) {
+			getOwner().add(Health.class).setSpawnHealth(6);
+		}
 
-	public WitherEntityProtocol() {
-		super(CreatureType.WITHER);
+		// Add metadata for hanging state
+		getOwner().add(MetadataComponent.class).addBoolMeta(16, VanillaData.HANGING);
 	}
 
-	@Override
-	public List<Parameter<?>> getSpawnParameters(Entity entity) {
-		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Float>(Parameter.TYPE_FLOAT, HEALTH_INDEX, entity.add(Health.class).getHealth()));
-		return parameters;
+	public boolean isHanging() {
+		return getData().get(VanillaData.HANGING);
+	}
+
+	public void setHanging(boolean hanging) {
+		getData().put(VanillaData.HANGING, hanging);
 	}
 }

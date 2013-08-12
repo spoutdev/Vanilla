@@ -617,6 +617,9 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 
 	@Override
 	public void syncEntity(EntitySyncEvent event) {
+		if (getOwner().isRemoved()) {
+			return;
+		}
 		super.syncEntity(event);
 		Entity e = event.getEntity();
 		if (!(e.getNetwork() instanceof VanillaNetworkProtocol)) {

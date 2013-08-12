@@ -92,7 +92,6 @@ public enum CreatureType {
 	WITHER(64, Wither.class, "WitherBoss"),
 	WOLF(95, Wolf.class, "Wolf"),
 	ZOMBIE(54, Zombie.class, "Zombie");
-
 	private final int id;
 	private final Class<? extends Living> componentType;
 	private final String name;

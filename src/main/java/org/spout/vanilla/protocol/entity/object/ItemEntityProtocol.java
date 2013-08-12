@@ -27,7 +27,6 @@
 package org.spout.vanilla.protocol.entity.object;
 
 public class ItemEntityProtocol extends ObjectEntityProtocol {
-
 	public ItemEntityProtocol() {
 		super(ObjectType.ITEM);
 	}

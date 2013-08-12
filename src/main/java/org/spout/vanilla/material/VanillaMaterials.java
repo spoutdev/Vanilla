@@ -38,8 +38,8 @@ import org.spout.api.material.MaterialRegistry;
 import org.spout.api.util.map.concurrent.AtomicShortArray;
 
 import org.spout.vanilla.component.entity.substance.vehicle.minecart.HopperMinecart;
-import org.spout.vanilla.component.entity.substance.vehicle.minecart.RideableMinecart;
 import org.spout.vanilla.component.entity.substance.vehicle.minecart.PoweredMinecart;
+import org.spout.vanilla.component.entity.substance.vehicle.minecart.RideableMinecart;
 import org.spout.vanilla.component.entity.substance.vehicle.minecart.StorageMinecart;
 import org.spout.vanilla.component.entity.substance.vehicle.minecart.TNTMinecart;
 import org.spout.vanilla.data.Music;

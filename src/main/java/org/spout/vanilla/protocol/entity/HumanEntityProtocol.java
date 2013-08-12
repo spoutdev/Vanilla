@@ -44,7 +44,6 @@ import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnMessage;
 import org.spout.vanilla.util.PlayerUtil;
 
 public class HumanEntityProtocol extends VanillaEntityProtocol {
-
 	@Override
 	public List<Message> getSpawnMessages(Entity entity, RepositionManager rm) {
 

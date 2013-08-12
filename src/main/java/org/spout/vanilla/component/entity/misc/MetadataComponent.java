@@ -26,29 +26,27 @@
  */
 package org.spout.vanilla.component.entity.misc;
 
-import gnu.trove.map.hash.TByteObjectHashMap;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
+import gnu.trove.map.hash.TByteObjectHashMap;
+
 import org.spout.api.ClientOnly;
 import org.spout.api.ServerOnly;
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.util.Parameter;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.data.Metadata;
 
 /**
- * Stores all the Metadata values as known by the Mojang client/server protocol.
- * It is kept updated on demand. If no Mojang clients are using this server, or
- * this client is not connected to a Mojang server, it is not kept updated.<br><br>
- * 
- * Please do not use this component to update or change metadata values of Entities.
- * Use the Entity data map instead, since that is what this component generally uses
- * to generate the metadata values.
+ * Stores all the Metadata values as known by the Mojang client/server protocol. It is kept updated on demand. If no Mojang clients are using this server, or this client is not connected to a Mojang
+ * server, it is not kept updated.<br><br>
+ *
+ * Please do not use this component to update or change metadata values of Entities. Use the Entity data map instead, since that is what this component generally uses to generate the metadata values.
  */
 public class MetadataComponent extends VanillaEntityComponent {
 	private final TByteObjectHashMap<Metadata<?>> meta = new TByteObjectHashMap<>();
@@ -60,9 +58,8 @@ public class MetadataComponent extends VanillaEntityComponent {
 	}
 
 	/**
-	 * Adds a new Metadata entry to be updated by and for the Entity.
-	 * The entry directly links to an entry in the Entity datatable.
-	 * 
+	 * Adds a new Metadata entry to be updated by and for the Entity. The entry directly links to an entry in the Entity datatable.
+	 *
 	 * @param index of the metadata parameter
 	 * @param type of the metadata parameter
 	 * @param dataKey for the Entity datatable to access the value
@@ -82,10 +79,8 @@ public class MetadataComponent extends VanillaEntityComponent {
 	}
 
 	/**
-	 * Adds a new Metadata entry to be updated by and for the Entity.
-	 * The entry directly links to an entry in the Entity datatable.
-	 * The boolean state is turned into a 1 or 0 byte value.
-	 * 
+	 * Adds a new Metadata entry to be updated by and for the Entity. The entry directly links to an entry in the Entity datatable. The boolean state is turned into a 1 or 0 byte value.
+	 *
 	 * @param index of the metadata parameter
 	 * @param dataKey for the Entity datatable to access the value
 	 */
@@ -94,11 +89,9 @@ public class MetadataComponent extends VanillaEntityComponent {
 	}
 
 	/**
-	 * Adds a new Metadata entry to be updated by and for the Entity.
-	 * The entry directly links to an entry in the Entity datatable.
-	 * The boolean state is turned into a 1 or 0 byte value.
-	 * If inverted is set to True, the 1 and 0 are turned around.
-	 * 
+	 * Adds a new Metadata entry to be updated by and for the Entity. The entry directly links to an entry in the Entity datatable. The boolean state is turned into a 1 or 0 byte value. If inverted is
+	 * set to True, the 1 and 0 are turned around.
+	 *
 	 * @param index of the metadata parameter
 	 * @param dataKey for the Entity datatable to access the value
 	 * @param inverted - True to use 1 for 0 and 0 for 1, False for default
@@ -132,9 +125,8 @@ public class MetadataComponent extends VanillaEntityComponent {
 	}
 
 	/**
-	 * Adds a new Metadata entry to be updated by and for the Entity.
-	 * If an entry with the same index already exists, it is overwritten.
-	 * 
+	 * Adds a new Metadata entry to be updated by and for the Entity. If an entry with the same index already exists, it is overwritten.
+	 *
 	 * @param metadata entry to add
 	 */
 	public void addMeta(Metadata<?> metadata) {
@@ -143,7 +135,7 @@ public class MetadataComponent extends VanillaEntityComponent {
 
 	/**
 	 * Tries to set a Metadata field to a new value using a Parameter.
-	 * 
+	 *
 	 * @param parameter to set to
 	 */
 	@ClientOnly
@@ -160,7 +152,7 @@ public class MetadataComponent extends VanillaEntityComponent {
 
 	/**
 	 * Tries to set all Metadata fields to the new values using a List of Parameters.
-	 * 
+	 *
 	 * @param parameters to set to
 	 */
 	public void setParameters(List<Parameter<?>> parameters) {
@@ -171,7 +163,7 @@ public class MetadataComponent extends VanillaEntityComponent {
 
 	/**
 	 * Gets all Parameters used for spawning the Entity owner of this Metadata Component
-	 * 
+	 *
 	 * @return List of spawn Parameters
 	 */
 	@ServerOnly
@@ -185,7 +177,7 @@ public class MetadataComponent extends VanillaEntityComponent {
 
 	/**
 	 * Gets all Parameters used for updating the Entity owner of this Metadata Component
-	 * 
+	 *
 	 * @return List of update Parameters
 	 */
 	@ServerOnly
@@ -205,7 +197,7 @@ public class MetadataComponent extends VanillaEntityComponent {
 		return false;
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings ("unchecked")
 	private <T> Metadata<T> getMeta(int index) {
 		return (Metadata<T>) meta.get((byte) (index & 255));
 	}

@@ -27,7 +27,6 @@
 package org.spout.vanilla.protocol.entity.object;
 
 public class ArrowObjectEntityProtocol extends ObjectEntityProtocol {
-
 	public ArrowObjectEntityProtocol() {
 		super(ObjectType.ARROW);
 	}

@@ -55,10 +55,9 @@ import static org.spout.vanilla.protocol.VanillaChannelBufferUtils.protocolifyPo
 import static org.spout.vanilla.protocol.VanillaChannelBufferUtils.protocolifyYaw;
 
 public abstract class VanillaEntityProtocol implements EntityProtocol {
-
 	/**
 	 * Gets all the Metadata Parameters associated with this Entity when spawning
-	 * 
+	 *
 	 * @param entity to get it for
 	 * @return List of metadata Parameters
 	 */
@@ -73,7 +72,7 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 
 	/**
 	 * Gets all the Metadata Parameters required for updating this Entity.
-	 * 
+	 *
 	 * @param entity to get it for
 	 * @return List of metadata Parameters to update
 	 */

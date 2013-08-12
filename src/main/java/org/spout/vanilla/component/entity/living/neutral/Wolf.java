@@ -43,7 +43,6 @@ import org.spout.vanilla.protocol.entity.creature.CreatureType;
  * A component that identifies the entity as a Wolf.
  */
 public class Wolf extends Animal implements Neutral, Aggressive, Tameable {
-
 	@Override
 	public void onAttached() {
 		super.onAttached();
@@ -132,7 +131,7 @@ public class Wolf extends Animal implements Neutral, Aggressive, Tameable {
 
 	/**
 	 * Gets whether the Wolf is sitting down on command
-	 * 
+	 *
 	 * @return True if sitting down, False if not (standing upright)
 	 */
 	public boolean isSitting() {
@@ -141,7 +140,7 @@ public class Wolf extends Animal implements Neutral, Aggressive, Tameable {
 
 	/**
 	 * Sets whether the Wolf is sitting down on command
-	 * 
+	 *
 	 * @param sitting state to set to
 	 */
 	public void setSitting(boolean sitting) {

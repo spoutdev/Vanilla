@@ -32,35 +32,35 @@ package org.spout.vanilla.component.entity.living;
 public interface Tameable {
 	/**
 	 * Gets whether this Entity is tamed
-	 * 
+	 *
 	 * @return True if tamed, False if not (and wild)
 	 */
 	public boolean isTamed();
 
 	/**
 	 * Sets whether this Entity is tamed
-	 * 
+	 *
 	 * @param tamed state to set to
 	 */
 	public void setTamed(boolean tamed);
 
 	/**
 	 * Gets whether this Entity can actually be tamed (right now)
-	 * 
+	 *
 	 * @return True if it can be tamed, False if not
 	 */
 	public boolean canBeTamed();
 
 	/**
 	 * Gets the name of the (Player) owner of this Entity
-	 * 
+	 *
 	 * @return Name of the owner
 	 */
 	public String getOwnerName();
 
 	/**
 	 * Sets the name of the (Player) owner of this Entity
-	 * 
+	 *
 	 * @param owner to set to
 	 */
 	public void setOwnerName(String owner);

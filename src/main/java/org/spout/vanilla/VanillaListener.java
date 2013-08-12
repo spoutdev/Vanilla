@@ -47,7 +47,6 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockSnapshot;
 import org.spout.api.util.access.BanType;
 
-import org.spout.vanilla.component.entity.player.VanillaPlayerNetworkComponent;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.component.entity.living.Human;
@@ -63,6 +62,7 @@ import org.spout.vanilla.component.entity.player.Ping;
 import org.spout.vanilla.component.entity.player.PlayerHead;
 import org.spout.vanilla.component.entity.player.PlayerInteract;
 import org.spout.vanilla.component.entity.player.PlayerList;
+import org.spout.vanilla.component.entity.player.VanillaPlayerNetworkComponent;
 import org.spout.vanilla.component.entity.player.hud.VanillaArmorWidget;
 import org.spout.vanilla.component.entity.player.hud.VanillaCrosshair;
 import org.spout.vanilla.component.entity.player.hud.VanillaDrowning;

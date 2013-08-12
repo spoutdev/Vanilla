@@ -81,7 +81,7 @@ public class Horse extends Animal implements Container, Passive, Tameable {
 			@Override
 			public void setValue(Integer value) {
 				int intValue = value.intValue();
-				setVariantAndMarking(Variant.fromId(intValue & 0x00ff), Marking.fromId(intValue  & 0xff00));
+				setVariantAndMarking(Variant.fromId(intValue & 0x00ff), Marking.fromId(intValue & 0xff00));
 			}
 		});
 

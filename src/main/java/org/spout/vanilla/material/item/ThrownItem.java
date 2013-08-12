@@ -38,9 +38,8 @@ import org.spout.vanilla.component.entity.substance.Substance;
 import org.spout.vanilla.component.entity.substance.projectile.Projectile;
 
 /**
- * Represents an Item that can be thrown away at a speed by right-click interaction.
- * After throwing, one count of the selected item is removed from the thrower its selected
- * slot, if the thrower is not suppressing this cost of shooting the item.
+ * Represents an Item that can be thrown away at a speed by right-click interaction. After throwing, one count of the selected item is removed from the thrower its selected slot, if the thrower is not
+ * suppressing this cost of shooting the item.
  */
 public abstract class ThrownItem extends EntitySpawnItem<Substance> {
 	private float launchForce = 250.0f;
@@ -52,7 +51,7 @@ public abstract class ThrownItem extends EntitySpawnItem<Substance> {
 
 	/**
 	 * Gets the force at which Entities are thrown away
-	 * 
+	 *
 	 * @return launchForce
 	 */
 	public float getLaunchForce() {
@@ -61,7 +60,7 @@ public abstract class ThrownItem extends EntitySpawnItem<Substance> {
 
 	/**
 	 * Sets the force at which Entities are thrown away
-	 * 
+	 *
 	 * @param launchForce to set to
 	 */
 	public void setLaunchForce(float launchForce) {
@@ -70,7 +69,7 @@ public abstract class ThrownItem extends EntitySpawnItem<Substance> {
 
 	/**
 	 * Called after an Entity was just spawned and is ready to be thrown
-	 * 
+	 *
 	 * @param spawnedComponent of the Entity that was spawned
 	 * @param thrower of the Spawned Component
 	 */

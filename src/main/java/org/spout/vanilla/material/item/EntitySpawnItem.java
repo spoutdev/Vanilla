@@ -33,6 +33,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.Material;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
 
 /**
@@ -54,9 +55,8 @@ public class EntitySpawnItem<T extends VanillaEntityComponent> extends VanillaIt
 	}
 
 	/**
-	 * Spawns a new Entity with the Entity Component as specified by {@link #setSpawnedComponent(Class)}.
-	 * The Entity is spawned an offset away from the Block specified.
-	 * 
+	 * Spawns a new Entity with the Entity Component as specified by {@link #setSpawnedComponent(Class)}. The Entity is spawned an offset away from the Block specified.
+	 *
 	 * @param at the Block to spawn
 	 * @param offset to spawn away from the Block
 	 * @return an instance of the spawned component, stored by the spawned entity
@@ -66,9 +66,8 @@ public class EntitySpawnItem<T extends VanillaEntityComponent> extends VanillaIt
 	}
 
 	/**
-	 * Spawns a new Entity with the Entity Component as specified by {@link #setSpawnedComponent(Class)}.
-	 * The Entity is spawned an offset away from the Entity specified.
-	 * 
+	 * Spawns a new Entity with the Entity Component as specified by {@link #setSpawnedComponent(Class)}. The Entity is spawned an offset away from the Entity specified.
+	 *
 	 * @param by the Entity to spawn
 	 * @param offset to spawn away from the Entity
 	 * @return an instance of the spawned component, stored by the spawned entity
@@ -79,11 +78,11 @@ public class EntitySpawnItem<T extends VanillaEntityComponent> extends VanillaIt
 
 	/**
 	 * Spawns a new Entity with the Entity Component as specified by {@link #setSpawnedComponent(Class)}.
-	 * 
+	 *
 	 * @param position to spawn the Entity at
 	 * @return an instance of the spawned component, stored by the spawned entity
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings ("unchecked")
 	public T spawnEntity(Point position) {
 		Class<? extends T> component = this.getSpawnedComponent();
 		Entity spawned = position.getWorld().createAndSpawnEntity(position, LoadOption.NO_LOAD, component);
@@ -92,7 +91,7 @@ public class EntitySpawnItem<T extends VanillaEntityComponent> extends VanillaIt
 
 	/**
 	 * Sets the main Entity component that is spawned by this item
-	 * 
+	 *
 	 * @param spawnedComponent to set to
 	 */
 	public void setSpawnedComponent(Class<? extends T> spawnedComponent) {
@@ -101,7 +100,7 @@ public class EntitySpawnItem<T extends VanillaEntityComponent> extends VanillaIt
 
 	/**
 	 * Gets the main Entity component that is spawned by this item
-	 * 
+	 *
 	 * @return Spawned Entity Component
 	 */
 	public Class<? extends T> getSpawnedComponent() {

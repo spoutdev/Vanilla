@@ -30,7 +30,6 @@ import org.spout.vanilla.component.entity.substance.projectile.Egg;
 import org.spout.vanilla.material.item.ThrownItem;
 
 public class EggItem extends ThrownItem {
-
 	public EggItem(String name, int id) {
 		super(name, id, Egg.class);
 		this.setMaxStackSize(16);

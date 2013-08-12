@@ -33,6 +33,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.Vector3;
 
 import org.spout.physics.collision.shape.BoxShape;
+
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.misc.MetadataComponent;
 import org.spout.vanilla.data.Metadata;
@@ -42,7 +43,6 @@ import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
 import org.spout.vanilla.protocol.entity.object.ObjectType;
 
 public abstract class MinecartBase extends VehicleSubstance {
-
 	@Override
 	public void onAttached() {
 		super.onAttached();
@@ -114,7 +114,7 @@ public abstract class MinecartBase extends VehicleSubstance {
 
 	/**
 	 * Shakes this Minecart back and forth
-	 * 
+	 *
 	 * @param amount to shake (more)
 	 */
 	public void shake(int amount) {
@@ -133,15 +133,14 @@ public abstract class MinecartBase extends VehicleSubstance {
 
 	/**
 	 * Gets the default Block Material that is displayed in this Minecart
-	 * 
+	 *
 	 * @return Default Block Material
 	 */
 	public abstract BlockMaterial getDefaultDisplayedBlock();
 
 	/**
-	 * Gets the displayed block in this Minecart.
-	 * If no Block is displayed, AIR is returned.
-	 * 
+	 * Gets the displayed block in this Minecart. If no Block is displayed, AIR is returned.
+	 *
 	 * @return Displayed Block Material
 	 */
 	public BlockMaterial getDisplayedBlock() {
@@ -152,9 +151,8 @@ public abstract class MinecartBase extends VehicleSubstance {
 	}
 
 	/**
-	 * Sets the displayed block in this Minecart.
-	 * To hide the Block, pass in null or AIR.
-	 * 
+	 * Sets the displayed block in this Minecart. To hide the Block, pass in null or AIR.
+	 *
 	 * @param material to set to
 	 */
 	public void setDisplayedBlock(BlockMaterial material) {

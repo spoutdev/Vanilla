@@ -51,9 +51,9 @@ import org.spout.api.protocol.Session;
 import org.spout.api.protocol.reposition.RepositionManager;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.entity.player.VanillaPlayerNetworkComponent;
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.component.entity.player.Ping;
+import org.spout.vanilla.component.entity.player.VanillaPlayerNetworkComponent;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionMessage;
 

@@ -32,7 +32,6 @@ import org.spout.vanilla.data.VanillaData;
  * A component that identifies the entity as a WitherSkeleton.
  */
 public class WitherSkeleton extends Skeleton {
-
 	@Override
 	public void onAttached() {
 		super.onAttached();

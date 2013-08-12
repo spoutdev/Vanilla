@@ -30,5 +30,4 @@ package org.spout.vanilla.component.entity.living;
  * Represents a neutral entity. A neutral entity will not attack unless provoked by another player.
  */
 public interface Neutral {
-
 }

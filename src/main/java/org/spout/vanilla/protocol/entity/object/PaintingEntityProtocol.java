@@ -40,7 +40,6 @@ import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityPaintingMessage;
 
 public class PaintingEntityProtocol extends VanillaEntityProtocol {
-
 	@Override
 	public List<Message> getSpawnMessages(Entity entity, RepositionManager rm) {
 		List<Message> messages = new ArrayList<>();

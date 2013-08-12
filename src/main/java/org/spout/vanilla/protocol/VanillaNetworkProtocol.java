@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.protocol;
 
-import org.spout.vanilla.protocol.EntityProtocol;
-
 /**
  * Establishes the implementation as a {@link EntityProtocol} holder.
  */

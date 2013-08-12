@@ -72,7 +72,7 @@ public class Wither extends Living implements Hostile {
 
 			@Override
 			public void setValue(Float value) {
-				getOwner().add(Health.class).setHealth(value, HealthChangeCause.UNKNOWN); 
+				getOwner().add(Health.class).setHealth(value, HealthChangeCause.UNKNOWN);
 			}
 		});
 	}

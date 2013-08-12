@@ -31,8 +31,8 @@ import java.util.HashMap;
 import org.spout.api.component.entity.EntityComponent;
 import org.spout.api.entity.Player;
 
-import org.spout.vanilla.protocol.VanillaNetworkProtocol;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.protocol.VanillaNetworkProtocol;
 import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
 
 public class VanillaEntityComponent extends EntityComponent {

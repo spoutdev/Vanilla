@@ -30,8 +30,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.Parameter;
 
 /**
- * Represents a single Metadata field of an Entity that keeps track of changes.
- * This is only read by and updated for Mojang clients/servers.
+ * Represents a single Metadata field of an Entity that keeps track of changes. This is only read by and updated for Mojang clients/servers.
  *
  * @param <T> The type of value this metadata field contains.
  */
@@ -113,14 +112,14 @@ public abstract class Metadata<T> {
 
 	/**
 	 * Sets the value of this parameter.
-	 * 
+	 *
 	 * @param value to set to
 	 */
 	public abstract void setValue(T value);
 
 	/**
 	 * Calls {@link setValue(Object)} with the new value of the parameter.
-	 * 
+	 *
 	 * @param parameter to set to
 	 */
 	public void setParameter(Parameter<T> parameter) {
@@ -128,10 +127,8 @@ public abstract class Metadata<T> {
 	}
 
 	/**
-	 * Updates the synchronized value with the current value obtained using {@link #getValue()}.
-	 * If the value did not change, null is returned, otherwise a new Parameter with the new
-	 * value is returned.
-	 * 
+	 * Updates the synchronized value with the current value obtained using {@link #getValue()}. If the value did not change, null is returned, otherwise a new Parameter with the new value is returned.
+	 *
 	 * @return Immutable Parameter instance with the new value if changed, or null for no change
 	 */
 	public Parameter<T> getUpdateParameter() {
@@ -144,9 +141,8 @@ public abstract class Metadata<T> {
 	}
 
 	/**
-	 * Creates a new Parameter instance representing the current synchronized value of this Metadata.
-	 * Note that further updates may be needed to refresh and use the live value instead.
-	 * 
+	 * Creates a new Parameter instance representing the current synchronized value of this Metadata. Note that further updates may be needed to refresh and use the live value instead.
+	 *
 	 * @return Immutable Parameter instance with the synchronized Value
 	 */
 	public Parameter<T> getSpawnParameter() {
@@ -159,9 +155,8 @@ public abstract class Metadata<T> {
 	}
 
 	/**
-	 * Gets the Type ID that represents a given type.
-	 * If no such type ID is available, -1 is returned instead.
-	 * 
+	 * Gets the Type ID that represents a given type. If no such type ID is available, -1 is returned instead.
+	 *
 	 * @param type to get the ID for
 	 * @return type ID
 	 */

@@ -32,6 +32,7 @@ import org.spout.api.event.entity.EntityInteractEvent;
 import org.spout.api.event.player.PlayerInteractEntityEvent;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.misc.MetadataComponent;
 import org.spout.vanilla.component.entity.substance.Item;
@@ -42,12 +43,9 @@ import org.spout.vanilla.event.entity.network.EntityStatusEvent;
 import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 
 /**
- * A destroyable vehicle substance that can take damage.
- * Instead of losing health, it loses durability.
- * Durability is recovered at a fixed rate over time.
+ * A destroyable vehicle substance that can take damage. Instead of losing health, it loses durability. Durability is recovered at a fixed rate over time.
  */
 public class VehicleSubstance extends Substance {
-
 	@Override
 	public void onAttached() {
 		super.onAttached();
@@ -86,7 +84,7 @@ public class VehicleSubstance extends Substance {
 
 	/**
 	 * Gets the rate in durability/second that durability is restored
-	 * 
+	 *
 	 * @return Durability restore rate
 	 */
 	public float getDurabilityRestoreRate() {

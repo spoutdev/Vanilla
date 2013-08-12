@@ -32,8 +32,8 @@ import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 
 import org.spout.vanilla.ai.examiner.VanillaBlockExaminer;
-import org.spout.vanilla.component.entity.VanillaNetworkComponent;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
+import org.spout.vanilla.component.entity.VanillaNetworkComponent;
 import org.spout.vanilla.component.entity.misc.Burn;
 import org.spout.vanilla.component.entity.misc.Drowning;
 import org.spout.vanilla.component.entity.misc.Effects;

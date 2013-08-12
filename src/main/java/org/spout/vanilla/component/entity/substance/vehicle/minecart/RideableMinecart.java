@@ -27,6 +27,7 @@
 package org.spout.vanilla.component.entity.substance.vehicle.minecart;
 
 import org.spout.api.material.BlockMaterial;
+
 import org.spout.vanilla.component.entity.substance.vehicle.MinecartBase;
 import org.spout.vanilla.material.VanillaMaterials;
 

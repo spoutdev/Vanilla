@@ -174,6 +174,7 @@ import org.spout.vanilla.scoreboard.Team;
 import org.spout.vanilla.world.generator.biome.VanillaBiome;
 import org.spout.vanilla.world.lighting.VanillaCuboidLightBuffer;
 import org.spout.vanilla.world.lighting.VanillaLighting;
+
 import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
 import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
 
@@ -469,7 +470,9 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 
 	@EventHandler
 	public void onPositionSend(EntityUpdateEvent event) {
-		if (event.getAction() != EntityUpdateEvent.UpdateAction.TRANSFORM) return;
+		if (event.getAction() != EntityUpdateEvent.UpdateAction.TRANSFORM) {
+			return;
+		}
 		Point p = event.getTransform().getPosition();
 		Quaternion rot = event.getTransform().getRotation();
 		PlayerPositionLookMessage PPLMsg = new PlayerPositionLookMessage(p.getX(), p.getY() + STANCE, p.getZ(), p.getY(), rot.getYaw(), rot.getPitch(), true, VanillaBlockDataChannelMessage.CHANNEL_ID, getRepositionManager());

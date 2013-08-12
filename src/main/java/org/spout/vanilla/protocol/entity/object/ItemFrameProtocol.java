@@ -39,7 +39,6 @@ import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityObjectMessage;
 
 public class ItemFrameProtocol extends ObjectEntityProtocol {
-
 	public ItemFrameProtocol() {
 		super(ObjectType.ITEM_FRAME);
 	}

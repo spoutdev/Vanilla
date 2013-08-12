@@ -33,7 +33,6 @@ import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyArray;
 import org.spout.api.map.DefaultedKeyFactory;
 import org.spout.api.map.DefaultedKeyImpl;
-import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;

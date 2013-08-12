@@ -45,8 +45,8 @@ import org.spout.api.math.Vector3;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.entity.player.VanillaPlayerNetworkComponent;
 import org.spout.vanilla.component.entity.misc.EntityHead;
+import org.spout.vanilla.component.entity.player.VanillaPlayerNetworkComponent;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.Burnable;

@@ -123,10 +123,9 @@ public class VanillaItemMaterial extends Material implements VanillaMaterial {
 	}
 
 	/**
-	 * Handles the removal of this Item Material from the selected slot of an Entity.
-	 * If this is suppressed by the Entity (for example, is in creative) nothing happens.
-	 * If the selected item is not this material, no item is subtracted.<br><br>
-	 * 
+	 * Handles the removal of this Item Material from the selected slot of an Entity. If this is suppressed by the Entity (for example, is in creative) nothing happens. If the selected item is not this
+	 * material, no item is subtracted.<br><br>
+	 *
 	 * @param entity to handle the selected item removal of
 	 */
 	public void handleSelectionRemove(Entity entity) {

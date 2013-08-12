@@ -27,22 +27,21 @@
 package org.spout.vanilla.component.entity.living;
 
 /**
- * Represents an Entity that can be aggressive. It may be provoked and end up
- * aggressive towards others it would normally ignore.<br><br>
- * 
+ * Represents an Entity that can be aggressive. It may be provoked and end up aggressive towards others it would normally ignore.<br><br>
+ *
  * Typically, only {@link Neutral} Entities can become aggressive.
  */
 public interface Aggressive {
 	/**
 	 * Gets whether this entity was provoked and is now aggressive
-	 * 
+	 *
 	 * @return True if aggressive, False if not
 	 */
 	public boolean isAggressive();
 
 	/**
 	 * Sets whether this entity was provoked and is now aggressive
-	 * 
+	 *
 	 * @param aggressive state to set to
 	 */
 	public void setAggressive(boolean aggressive);

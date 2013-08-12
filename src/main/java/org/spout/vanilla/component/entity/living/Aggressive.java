@@ -24,35 +24,26 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.entity.living.neutral;
-
-import org.spout.api.util.Parameter;
-
-import org.spout.vanilla.component.entity.living.Living;
-import org.spout.vanilla.component.entity.living.Neutral;
-import org.spout.vanilla.component.entity.misc.Health;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.protocol.entity.creature.BatEntityProtocol;
+package org.spout.vanilla.component.entity.living;
 
 /**
- * A component that identifies the entity as a Bat.
+ * Represents an Entity that can be aggressive. It may be provoked and end up
+ * aggressive towards others it would normally ignore.<br><br>
+ * 
+ * Typically, only {@link Neutral} Entities can become aggressive.
  */
-public class Bat extends Living implements Neutral {
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		setEntityProtocol(new BatEntityProtocol());
-		if (getAttachedCount() == 1) {
-			getOwner().add(Health.class).setSpawnHealth(6);
-		}
-	}
+public interface Aggressive {
+	/**
+	 * Gets whether this entity was provoked and is now aggressive
+	 * 
+	 * @return True if aggressive, False if not
+	 */
+	public boolean isAggressive();
 
-	public boolean isHanging() {
-		return getData().get(VanillaData.HANGING);
-	}
-
-	public void setHanging(boolean hanging) {
-		getData().put(VanillaData.HANGING, hanging);
-		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) (hanging ? 1 : 0)));
-	}
+	/**
+	 * Sets whether this entity was provoked and is now aggressive
+	 * 
+	 * @param aggressive state to set to
+	 */
+	public void setAggressive(boolean aggressive);
 }

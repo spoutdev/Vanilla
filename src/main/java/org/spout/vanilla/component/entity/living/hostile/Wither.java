@@ -33,11 +33,15 @@ import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.misc.Damage;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.component.entity.misc.MetadataComponent;
 import org.spout.vanilla.data.Difficulty;
+import org.spout.vanilla.data.Metadata;
 import org.spout.vanilla.data.effect.EntityEffect;
 import org.spout.vanilla.data.effect.EntityEffectType;
+import org.spout.vanilla.event.cause.HealthChangeCause;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.entity.creature.WitherEntityProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureType;
 
 /**
  * A component that identifies the entity as a Wither.
@@ -46,7 +50,7 @@ public class Wither extends Living implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		setEntityProtocol(new WitherEntityProtocol());
+		setEntityProtocol(new CreatureProtocol(CreatureType.WITHER));
 		getOwner().add(DeathDrops.class).addDrop(new ItemStack(VanillaMaterials.NETHER_STAR, 1)).addXpDrop((short) 50);
 		if (getAttachedCount() == 1) {
 			getOwner().add(Health.class).setSpawnHealth(300);
@@ -58,5 +62,18 @@ public class Wither extends Living implements Hostile {
 		damage.getDamageLevel(Difficulty.NORMAL).setEffect(new EntityEffect(EntityEffectType.WITHER, 5));
 		damage.getDamageLevel(Difficulty.HARD).setEffect(new EntityEffect(EntityEffectType.WITHER, 7));
 		damage.getDamageLevel(Difficulty.HARDCORE).setEffect(damage.getDamageLevel(Difficulty.HARD).getEffect());
+
+		// Add metadata for Wither health
+		getOwner().add(MetadataComponent.class).addMeta(new Metadata<Float>(Metadata.TYPE_FLOAT, 16) {
+			@Override
+			public Float getValue() {
+				return getOwner().add(Health.class).getHealth();
+			}
+
+			@Override
+			public void setValue(Float value) {
+				getOwner().add(Health.class).setHealth(value, HealthChangeCause.UNKNOWN); 
+			}
+		});
 	}
 }

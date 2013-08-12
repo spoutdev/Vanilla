@@ -34,6 +34,7 @@ import org.spout.api.protocol.ClientSession;
 import org.spout.api.protocol.MessageHandler;
 
 import org.spout.vanilla.component.entity.living.Human;
+import org.spout.vanilla.component.entity.misc.MetadataComponent;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnMessage;
 
 public class PlayerSpawnHandler extends MessageHandler<PlayerSpawnMessage> {
@@ -46,11 +47,18 @@ public class PlayerSpawnHandler extends MessageHandler<PlayerSpawnMessage> {
 		World w = session.getEngine().getDefaultWorld();
 		final Point pos = new Point(w, message.getX(), message.getY(), message.getZ());
 
+		// Create a new Player Entity with a Human Entity Component
 		Entity entity = w.createEntity(pos, Human.class);
 		entity.setSavable(true);
 		entity.add(Human.class).setName(message.getName());
 		EntityPrefab humanPrefab = session.getEngine().getFileSystem().getResource("entity://Vanilla/entities/human/human.sep");
 		entity = humanPrefab.createEntity(pos);
+
+		// Load in Metadata
+		MetadataComponent metadata = entity.get(MetadataComponent.class);
+		if (metadata != null) {
+			metadata.setParameters(message.getParameters());
+		}
 
 		w.spawnEntity(entity);
 		System.out.println(message.toString());

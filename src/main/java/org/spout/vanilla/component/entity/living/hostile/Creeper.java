@@ -28,7 +28,6 @@ package org.spout.vanilla.component.entity.living.hostile;
 
 import org.spout.api.component.entity.PhysicsComponent;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.util.Parameter;
 
 import org.spout.physics.collision.shape.BoxShape;
 
@@ -40,9 +39,12 @@ import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.component.entity.misc.MetadataComponent;
+import org.spout.vanilla.data.Metadata;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.entity.creature.CreeperEntityProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureType;
 
 /**
  * A component that identifies the entity as a Creeper.
@@ -51,7 +53,7 @@ public class Creeper extends Living implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		setEntityProtocol(new CreeperEntityProtocol());
+		setEntityProtocol(new CreatureProtocol(CreatureType.CREEPER));
 		getOwner().add(DeathDrops.class).addDrop(new ItemStack(VanillaMaterials.GUNPOWDER, getRandom().nextInt(2))).addXpDrop((short) 5);
 		PhysicsComponent physics = getOwner().getPhysics();
 		physics.activate(2f, new BoxShape(1f, 2f, 1f), false, true);
@@ -66,6 +68,11 @@ public class Creeper extends Living implements Hostile {
 		getAI().registerSensor(humanSensor);
 		getAI().registerGoal(new AttackPlayerGoal(getAI()));
 		getAI().registerAction(new ActionAttack(getAI()));
+
+		// Metadata values
+		MetadataComponent meta = getOwner().add(MetadataComponent.class);
+		meta.addMeta(Metadata.TYPE_BYTE, 16, VanillaData.STATE);
+		meta.addBoolMeta(17, VanillaData.CHARGED);
 	}
 
 	@Override
@@ -95,7 +102,6 @@ public class Creeper extends Living implements Hostile {
 
 	public void setState(byte state) {
 		getData().put(VanillaData.STATE, state);
-		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, state));
 	}
 
 	public boolean isCharged() {
@@ -104,6 +110,5 @@ public class Creeper extends Living implements Hostile {
 
 	public void setCharged(boolean charged) {
 		getData().put(VanillaData.CHARGED, charged);
-		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 17, charged ? (byte) 1 : 0));
 	}
 }

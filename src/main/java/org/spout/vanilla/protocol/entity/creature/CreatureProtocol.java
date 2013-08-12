@@ -48,7 +48,6 @@ public class CreatureProtocol extends BasicEntityProtocol {
 
 	@Override
 	public List<Message> getSpawnMessages(Entity entity, RepositionManager rm) {
-
 		List<Message> messages = new ArrayList<Message>(6);
 
 		int entityId = entity.getId();

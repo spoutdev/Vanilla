@@ -34,7 +34,8 @@ import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.entity.creature.MagmaCubeEntityProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureType;
 
 /**
  * A component that identifies the entity as a MagmaCube.
@@ -43,7 +44,7 @@ public class MagmaCube extends Living implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		setEntityProtocol(new MagmaCubeEntityProtocol());
+		setEntityProtocol(new CreatureProtocol(CreatureType.MAGMA_CUBE));
 		getOwner().add(DeathDrops.class).addDrop(new ItemStack(VanillaMaterials.MAGMA_CREAM, getRandom().nextInt(1)));
 		if (getAttachedCount() == 1) {
 			int spawnHealth = 1;

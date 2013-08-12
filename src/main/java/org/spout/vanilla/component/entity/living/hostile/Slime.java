@@ -26,13 +26,14 @@
  */
 package org.spout.vanilla.component.entity.living.hostile;
 
-import org.spout.api.util.Parameter;
-
 import org.spout.vanilla.component.entity.living.Hostile;
 import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.component.entity.misc.MetadataComponent;
+import org.spout.vanilla.data.Metadata;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.protocol.entity.creature.SlimeEntityProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureType;
 
 /**
  * A component that identifies the entity as a Slime.
@@ -41,7 +42,7 @@ public class Slime extends Living implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		setEntityProtocol(new SlimeEntityProtocol());
+		setEntityProtocol(new CreatureProtocol(CreatureType.SLIME));
 		if (getAttachedCount() == 1) {
 			int spawnHealth = 1;
 			if (getSize() == 2) {
@@ -51,6 +52,9 @@ public class Slime extends Living implements Hostile {
 			}
 			getOwner().add(Health.class).setSpawnHealth(spawnHealth);
 		}
+
+		// Add metadata for slime size
+		getOwner().add(MetadataComponent.class).addMeta(Metadata.TYPE_BYTE, 16, VanillaData.SLIME_SIZE);
 
 		//TODO: Damage depends of the size. Not the difficulty.
 	}
@@ -62,7 +66,6 @@ public class Slime extends Living implements Hostile {
 	public void setSize(byte size) {
 		if (size >= 0 && size <= 4 && size != 3) {
 			getOwner().getData().put(VanillaData.SLIME_SIZE, size);
-			setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, size));
 		}
 	}
 }

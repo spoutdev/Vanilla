@@ -29,15 +29,16 @@ package org.spout.vanilla.component.entity.living.hostile;
 import java.util.Random;
 
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.entity.living.Hostile;
 import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.component.entity.misc.MetadataComponent;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.entity.creature.GhastEntityProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureType;
 
 /**
  * A component that identifies the entity as a Ghast.
@@ -46,7 +47,7 @@ public class Ghast extends Living implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		setEntityProtocol(new GhastEntityProtocol());
+		setEntityProtocol(new CreatureProtocol(CreatureType.GHAST));
 		DeathDrops dropComponent = getOwner().add(DeathDrops.class);
 		Random random = getRandom();
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.GUNPOWDER, random.nextInt(2)));
@@ -55,6 +56,9 @@ public class Ghast extends Living implements Hostile {
 		if (getAttachedCount() == 1) {
 			getOwner().add(Health.class).setSpawnHealth(10);
 		}
+
+		// Add metadata for red eyes
+		getOwner().add(MetadataComponent.class).addBoolMeta(16, VanillaData.RED_EYES);
 
 		//TODO: Fireball damage
 	}
@@ -65,6 +69,5 @@ public class Ghast extends Living implements Hostile {
 
 	public void setRedEyes(boolean redEyes) {
 		getData().put(VanillaData.RED_EYES, redEyes);
-		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, redEyes ? (byte) 1 : 0));
 	}
 }

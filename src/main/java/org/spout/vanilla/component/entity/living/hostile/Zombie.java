@@ -45,10 +45,12 @@ import org.spout.vanilla.component.entity.misc.Damage;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.misc.EntityItemCollector;
 import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.component.entity.misc.MetadataComponent;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.entity.creature.ZombieEntityProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureType;
 
 /**
  * A component that identifies the entity as a Zombie.
@@ -57,7 +59,7 @@ public class Zombie extends Living implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		setEntityProtocol(new ZombieEntityProtocol());
+		setEntityProtocol(new CreatureProtocol(CreatureType.ZOMBIE));
 		getOwner().add(DeathDrops.class).addDrop(new ItemStack(VanillaMaterials.ROTTEN_FLESH, getRandom().nextInt(2))).addXpDrop((short) 5);
 		getOwner().add(EntityInventory.class);
 		getOwner().add(EntityItemCollector.class);
@@ -83,6 +85,9 @@ public class Zombie extends Living implements Hostile {
 		//Go attack nearby players AI
 		getAI().registerGoal(new AttackPlayerGoal(getAI()));
 		getAI().registerAction(new ActionAttack(getAI()));
+
+		// Add villager state metadata
+		getOwner().add(MetadataComponent.class).addBoolMeta(16, VanillaData.WAS_VILLAGER);
 	}
 
 	/**

@@ -26,16 +26,13 @@
  */
 package org.spout.vanilla.component.entity;
 
-import java.util.Arrays;
 import java.util.HashMap;
 
 import org.spout.api.component.entity.EntityComponent;
 import org.spout.api.entity.Player;
-import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.protocol.VanillaNetworkProtocol;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.event.entity.network.EntityMetaChangeEvent;
 import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
 
 public class VanillaEntityComponent extends EntityComponent {
@@ -63,10 +60,6 @@ public class VanillaEntityComponent extends EntityComponent {
 			return;
 		}
 		((VanillaNetworkProtocol) getOwner().getNetwork()).setEntityProtocol(p);
-	}
-
-	protected void setMetadata(Parameter<?>... p) {
-		getOwner().getNetwork().callProtocolEvent(new EntityMetaChangeEvent(getOwner(), Arrays.asList(p)));
 	}
 
 	/**

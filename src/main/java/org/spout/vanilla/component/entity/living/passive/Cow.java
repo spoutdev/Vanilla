@@ -71,7 +71,7 @@ public class Cow extends Animal implements Passive {
 	}
 
 	@Override
-	public void onInteract(final EntityInteractEvent event) {
+	public void onInteract(final EntityInteractEvent<?> event) {
 		if (event instanceof PlayerInteractEntityEvent) {
 			final PlayerInteractEntityEvent pie = (PlayerInteractEntityEvent) event;
 			final Player player = (Player) pie.getEntity();

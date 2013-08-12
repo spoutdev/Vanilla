@@ -26,8 +26,18 @@
  */
 package org.spout.vanilla.component.entity.living.hostile;
 
+import org.spout.vanilla.data.VanillaData;
+
 /**
  * A component that identifies the entity as a WitherSkeleton.
  */
 public class WitherSkeleton extends Skeleton {
+
+	@Override
+	public void onAttached() {
+		super.onAttached();
+
+		// Change category to 1
+		getOwner().getData().put(VanillaData.ENTITY_CATEGORY, (byte) 1);
+	}
 }

@@ -27,26 +27,28 @@
 package org.spout.vanilla.component.entity.living.hostile;
 
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.util.Parameter;
 
+import org.spout.vanilla.component.entity.living.Aggressive;
 import org.spout.vanilla.component.entity.living.Hostile;
 import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.misc.Damage;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.component.entity.misc.MetadataComponent;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.entity.creature.BlazeEntityProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureType;
 
 /**
  * A component that identifies the entity as a Blaze.
  */
-public class Blaze extends Living implements Hostile {
+public class Blaze extends Living implements Hostile, Aggressive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		setEntityProtocol(new BlazeEntityProtocol());
+		setEntityProtocol(new CreatureProtocol(CreatureType.BLAZE));
 		getOwner().add(DeathDrops.class).addDrop(new ItemStack(VanillaMaterials.BLAZE_ROD, getRandom().nextInt(1))).addXpDrop((short) 10);
 		if (getAttachedCount() == 1) {
 			getOwner().add(Health.class).setSpawnHealth(20);
@@ -56,14 +58,18 @@ public class Blaze extends Living implements Hostile {
 		damage.getDamageLevel(Difficulty.NORMAL).setAmount(5);
 		damage.getDamageLevel(Difficulty.HARD).setAmount(7);
 		damage.getDamageLevel(Difficulty.HARDCORE).setAmount(damage.getDamageLevel(Difficulty.HARD).getAmount());
+
+		// Add metadata associated with the aggressiveness state
+		getOwner().add(MetadataComponent.class).addBoolMeta(16, VanillaData.AGGRESSIVE);
 	}
 
+	@Override
 	public boolean isAggressive() {
 		return getData().get(VanillaData.AGGRESSIVE);
 	}
 
-	public void setAggresive(boolean aggro) {
+	@Override
+	public void setAggressive(boolean aggro) {
 		getData().put(VanillaData.AGGRESSIVE, aggro);
-		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, aggro ? (byte) 1 : 0));
 	}
 }

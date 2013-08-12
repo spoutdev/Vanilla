@@ -31,39 +31,99 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 
 import org.spout.api.inventory.Container;
 
-import org.spout.vanilla.protocol.VanillaNetworkProtocol;
 import org.spout.vanilla.component.entity.living.Animal;
 import org.spout.vanilla.component.entity.living.Passive;
+import org.spout.vanilla.component.entity.living.Tameable;
 import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.component.entity.misc.MetadataComponent;
+import org.spout.vanilla.data.Metadata;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.entity.HorseInventory;
-import org.spout.vanilla.protocol.entity.creature.HorseEntityProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureType;
 
-public class Horse extends Animal implements Container, Passive {
+public class Horse extends Animal implements Container, Passive, Tameable {
 	@Override
 	public void onAttached() {
-		((VanillaNetworkProtocol) getOwner().getNetwork()).setEntityProtocol(new HorseEntityProtocol());
+		setEntityProtocol(new CreatureProtocol(CreatureType.HORSE));
 		if (getAttachedCount() == 1) {
 			getOwner().add(Health.class).setSpawnHealth(22);
 		}
+		super.onAttached();
+
+		// Add metadata for the Horse
+		MetadataComponent metadata = getOwner().add(MetadataComponent.class);
+
+		//TODO: Implement tame/saddle/bred/chest/etc. for index 16 (see protocol page)
+		metadata.addMeta(new Metadata<Integer>(Metadata.TYPE_INT, 16) {
+			@Override
+			public Integer getValue() {
+				// TODO Auto-generated method stub
+				return 0;
+			}
+
+			@Override
+			public void setValue(Integer value) {
+				// TODO Auto-generated method stub
+			}
+		});
+
+		// Metadata for the type ID of the Horse
+		metadata.addMeta(Metadata.TYPE_BYTE, 19, VanillaData.ENTITY_CATEGORY);
+
+		// Metadata for variant and marking
+		metadata.addMeta(new Metadata<Integer>(Metadata.TYPE_INT, 20) {
+			@Override
+			public Integer getValue() {
+				return (getVariant().getVariantId() & 0x00ff) | (getMarking().getMarkingId() & 0xff00);
+			}
+
+			@Override
+			public void setValue(Integer value) {
+				int intValue = value.intValue();
+				setVariantAndMarking(Variant.fromId(intValue & 0x00ff), Marking.fromId(intValue  & 0xff00));
+			}
+		});
+
+		// Metadata for the owner name of the Horse
+		metadata.addMeta(21, Metadata.TYPE_STRING, VanillaData.OWNER);
+
+		//TODO: Implement the armor type INT value (what is it? Material ID?)
+		metadata.addMeta(new Metadata<Integer>(Metadata.TYPE_INT, 22) {
+			@Override
+			public Integer getValue() {
+				// TODO Auto-generated method stub
+				return 0;
+			}
+
+			@Override
+			public void setValue(Integer value) {
+				// TODO Auto-generated method stub
+			}
+		});
 	}
 
+	@Override
 	public boolean isTamed() {
 		return getOwner().getData().get(VanillaData.TAMED);
 	}
 
+	@Override
 	public void setTamed(boolean tamed) {
 		getOwner().getData().put(VanillaData.TAMED, tamed);
 	}
 
-	public boolean canTame() {
+	@Override
+	public boolean canBeTamed() {
 		return getHorseTypeId() <= 2;
 	}
 
+	@Override
 	public String getOwnerName() {
 		return getOwner().getData().get(VanillaData.OWNER);
 	}
 
+	@Override
 	public void setOwnerName(String owner) {
 		if (isTamed()) {
 			getOwner().getData().put(VanillaData.OWNER, owner);
@@ -107,7 +167,11 @@ public class Horse extends Animal implements Container, Passive {
 	 * @return byte
 	 */
 	public byte getHorseTypeId() {
-		return 0;
+		return getOwner().getData().get(VanillaData.ENTITY_CATEGORY);
+	}
+
+	public void setHorseTypeId(byte id) {
+		getOwner().getData().put(VanillaData.ENTITY_CATEGORY, id);
 	}
 
 	@Override

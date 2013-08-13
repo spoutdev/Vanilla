@@ -62,7 +62,7 @@ public class Snow extends GroundAttachable implements DynamicMaterial, Initializ
 	//TODO: Box Shape
 	public Snow(String name, int id, String model, CollisionShape shape, boolean isGhost) {
 		super((short) 0x07, name, id, model, shape);
-		this.setLiquidObstacle(false).setStepSound(SoundEffects.STEP_CLOTH).setHardness(0.1F).setResistance(0.2F).setTransparent().setOpacity(1).setGhost(isGhost);
+		this.setLiquidObstacle(false).setStepSound(SoundEffects.STEP_CLOTH).setHardness(0.1F).setResistance(0.5F).setTransparent().setOpacity(1).setGhost(isGhost);
 		this.addMiningType(ToolType.SPADE).setMiningLevel(ToolLevel.WOOD);
 	}
 

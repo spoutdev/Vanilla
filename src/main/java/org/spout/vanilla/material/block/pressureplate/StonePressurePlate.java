@@ -35,7 +35,7 @@ import org.spout.vanilla.material.block.PressurePlate;
 public class StonePressurePlate extends PressurePlate {
 	public StonePressurePlate(String name, int id) {
 		super(name, id, null);
-		this.setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 0);
+		this.setHardness(0.5F).setResistance(2.5F).setOpacity((byte) 0);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 

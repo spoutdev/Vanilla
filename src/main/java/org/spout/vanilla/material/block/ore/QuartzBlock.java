@@ -48,7 +48,7 @@ public class QuartzBlock extends Solid implements Directional {
 	private QuartzBlock(String name, String model) {
 		super((short) 0x0003, name, 155, model);
 		this.type = QuartzBlockType.QUARTZ;
-		this.setHardness(0.8F).setResistance(1.3F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
+		this.setHardness(0.8F).setResistance(4.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
 	}
 
 	private QuartzBlock(String name, QuartzBlockType type, QuartzBlock parent, String model) {

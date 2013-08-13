@@ -38,7 +38,7 @@ public class Ladder extends AbstractAttachable {
 	//TODO: Box Shape
 	public Ladder(String name, int id) {
 		super(name, id, VanillaMaterialModels.LADDER, null);
-		this.setAttachable(BlockFaces.WESN).setHardness(0.4F).setResistance(0.7F).setTransparent();
+		this.setAttachable(BlockFaces.WESN).setHardness(0.4F).setResistance(2.0F).setTransparent();
 	}
 
 	@Override

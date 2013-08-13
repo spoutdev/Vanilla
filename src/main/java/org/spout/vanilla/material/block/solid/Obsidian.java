@@ -37,7 +37,7 @@ import org.spout.vanilla.material.block.Solid;
 public class Obsidian extends Solid {
 	public Obsidian(String name, int id) {
 		super(name, id, VanillaMaterialModels.OBSIDIAN);
-		this.setHardness(50.0F).setResistance(2000.0F);
+		this.setHardness(50.0F).setResistance(6000.0F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE, ToolLevelFlags.DIAMOND_UP);
 	}
 

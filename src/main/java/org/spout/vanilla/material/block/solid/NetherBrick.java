@@ -33,7 +33,7 @@ import org.spout.vanilla.material.block.Solid;
 public class NetherBrick extends Solid {
 	public NetherBrick(String name, int id) {
 		super(name, id, VanillaMaterialModels.NETHER_BRICK);
-		this.setHardness(2.0F).setResistance(10.0F);
+		this.setHardness(2.0F).setResistance(30.0F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 }

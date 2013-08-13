@@ -35,6 +35,6 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 public class MonsterSpawnerBlock extends VanillaBlockMaterial {
 	public MonsterSpawnerBlock(String name, int id) {
 		super(name, id, VanillaMaterialModels.MONSTER_SPAWNER, new BoxShape(1, 1, 1), MonsterSpawner.class);
-		this.setHardness(5.0F).setResistance(8.3F).setTransparent();
+		this.setHardness(5.0F).setResistance(25.0F).setTransparent();
 	}
 }

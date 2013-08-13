@@ -40,7 +40,7 @@ import org.spout.vanilla.world.lighting.VanillaLighting;
 public class Mycelium extends SpreadingSolid implements InitializableMaterial {
 	public Mycelium(String name, int id) {
 		super(name, id, VanillaMaterialModels.MYCELIUM);
-		this.setHardness(0.6F).setResistance(0.8F).addMiningType(ToolType.SPADE);
+		this.setHardness(0.6F).setResistance(2.5F).addMiningType(ToolType.SPADE);
 	}
 
 	@Override

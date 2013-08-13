@@ -51,7 +51,7 @@ public class Ice extends SpreadingSolid implements InitializableMaterial {
 
 	public Ice(String name, int id) {
 		super(name, id, VanillaMaterialModels.ICE);
-		this.setHardness(0.5F).setResistance(0.8F).setOcclusion((short) 0, BlockFaces.NONE).setOpacity((byte) 2);
+		this.setHardness(0.5F).setResistance(2.5F).setOcclusion((short) 0, BlockFaces.NONE).setOpacity((byte) 2);
 		this.getDrops().clear();
 	}
 

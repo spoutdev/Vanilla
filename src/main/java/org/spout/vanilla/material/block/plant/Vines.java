@@ -62,7 +62,7 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 
 	public Vines(String name, int id) {
 		super(name, id, VanillaMaterialModels.VINES, null);
-		this.setLiquidObstacle(false).setHardness(0.2F).setResistance(0.3F).setTransparent().setGhost(true);
+		this.setLiquidObstacle(false).setHardness(0.2F).setResistance(1.0F).setTransparent().setGhost(true);
 		this.getDrops().DEFAULT.clear().add(this).addFlags(ToolTypeFlags.SHEARS);
 		if (VanillaPlugin.getInstance().getEngine().getPlatform() == Platform.CLIENT) {
 			if (!getModel().getRenderMaterial().getBufferEffects().contains(VanillaEffects.BIOME_FOLIAGE_COLOR)) {

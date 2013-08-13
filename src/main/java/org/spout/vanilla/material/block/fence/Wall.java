@@ -42,7 +42,7 @@ public class Wall extends Solid {
 
 	private Wall(String name, String model) {
 		super((short) 0x1, name, 139, model);
-		this.setHardness(1.5F).setResistance(10.0F);
+		this.setHardness(1.5F).setResistance(30.0F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 

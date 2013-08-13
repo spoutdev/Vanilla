@@ -40,7 +40,7 @@ import org.spout.vanilla.material.block.component.FurnaceBlock;
 public class CoalOre extends Ore implements TimedCraftable, InitializableMaterial {
 	public CoalOre(String name, int id) {
 		super(name, id, VanillaMaterialModels.COAL_ORE);
-		this.setHardness(3.0F).setResistance(5.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
+		this.setHardness(3.0F).setResistance(15.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
 	}
 
 	@Override

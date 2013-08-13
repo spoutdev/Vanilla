@@ -51,7 +51,7 @@ public class Cactus extends StackGrowingBase implements TimedCraftable {
 
 	public Cactus(String name, int id) {
 		super(name, id, VanillaMaterialModels.CACTUS, new BoxShape(1, 1, 1));
-		this.setHardness(0.4F).setResistance(0.7F).setTransparent();
+		this.setHardness(0.4F).setResistance(2.0F).setTransparent();
 		this.addDeniedNeighbour(VanillaMaterials.WEB, VanillaMaterials.STONE_PRESSURE_PLATE, VanillaMaterials.WOODEN_PRESSURE_PLATE);
 	}
 

@@ -51,7 +51,7 @@ public class Leaves extends Solid implements Burnable, InitializableMaterial {
 
 	private Leaves(String name, String model) {
 		super((short) 0x0003, name, 18, model);
-		this.setHardness(0.2F).setResistance(0.3F).setOpacity(1);
+		this.setHardness(0.2F).setResistance(1.0F).setOpacity(1);
 		if (VanillaPlugin.getInstance().getEngine().getPlatform() == Platform.CLIENT) {
 			if (!getModel().getRenderMaterial().getBufferEffects().contains(VanillaEffects.BIOME_FOLIAGE_COLOR)) {
 				getModel().getRenderMaterial().addBufferEffect(VanillaEffects.BIOME_FOLIAGE_COLOR);

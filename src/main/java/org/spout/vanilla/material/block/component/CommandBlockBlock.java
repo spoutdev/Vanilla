@@ -40,6 +40,7 @@ import org.spout.vanilla.util.RedstoneUtil;
 public class CommandBlockBlock extends VanillaBlockMaterial implements RedstoneTarget {
 	public CommandBlockBlock(String name, int id) {
 		super(name, id, null, new BoxShape(1, 1, 1), CommandBlock.class);
+		this.setResistance(18000000.0F);
 	}
 
 	@Override

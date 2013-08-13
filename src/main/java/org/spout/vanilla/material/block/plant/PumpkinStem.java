@@ -32,6 +32,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 public class PumpkinStem extends Stem implements InitializableMaterial {
 	public PumpkinStem(String name, int id) {
 		super(name, id);
+		this.setResistance(0.0F);
 	}
 
 	@Override

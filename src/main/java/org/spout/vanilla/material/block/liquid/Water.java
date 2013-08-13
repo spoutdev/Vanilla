@@ -50,6 +50,7 @@ public class Water extends Liquid implements DynamicMaterial, InitializableMater
 	public Water(String name, int id, boolean flowing) {
 		super(name, id, flowing, VanillaMaterialModels.WATER);
 		this.setFlowDelay(250);
+		this.setResistance(500.0F);
 		if (getEngine().getPlatform() == Platform.CLIENT) {
 			if (!getModel().getRenderMaterial().getBufferEffects().contains(VanillaEffects.BIOME_WATER_COLOR)) {
 				getModel().getRenderMaterial().addBufferEffect(VanillaEffects.BIOME_WATER_COLOR);

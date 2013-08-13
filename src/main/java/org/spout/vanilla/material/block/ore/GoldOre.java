@@ -39,7 +39,7 @@ import org.spout.vanilla.material.block.component.FurnaceBlock;
 public class GoldOre extends Ore implements TimedCraftable {
 	public GoldOre(String name, int id) {
 		super(name, id, VanillaMaterialModels.GOLD_ORE);
-		this.setHardness(3.0F).setResistance(5.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.IRON);
+		this.setHardness(3.0F).setResistance(15.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.IRON);
 	}
 
 	@Override

@@ -40,7 +40,7 @@ import org.spout.vanilla.material.block.component.FurnaceBlock;
 public class DiamondOre extends Ore implements InitializableMaterial, TimedCraftable {
 	public DiamondOre(String name, int id) {
 		super(name, id, VanillaMaterialModels.DIAMOND_ORE);
-		this.setHardness(3.0F).setResistance(5.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.IRON);
+		this.setHardness(3.0F).setResistance(15.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.IRON);
 	}
 
 	@Override

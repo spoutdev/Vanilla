@@ -34,5 +34,6 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 public class LockedChest extends VanillaBlockMaterial {
 	public LockedChest(String name, int id) {
 		super(name, id, VanillaMaterialModels.LOCKED_CHEST, new BoxShape(1, 1, 1));
+		this.setResistance(0.0F);
 	}
 }

@@ -35,7 +35,7 @@ import org.spout.vanilla.material.block.Solid;
 public class MossStone extends Solid {
 	public MossStone(String name, int id) {
 		super(name, id, VanillaMaterialModels.MOSS_STONE);
-		this.setHardness(2.0F).setResistance(10.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
+		this.setHardness(2.0F).setResistance(30.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
 	}
 
 	@Override

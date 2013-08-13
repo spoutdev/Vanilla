@@ -37,6 +37,7 @@ public abstract class Fence extends VanillaBlockMaterial {
 	//TODO: Box Shape
 	public Fence(String name, int id, String model) {
 		super(name, id, model, null);
+		this.setResistance(15.0F);
 	}
 
 	@Override

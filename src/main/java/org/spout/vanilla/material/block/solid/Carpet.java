@@ -60,7 +60,7 @@ public class Carpet extends Solid implements Burnable {
 	private Carpet(String name, WoolColor color, Carpet parent, String model) {
 		super(name, 171, color.getData(), parent, model);
 		this.color = color;
-		this.setHardness(0.8F).setResistance(1.3F).setStepSound(SoundEffects.STEP_CLOTH);
+		this.setHardness(0.8F).setResistance(4.0F).setStepSound(SoundEffects.STEP_CLOTH);
 	}
 
 	@Override

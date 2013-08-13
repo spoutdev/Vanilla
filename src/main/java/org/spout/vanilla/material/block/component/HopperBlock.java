@@ -44,7 +44,7 @@ import org.spout.vanilla.util.RedstoneUtil;
 public class HopperBlock extends VanillaBlockMaterial implements RedstoneTarget {
 	public HopperBlock(String name, int id) {
 		super(name, id, VanillaMaterialModels.HOPPER, new BoxShape(1, 1, 1), Hopper.class);
-		this.setHardness(3.5F).setResistance(5.8F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
+		this.setHardness(3.5F).setResistance(15.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
 	}
 
 	@Override

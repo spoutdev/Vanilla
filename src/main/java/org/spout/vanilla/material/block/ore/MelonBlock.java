@@ -34,7 +34,7 @@ import org.spout.vanilla.material.block.Ore;
 public class MelonBlock extends Ore implements InitializableMaterial {
 	public MelonBlock(String name, int id) {
 		super(name, id, VanillaMaterialModels.MELON_BLOCK);
-		this.setHardness(1.0F).setResistance(1.7F);
+		this.setHardness(1.0F).setResistance(5.0F);
 	}
 
 	@Override

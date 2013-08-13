@@ -33,7 +33,7 @@ public class DragonEgg extends VanillaBlockMaterial {
 	public DragonEgg(String name, int id) {
 		//TODO: Box Shape
 		super(name, id, VanillaMaterialModels.DRAGON_EGG, null);
-		this.setHardness(3.0F).setResistance(15.0F);
+		this.setHardness(3.0F).setResistance(45.0F);
 	}
 
 	@Override

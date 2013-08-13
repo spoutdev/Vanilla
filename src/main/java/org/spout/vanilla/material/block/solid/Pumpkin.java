@@ -43,7 +43,7 @@ public class Pumpkin extends Solid implements Directional {
 
 	public Pumpkin(short dataMask, String name, int id, String model, boolean lantern) {
 		super(dataMask, name + "_E", id, ModelUtil.getDirectionalModel(model, BlockFace.EAST));
-		this.setHardness(1.0F).setResistance(1.7F).addMiningType(ToolType.AXE);
+		this.setHardness(1.0F).setResistance(5.0F).addMiningType(ToolType.AXE);
 		this.lantern = lantern;
 		// Register the directional submaterials
 		if (model == null) {

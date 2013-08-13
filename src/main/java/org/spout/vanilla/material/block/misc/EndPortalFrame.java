@@ -44,7 +44,7 @@ public class EndPortalFrame extends VanillaBlockMaterial implements Directional 
 	public EndPortalFrame(String name, int id) {
 		//TODO: Box Shape
 		super(name, id, VanillaMaterialModels.END_PORTAL_FRAME, null);
-		this.setHardness(-1.0F).setResistance(6000000.0F);
+		this.setHardness(-1.0F).setResistance(18000000.0F);
 		this.setOcclusion((short) 0, BlockFace.BOTTOM);
 	}
 

@@ -39,7 +39,7 @@ import org.spout.vanilla.material.block.SolidMoving;
 public class Gravel extends SolidMoving implements InitializableMaterial {
 	public Gravel(String name, int id) {
 		super(name, id, VanillaMaterialModels.GRAVEL);
-		this.setHardness(0.6F).setResistance(1.0F).setStepSound(SoundEffects.STEP_GRAVEL);
+		this.setHardness(0.6F).setResistance(3.0F).setStepSound(SoundEffects.STEP_GRAVEL);
 		this.addMiningType(ToolType.SPADE);
 	}
 

@@ -33,7 +33,7 @@ import org.spout.vanilla.material.block.Solid;
 public class HardenedClay extends Solid {
 	public HardenedClay(String name, int id) {
 		super(name, id, VanillaMaterialModels.HARDENED_CLAY);
-		this.setHardness(0.5F).setResistance(30.0f); // TODO: Should have 'greater resistance'
+		this.setHardness(0.5F).setResistance(30.0F);
 		this.addMiningType(ToolType.PICKAXE);
 	}
 

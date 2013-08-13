@@ -29,6 +29,6 @@ package org.spout.vanilla.material.block.solid;
 public class SilverfishStone extends Stone {
 	public SilverfishStone(String name, int id) {
 		super(name, id);
-		this.setHardness(0.8F).setResistance(1.2F); // TODO Confirm resistance
+		this.setHardness(0.8F).setResistance(3.75F);
 	}
 }

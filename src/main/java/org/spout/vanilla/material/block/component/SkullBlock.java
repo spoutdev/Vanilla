@@ -49,7 +49,7 @@ public class SkullBlock extends VanillaBlockMaterial implements Attachable {
 	private SkullBlock(String name, int id) {
 		//TODO: Box Shape
 		super((short) 0x7, name, id, null, null, Skull.class);
-		this.setHardness(1.0F).setResistance(3.0F).setTransparent();
+		this.setHardness(1.0F).setResistance(5.0F).setTransparent();
 	}
 
 	private SkullBlock(String name, int data, SkullBlock parent) {

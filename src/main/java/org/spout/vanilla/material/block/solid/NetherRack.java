@@ -38,7 +38,7 @@ import org.spout.vanilla.material.block.component.FurnaceBlock;
 public class NetherRack extends Solid implements TimedCraftable {
 	public NetherRack(String name, int id) {
 		super(name, id, VanillaMaterialModels.NETHER_RACK);
-		this.setHardness(0.6F).setResistance(0.6F);
+		this.setHardness(0.6F).setResistance(2.0F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 

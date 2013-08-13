@@ -37,7 +37,7 @@ import org.spout.vanilla.material.block.attachable.PointAttachable;
 public class Glass extends Solid {
 	public Glass(String name, int id) {
 		super(name, id, VanillaMaterialModels.GLASS);
-		this.setHardness(0.3F).setResistance(0.5F).setTransparent();
+		this.setHardness(0.3F).setResistance(1.5F).setTransparent();
 		this.getDrops().DEFAULT.clear();
 	}
 

@@ -38,7 +38,7 @@ public class MushroomBlock extends Solid implements Fuel, InitializableMaterial 
 
 	public MushroomBlock(String name, int id) {
 		super(name, id, VanillaMaterialModels.MUSHROOM_BLOCK);
-		this.setHardness(0.2F).setResistance(0.3F);
+		this.setHardness(0.2F).setResistance(1.0F);
 	}
 
 	@Override

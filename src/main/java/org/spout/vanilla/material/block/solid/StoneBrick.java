@@ -39,7 +39,7 @@ public class StoneBrick extends Solid {
 
 	private StoneBrick(String name, String model) {
 		super((short) 0x0003, name, 98, model);
-		this.setHardness(1.5F).setResistance(10.0F);
+		this.setHardness(1.5F).setResistance(30.0F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 

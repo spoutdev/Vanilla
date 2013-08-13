@@ -47,6 +47,7 @@ public class Lava extends Liquid implements InitializableMaterial {
 	public Lava(String name, int id, boolean flowing) {
 		super(name, id, flowing, VanillaMaterialModels.LAVA);
 		this.setFlowDelay(1500);
+		this.setResistance(flowing ? 0.0F : 500.0F);
 		if (getEngine().getPlatform() == Platform.CLIENT) {
 			if (!getModel().getRenderMaterial().getRenderEffects().contains(VanillaEffects.LIQUID)) {
 				getModel().getRenderMaterial().addRenderEffect(VanillaEffects.LIQUID);

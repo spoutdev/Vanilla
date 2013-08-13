@@ -53,7 +53,7 @@ public class FarmLand extends VanillaBlockMaterial implements InitializableMater
 
 	public FarmLand(String name, int id) {
 		super(name, id, VanillaMaterialModels.FARM_LAND, new BoxShape(1, 1, 1));
-		this.setHardness(0.6F).setResistance(1.0F).setOpaque();
+		this.setHardness(0.6F).setResistance(3.0F).setOpaque();
 		this.addMiningType(ToolType.SPADE);
 	}
 

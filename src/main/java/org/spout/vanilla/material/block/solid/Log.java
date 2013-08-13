@@ -72,7 +72,7 @@ public class Log extends RotationalSolid implements DynamicMaterial, Fuel, Timed
 
 	private Log(String name, Sapling sapling, String model) {
 		super(dataMask, name, 17, model);
-		this.setHardness(2.0F).setResistance(10.F).setStepSound(SoundEffects.STEP_WOOD);
+		this.setHardness(2.0F).setResistance(10.0F).setStepSound(SoundEffects.STEP_WOOD);
 		this.addMiningType(ToolType.AXE);
 		this.sapling = sapling;
 	}

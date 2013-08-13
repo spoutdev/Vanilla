@@ -42,7 +42,7 @@ public class RedstoneBlock extends Solid implements RedstoneSource {
 
 	public RedstoneBlock(String name, int id) {
 		super(name, id, VanillaMaterialModels.REDSTONE_BLOCK);
-		this.setHardness(3.0F).setResistance(5.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
+		this.setHardness(3.0F).setResistance(30.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
 	}
 
 	@Override

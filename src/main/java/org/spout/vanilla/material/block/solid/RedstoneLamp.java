@@ -44,8 +44,7 @@ public class RedstoneLamp extends Solid implements InitializableMaterial, Redsto
 	public RedstoneLamp(String name, int id, boolean on, String model) {
 		super(name, id, model);
 		this.on = on;
-		// TODO: The resistance is not correct (?)
-		this.setHardness(0.3F).setResistance(0.5F);
+		this.setHardness(0.3F).setResistance(1.5F);
 	}
 
 	@Override

@@ -34,7 +34,7 @@ public class GlassPane extends VanillaBlockMaterial {
 	//TODO: Box Shape
 	public GlassPane(String name, int id) {
 		super(name, id, VanillaMaterialModels.GLASS_PANE, null);
-		this.setHardness(0.3F).setResistance(0.3F).setTransparent();
+		this.setHardness(0.3F).setResistance(1.5F).setTransparent();
 		this.getDrops().clear();
 	}
 

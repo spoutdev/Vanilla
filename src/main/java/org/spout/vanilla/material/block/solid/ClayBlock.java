@@ -36,7 +36,7 @@ import org.spout.vanilla.material.block.Solid;
 public class ClayBlock extends Solid implements InitializableMaterial {
 	public ClayBlock(String name, int id) {
 		super(name, id, VanillaMaterialModels.CLAY_BLOCK);
-		this.setHardness(0.6F).setResistance(1.0F).setStepSound(SoundEffects.STEP_GRAVEL);
+		this.setHardness(0.6F).setResistance(3.0F).setStepSound(SoundEffects.STEP_GRAVEL);
 		this.addMiningType(ToolType.SPADE);
 	}
 

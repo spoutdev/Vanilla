@@ -32,6 +32,7 @@ import org.spout.vanilla.material.Burnable;
 public class HayBale extends RotationalSolid implements Burnable {
 	public HayBale(String name, int id) {
 		super(name, id, VanillaMaterialModels.HAY_BALE);
+		this.setResistance(10.0F);
 	}
 
 	@Override

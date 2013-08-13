@@ -36,6 +36,7 @@ import gnu.trove.set.TIntSet;
 
 import org.spout.api.Spout;
 import org.spout.api.component.BlockComponentOwner;
+import org.spout.api.component.entity.EntityComponent;
 import org.spout.api.component.entity.PlayerNetworkComponent;
 import org.spout.api.datatable.ManagedMap;
 import org.spout.api.entity.Entity;
@@ -653,6 +654,15 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 			for (Message message : messages) {
 				getSession().send(message);
 			}
+		} else if (spawn) {
+			// For debugging purposes: log all entities with a missing protocol
+			Spout.getLogger().warning("Could not spawn Entity (" + e.getUID() + "): No Entity Protocol is set on network " + e.getNetwork());
+			StringBuilder bldr = new StringBuilder();
+			for (EntityComponent comp : e.getAll(EntityComponent.class)) {
+				bldr.append(" ");
+				bldr.append(comp.getClass().getSimpleName());
+			}
+			Spout.getLogger().warning("Set components:" + bldr.toString());
 		}
 	}
 

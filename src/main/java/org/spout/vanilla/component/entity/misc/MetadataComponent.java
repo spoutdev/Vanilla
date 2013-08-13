@@ -134,6 +134,15 @@ public class MetadataComponent extends VanillaEntityComponent {
 	}
 
 	/**
+	 * Removes a Metadata entry so it is no longer being updated
+	 * 
+	 * @param index to remove
+	 */
+	public void removeMeta(int index) {
+		meta.remove((byte) (index & 255));
+	}
+
+	/**
 	 * Tries to set a Metadata field to a new value using a Parameter.
 	 *
 	 * @param parameter to set to

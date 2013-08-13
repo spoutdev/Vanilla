@@ -28,18 +28,40 @@ package org.spout.vanilla.material.item.vehicle;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.Action;
+import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.component.entity.substance.vehicle.MinecartBase;
+import org.spout.vanilla.component.entity.minecart.MinecartType;
+import org.spout.vanilla.component.entity.substance.vehicle.Minecart;
 import org.spout.vanilla.material.block.rail.RailBase;
 import org.spout.vanilla.material.item.EntitySpawnItem;
 
-public class MinecartItem<T extends MinecartBase> extends EntitySpawnItem<T> {
-	public MinecartItem(String name, int id, Class<? extends T> spawnedComponent) {
+public class MinecartItem<T extends MinecartType> extends EntitySpawnItem<Minecart> {
+	private Class<? extends T> minecartType;
+
+	public MinecartItem(String name, int id, Class<? extends T> minecartType) {
 		super(name, id, null);
-		this.setSpawnedComponent(spawnedComponent);
+		this.setSpawnedComponent(Minecart.class);
+		this.setMinecartType(minecartType);
+	}
+
+	public Class<? extends T> getMinecartType() {
+		return this.minecartType;
+	}
+
+	public void setMinecartType(Class<? extends T> minecartType) {
+		this.minecartType = minecartType;
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public Minecart spawnEntity(Point position) {
+		Class<? extends Minecart> component = this.getSpawnedComponent();
+		Entity spawned = position.getWorld().createAndSpawnEntity(position, LoadOption.NO_LOAD, component, getMinecartType());
+		return spawned.add(component);
 	}
 
 	@Override

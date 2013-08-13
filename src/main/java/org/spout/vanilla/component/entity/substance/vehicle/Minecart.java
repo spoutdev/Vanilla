@@ -30,26 +30,36 @@ import org.spout.api.component.entity.PhysicsComponent;
 import org.spout.api.datatable.ManagedMap;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.Material;
 import org.spout.api.math.Vector3;
 
 import org.spout.physics.collision.shape.BoxShape;
 
+import org.spout.vanilla.component.entity.minecart.MinecartType;
+import org.spout.vanilla.component.entity.minecart.type.RideableMinecartType;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.misc.MetadataComponent;
 import org.spout.vanilla.data.Metadata;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
 import org.spout.vanilla.protocol.entity.object.ObjectType;
 
-public abstract class MinecartBase extends VehicleSubstance {
+public class Minecart extends VehicleSubstance {
 	@Override
 	public void onAttached() {
 		super.onAttached();
 		setEntityProtocol(new ObjectEntityProtocol(ObjectType.MINECART));
+
+		System.out.println("COUNT: " + getAttachedCount());
 		if (getAttachedCount() == 1) {
+			// Set drops
 			getOwner().add(DeathDrops.class).addDrop(new ItemStack(VanillaMaterials.MINECART, 1));
+			// Set the displayed block
+			setDisplayedBlock(getType().getDefaultDisplayedBlock());
 		}
+
 		PhysicsComponent physics = getOwner().getPhysics();
 		physics.activate(1f, new BoxShape(0.98f, 0.49f, 0.7f), false, true);
 
@@ -60,16 +70,24 @@ public abstract class MinecartBase extends VehicleSubstance {
 		metadata.addMeta(new Metadata<Integer>(Metadata.TYPE_INT, 20) {
 			@Override
 			public Integer getValue() {
-				short id = getOwner().getData().get(VanillaData.MINECART_BLOCK_ID);
-				short data = getOwner().getData().get(VanillaData.MINECART_BLOCK_DATA);
-				return (id & 0xFFFF) | (data << 16);
+				BlockMaterial material = getDisplayedBlock();
+				if (material instanceof VanillaBlockMaterial) {
+					VanillaBlockMaterial vanillaMat = (VanillaBlockMaterial) material;
+					return (vanillaMat.getMinecraftId()  & 0xFFFF) | (vanillaMat.getMinecraftData(vanillaMat.getData()) << 16);
+				} else {
+					return 0;
+				}
 			}
 
 			@Override
 			public void setValue(Integer value) {
 				int fullState = value.intValue();
-				getOwner().getData().put(VanillaData.MINECART_BLOCK_ID, (short) (fullState & 0xFFFF));
-				getOwner().getData().put(VanillaData.MINECART_BLOCK_DATA, (short) (fullState >> 16));
+				Material material = VanillaMaterials.getMaterial((short) (fullState & 0xFFFF), (short) (fullState >> 16));
+				if (material instanceof BlockMaterial) {
+					setDisplayedBlock((BlockMaterial) material);
+				} else {
+					setDisplayedBlock(VanillaMaterials.AIR);
+				}
 			}
 		});
 		metadata.addMeta(Metadata.TYPE_INT, 21, VanillaData.MINECART_BLOCK_OFFSET);
@@ -87,7 +105,7 @@ public abstract class MinecartBase extends VehicleSubstance {
 				} else if (getDisplayedBlock() == VanillaMaterials.AIR) {
 					// Make visible...make visible what? Just use the default Block for now
 					// Hopefully the real block to display will arrive later on
-					setDisplayedBlock(getDefaultDisplayedBlock());
+					setDisplayedBlock(Minecart.this.getType().getDefaultDisplayedBlock());
 				}
 			}
 		});
@@ -112,6 +130,12 @@ public abstract class MinecartBase extends VehicleSubstance {
 		getOwner().getPhysics().setMovementVelocity(new Vector3(0.2, 0.0, 0.0));
 	}
 
+	@Override
+	protected void onDestroy() {
+		getType().onDestroy();
+		super.onDestroy();
+	}
+
 	/**
 	 * Shakes this Minecart back and forth
 	 *
@@ -123,6 +147,28 @@ public abstract class MinecartBase extends VehicleSubstance {
 		setShakingForce(getShakingForce() + amount);
 	}
 
+	/**
+	 * Sets the Minecart Type component of this Minecart
+	 * 
+	 * @param type to set to
+	 */
+	public <T extends MinecartType> T setType(Class<T> type) {
+		return getOwner().add(type);
+	}
+
+	/**
+	 * Gets the Minecart Type component of this Minecart
+	 * 
+	 * @return Minecart Type
+	 */
+	public MinecartType getType() {
+		MinecartType type = getOwner().get(MinecartType.class);
+		if (type == null) {
+			type = setType(RideableMinecartType.class);
+		}
+		return type;
+	}
+
 	public int getShakingForce() {
 		return getOwner().getData().get(VanillaData.MINECART_SHAKE_FORCE);
 	}
@@ -130,13 +176,6 @@ public abstract class MinecartBase extends VehicleSubstance {
 	public void setShakingForce(int force) {
 		getOwner().getData().put(VanillaData.MINECART_SHAKE_FORCE, force);
 	}
-
-	/**
-	 * Gets the default Block Material that is displayed in this Minecart
-	 *
-	 * @return Default Block Material
-	 */
-	public abstract BlockMaterial getDefaultDisplayedBlock();
 
 	/**
 	 * Gets the displayed block in this Minecart. If no Block is displayed, AIR is returned.

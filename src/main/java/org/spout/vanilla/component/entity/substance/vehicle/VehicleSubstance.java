@@ -102,6 +102,7 @@ public class VehicleSubstance extends Substance {
 						onDestroy();
 						getOwner().remove();
 					}
+					break;
 			}
 		}
 	}

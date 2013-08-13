@@ -108,7 +108,7 @@ public class VanillaData {
 	public static final DefaultedKey<Float> MAX_UPDATE_DELAY = new DefaultedKeyImpl<Float>("max_update_delay", 4f);
 	public static final DefaultedKey<Float> EFFECT_DURATION = new DefaultedKeyImpl<Float>("effect_duration", 9f);
 	//Entity data
-	public static final DefaultedKey<HashMap> ATTACHED_COUNT = new DefaultedKeyImpl<HashMap>("attached_count", new HashMap<Class<? extends VanillaEntityComponent>, Integer>());
+	public static final DefaultedKey<HashMap<Class<? extends VanillaEntityComponent>, Integer>> ATTACHED_COUNT = new DefaultedKeyFactory<>("attached_count", HashMap.class);
 	public static final DefaultedKey<Boolean> IS_FALLING = new DefaultedKeyImpl<Boolean>("is_falling", false);
 	public static final DefaultedKey<Boolean> IS_ON_GROUND = new DefaultedKeyImpl<Boolean>("is_on_Ground", true);
 	public static final DefaultedKey<Boolean> IS_JUMPING = new DefaultedKeyImpl<Boolean>("is_jumping", false);

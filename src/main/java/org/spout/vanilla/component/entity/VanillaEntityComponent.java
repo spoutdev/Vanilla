@@ -36,8 +36,8 @@ import org.spout.vanilla.protocol.VanillaNetworkProtocol;
 import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
 
 public class VanillaEntityComponent extends EntityComponent {
+
 	@Override
-	@SuppressWarnings ("unchecked")
 	public void onAttached() {
 		HashMap<Class<? extends VanillaEntityComponent>, Integer> map = getOwner().getData().get(VanillaData.ATTACHED_COUNT);
 		Integer count = map.get(getClass());

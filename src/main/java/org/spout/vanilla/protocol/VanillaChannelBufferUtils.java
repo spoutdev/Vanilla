@@ -161,6 +161,17 @@ public final class VanillaChannelBufferUtils {
 		return new String(characters);
 	}
 
+	/**
+	 * Gets the size of a String represented in the formats read and written by
+	 * {@link #writeString(ChannelBuffer, String)} and {@link #readString(ChannelBuffer)}.
+	 * 
+	 * @param str to get the written length of
+	 * @return String length
+	 */
+	public static int getStringLength(String str) {
+		return str.length() * 2 + 2;
+	}
+
 	public static ItemStack readItemStack(ChannelBuffer buffer) throws IOException {
 		short id = buffer.readShort();
 		if (id < 0) {

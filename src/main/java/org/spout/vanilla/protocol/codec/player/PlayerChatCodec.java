@@ -26,16 +26,24 @@
  */
 package org.spout.vanilla.protocol.codec.player;
 
+import java.io.IOException;
+
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
+import org.spout.api.Platform;
+import org.spout.api.Spout;
 import org.spout.api.protocol.MessageCodec;
-import org.spout.api.util.ChannelBufferUtils;
 
+import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.player.PlayerChatMessage;
 
+/**
+ * Chat message codec to use when in Server mode
+ */
 public final class PlayerChatCodec extends MessageCodec<PlayerChatMessage> {
 	private static final JsonParser parser = new JsonParser();
 
@@ -44,19 +52,56 @@ public final class PlayerChatCodec extends MessageCodec<PlayerChatMessage> {
 	}
 
 	@Override
-	public PlayerChatMessage decode(ChannelBuffer buffer) {
-		// TODO: Chat support is much more than just 'text'
-		String message = ChannelBufferUtils.readString(buffer);
+	public PlayerChatMessage decodeFromClient(ChannelBuffer buffer) throws IOException {
+		// As a server we read messages from the client as plain text
+		String message = VanillaChannelBufferUtils.readString(buffer);
+		return new PlayerChatMessage(message);
+	}
+
+	@Override
+	public PlayerChatMessage decodeFromServer(ChannelBuffer buffer) throws IOException {
+		// As a client we read messages from the server using the JSON parser
+		String message = VanillaChannelBufferUtils.readString(buffer);
 		return new PlayerChatMessage(parser.parse(message).getAsJsonObject().get("text").getAsString());
 	}
 
 	@Override
-	public ChannelBuffer encode(PlayerChatMessage message) {
-		// TODO: Chat support is much more than just 'text'
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+	public ChannelBuffer encodeToClient(PlayerChatMessage message) {
+		// As a server we send messages to the client in JSON format
 		JsonObject json = new JsonObject();
 		json.addProperty("text", message.getMessage());
-		ChannelBufferUtils.writeString(buffer, json.toString());
+		return bufferMessage(json.toString());
+	}
+
+	@Override
+	public ChannelBuffer encodeToServer(PlayerChatMessage message) {
+		// As a client we send messages to the server in plain text format
+		return bufferMessage(message.getMessage());
+	}
+
+	@Override
+	public PlayerChatMessage decode(ChannelBuffer buffer) throws IOException {
+		// Basic implementation (this should never be called anyway!)
+		if (Spout.getPlatform() == Platform.CLIENT) {
+			return decodeFromServer(buffer);
+		} else {
+			return decodeFromClient(buffer);
+		}
+	}
+
+	@Override
+	public ChannelBuffer encode(PlayerChatMessage message) {
+		// Basic implementation (this should never be called anyway!)
+		if (Spout.getPlatform() == Platform.CLIENT) {
+			return encodeToServer(message);
+		} else {
+			return encodeToClient(message);
+		}
+	}
+
+	private ChannelBuffer bufferMessage(String message) {
+		ChannelBuffer buffer = ChannelBuffers.buffer(VanillaChannelBufferUtils.getStringLength(message));
+		VanillaChannelBufferUtils.writeString(buffer, message);
 		return buffer;
 	}
 }

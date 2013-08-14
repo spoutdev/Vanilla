@@ -52,7 +52,6 @@ public class Minecart extends VehicleSubstance {
 		super.onAttached();
 		setEntityProtocol(new ObjectEntityProtocol(ObjectType.MINECART));
 
-		System.out.println("COUNT: " + getAttachedCount());
 		if (getAttachedCount() == 1) {
 			// Set drops
 			getOwner().add(DeathDrops.class).addDrop(new ItemStack(VanillaMaterials.MINECART, 1));

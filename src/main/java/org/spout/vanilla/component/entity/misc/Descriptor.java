@@ -24,18 +24,48 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.entity.substance;
+package org.spout.vanilla.component.entity.misc;
 
+import org.spout.api.geo.discrete.Point;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
-import org.spout.vanilla.component.entity.misc.Descriptor;
 
-public abstract class Substance extends VanillaEntityComponent {
+/**
+ * Creates a description of entities (mainly to help debugging them)
+ */
+public class Descriptor extends VanillaEntityComponent {
+	private String name = "Unknown";
 
-	@Override
-	public void onAttached() {
-		super.onAttached();
+	/**
+	 * Gets the name of the Entity
+	 * 
+	 * @return entity name
+	 */
+	public String getName() {
+		return name;
+	}
 
-		// Description (use Class name as default)
-		getOwner().add(Descriptor.class).setName(getClass().getSimpleName());
+	/**
+	 * Sets the name of the Entity
+	 * 
+	 * @param name of the Entity to set to
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * Generates a small description that helps identify where and what this Entity is
+	 * 
+	 * @return Entity description
+	 */
+	public String getDescription() {
+		Point pos = getOwner().getPhysics().getPosition();
+		StringBuilder desc = new StringBuilder();
+		desc.append(getName()).append(' ');
+		desc.append("[x=").append(pos.getBlockX());
+		desc.append(",y=").append(pos.getBlockY());
+		desc.append(",z=").append(pos.getBlockZ());
+		desc.append(",ID=").append(getOwner().getId());
+		return desc.toString();
 	}
 }

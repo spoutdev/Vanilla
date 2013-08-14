@@ -191,7 +191,7 @@ public class VanillaData {
 	public static final DefaultedKey<Integer> MINECART_SHAKE_FORCE = new DefaultedKeyImpl<Integer>("shakingForce", 0);
 	public static final DefaultedKey<Short> MINECART_BLOCK_ID = new DefaultedKeyImpl<Short>("displayblockid", (short) 0);
 	public static final DefaultedKey<Short> MINECART_BLOCK_DATA = new DefaultedKeyImpl<Short>("displayblockdata", (short) 0);
-	public static final DefaultedKey<Integer> MINECART_BLOCK_OFFSET = new DefaultedKeyImpl<Integer>("displayblockoffset", 9);
+	public static final DefaultedKey<Integer> MINECART_BLOCK_OFFSET = new DefaultedKeyImpl<Integer>("displayblockoffset", 6);
 	//Sky specific
 	public static final DefaultedKey<Long> MAX_TIME = new DefaultedKeyImpl<Long>("max_time", 24000L);
 	public static final DefaultedKey<Long> TIME_RATE = new DefaultedKeyImpl<Long>("time_rate", 1L);

@@ -34,16 +34,11 @@ import com.google.gson.JsonParser;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
-import org.spout.api.Platform;
-import org.spout.api.Spout;
 import org.spout.api.protocol.MessageCodec;
 
 import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.player.PlayerChatMessage;
 
-/**
- * Chat message codec to use when in Server mode
- */
 public final class PlayerChatCodec extends MessageCodec<PlayerChatMessage> {
 	private static final JsonParser parser = new JsonParser();
 
@@ -77,26 +72,6 @@ public final class PlayerChatCodec extends MessageCodec<PlayerChatMessage> {
 	public ChannelBuffer encodeToServer(PlayerChatMessage message) {
 		// As a client we send messages to the server in plain text format
 		return bufferMessage(message.getMessage());
-	}
-
-	@Override
-	public PlayerChatMessage decode(ChannelBuffer buffer) throws IOException {
-		// Basic implementation (this should never be called anyway!)
-		if (Spout.getPlatform() == Platform.CLIENT) {
-			return decodeFromServer(buffer);
-		} else {
-			return decodeFromClient(buffer);
-		}
-	}
-
-	@Override
-	public ChannelBuffer encode(PlayerChatMessage message) {
-		// Basic implementation (this should never be called anyway!)
-		if (Spout.getPlatform() == Platform.CLIENT) {
-			return encodeToServer(message);
-		} else {
-			return encodeToClient(message);
-		}
 	}
 
 	private ChannelBuffer bufferMessage(String message) {

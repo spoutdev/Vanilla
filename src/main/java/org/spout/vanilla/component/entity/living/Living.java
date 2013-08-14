@@ -35,6 +35,7 @@ import org.spout.vanilla.ai.examiner.VanillaBlockExaminer;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.component.entity.VanillaNetworkComponent;
 import org.spout.vanilla.component.entity.misc.Burn;
+import org.spout.vanilla.component.entity.misc.Descriptor;
 import org.spout.vanilla.component.entity.misc.Drowning;
 import org.spout.vanilla.component.entity.misc.Effects;
 import org.spout.vanilla.component.entity.misc.EntityHead;
@@ -65,6 +66,9 @@ public abstract class Living extends VanillaEntityComponent {
 		if (!(holder instanceof Player)) {
 			holder.add(VanillaNetworkComponent.class);
 		}
+
+		// Description (use Class name as default)
+		holder.add(Descriptor.class).setName(getClass().getSimpleName());
 
 		// Add metadata associated with general living Entity properties
 		getOwner().add(MetadataComponent.class).addMeta(new Metadata<Byte>(Metadata.TYPE_BYTE, 0) {

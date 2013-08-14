@@ -52,4 +52,18 @@ public class HorseInventory extends Inventory {
 		}
 		return true;
 	}
+
+	public int getArmorTypeId() {
+		Material material = get(ARMOR_SLOT) != null ? get(ARMOR_SLOT).getMaterial() : null;
+		 if (material instanceof HorseArmor) {
+			return ((HorseArmor) material).getTypeId();
+		} else {
+			return 0;
+		}
+	}
+
+	public boolean hasSaddle() {
+		ItemStack stack = get(SADDLE_SLOT);
+		return stack != null && stack.getMaterial().isMaterial(VanillaMaterials.SADDLE);
+	}
 }

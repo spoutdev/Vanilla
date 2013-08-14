@@ -29,6 +29,10 @@ package org.spout.vanilla.material.item.armor;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public abstract class HorseArmor extends VanillaItemMaterial {
+	public static final int IRON_ID = 1;
+	public static final int GOLD_ID = 2;
+	public static final int DIAMOND_ID = 3;
+
 	private int protection;
 
 	protected HorseArmor(String name, int id) {
@@ -36,11 +40,21 @@ public abstract class HorseArmor extends VanillaItemMaterial {
 		this.setMaxStackSize(1);
 	}
 
+	/**
+	 * Returns the amount of protection the currently equipped armor provides
+	 * @return
+	 */
 	public int getBaseProtection() {
 		return protection;
 	}
 
-	protected void setBaseProtection(int protection) {
+	protected final void setBaseProtection(int protection) {
 		this.protection = protection;
 	}
+
+	/**
+	 *
+	 * @return type ID of Armor
+	 */
+	public abstract int getTypeId();
 }

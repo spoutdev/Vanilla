@@ -33,4 +33,9 @@ public class GoldHorseArmor extends HorseArmor {
 		super(name, id);
 		setBaseProtection(7);
 	}
+
+	@Override
+	public int getTypeId() {
+		return GOLD_ID;
+	}
 }

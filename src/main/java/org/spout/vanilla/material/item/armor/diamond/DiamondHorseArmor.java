@@ -33,4 +33,9 @@ public class DiamondHorseArmor extends HorseArmor {
 		super(name, id);
 		setBaseProtection(11);
 	}
+
+	@Override
+	public int getTypeId() {
+		return DIAMOND_ID;
+	}
 }

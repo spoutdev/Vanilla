@@ -43,11 +43,17 @@ import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
 import org.spout.vanilla.protocol.entity.creature.CreatureType;
 
 public class Horse extends Animal implements Container, Passive, Tameable {
+	public static final int DEFAULT_HEALTH = 22;
+	public static final int TYPE_INDEX = 19; // MC Data index for horse type
+	public static final int VARIANT_INDEX = 20; // MC Data index for horse variant & marking
+	public static final int OWNER_INDEX = 21; // MC Data index for owner's name
+	public static final int ARMOR_TYPE_INDEX = 22; // MC Data index for amount of armor type the horse currently wears, None 0, Iron 1, Gold 2, Diamond 3
+
 	@Override
 	public void onAttached() {
 		setEntityProtocol(new CreatureProtocol(CreatureType.HORSE));
 		if (getAttachedCount() == 1) {
-			getOwner().add(Health.class).setSpawnHealth(22);
+			getOwner().add(Health.class).setSpawnHealth(DEFAULT_HEALTH);
 		}
 		super.onAttached();
 
@@ -58,8 +64,35 @@ public class Horse extends Animal implements Container, Passive, Tameable {
 		metadata.addMeta(new Metadata<Integer>(Metadata.TYPE_INT, 16) {
 			@Override
 			public Integer getValue() {
-				// TODO Auto-generated method stub
-				return 0;
+				int value = 0;
+				if (isTamed()) {
+					value |= 2;
+				}
+				if (getInventory().hasSaddle()) {
+					value |= 4;
+				}
+				/*
+				TODO: Check if inventory is setup to have a chest or not.
+				if (hasChest()) {
+					value |= 8;
+				}
+				TODO: Check if horse has already bred.
+				if (hasBred()) {
+					value |= 16;
+				}
+			    */
+
+				if (isEatingBlocking()) {
+					value |= 32;
+				}
+				/*
+				TODO: rearing
+				if (isRearing() {
+					value |= 64;
+				}
+
+				 */
+				return value;
 			}
 
 			@Override
@@ -69,10 +102,10 @@ public class Horse extends Animal implements Container, Passive, Tameable {
 		});
 
 		// Metadata for the type ID of the Horse
-		metadata.addMeta(Metadata.TYPE_BYTE, 19, VanillaData.ENTITY_CATEGORY);
+		metadata.addMeta(Metadata.TYPE_BYTE, TYPE_INDEX, VanillaData.ENTITY_CATEGORY);
 
 		// Metadata for variant and marking
-		metadata.addMeta(new Metadata<Integer>(Metadata.TYPE_INT, 20) {
+		metadata.addMeta(new Metadata<Integer>(Metadata.TYPE_INT, VARIANT_INDEX) {
 			@Override
 			public Integer getValue() {
 				return (getVariant().getVariantId() & 0x00ff) | (getMarking().getMarkingId() & 0xff00);
@@ -86,19 +119,18 @@ public class Horse extends Animal implements Container, Passive, Tameable {
 		});
 
 		// Metadata for the owner name of the Horse
-		metadata.addMeta(21, Metadata.TYPE_STRING, VanillaData.OWNER);
+		metadata.addMeta(OWNER_INDEX, Metadata.TYPE_STRING, VanillaData.OWNER);
 
-		//TODO: Implement the armor type INT value (what is it? Material ID?)
-		metadata.addMeta(new Metadata<Integer>(Metadata.TYPE_INT, 22) {
+		// Metadata for the currently equipped Armor
+		metadata.addMeta(new Metadata<Integer>(Metadata.TYPE_INT, ARMOR_TYPE_INDEX) {
 			@Override
 			public Integer getValue() {
-				// TODO Auto-generated method stub
-				return 0;
+				return getHorseTypeId() > 0 ? 0 : getInventory().getArmorTypeId();
 			}
 
 			@Override
 			public void setValue(Integer value) {
-				// TODO Auto-generated method stub
+				// Intentionally left blank, armor types can not be set via metadata
 			}
 		});
 	}

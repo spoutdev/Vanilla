@@ -73,6 +73,7 @@ public class Skeleton extends Living implements Hostile {
 		if (getAttachedCount() == 1) {
 			getOwner().add(Health.class).setSpawnHealth(20);
 		}
+		//TODO: There are 2 kinds of damage for Skeles : Sword & Bow, along with different AI when either is equipped
 
 		// Default category of 0
 		getOwner().getData().put(VanillaData.ENTITY_CATEGORY, (byte) 0);

@@ -33,4 +33,9 @@ public class IronHorseArmor extends HorseArmor {
 		super(name, id);
 		setBaseProtection(5);
 	}
+
+	@Override
+	public int getTypeId() {
+		return IRON_ID;
+	}
 }

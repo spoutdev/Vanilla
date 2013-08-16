@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.codec.player;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
@@ -38,7 +38,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.reposition.NullRepositionManager;
 
-import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.player.PlayerBlockPlacementMessage;
 
 public final class PlayerBlockPlacementCodec extends MessageCodec<PlayerBlockPlacementMessage> {
@@ -47,13 +47,13 @@ public final class PlayerBlockPlacementCodec extends MessageCodec<PlayerBlockPla
 	}
 
 	@Override
-	public PlayerBlockPlacementMessage decode(ChannelBuffer buffer) throws IOException {
+	public PlayerBlockPlacementMessage decode(ByteBuf buffer) throws IOException {
 		int x = buffer.readInt();
 		int y = buffer.readUnsignedByte();
 		int z = buffer.readInt();
 		BlockFace direction = BlockFaces.BTEWNS.get(buffer.readUnsignedByte(), BlockFace.THIS);
 
-		ItemStack heldItem = VanillaChannelBufferUtils.readItemStack(buffer);
+		ItemStack heldItem = VanillaByteBufUtils.readItemStack(buffer);
 
 		float dx = ((float) (buffer.readByte() & 0xFF)) / 16.0F;
 		float dy = ((float) (buffer.readByte() & 0xFF)) / 16.0F;
@@ -63,13 +63,13 @@ public final class PlayerBlockPlacementCodec extends MessageCodec<PlayerBlockPla
 	}
 
 	@Override
-	public ChannelBuffer encode(PlayerBlockPlacementMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+	public ByteBuf encode(PlayerBlockPlacementMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer();
 		buffer.writeInt(message.getX());
 		buffer.writeByte(message.getY());
 		buffer.writeInt(message.getZ());
 		buffer.writeByte(BlockFaces.BTEWNS.indexOf(message.getDirection(), 255));
-		VanillaChannelBufferUtils.writeItemStack(buffer, message.getHeldItem());
+		VanillaByteBufUtils.writeItemStack(buffer, message.getHeldItem());
 		buffer.writeByte((int) (message.getFace().getX() * 16.0F));
 		buffer.writeByte((int) (message.getFace().getY() * 16.0F));
 		buffer.writeByte((int) (message.getFace().getZ() * 16.0F));

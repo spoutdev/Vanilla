@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.codec.entity.pos;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
@@ -41,7 +41,7 @@ public final class EntityTeleportCodec extends MessageCodec<EntityTeleportMessag
 	}
 
 	@Override
-	public EntityTeleportMessage decode(ChannelBuffer buffer) throws IOException {
+	public EntityTeleportMessage decode(ByteBuf buffer) throws IOException {
 		int id = buffer.readInt();
 		int x = buffer.readInt();
 		int y = buffer.readInt();
@@ -52,8 +52,8 @@ public final class EntityTeleportCodec extends MessageCodec<EntityTeleportMessag
 	}
 
 	@Override
-	public ChannelBuffer encode(EntityTeleportMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(18);
+	public ByteBuf encode(EntityTeleportMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer(18);
 		buffer.writeInt(message.getEntityId());
 		buffer.writeInt(message.getX());
 		buffer.writeInt(message.getY());

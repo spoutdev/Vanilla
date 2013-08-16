@@ -44,12 +44,12 @@ public class RconEncoder /*extends OneToOneEncoder*/ {
 			if (codec == null) {
 				throw new IOException("No codec for " + msg.getClass());
 			}
-			ChannelBuffer headerBuf = ChannelBuffers.buffer(ByteOrder.LITTLE_ENDIAN, 12);
-			ChannelBuffer payloadBuf = codec.encode(msg);
+			ByteBuf headerBuf = Unpooled.buffer(ByteOrder.LITTLE_ENDIAN, 12);
+			ByteBuf payloadBuf = codec.encode(msg);
 			headerBuf.writeInt(8 + payloadBuf.writerIndex() + 1); // Length
 			headerBuf.writeInt(session.getRequestId()); // Request id
 			headerBuf.writeInt(codec.getOpcode()); // Opcode
-			return ChannelBuffers.wrappedBuffer(headerBuf, payloadBuf);
+			return Unpooled.wrappedBuffer(headerBuf, payloadBuf);
 		}
 		return obj;
 	}*/

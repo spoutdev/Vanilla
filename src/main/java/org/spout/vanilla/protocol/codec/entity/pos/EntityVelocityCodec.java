@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.codec.entity.pos;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
@@ -41,7 +41,7 @@ public final class EntityVelocityCodec extends MessageCodec<EntityVelocityMessag
 	}
 
 	@Override
-	public EntityVelocityMessage decode(ChannelBuffer buffer) throws IOException {
+	public EntityVelocityMessage decode(ByteBuf buffer) throws IOException {
 		int id = buffer.readInt();
 		int vx = buffer.readUnsignedShort();
 		int vy = buffer.readUnsignedShort();
@@ -50,8 +50,8 @@ public final class EntityVelocityCodec extends MessageCodec<EntityVelocityMessag
 	}
 
 	@Override
-	public ChannelBuffer encode(EntityVelocityMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(10);
+	public ByteBuf encode(EntityVelocityMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer(10);
 		buffer.writeInt(message.getEntityId());
 		buffer.writeShort(message.getVelocityX());
 		buffer.writeShort(message.getVelocityY());

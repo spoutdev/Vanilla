@@ -28,13 +28,13 @@ package org.spout.vanilla.protocol.codec.world;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.reposition.NullRepositionManager;
 
-import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.world.ParticleEffectMessage;
 
 public class ParticleEffectCodec extends MessageCodec<ParticleEffectMessage> {
@@ -43,8 +43,8 @@ public class ParticleEffectCodec extends MessageCodec<ParticleEffectMessage> {
 	}
 
 	@Override
-	public ParticleEffectMessage decode(ChannelBuffer buffer) throws IOException {
-		String name = VanillaChannelBufferUtils.readString(buffer);
+	public ParticleEffectMessage decode(ByteBuf buffer) throws IOException {
+		String name = VanillaByteBufUtils.readString(buffer);
 		float x = buffer.readFloat();
 		float y = buffer.readFloat();
 		float z = buffer.readFloat();
@@ -57,9 +57,9 @@ public class ParticleEffectCodec extends MessageCodec<ParticleEffectMessage> {
 	}
 
 	@Override
-	public ChannelBuffer encode(ParticleEffectMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		VanillaChannelBufferUtils.writeString(buffer, message.getName());
+	public ByteBuf encode(ParticleEffectMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer();
+		VanillaByteBufUtils.writeString(buffer, message.getName());
 		buffer.writeFloat(message.getX());
 		buffer.writeFloat(message.getY());
 		buffer.writeFloat(message.getZ());

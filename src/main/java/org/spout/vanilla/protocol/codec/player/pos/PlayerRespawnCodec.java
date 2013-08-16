@@ -28,12 +28,12 @@ package org.spout.vanilla.protocol.codec.player.pos;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerRespawnMessage;
 
 public final class PlayerRespawnCodec extends MessageCodec<PlayerRespawnMessage> {
@@ -42,23 +42,23 @@ public final class PlayerRespawnCodec extends MessageCodec<PlayerRespawnMessage>
 	}
 
 	@Override
-	public PlayerRespawnMessage decode(ChannelBuffer buffer) throws IOException {
+	public PlayerRespawnMessage decode(ByteBuf buffer) throws IOException {
 		int dimension = buffer.readInt();
 		byte difficulty = buffer.readByte();
 		byte creative = buffer.readByte();
 		int height = buffer.readUnsignedShort();
-		String worldType = VanillaChannelBufferUtils.readString(buffer);
+		String worldType = VanillaByteBufUtils.readString(buffer);
 		return new PlayerRespawnMessage(dimension, difficulty, creative, height, worldType);
 	}
 
 	@Override
-	public ChannelBuffer encode(PlayerRespawnMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+	public ByteBuf encode(PlayerRespawnMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer();
 		buffer.writeInt(message.getDimension());
 		buffer.writeByte(message.getDifficulty());
 		buffer.writeByte(message.getGameMode());
 		buffer.writeShort(message.getWorldHeight());
-		VanillaChannelBufferUtils.writeString(buffer, message.getWorldType());
+		VanillaByteBufUtils.writeString(buffer, message.getWorldType());
 		return buffer;
 	}
 }

@@ -28,12 +28,12 @@ package org.spout.vanilla.protocol.codec.scoreboard;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardScoreMessage;
 
 public class ScoreboardScoreCodec extends MessageCodec<ScoreboardScoreMessage> {
@@ -42,25 +42,25 @@ public class ScoreboardScoreCodec extends MessageCodec<ScoreboardScoreMessage> {
 	}
 
 	@Override
-	public ScoreboardScoreMessage decode(ChannelBuffer buffer) throws IOException {
-		String item = VanillaChannelBufferUtils.readString(buffer);
+	public ScoreboardScoreMessage decode(ByteBuf buffer) throws IOException {
+		String item = VanillaByteBufUtils.readString(buffer);
 		boolean remove = buffer.readByte() == 1;
 		String name = null;
 		int value = 0;
 		if (!remove) {
-			name = VanillaChannelBufferUtils.readString(buffer);
+			name = VanillaByteBufUtils.readString(buffer);
 			value = buffer.readInt();
 		}
 		return new ScoreboardScoreMessage(item, remove, name, value);
 	}
 
 	@Override
-	public ChannelBuffer encode(ScoreboardScoreMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		VanillaChannelBufferUtils.writeString(buffer, message.getItem());
+	public ByteBuf encode(ScoreboardScoreMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer();
+		VanillaByteBufUtils.writeString(buffer, message.getItem());
 		buffer.writeByte(message.isRemove() ? 1 : 0);
 		if (!message.isRemove()) {
-			VanillaChannelBufferUtils.writeString(buffer, message.getScoreboard());
+			VanillaByteBufUtils.writeString(buffer, message.getScoreboard());
 			buffer.writeInt(message.getValue());
 		}
 		return buffer;

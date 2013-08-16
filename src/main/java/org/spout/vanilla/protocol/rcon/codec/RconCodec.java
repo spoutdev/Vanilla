@@ -28,9 +28,9 @@ package org.spout.vanilla.protocol.rcon.codec;
 
 import java.nio.ByteOrder;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
-import org.jboss.netty.util.CharsetUtil;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import io.netty.util.CharsetUtil;
 
 import org.spout.api.protocol.MessageCodec;
 
@@ -45,9 +45,10 @@ public abstract class RconCodec<T extends RconMessage> extends MessageCodec<T> {
 	}
 
 	@Override
-	public ChannelBuffer encode(T message) {
+	public ByteBuf encode(T message) {
 		byte[] bytes = message.getPayload().getBytes(CharsetUtil.US_ASCII);
-		ChannelBuffer buffer = ChannelBuffers.buffer(ByteOrder.LITTLE_ENDIAN, bytes.length + 2);
+		ByteBuf buffer = Unpooled.buffer(bytes.length + 2);
+		buffer.order(ByteOrder.LITTLE_ENDIAN);
 		buffer.writeBytes(bytes);
 		buffer.writeByte(0);
 		buffer.writeByte(0);
@@ -55,8 +56,9 @@ public abstract class RconCodec<T extends RconMessage> extends MessageCodec<T> {
 	}
 
 	@Override
-	public T decode(ChannelBuffer buffer) {
-		ChannelBuffer expandingBytes = ChannelBuffers.dynamicBuffer(buffer.writerIndex());
+	public T decode(ByteBuf buffer) {
+		buffer.order(ByteOrder.LITTLE_ENDIAN);
+		ByteBuf expandingBytes = Unpooled.buffer(buffer.writerIndex());
 		byte b;
 		while ((b = buffer.readByte()) != 0) {
 			expandingBytes.writeByte(b);

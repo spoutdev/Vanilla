@@ -28,12 +28,12 @@ package org.spout.vanilla.protocol.codec.player.conn;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerListMessage;
 
 public class PlayerListCodec extends MessageCodec<PlayerListMessage> {
@@ -42,17 +42,17 @@ public class PlayerListCodec extends MessageCodec<PlayerListMessage> {
 	}
 
 	@Override
-	public PlayerListMessage decode(ChannelBuffer buffer) throws IOException {
-		String name = VanillaChannelBufferUtils.readString(buffer);
+	public PlayerListMessage decode(ByteBuf buffer) throws IOException {
+		String name = VanillaByteBufUtils.readString(buffer);
 		boolean addOrRemove = buffer.readByte() == 1;
 		short ping = buffer.readShort();
 		return new PlayerListMessage(name, addOrRemove, ping);
 	}
 
 	@Override
-	public ChannelBuffer encode(PlayerListMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		VanillaChannelBufferUtils.writeString(buffer, message.getPlayerName());
+	public ByteBuf encode(PlayerListMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer();
+		VanillaByteBufUtils.writeString(buffer, message.getPlayerName());
 		buffer.writeByte(message.playerIsOnline() ? 1 : 0);
 		buffer.writeShort(message.getPing());
 		return buffer;

@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.plugin;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.util.Named;
@@ -47,15 +47,15 @@ public class BeaconCodec extends MessageCodec<BeaconMessage> implements Named {
 	}
 
 	@Override
-	public BeaconMessage decode(ChannelBuffer buffer) throws IOException {
+	public BeaconMessage decode(ByteBuf buffer) throws IOException {
 		int primary = buffer.readInt();
 		int secondary = buffer.readInt();
 		return new BeaconMessage(primary, secondary);
 	}
 
 	@Override
-	public ChannelBuffer encode(BeaconMessage msg) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(9);
+	public ByteBuf encode(BeaconMessage msg) throws IOException {
+		ByteBuf buffer = Unpooled.buffer(9);
 		buffer.writeInt(msg.getPrimaryEffect());
 		buffer.writeInt(msg.getSecondaryEffect());
 		return buffer;

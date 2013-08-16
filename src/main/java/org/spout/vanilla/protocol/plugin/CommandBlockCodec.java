@@ -28,13 +28,13 @@ package org.spout.vanilla.protocol.plugin;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.util.Named;
 
-import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaByteBufUtils;
 
 public class CommandBlockCodec extends MessageCodec<CommandBlockMessage> implements Named {
 	public static final String CHANNEL = "MC|AdvCdm";
@@ -49,21 +49,21 @@ public class CommandBlockCodec extends MessageCodec<CommandBlockMessage> impleme
 	}
 
 	@Override
-	public CommandBlockMessage decode(ChannelBuffer buffer) throws IOException {
+	public CommandBlockMessage decode(ByteBuf buffer) throws IOException {
 		int x = buffer.readInt();
 		int y = buffer.readInt();
 		int z = buffer.readInt();
-		String cmd = VanillaChannelBufferUtils.readString(buffer);
+		String cmd = VanillaByteBufUtils.readString(buffer);
 		return new CommandBlockMessage(x, y, z, cmd);
 	}
 
 	@Override
-	public ChannelBuffer encode(CommandBlockMessage msg) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+	public ByteBuf encode(CommandBlockMessage msg) throws IOException {
+		ByteBuf buffer = Unpooled.buffer();
 		buffer.writeInt(msg.getX());
 		buffer.writeInt(msg.getY());
 		buffer.writeInt(msg.getZ());
-		VanillaChannelBufferUtils.writeString(buffer, msg.getCommand());
+		VanillaByteBufUtils.writeString(buffer, msg.getCommand());
 		return buffer;
 	}
 }

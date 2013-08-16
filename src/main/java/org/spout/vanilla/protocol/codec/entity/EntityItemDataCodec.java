@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.codec.entity;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
@@ -41,7 +41,7 @@ public final class EntityItemDataCodec extends MessageCodec<EntityItemDataMessag
 	}
 
 	@Override
-	public EntityItemDataMessage decode(ChannelBuffer buffer) throws IOException {
+	public EntityItemDataMessage decode(ByteBuf buffer) throws IOException {
 		short type = buffer.readShort();
 		short id = buffer.readShort();
 		int size = buffer.readUnsignedShort();
@@ -51,8 +51,8 @@ public final class EntityItemDataCodec extends MessageCodec<EntityItemDataMessag
 	}
 
 	@Override
-	public ChannelBuffer encode(EntityItemDataMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+	public ByteBuf encode(EntityItemDataMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer();
 		buffer.writeShort(message.getType());
 		buffer.writeShort(message.getId());
 		buffer.writeShort(message.getData().length);

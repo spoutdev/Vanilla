@@ -28,13 +28,13 @@ package org.spout.vanilla.protocol.codec.window;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.window.WindowSlotMessage;
 
 public final class WindowSlotCodec extends MessageCodec<WindowSlotMessage> {
@@ -43,19 +43,19 @@ public final class WindowSlotCodec extends MessageCodec<WindowSlotMessage> {
 	}
 
 	@Override
-	public WindowSlotMessage decode(ChannelBuffer buffer) throws IOException {
+	public WindowSlotMessage decode(ByteBuf buffer) throws IOException {
 		int id = buffer.readUnsignedByte();
 		int slot = buffer.readUnsignedShort();
-		ItemStack item = VanillaChannelBufferUtils.readItemStack(buffer);
+		ItemStack item = VanillaByteBufUtils.readItemStack(buffer);
 		return new WindowSlotMessage(id, slot, item);
 	}
 
 	@Override
-	public ChannelBuffer encode(WindowSlotMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+	public ByteBuf encode(WindowSlotMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer();
 		buffer.writeByte(message.getWindowInstanceId());
 		buffer.writeShort(message.getSlot());
-		VanillaChannelBufferUtils.writeItemStack(buffer, message.get());
+		VanillaByteBufUtils.writeItemStack(buffer, message.get());
 		return buffer;
 	}
 }

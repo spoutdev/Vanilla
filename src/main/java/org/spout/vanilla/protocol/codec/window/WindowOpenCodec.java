@@ -28,13 +28,13 @@ package org.spout.vanilla.protocol.codec.window;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
 import org.spout.vanilla.inventory.window.WindowType;
-import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.window.WindowOpenMessage;
 
 public final class WindowOpenCodec extends MessageCodec<WindowOpenMessage> {
@@ -43,24 +43,24 @@ public final class WindowOpenCodec extends MessageCodec<WindowOpenMessage> {
 	}
 
 	@Override
-	public WindowOpenMessage decode(ChannelBuffer buffer) throws IOException {
+	public WindowOpenMessage decode(ByteBuf buffer) throws IOException {
 		int id = buffer.readUnsignedByte();
 		WindowType type = WindowType.get(buffer.readUnsignedByte());
 		if (type == null) {
 			throw new IOException("Read Window Type is invalid");
 		}
-		String title = VanillaChannelBufferUtils.readString(buffer);
+		String title = VanillaByteBufUtils.readString(buffer);
 		int slots = buffer.readUnsignedByte();
 		boolean useTitle = buffer.readUnsignedByte() != 0;
 		return new WindowOpenMessage(id, type, title, slots, useTitle);
 	}
 
 	@Override
-	public ChannelBuffer encode(WindowOpenMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+	public ByteBuf encode(WindowOpenMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer();
 		buffer.writeByte(message.getWindowInstanceId());
 		buffer.writeByte(message.getType().getId());
-		VanillaChannelBufferUtils.writeString(buffer, message.getTitle());
+		VanillaByteBufUtils.writeString(buffer, message.getTitle());
 		buffer.writeByte(message.getSlots());
 		buffer.writeByte(message.isUsingTitle() ? 1 : 0);
 		return buffer;

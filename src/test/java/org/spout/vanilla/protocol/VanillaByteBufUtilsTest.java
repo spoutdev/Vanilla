@@ -29,8 +29,9 @@ package org.spout.vanilla.protocol;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+
 import org.junit.Test;
 
 import org.spout.api.inventory.ItemStack;
@@ -41,12 +42,12 @@ import org.spout.vanilla.material.VanillaMaterials;
 
 import static org.junit.Assert.assertEquals;
 
-import static org.spout.vanilla.protocol.VanillaChannelBufferUtils.readParameters;
-import static org.spout.vanilla.protocol.VanillaChannelBufferUtils.readString;
-import static org.spout.vanilla.protocol.VanillaChannelBufferUtils.writeParameters;
-import static org.spout.vanilla.protocol.VanillaChannelBufferUtils.writeString;
+import static org.spout.vanilla.protocol.VanillaByteBufUtils.readParameters;
+import static org.spout.vanilla.protocol.VanillaByteBufUtils.readString;
+import static org.spout.vanilla.protocol.VanillaByteBufUtils.writeParameters;
+import static org.spout.vanilla.protocol.VanillaByteBufUtils.writeString;
 
-public class VanillaChannelBufferUtilsTest {
+public class VanillaByteBufUtilsTest {
 	public static final List<Parameter<?>> TEST_PARAMS = new ArrayList<Parameter<?>>();
 
 	static {
@@ -62,7 +63,7 @@ public class VanillaChannelBufferUtilsTest {
 
 	@Test
 	public void testParameters() throws Exception {
-		ChannelBuffer buf = ChannelBuffers.dynamicBuffer();
+		ByteBuf buf = Unpooled.buffer();
 		writeParameters(buf, TEST_PARAMS);
 		assertEquals(TEST_PARAMS, readParameters(buf));
 	}
@@ -71,7 +72,7 @@ public class VanillaChannelBufferUtilsTest {
 
 	@Test
 	public void testString() throws Exception {
-		ChannelBuffer buf = ChannelBuffers.dynamicBuffer();
+		ByteBuf buf = Unpooled.buffer();
 		writeString(buf, TEST_STRING);
 		assertEquals(TEST_STRING, readString(buf));
 	}

@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.codec.player;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
@@ -42,15 +42,15 @@ public final class PlayerGameStateCodec extends MessageCodec<PlayerGameStateMess
 	}
 
 	@Override
-	public PlayerGameStateMessage decode(ChannelBuffer buffer) throws IOException {
+	public PlayerGameStateMessage decode(ByteBuf buffer) throws IOException {
 		byte reason = buffer.readByte();
 		byte gameMode = buffer.readByte();
 		return new PlayerGameStateMessage(reason, GameMode.get(gameMode));
 	}
 
 	@Override
-	public ChannelBuffer encode(PlayerGameStateMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(2);
+	public ByteBuf encode(PlayerGameStateMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer(2);
 		buffer.writeByte(message.getReason());
 		buffer.writeByte(message.getGameMode().getId());
 		return buffer;

@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.codec.entity;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
@@ -41,15 +41,15 @@ public final class EntityStatusCodec extends MessageCodec<EntityStatusMessage> {
 	}
 
 	@Override
-	public EntityStatusMessage decode(ChannelBuffer buffer) throws IOException {
+	public EntityStatusMessage decode(ByteBuf buffer) throws IOException {
 		int id = buffer.readInt();
 		byte status = buffer.readByte();
 		return new EntityStatusMessage(id, status);
 	}
 
 	@Override
-	public ChannelBuffer encode(EntityStatusMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(5);
+	public ByteBuf encode(EntityStatusMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer(5);
 		buffer.writeInt(message.getEntityId());
 		buffer.writeByte(message.getStatus());
 		return buffer;

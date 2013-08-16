@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.protocol.netcache.protocol;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.util.Named;
@@ -40,14 +40,14 @@ public class ChunkCacheCodec extends MessageCodec<ChunkCacheMessage> implements 
 	}
 
 	@Override
-	public ChannelBuffer encode(ChunkCacheMessage message) {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+	public ByteBuf encode(ChunkCacheMessage message) {
+		ByteBuf buffer = Unpooled.buffer();
 		buffer.writeBytes(message.getData());
 		return buffer;
 	}
 
 	@Override
-	public ChunkCacheMessage decode(ChannelBuffer buffer) {
+	public ChunkCacheMessage decode(ByteBuf buffer) {
 		byte[] data = new byte[buffer.readableBytes()];
 		buffer.readBytes(data);
 		return new ChunkCacheMessage(data);

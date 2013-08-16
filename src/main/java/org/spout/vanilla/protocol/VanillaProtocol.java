@@ -33,9 +33,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+
+import org.spout.api.Platform;
+import org.spout.api.Spout;
 import org.spout.api.command.Command;
 import org.spout.api.command.CommandArguments;
 import org.spout.api.component.entity.PlayerNetworkComponent;
@@ -441,15 +444,15 @@ public class VanillaProtocol extends Protocol {
 
 	@Override
 	@SuppressWarnings ("unchecked")
-	public <T extends Message> Message getWrappedMessage(boolean upstream, T dynamicMessage) throws IOException {
+	public <T extends Message> Message getWrappedMessage(T dynamicMessage) throws IOException {
 		MessageCodec<T> codec = (MessageCodec<T>) getCodecLookupService().find(dynamicMessage.getClass());
-		ChannelBuffer buffer = codec.encode(upstream, dynamicMessage);
+		ByteBuf buffer = codec.encode(Spout.getPlatform() == Platform.CLIENT, dynamicMessage);
 
 		return new ServerPluginMessage(getName(codec), buffer.array());
 	}
 
 	@Override
-	public MessageCodec<?> readHeader(ChannelBuffer buf) throws UnknownPacketException {
+	public MessageCodec<?> readHeader(ByteBuf buf) throws UnknownPacketException {
 		int opcode = buf.readUnsignedByte();
 		MessageCodec<?> codec = getCodecLookupService().find(opcode);
 		if (codec == null) {
@@ -459,8 +462,8 @@ public class VanillaProtocol extends Protocol {
 	}
 
 	@Override
-	public ChannelBuffer writeHeader(MessageCodec<?> codec, ChannelBuffer data) {
-		ChannelBuffer buffer = ChannelBuffers.buffer(1);
+	public ByteBuf writeHeader(MessageCodec<?> codec, ByteBuf data) {
+		ByteBuf buffer = Unpooled.buffer(1);
 		buffer.writeByte(codec.getOpcode());
 		return buffer;
 	}

@@ -28,13 +28,13 @@ package org.spout.vanilla.protocol.codec.window;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.window.WindowCreativeActionMessage;
 
 public class WindowCreativeActionCodec extends MessageCodec<WindowCreativeActionMessage> {
@@ -43,17 +43,17 @@ public class WindowCreativeActionCodec extends MessageCodec<WindowCreativeAction
 	}
 
 	@Override
-	public WindowCreativeActionMessage decode(ChannelBuffer buffer) throws IOException {
+	public WindowCreativeActionMessage decode(ByteBuf buffer) throws IOException {
 		short slot = buffer.readShort();
-		ItemStack item = VanillaChannelBufferUtils.readItemStack(buffer);
+		ItemStack item = VanillaByteBufUtils.readItemStack(buffer);
 		return new WindowCreativeActionMessage(slot, item);
 	}
 
 	@Override
-	public ChannelBuffer encode(WindowCreativeActionMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+	public ByteBuf encode(WindowCreativeActionMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer();
 		buffer.writeShort(message.getSlot());
-		VanillaChannelBufferUtils.writeItemStack(buffer, message.get());
+		VanillaByteBufUtils.writeItemStack(buffer, message.get());
 		return buffer;
 	}
 }

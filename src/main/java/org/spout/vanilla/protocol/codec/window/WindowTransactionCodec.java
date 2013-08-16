@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.codec.window;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
@@ -41,7 +41,7 @@ public final class WindowTransactionCodec extends MessageCodec<WindowTransaction
 	}
 
 	@Override
-	public WindowTransactionMessage decode(ChannelBuffer buffer) throws IOException {
+	public WindowTransactionMessage decode(ByteBuf buffer) throws IOException {
 		int id = buffer.readUnsignedByte();
 		int transaction = buffer.readUnsignedShort();
 		boolean accepted = buffer.readUnsignedByte() != 0;
@@ -49,8 +49,8 @@ public final class WindowTransactionCodec extends MessageCodec<WindowTransaction
 	}
 
 	@Override
-	public ChannelBuffer encode(WindowTransactionMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(4);
+	public ByteBuf encode(WindowTransactionMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer(4);
 		buffer.writeByte(message.getWindowInstanceId());
 		buffer.writeShort(message.getTransaction());
 		buffer.writeByte(message.isAccepted() ? 1 : 0);

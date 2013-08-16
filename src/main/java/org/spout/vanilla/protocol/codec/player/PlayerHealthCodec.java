@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.codec.player;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
@@ -41,7 +41,7 @@ public final class PlayerHealthCodec extends MessageCodec<PlayerHealthMessage> {
 	}
 
 	@Override
-	public PlayerHealthMessage decode(ChannelBuffer buffer) throws IOException {
+	public PlayerHealthMessage decode(ByteBuf buffer) throws IOException {
 		float health = buffer.readFloat();
 		short food = buffer.readShort();
 		float foodSaturation = buffer.readFloat();
@@ -49,8 +49,8 @@ public final class PlayerHealthCodec extends MessageCodec<PlayerHealthMessage> {
 	}
 
 	@Override
-	public ChannelBuffer encode(PlayerHealthMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(11);
+	public ByteBuf encode(PlayerHealthMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer(11);
 		buffer.writeFloat(message.getHealth());
 		buffer.writeShort(message.getFood());
 		buffer.writeFloat(message.getFoodSaturation());

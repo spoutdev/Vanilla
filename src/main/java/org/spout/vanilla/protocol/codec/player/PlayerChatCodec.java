@@ -28,11 +28,11 @@ package org.spout.vanilla.protocol.codec.player;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
-import org.spout.api.util.ChannelBufferUtils;
+import org.spout.api.util.ByteBufUtils;
 
 import org.spout.vanilla.protocol.msg.player.PlayerChatMessage;
 
@@ -44,19 +44,19 @@ public final class PlayerChatCodec extends MessageCodec<PlayerChatMessage> {
 	}
 
 	@Override
-	public PlayerChatMessage decode(ChannelBuffer buffer) {
+	public PlayerChatMessage decode(ByteBuf buffer) {
 		// TODO: Chat support is much more than just 'text'
-		String message = ChannelBufferUtils.readString(buffer);
+		String message = ByteBufUtils.readString(buffer);
 		return new PlayerChatMessage(parser.parse(message).getAsJsonObject().get("text").getAsString());
 	}
 
 	@Override
-	public ChannelBuffer encode(PlayerChatMessage message) {
+	public ByteBuf encode(PlayerChatMessage message) {
 		// TODO: Chat support is much more than just 'text'
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+		ByteBuf buffer = Unpooled.buffer();
 		JsonObject json = new JsonObject();
 		json.addProperty("text", message.getMessage());
-		ChannelBufferUtils.writeString(buffer, json.toString());
+		ByteBufUtils.writeString(buffer, json.toString());
 		return buffer;
 	}
 }

@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.codec.entity;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
@@ -41,15 +41,15 @@ public final class EntityAnimationCodec extends MessageCodec<EntityAnimationMess
 	}
 
 	@Override
-	public EntityAnimationMessage decode(ChannelBuffer buffer) throws IOException {
+	public EntityAnimationMessage decode(ByteBuf buffer) throws IOException {
 		int id = buffer.readInt();
 		byte animation = buffer.readByte();
 		return new EntityAnimationMessage(id, animation);
 	}
 
 	@Override
-	public ChannelBuffer encode(EntityAnimationMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(5);
+	public ByteBuf encode(EntityAnimationMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer(5);
 		buffer.writeInt(message.getEntityId());
 		buffer.writeByte(message.getAnimationId());
 		return buffer;

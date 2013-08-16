@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.codec.entity.spawn;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.reposition.NullRepositionManager;
@@ -42,7 +42,7 @@ public final class EntityThunderboltCodec extends MessageCodec<EntityThunderbolt
 	}
 
 	@Override
-	public EntityThunderboltMessage decode(ChannelBuffer buffer) throws IOException {
+	public EntityThunderboltMessage decode(ByteBuf buffer) throws IOException {
 		int id = buffer.readInt();
 		int mode = buffer.readUnsignedByte();
 		int x = buffer.readInt() / 32;
@@ -52,8 +52,8 @@ public final class EntityThunderboltCodec extends MessageCodec<EntityThunderbolt
 	}
 
 	@Override
-	public ChannelBuffer encode(EntityThunderboltMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(17);
+	public ByteBuf encode(EntityThunderboltMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer(17);
 		buffer.writeInt(message.getEntityId());
 		buffer.writeByte(message.getMode());
 		buffer.writeInt(message.getX() * 32);

@@ -129,7 +129,7 @@ import org.spout.vanilla.protocol.plugin.CommandBlockMessage;
 import org.spout.vanilla.protocol.plugin.RegisterPluginChannelMessage;
 import org.spout.vanilla.protocol.plugin.UnregisterPluginChannelMessage;
 
-import static org.spout.vanilla.protocol.VanillaChannelBufferUtilsTest.TEST_PARAMS;
+import static org.spout.vanilla.protocol.VanillaByteBufUtilsTest.TEST_PARAMS;
 
 public class VanillaProtocolTest extends BaseProtocolTest {
 	private static final VanillaProtocol PROTOCOL = new VanillaProtocol();

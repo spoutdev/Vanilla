@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.codec.entity.spawn;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.reposition.NullRepositionManager;
@@ -42,7 +42,7 @@ public final class EntitySpawnObjectCodec extends MessageCodec<EntityObjectMessa
 	}
 
 	@Override
-	public EntityObjectMessage decode(ChannelBuffer buffer) throws IOException {
+	public EntityObjectMessage decode(ByteBuf buffer) throws IOException {
 		//TODO: There's 2 new bytes. Currently unknown according to wiki.vg 17/12/2012
 		int entityId = buffer.readInt();
 		byte type = buffer.readByte();
@@ -62,8 +62,8 @@ public final class EntitySpawnObjectCodec extends MessageCodec<EntityObjectMessa
 	}
 
 	@Override
-	public ChannelBuffer encode(EntityObjectMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(message.getThrowerId() > 0 ? 29 : 23);
+	public ByteBuf encode(EntityObjectMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer(message.getThrowerId() > 0 ? 29 : 23);
 		buffer.writeInt(message.getEntityId());
 		buffer.writeByte(message.getType());
 		buffer.writeInt(message.getX());

@@ -30,11 +30,11 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
-import org.spout.api.util.ChannelBufferUtils;
+import org.spout.api.util.ByteBufUtils;
 
 import org.spout.vanilla.protocol.msg.entity.EntityPropertiesMessage;
 
@@ -44,26 +44,26 @@ public class EntityPropertiesCodec extends MessageCodec<EntityPropertiesMessage>
 	}
 
 	@Override
-	public EntityPropertiesMessage decode(ChannelBuffer buffer) throws IOException {
+	public EntityPropertiesMessage decode(ByteBuf buffer) throws IOException {
 		int entityID = buffer.readInt();
 		int amount = buffer.readInt();
 		System.out.println(amount);
 		EntityPropertiesMessage msg = new EntityPropertiesMessage(entityID);
 		Map<EntityPropertiesCodec, Double> map = new HashMap<EntityPropertiesCodec, Double>();
 		for (int i = 1; i <= amount; i++) {
-			msg.addProperty(EntityPropertiesMessage.EntityProperties.getByName(ChannelBufferUtils.readString(buffer)), buffer.readDouble());
+			msg.addProperty(EntityPropertiesMessage.EntityProperties.getByName(ByteBufUtils.readString(buffer)), buffer.readDouble());
 		}
 		return msg;
 	}
 
 	@Override
-	public ChannelBuffer encode(EntityPropertiesMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+	public ByteBuf encode(EntityPropertiesMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer();
 		buffer.writeInt(message.getEntityId());
 		Map<EntityPropertiesMessage.EntityProperties, Double> map = message.getProperties();
 		buffer.writeInt(map.size());
 		for (Map.Entry<EntityPropertiesMessage.EntityProperties, Double> value : map.entrySet()) {
-			ChannelBufferUtils.writeString(buffer, value.getKey().toString());
+			ByteBufUtils.writeString(buffer, value.getKey().toString());
 			buffer.writeDouble(value.getValue());
 		}
 		return buffer;

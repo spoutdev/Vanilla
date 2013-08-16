@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.codec.entity;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
@@ -41,7 +41,7 @@ public final class EntityAttachEntityCodec extends MessageCodec<EntityAttachEnti
 	}
 
 	@Override
-	public EntityAttachEntityMessage decode(ChannelBuffer buffer) throws IOException {
+	public EntityAttachEntityMessage decode(ByteBuf buffer) throws IOException {
 		int id = buffer.readInt();
 		int vehicle = buffer.readInt();
 		byte leashed = buffer.readByte();
@@ -49,8 +49,8 @@ public final class EntityAttachEntityCodec extends MessageCodec<EntityAttachEnti
 	}
 
 	@Override
-	public ChannelBuffer encode(EntityAttachEntityMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(10);
+	public ByteBuf encode(EntityAttachEntityMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer(10);
 		buffer.writeInt(message.getEntityId());
 		buffer.writeInt(message.getVehicle());
 		buffer.writeByte(message.isLeashed() ? 1 : 0);

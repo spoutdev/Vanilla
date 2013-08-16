@@ -28,12 +28,12 @@ package org.spout.vanilla.protocol.codec.scoreboard;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardObjectiveMessage;
 
 public class ScoreboardObjectiveCodec extends MessageCodec<ScoreboardObjectiveMessage> {
@@ -42,18 +42,18 @@ public class ScoreboardObjectiveCodec extends MessageCodec<ScoreboardObjectiveMe
 	}
 
 	@Override
-	public ScoreboardObjectiveMessage decode(ChannelBuffer buffer) throws IOException {
-		String name = VanillaChannelBufferUtils.readString(buffer);
-		String display = VanillaChannelBufferUtils.readString(buffer);
+	public ScoreboardObjectiveMessage decode(ByteBuf buffer) throws IOException {
+		String name = VanillaByteBufUtils.readString(buffer);
+		String display = VanillaByteBufUtils.readString(buffer);
 		byte action = buffer.readByte();
 		return new ScoreboardObjectiveMessage(name, display, action);
 	}
 
 	@Override
-	public ChannelBuffer encode(ScoreboardObjectiveMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		VanillaChannelBufferUtils.writeString(buffer, message.getName());
-		VanillaChannelBufferUtils.writeString(buffer, message.getDisplay());
+	public ByteBuf encode(ScoreboardObjectiveMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer();
+		VanillaByteBufUtils.writeString(buffer, message.getName());
+		VanillaByteBufUtils.writeString(buffer, message.getDisplay());
 		buffer.writeByte(message.getAction());
 		return buffer;
 	}

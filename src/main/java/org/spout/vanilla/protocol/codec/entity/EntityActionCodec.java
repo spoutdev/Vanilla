@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.codec.entity;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
@@ -41,7 +41,7 @@ public final class EntityActionCodec extends MessageCodec<EntityActionMessage> {
 	}
 
 	@Override
-	public EntityActionMessage decode(ChannelBuffer buffer) throws IOException {
+	public EntityActionMessage decode(ByteBuf buffer) throws IOException {
 		int id = buffer.readInt();
 		int action = buffer.readUnsignedByte();
 		int jumpBoost = buffer.readInt();
@@ -49,8 +49,8 @@ public final class EntityActionCodec extends MessageCodec<EntityActionMessage> {
 	}
 
 	@Override
-	public ChannelBuffer encode(EntityActionMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(10);
+	public ByteBuf encode(EntityActionMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer(10);
 		buffer.writeInt(message.getEntityId());
 		buffer.writeByte(message.getAction());
 		buffer.writeInt(message.getJumpBoost());

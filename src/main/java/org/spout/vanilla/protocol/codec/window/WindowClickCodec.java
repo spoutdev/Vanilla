@@ -28,13 +28,13 @@ package org.spout.vanilla.protocol.codec.window;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.window.WindowClickMessage;
 
 public final class WindowClickCodec extends MessageCodec<WindowClickMessage> {
@@ -43,25 +43,25 @@ public final class WindowClickCodec extends MessageCodec<WindowClickMessage> {
 	}
 
 	@Override
-	public WindowClickMessage decode(ChannelBuffer buffer) throws IOException {
+	public WindowClickMessage decode(ByteBuf buffer) throws IOException {
 		int id = buffer.readUnsignedByte();
 		int slot = buffer.readUnsignedShort();
 		byte button = buffer.readByte();
 		int transaction = buffer.readUnsignedShort();
 		byte mode = buffer.readByte();
-		ItemStack item = VanillaChannelBufferUtils.readItemStack(buffer);
+		ItemStack item = VanillaByteBufUtils.readItemStack(buffer);
 		return new WindowClickMessage(id, slot, button, transaction, mode, item);
 	}
 
 	@Override
-	public ChannelBuffer encode(WindowClickMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+	public ByteBuf encode(WindowClickMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer();
 		buffer.writeByte(message.getWindowInstanceId());
 		buffer.writeShort(message.getSlot());
 		buffer.writeByte(message.getButton());
 		buffer.writeShort(message.getTransaction());
 		buffer.writeByte(message.getMode());
-		VanillaChannelBufferUtils.writeItemStack(buffer, message.get());
+		VanillaByteBufUtils.writeItemStack(buffer, message.get());
 		return buffer;
 	}
 }

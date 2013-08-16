@@ -28,13 +28,13 @@ package org.spout.vanilla.protocol.codec.world;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.reposition.NullRepositionManager;
 
-import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.world.SoundEffectMessage;
 
 public final class SoundEffectCodec extends MessageCodec<SoundEffectMessage> {
@@ -50,8 +50,8 @@ public final class SoundEffectCodec extends MessageCodec<SoundEffectMessage> {
 	 */
 
 	@Override
-	public SoundEffectMessage decode(ChannelBuffer buffer) throws IOException {
-		String soundName = VanillaChannelBufferUtils.readString(buffer);
+	public SoundEffectMessage decode(ByteBuf buffer) throws IOException {
+		String soundName = VanillaByteBufUtils.readString(buffer);
 		float x = (float) buffer.readInt() / 8.0f;
 		float y = (float) buffer.readInt() / 8.0f;
 		float z = (float) buffer.readInt() / 8.0f;
@@ -61,9 +61,9 @@ public final class SoundEffectCodec extends MessageCodec<SoundEffectMessage> {
 	}
 
 	@Override
-	public ChannelBuffer encode(SoundEffectMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		VanillaChannelBufferUtils.writeString(buffer, message.getSoundName());
+	public ByteBuf encode(SoundEffectMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer();
+		VanillaByteBufUtils.writeString(buffer, message.getSoundName());
 		buffer.writeInt((int) (message.getX() * 8.0f));
 		buffer.writeInt((int) (message.getY() * 8.0f));
 		buffer.writeInt((int) (message.getZ() * 8.0f));

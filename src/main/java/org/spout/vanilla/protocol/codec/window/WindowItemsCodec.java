@@ -28,13 +28,13 @@ package org.spout.vanilla.protocol.codec.window;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.window.WindowItemsMessage;
 
 public final class WindowItemsCodec extends MessageCodec<WindowItemsMessage> {
@@ -43,24 +43,24 @@ public final class WindowItemsCodec extends MessageCodec<WindowItemsMessage> {
 	}
 
 	@Override
-	public WindowItemsMessage decode(ChannelBuffer buffer) throws IOException {
+	public WindowItemsMessage decode(ByteBuf buffer) throws IOException {
 		byte id = buffer.readByte();
 		short count = buffer.readShort();
 		ItemStack[] items = new ItemStack[count];
 		for (int slot = 0; slot < count; slot++) {
-			items[slot] = VanillaChannelBufferUtils.readItemStack(buffer);
+			items[slot] = VanillaByteBufUtils.readItemStack(buffer);
 		}
 		return new WindowItemsMessage(id, items);
 	}
 
 	@Override
-	public ChannelBuffer encode(WindowItemsMessage message) throws IOException {
+	public ByteBuf encode(WindowItemsMessage message) throws IOException {
 		ItemStack[] items = message.getItems();
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+		ByteBuf buffer = Unpooled.buffer();
 		buffer.writeByte(message.getWindowInstanceId());
 		buffer.writeShort(items.length);
 		for (ItemStack item : items) {
-			VanillaChannelBufferUtils.writeItemStack(buffer, item);
+			VanillaByteBufUtils.writeItemStack(buffer, item);
 		}
 		return buffer;
 	}

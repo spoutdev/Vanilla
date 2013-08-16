@@ -28,12 +28,12 @@ package org.spout.vanilla.protocol.codec.scoreboard;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardTeamMessage;
 
 public class ScoreboardTeamCodec extends MessageCodec<ScoreboardTeamMessage> {
@@ -42,8 +42,8 @@ public class ScoreboardTeamCodec extends MessageCodec<ScoreboardTeamMessage> {
 	}
 
 	@Override
-	public ScoreboardTeamMessage decode(ChannelBuffer buffer) throws IOException {
-		String name = VanillaChannelBufferUtils.readString(buffer);
+	public ScoreboardTeamMessage decode(ByteBuf buffer) throws IOException {
+		String name = VanillaByteBufUtils.readString(buffer);
 		String displayName, prefix, suffix;
 		boolean friendlyFire = false;
 		String[] players = null;
@@ -52,9 +52,9 @@ public class ScoreboardTeamCodec extends MessageCodec<ScoreboardTeamMessage> {
 		switch (mode) {
 			case 0:
 			case 2:
-				displayName = VanillaChannelBufferUtils.readString(buffer);
-				prefix = VanillaChannelBufferUtils.readString(buffer);
-				suffix = VanillaChannelBufferUtils.readString(buffer);
+				displayName = VanillaByteBufUtils.readString(buffer);
+				prefix = VanillaByteBufUtils.readString(buffer);
+				suffix = VanillaByteBufUtils.readString(buffer);
 				friendlyFire = buffer.readByte() == 1;
 				players = null;
 				break;
@@ -63,7 +63,7 @@ public class ScoreboardTeamCodec extends MessageCodec<ScoreboardTeamMessage> {
 				short count = buffer.readShort();
 				players = new String[count];
 				for (int i = 0; i < count; i++) {
-					players[i] = VanillaChannelBufferUtils.readString(buffer);
+					players[i] = VanillaByteBufUtils.readString(buffer);
 				}
 			default:
 				displayName = prefix = suffix = null;
@@ -74,23 +74,23 @@ public class ScoreboardTeamCodec extends MessageCodec<ScoreboardTeamMessage> {
 	}
 
 	@Override
-	public ChannelBuffer encode(ScoreboardTeamMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		VanillaChannelBufferUtils.writeString(buffer, message.getName());
+	public ByteBuf encode(ScoreboardTeamMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer();
+		VanillaByteBufUtils.writeString(buffer, message.getName());
 		buffer.writeByte(message.getAction());
 		switch (message.getAction()) {
 			case 0:
 			case 2:
-				VanillaChannelBufferUtils.writeString(buffer, message.getDisplayName());
-				VanillaChannelBufferUtils.writeString(buffer, message.getPrefix());
-				VanillaChannelBufferUtils.writeString(buffer, message.getSuffix());
+				VanillaByteBufUtils.writeString(buffer, message.getDisplayName());
+				VanillaByteBufUtils.writeString(buffer, message.getPrefix());
+				VanillaByteBufUtils.writeString(buffer, message.getSuffix());
 				buffer.writeByte(message.isFriendlyFire() ? 1 : 0);
 				break;
 			case 3:
 			case 4:
 				buffer.writeShort(message.getPlayers().length);
 				for (String name : message.getPlayers()) {
-					VanillaChannelBufferUtils.writeString(buffer, name);
+					VanillaByteBufUtils.writeString(buffer, name);
 				}
 				break;
 			default:

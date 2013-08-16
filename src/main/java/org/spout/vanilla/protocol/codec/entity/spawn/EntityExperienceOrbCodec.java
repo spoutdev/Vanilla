@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.codec.entity.spawn;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.reposition.NullRepositionManager;
@@ -42,7 +42,7 @@ public class EntityExperienceOrbCodec extends MessageCodec<EntityExperienceOrbMe
 	}
 
 	@Override
-	public EntityExperienceOrbMessage decode(ChannelBuffer buffer) throws IOException {
+	public EntityExperienceOrbMessage decode(ByteBuf buffer) throws IOException {
 		int id = buffer.readInt();
 		int x = buffer.readInt();
 		int y = buffer.readInt();
@@ -52,8 +52,8 @@ public class EntityExperienceOrbCodec extends MessageCodec<EntityExperienceOrbMe
 	}
 
 	@Override
-	public ChannelBuffer encode(EntityExperienceOrbMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(18);
+	public ByteBuf encode(EntityExperienceOrbMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer(18);
 		buffer.writeInt(message.getEntityId());
 		buffer.writeInt(message.getX());
 		buffer.writeInt(message.getY());

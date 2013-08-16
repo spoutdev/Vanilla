@@ -30,7 +30,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jboss.netty.buffer.ChannelBuffer;
+import io.netty.buffer.ByteBuf;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
@@ -41,10 +41,10 @@ import org.spout.nbt.CompoundMap;
 
 import org.spout.vanilla.material.VanillaMaterials;
 
-import static org.spout.api.util.ChannelBufferUtils.readCompound;
-import static org.spout.api.util.ChannelBufferUtils.writeCompound;
+import static org.spout.api.util.ByteBufUtils.readCompound;
+import static org.spout.api.util.ByteBufUtils.writeCompound;
 
-public final class VanillaChannelBufferUtils {
+public final class VanillaByteBufUtils {
 	/**
 	 * Writes a list of parameters (e.g. mob metadata) to the buffer.
 	 *
@@ -52,7 +52,7 @@ public final class VanillaChannelBufferUtils {
 	 * @param parameters The parameters.
 	 */
 	@SuppressWarnings ("unchecked")
-	public static void writeParameters(ChannelBuffer buf, List<Parameter<?>> parameters) {
+	public static void writeParameters(ByteBuf buf, List<Parameter<?>> parameters) {
 		for (Parameter<?> parameter : parameters) {
 			int type = parameter.getType();
 			int index = parameter.getIndex();
@@ -94,7 +94,7 @@ public final class VanillaChannelBufferUtils {
 	 * @param buf The buffer.
 	 * @return The parameters.
 	 */
-	public static List<Parameter<?>> readParameters(ChannelBuffer buf) throws IOException {
+	public static List<Parameter<?>> readParameters(ByteBuf buf) throws IOException {
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
 
 		for (int b = buf.readUnsignedByte(); b != 127; b = buf.readUnsignedByte()) {
@@ -133,7 +133,7 @@ public final class VanillaChannelBufferUtils {
 	 * @param str The string.
 	 * @throws IllegalArgumentException if the string is too long <em>after</em> it is encoded.
 	 */
-	public static void writeString(ChannelBuffer buf, String str) {
+	public static void writeString(ByteBuf buf, String str) {
 		int len = str.length();
 		if (len >= 65536) {
 			throw new IllegalArgumentException("String too long.");
@@ -150,7 +150,7 @@ public final class VanillaChannelBufferUtils {
 	 * @param buf The buffer.
 	 * @return The string.
 	 */
-	public static String readString(ChannelBuffer buf) {
+	public static String readString(ByteBuf buf) {
 		int len = buf.readUnsignedShort();
 
 		char[] characters = new char[len];
@@ -161,7 +161,7 @@ public final class VanillaChannelBufferUtils {
 		return new String(characters);
 	}
 
-	public static ItemStack readItemStack(ChannelBuffer buffer) throws IOException {
+	public static ItemStack readItemStack(ByteBuf buffer) throws IOException {
 		short id = buffer.readShort();
 		if (id < 0) {
 			return null;
@@ -177,7 +177,7 @@ public final class VanillaChannelBufferUtils {
 		}
 	}
 
-	public static void writeItemStack(ChannelBuffer buffer, ItemStack item) {
+	public static void writeItemStack(ByteBuf buffer, ItemStack item) {
 		short id = item == null ? (short) -1 : VanillaMaterials.getMinecraftId(item.getMaterial());
 		buffer.writeShort(id);
 		if (id != -1) {
@@ -226,14 +226,7 @@ public final class VanillaChannelBufferUtils {
 		return -deProtocolifyPitch(yaw);
 	}
 
-	/**
-	 * Create a SlotData stucture
-	 * @param buf The buffer to decode the Slot field
-	 * @return The according SlotData
-	 */
-	/**
-	 * Default private constructor to prevent instantiation.
-	 */
-	private VanillaChannelBufferUtils() {
+	private VanillaByteBufUtils() {
 	}
+
 }

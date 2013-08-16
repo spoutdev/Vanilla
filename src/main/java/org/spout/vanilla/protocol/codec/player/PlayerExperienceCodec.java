@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.codec.player;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
@@ -41,7 +41,7 @@ public class PlayerExperienceCodec extends MessageCodec<PlayerExperienceMessage>
 	}
 
 	@Override
-	public PlayerExperienceMessage decode(ChannelBuffer buffer) throws IOException {
+	public PlayerExperienceMessage decode(ByteBuf buffer) throws IOException {
 		float barValue = buffer.readFloat();
 		short level = buffer.readShort();
 		short totalExp = buffer.readShort();
@@ -49,8 +49,8 @@ public class PlayerExperienceCodec extends MessageCodec<PlayerExperienceMessage>
 	}
 
 	@Override
-	public ChannelBuffer encode(PlayerExperienceMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(8);
+	public ByteBuf encode(PlayerExperienceMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer(8);
 		buffer.writeFloat(message.getBarValue());
 		buffer.writeShort(message.getLevel());
 		buffer.writeShort(message.getTotalExp());

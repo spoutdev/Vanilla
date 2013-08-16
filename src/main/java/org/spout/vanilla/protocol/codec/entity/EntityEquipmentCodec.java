@@ -28,13 +28,13 @@ package org.spout.vanilla.protocol.codec.entity;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
 
 public final class EntityEquipmentCodec extends MessageCodec<EntityEquipmentMessage> {
@@ -43,19 +43,19 @@ public final class EntityEquipmentCodec extends MessageCodec<EntityEquipmentMess
 	}
 
 	@Override
-	public EntityEquipmentMessage decode(ChannelBuffer buffer) throws IOException {
+	public EntityEquipmentMessage decode(ByteBuf buffer) throws IOException {
 		int entityId = buffer.readInt();
 		int slot = buffer.readUnsignedShort();
-		ItemStack item = VanillaChannelBufferUtils.readItemStack(buffer);
+		ItemStack item = VanillaByteBufUtils.readItemStack(buffer);
 		return new EntityEquipmentMessage(entityId, slot, item);
 	}
 
 	@Override
-	public ChannelBuffer encode(EntityEquipmentMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+	public ByteBuf encode(EntityEquipmentMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer();
 		buffer.writeInt(message.getEntityId());
 		buffer.writeShort(message.getSlot());
-		VanillaChannelBufferUtils.writeItemStack(buffer, message.get());
+		VanillaByteBufUtils.writeItemStack(buffer, message.get());
 		return buffer;
 	}
 }

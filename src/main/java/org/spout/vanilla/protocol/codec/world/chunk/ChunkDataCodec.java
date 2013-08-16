@@ -31,8 +31,8 @@ import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.protocol.MessageCodec;
@@ -52,7 +52,7 @@ public final class ChunkDataCodec extends MessageCodec<ChunkDataMessage> {
 	}
 
 	@Override
-	public ChunkDataMessage decode(ChannelBuffer buffer) throws IOException {
+	public ChunkDataMessage decode(ByteBuf buffer) throws IOException {
 		int x = buffer.readInt();
 		int z = buffer.readInt();
 		boolean contiguous = buffer.readByte() == 1;
@@ -133,8 +133,8 @@ public final class ChunkDataCodec extends MessageCodec<ChunkDataMessage> {
 	}
 
 	@Override
-	public ChannelBuffer encode(ChunkDataMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+	public ByteBuf encode(ChunkDataMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer();
 
 		buffer.writeInt(message.getX());
 		buffer.writeInt(message.getZ());

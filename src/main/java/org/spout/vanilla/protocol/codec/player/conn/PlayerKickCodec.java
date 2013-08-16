@@ -26,12 +26,12 @@
  */
 package org.spout.vanilla.protocol.codec.player.conn;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerKickMessage;
 
 public final class PlayerKickCodec extends MessageCodec<PlayerKickMessage> {
@@ -40,14 +40,14 @@ public final class PlayerKickCodec extends MessageCodec<PlayerKickMessage> {
 	}
 
 	@Override
-	public PlayerKickMessage decode(ChannelBuffer buffer) {
-		return new PlayerKickMessage(VanillaChannelBufferUtils.readString(buffer));
+	public PlayerKickMessage decode(ByteBuf buffer) {
+		return new PlayerKickMessage(VanillaByteBufUtils.readString(buffer));
 	}
 
 	@Override
-	public ChannelBuffer encode(PlayerKickMessage message) {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		VanillaChannelBufferUtils.writeString(buffer, message.getReason());
+	public ByteBuf encode(PlayerKickMessage message) {
+		ByteBuf buffer = Unpooled.buffer();
+		VanillaByteBufUtils.writeString(buffer, message.getReason());
 		return buffer;
 	}
 }

@@ -28,13 +28,13 @@ package org.spout.vanilla.protocol.codec.world.block;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.reposition.NullRepositionManager;
 
-import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.world.block.SignMessage;
 
 public final class SignCodec extends MessageCodec<SignMessage> {
@@ -43,13 +43,13 @@ public final class SignCodec extends MessageCodec<SignMessage> {
 	}
 
 	@Override
-	public SignMessage decode(ChannelBuffer buffer) throws IOException {
+	public SignMessage decode(ByteBuf buffer) throws IOException {
 		int x = buffer.readInt();
 		int y = buffer.readShort();
 		int z = buffer.readInt();
 		String[] message = new String[4];
 		for (int i = 0; i < message.length; i++) {
-			String line = VanillaChannelBufferUtils.readString(buffer);
+			String line = VanillaByteBufUtils.readString(buffer);
 			if (line == null) {
 				line = "";
 			}
@@ -59,10 +59,10 @@ public final class SignCodec extends MessageCodec<SignMessage> {
 	}
 
 	@Override
-	public ChannelBuffer encode(SignMessage message) throws IOException {
+	public ByteBuf encode(SignMessage message) throws IOException {
 		String[] lines = message.getMessage();
 
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+		ByteBuf buffer = Unpooled.buffer();
 		buffer.writeInt(message.getX());
 		buffer.writeShort(message.getY());
 		buffer.writeInt(message.getZ());
@@ -70,7 +70,7 @@ public final class SignCodec extends MessageCodec<SignMessage> {
 			if (line == null) {
 				line = "";
 			}
-			VanillaChannelBufferUtils.writeString(buffer, line);
+			VanillaByteBufUtils.writeString(buffer, line);
 		}
 		return buffer;
 	}

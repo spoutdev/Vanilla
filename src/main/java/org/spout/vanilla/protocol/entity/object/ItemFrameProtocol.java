@@ -34,7 +34,7 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.RepositionManager;
 
 import org.spout.vanilla.component.entity.substance.ItemFrame;
-import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityObjectMessage;
 
@@ -47,7 +47,7 @@ public class ItemFrameProtocol extends ObjectEntityProtocol {
 	@Override
 	public List<Message> getSpawnMessages(Entity entity, RepositionManager rm) {
 		List<Message> msgs = new ArrayList<Message>();
-		msgs.add(new EntityObjectMessage(entity, (byte) typeId, VanillaChannelBufferUtils.getNativeDirection(entity.add(ItemFrame.class).getOrientation()), rm));
+		msgs.add(new EntityObjectMessage(entity, (byte) typeId, VanillaByteBufUtils.getNativeDirection(entity.add(ItemFrame.class).getOrientation()), rm));
 		msgs.add(new EntityMetadataMessage(entity.getId(), this.getSpawnParameters(entity)));
 		return msgs;
 	}

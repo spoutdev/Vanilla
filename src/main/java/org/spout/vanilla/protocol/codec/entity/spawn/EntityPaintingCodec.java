@@ -28,13 +28,13 @@ package org.spout.vanilla.protocol.codec.entity.spawn;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.reposition.NullRepositionManager;
 
-import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityPaintingMessage;
 
 public final class EntityPaintingCodec extends MessageCodec<EntityPaintingMessage> {
@@ -43,9 +43,9 @@ public final class EntityPaintingCodec extends MessageCodec<EntityPaintingMessag
 	}
 
 	@Override
-	public EntityPaintingMessage decode(ChannelBuffer buffer) throws IOException {
+	public EntityPaintingMessage decode(ByteBuf buffer) throws IOException {
 		int id = buffer.readInt();
-		String title = VanillaChannelBufferUtils.readString(buffer);
+		String title = VanillaByteBufUtils.readString(buffer);
 		int x = buffer.readInt();
 		int y = buffer.readInt();
 		int z = buffer.readInt();
@@ -54,10 +54,10 @@ public final class EntityPaintingCodec extends MessageCodec<EntityPaintingMessag
 	}
 
 	@Override
-	public ChannelBuffer encode(EntityPaintingMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+	public ByteBuf encode(EntityPaintingMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer();
 		buffer.writeInt(message.getEntityId());
-		VanillaChannelBufferUtils.writeString(buffer, message.getTitle());
+		VanillaByteBufUtils.writeString(buffer, message.getTitle());
 		buffer.writeInt(message.getX());
 		buffer.writeInt(message.getY());
 		buffer.writeInt(message.getZ());

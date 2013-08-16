@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.codec.player;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
@@ -41,13 +41,13 @@ public final class PlayerTimeCodec extends MessageCodec<PlayerTimeMessage> {
 	}
 
 	@Override
-	public PlayerTimeMessage decode(ChannelBuffer buffer) throws IOException {
+	public PlayerTimeMessage decode(ByteBuf buffer) throws IOException {
 		return new PlayerTimeMessage(buffer.readLong(), buffer.readLong());
 	}
 
 	@Override
-	public ChannelBuffer encode(PlayerTimeMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(16);
+	public ByteBuf encode(PlayerTimeMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer(16);
 		buffer.writeLong(message.getAge());
 		buffer.writeLong(message.getTime());
 		return buffer;

@@ -41,7 +41,7 @@ import org.spout.api.util.Parameter;
 import org.spout.vanilla.component.entity.misc.EntityHead;
 import org.spout.vanilla.component.entity.misc.MetadataComponent;
 import org.spout.vanilla.protocol.EntityProtocol;
-import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.entity.EntityDestroyMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityHeadYawMessage;
@@ -50,9 +50,9 @@ import org.spout.vanilla.protocol.msg.entity.pos.EntityRelativePositionYawMessag
 import org.spout.vanilla.protocol.msg.entity.pos.EntityTeleportMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityYawMessage;
 
-import static org.spout.vanilla.protocol.VanillaChannelBufferUtils.protocolifyPitch;
-import static org.spout.vanilla.protocol.VanillaChannelBufferUtils.protocolifyPosition;
-import static org.spout.vanilla.protocol.VanillaChannelBufferUtils.protocolifyYaw;
+import static org.spout.vanilla.protocol.VanillaByteBufUtils.protocolifyPitch;
+import static org.spout.vanilla.protocol.VanillaByteBufUtils.protocolifyPosition;
+import static org.spout.vanilla.protocol.VanillaByteBufUtils.protocolifyYaw;
 
 public abstract class VanillaEntityProtocol implements EntityProtocol {
 
@@ -140,7 +140,7 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 		// Head movement
 		EntityHead head = entity.get(EntityHead.class);
 		if (head != null && head.isDirty()) {
-			final int headYawProt = VanillaChannelBufferUtils.protocolifyYaw(head.getOrientation().getYaw());
+			final int headYawProt = VanillaByteBufUtils.protocolifyYaw(head.getOrientation().getYaw());
 			messages.add(new EntityHeadYawMessage(entity.getId(), headYawProt));
 		}
 

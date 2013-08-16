@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.codec.entity;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
@@ -41,7 +41,7 @@ public class SteerVehicleCodec extends MessageCodec<SteerVehicleMessage> {
 	}
 
 	@Override
-	public SteerVehicleMessage decode(ChannelBuffer buffer) throws IOException {
+	public SteerVehicleMessage decode(ByteBuf buffer) throws IOException {
 		float sideways = buffer.readFloat();
 		float forward = buffer.readFloat();
 		boolean jump = buffer.readByte() != 0;
@@ -50,8 +50,8 @@ public class SteerVehicleCodec extends MessageCodec<SteerVehicleMessage> {
 	}
 
 	@Override
-	public ChannelBuffer encode(SteerVehicleMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(11);
+	public ByteBuf encode(SteerVehicleMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer(11);
 		buffer.writeFloat(message.getSideways());
 		buffer.writeFloat(message.getForward());
 		buffer.writeByte(message.isJumping() ? 1 : 0);

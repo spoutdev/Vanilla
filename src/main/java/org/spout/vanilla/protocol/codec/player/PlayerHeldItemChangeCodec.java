@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.codec.player;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
@@ -41,14 +41,14 @@ public final class PlayerHeldItemChangeCodec extends MessageCodec<PlayerHeldItem
 	}
 
 	@Override
-	public PlayerHeldItemChangeMessage decode(ChannelBuffer buffer) throws IOException {
+	public PlayerHeldItemChangeMessage decode(ByteBuf buffer) throws IOException {
 		int slot = buffer.readUnsignedShort();
 		return new PlayerHeldItemChangeMessage(slot);
 	}
 
 	@Override
-	public ChannelBuffer encode(PlayerHeldItemChangeMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(2);
+	public ByteBuf encode(PlayerHeldItemChangeMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer(2);
 		buffer.writeShort(message.getSlot());
 		return buffer;
 	}

@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.codec.entity.pos;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
@@ -41,15 +41,15 @@ public class EntityHeadYawCodec extends MessageCodec<EntityHeadYawMessage> {
 	}
 
 	@Override
-	public EntityHeadYawMessage decode(ChannelBuffer buffer) throws IOException {
+	public EntityHeadYawMessage decode(ByteBuf buffer) throws IOException {
 		int id = buffer.readInt();
 		int headYaw = buffer.readUnsignedByte();
 		return new EntityHeadYawMessage(id, headYaw);
 	}
 
 	@Override
-	public ChannelBuffer encode(EntityHeadYawMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(5);
+	public ByteBuf encode(EntityHeadYawMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer(5);
 		buffer.writeInt(message.getEntityId());
 		buffer.writeByte(message.getHeadYaw());
 		return buffer;

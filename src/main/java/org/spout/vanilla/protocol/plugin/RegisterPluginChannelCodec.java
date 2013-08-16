@@ -29,9 +29,9 @@ package org.spout.vanilla.protocol.plugin;
 import java.util.Arrays;
 import java.util.Iterator;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
-import org.jboss.netty.util.CharsetUtil;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import io.netty.util.CharsetUtil;
 
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.util.Named;
@@ -42,8 +42,8 @@ public class RegisterPluginChannelCodec extends MessageCodec<RegisterPluginChann
 	}
 
 	@Override
-	public ChannelBuffer encode(RegisterPluginChannelMessage message) {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+	public ByteBuf encode(RegisterPluginChannelMessage message) {
+		ByteBuf buffer = Unpooled.buffer();
 		for (Iterator<String> i = message.getTypes().iterator(); i.hasNext(); ) {
 			buffer.writeBytes(i.next().getBytes(CharsetUtil.UTF_8));
 			if (i.hasNext()) {
@@ -54,7 +54,7 @@ public class RegisterPluginChannelCodec extends MessageCodec<RegisterPluginChann
 	}
 
 	@Override
-	public RegisterPluginChannelMessage decode(ChannelBuffer buffer) {
+	public RegisterPluginChannelMessage decode(ByteBuf buffer) {
 		byte[] strData = new byte[buffer.readableBytes()];
 		buffer.readBytes(strData);
 		String str = new String(strData, CharsetUtil.UTF_8);

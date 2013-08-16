@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.codec.player.pos;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.reposition.NullRepositionManager;
@@ -42,7 +42,7 @@ public final class PlayerSpawnPositionCodec extends MessageCodec<PlayerSpawnPosi
 	}
 
 	@Override
-	public PlayerSpawnPositionMessage decode(ChannelBuffer buffer) throws IOException {
+	public PlayerSpawnPositionMessage decode(ByteBuf buffer) throws IOException {
 		int x = buffer.readInt();
 		int y = buffer.readInt();
 		int z = buffer.readInt();
@@ -50,8 +50,8 @@ public final class PlayerSpawnPositionCodec extends MessageCodec<PlayerSpawnPosi
 	}
 
 	@Override
-	public ChannelBuffer encode(PlayerSpawnPositionMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(12);
+	public ByteBuf encode(PlayerSpawnPositionMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer(12);
 		buffer.writeInt(message.getX());
 		buffer.writeInt(message.getY());
 		buffer.writeInt(message.getZ());

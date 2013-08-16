@@ -28,12 +28,12 @@ package org.spout.vanilla.protocol.codec.entity;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.reposition.NullRepositionManager;
-import org.spout.api.util.ChannelBufferUtils;
+import org.spout.api.util.ByteBufUtils;
 import org.spout.nbt.CompoundMap;
 
 import org.spout.vanilla.protocol.msg.entity.EntityTileDataMessage;
@@ -44,23 +44,23 @@ public class EntityTileDataCodec extends MessageCodec<EntityTileDataMessage> {
 	}
 
 	@Override
-	public EntityTileDataMessage decode(ChannelBuffer buffer) throws IOException {
+	public EntityTileDataMessage decode(ByteBuf buffer) throws IOException {
 		int x = buffer.readInt();
 		int y = buffer.readShort();
 		int z = buffer.readInt();
 		byte action = buffer.readByte();
-		CompoundMap data = ChannelBufferUtils.readCompound(buffer);
+		CompoundMap data = ByteBufUtils.readCompound(buffer);
 		return new EntityTileDataMessage(x, y, z, action, data, NullRepositionManager.getInstance());
 	}
 
 	@Override
-	public ChannelBuffer encode(EntityTileDataMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+	public ByteBuf encode(EntityTileDataMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer();
 		buffer.writeInt(message.getX());
 		buffer.writeShort(message.getY());
 		buffer.writeInt(message.getZ());
 		buffer.writeByte(message.getAction());
-		ChannelBufferUtils.writeCompound(buffer, message.getData());
+		ByteBufUtils.writeCompound(buffer, message.getData());
 		return buffer;
 	}
 }

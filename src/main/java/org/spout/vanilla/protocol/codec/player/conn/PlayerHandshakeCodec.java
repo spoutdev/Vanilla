@@ -26,12 +26,12 @@
  */
 package org.spout.vanilla.protocol.codec.player.conn;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerHandshakeMessage;
 
 public final class PlayerHandshakeCodec extends MessageCodec<PlayerHandshakeMessage> {
@@ -40,20 +40,20 @@ public final class PlayerHandshakeCodec extends MessageCodec<PlayerHandshakeMess
 	}
 
 	@Override
-	public PlayerHandshakeMessage decode(ChannelBuffer buffer) {
+	public PlayerHandshakeMessage decode(ByteBuf buffer) {
 		byte protoVersion = buffer.readByte();
-		String username = VanillaChannelBufferUtils.readString(buffer);
-		String hostname = VanillaChannelBufferUtils.readString(buffer);
+		String username = VanillaByteBufUtils.readString(buffer);
+		String hostname = VanillaByteBufUtils.readString(buffer);
 		int port = buffer.readInt();
 		return new PlayerHandshakeMessage(protoVersion, username, hostname, port);
 	}
 
 	@Override
-	public ChannelBuffer encode(PlayerHandshakeMessage message) {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+	public ByteBuf encode(PlayerHandshakeMessage message) {
+		ByteBuf buffer = Unpooled.buffer();
 		buffer.writeByte(message.getProtocolVersion());
-		VanillaChannelBufferUtils.writeString(buffer, message.getUsername());
-		VanillaChannelBufferUtils.writeString(buffer, message.getHostname());
+		VanillaByteBufUtils.writeString(buffer, message.getUsername());
+		VanillaByteBufUtils.writeString(buffer, message.getHostname());
 		buffer.writeInt(message.getPort());
 		return buffer;
 	}

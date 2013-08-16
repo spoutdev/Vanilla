@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.codec.entity;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
@@ -41,7 +41,7 @@ public final class EntityRelativePositionCodec extends MessageCodec<EntityRelati
 	}
 
 	@Override
-	public EntityRelativePositionMessage decode(ChannelBuffer buffer) throws IOException {
+	public EntityRelativePositionMessage decode(ByteBuf buffer) throws IOException {
 		int id = buffer.readInt();
 		int dx = buffer.readByte();
 		int dy = buffer.readByte();
@@ -50,8 +50,8 @@ public final class EntityRelativePositionCodec extends MessageCodec<EntityRelati
 	}
 
 	@Override
-	public ChannelBuffer encode(EntityRelativePositionMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(7);
+	public ByteBuf encode(EntityRelativePositionMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer(7);
 		buffer.writeInt(message.getEntityId());
 		buffer.writeByte(message.getDeltaX());
 		buffer.writeByte(message.getDeltaY());

@@ -56,8 +56,8 @@ public class FallingBlockProtocol extends ObjectEntityProtocol {
 			//			int x = (int) Math.floor(pos.getX() * p);
 			//			int y = (int) Math.floor(pos.getY() * p);
 			//			int z = (int) Math.floor(pos.getZ() * p);
-			//			byte yaw = (byte) VanillaChannelBufferUtils.protocolifyYaw(entity.getPhysics().getRotation().getYaw());
-			//			byte pitch = (byte) VanillaChannelBufferUtils.protocolifyPitch(entity.getPhysics().getRotation().getPitch());
+			//			byte yaw = (byte) VanillaByteBufUtils.protocolifyYaw(entity.getPhysics().getRotation().getYaw());
+			//			byte pitch = (byte) VanillaByteBufUtils.protocolifyPitch(entity.getPhysics().getRotation().getPitch());
 			//			short fallSpeed = (short) (block.getFallingSpeed() * 8000d);
 			//			messages.add(new EntityObjectMessage(entity.getId(), (byte) typeId, x, y, z, messageData, (short) 0, fallSpeed, (short) 0, yaw, pitch, rm));
 			//			messages.add(new EntityMetadataMessage(entity.getId(), getSpawnParameters(entity)));

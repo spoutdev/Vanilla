@@ -65,4 +65,5 @@ public final class WindowCloseMessage extends WindowMessage {
 		return new org.apache.commons.lang3.builder.HashCodeBuilder()
 				.append(this.getWindowInstanceId())
 				.toHashCode();
+	}
 }

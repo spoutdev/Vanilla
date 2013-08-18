@@ -191,6 +191,6 @@ public final class EntityObjectMessage extends EntityMessage {
 				.append(this.speedZ)
 				.append(this.yaw)
 				.append(this.pitch)
-				.toHashCode()
+				.toHashCode();
 	}
 }

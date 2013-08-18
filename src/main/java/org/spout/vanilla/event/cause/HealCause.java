@@ -62,13 +62,4 @@ public enum HealCause {
 	 * Health gained due to an unknown source.
 	 */
 	UNKNOWN;
-
-	public boolean equals(HealCause... causes) {
-		for (HealCause cause : causes) {
-			if (equals(cause)) {
-				return true;
-			}
-		}
-		return false;
-	}
 }

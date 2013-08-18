@@ -66,6 +66,7 @@ import org.spout.vanilla.event.entity.EntityDamageEvent;
 import org.spout.vanilla.event.entity.EntityDeathEvent;
 import org.spout.vanilla.event.entity.EntityHealEvent;
 import org.spout.vanilla.event.entity.EntityHealthChangeEvent;
+import org.spout.vanilla.event.entity.EntityMaxHealthChangeEvent;
 import org.spout.vanilla.event.entity.network.EntityAnimationEvent;
 import org.spout.vanilla.event.entity.network.EntityMetaChangeEvent;
 import org.spout.vanilla.event.entity.network.EntityStatusEvent;
@@ -321,8 +322,11 @@ public class Health extends VanillaEntityComponent {
 		if (!VanillaConfiguration.PLAYER_SURVIVAL_ENABLE_HEALTH.getBoolean()) {
 			return;
 		}
-		getData().put(VanillaData.MAX_HEALTH, maxHealth);
-		//TODO: Add event for max health change
+        EntityMaxHealthChangeEvent event = new EntityMaxHealthChangeEvent(getOwner(), maxHealth);
+        getEngine().getEventManager().callEvent(event);
+        if (!event.isCancelled()) {
+            getData().put(VanillaData.MAX_HEALTH, event.getMaxHealth());
+        }
 	}
 
 	/**

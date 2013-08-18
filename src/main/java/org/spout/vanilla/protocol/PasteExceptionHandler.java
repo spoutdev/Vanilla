@@ -58,7 +58,7 @@ public class PasteExceptionHandler implements UncaughtExceptionHandler {
 		Player player = session.getPlayer();
 		player.getEngine().getLogger().log(Level.SEVERE, "Message handler for " + message.getClass().getSimpleName() + " threw exception for player " + (session.getPlayer() != null ? session.getPlayer().getName() : "null"));
 		ex.printStackTrace();
-		if (player != null && player.hasPermission("vanilla.exception.paste")) {
+		if (player.hasPermission("vanilla.exception.paste")) {
 			StringBuilder builder = new StringBuilder("Vanilla Error Report:\n");
 			builder.append("( Please submit this report to http://spout.in/issues )\n");
 			builder.append("    Version: ").append(VanillaPlugin.getInstance().getDescription().getVersion()).append("\n");
@@ -69,7 +69,7 @@ public class PasteExceptionHandler implements UncaughtExceptionHandler {
 			Runnable task = new PasteRunnable(session, builder.toString(), "Message handler exception for " + message.getClass().getSimpleName());
 			player.getEngine().getScheduler().scheduleAsyncDelayedTask(VanillaPlugin.getInstance(), task, 0, TaskPriority.CRITICAL);
 		} else {
-			session.disconnect(false, "Message handler exception for " + message.getClass().getSimpleName());
+			session.disconnect("Message handler exception for " + message.getClass().getSimpleName());
 		}
 	}
 
@@ -112,9 +112,9 @@ public class PasteExceptionHandler implements UncaughtExceptionHandler {
 				e.printStackTrace();
 			}
 			if (response.startsWith(PASTEBIN_URL)) {
-				session.disconnect(true, "Unhandled exception: " + response);
+				session.disconnect("Unhandled exception: " + response);
 			} else {
-				session.disconnect(false, backupMessage);
+				session.disconnect(backupMessage);
 			}
 		}
 	}

@@ -123,4 +123,17 @@ public final class PlayerSpawnMessage extends EntityMessage {
 				.append(this.name, other.name)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.getEntityId())
+				.append(this.x)
+				.append(this.y)
+				.append(this.z)
+				.append(this.yaw)
+				.append(this.item)
+				.append(this.name)
+				.toHashCode();
+	}
 }

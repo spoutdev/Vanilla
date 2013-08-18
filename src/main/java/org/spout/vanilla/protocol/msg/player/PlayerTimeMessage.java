@@ -66,6 +66,17 @@ public final class PlayerTimeMessage extends VanillaMainChannelMessage {
 			return false;
 		}
 		final PlayerTimeMessage other = (PlayerTimeMessage) obj;
-		return this.time == other.time;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.age, other.age)
+				.append(this.time, other.time)
+				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.age)
+				.append(this.time)
+				.toHashCode();
 	}
 }

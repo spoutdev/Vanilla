@@ -88,12 +88,12 @@ public final class EffectMessage extends VanillaMainChannelMessage {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("id", id)
-				.append("x", x)
-				.append("y", y)
-				.append("z", z)
-				.append("data", data)
-				.append("no_volume_decrease", volumeDecrease)
+				.append("id", this.id)
+				.append("x", this.x)
+				.append("y", this.y)
+				.append("z", this.z)
+				.append("data", this.data)
+				.append("no_volume_decrease", this.volumeDecrease)
 				.toString();
 	}
 
@@ -114,5 +114,17 @@ public final class EffectMessage extends VanillaMainChannelMessage {
 				.append(this.data, other.data)
 				.append(this.volumeDecrease, other.volumeDecrease)
 				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.id)
+				.append(this.x)
+				.append(this.y)
+				.append(this.z)
+				.append(this.data)
+				.append(this.volumeDecrease)
+				.toHashCode();
 	}
 }

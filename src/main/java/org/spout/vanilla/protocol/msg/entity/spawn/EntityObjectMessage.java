@@ -177,4 +177,20 @@ public final class EntityObjectMessage extends EntityMessage {
 				.append(this.pitch, other.pitch)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.getEntityId())
+				.append(this.type)
+				.append(this.x)
+				.append(this.y)
+				.append(this.z)
+				.append(this.speedX)
+				.append(this.speedY)
+				.append(this.speedZ)
+				.append(this.yaw)
+				.append(this.pitch)
+				.toHashCode()
+	}
 }

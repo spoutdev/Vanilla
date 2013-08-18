@@ -71,10 +71,10 @@ public final class WindowOpenMessage extends WindowMessage {
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
 				.append("id", this.getWindowInstanceId())
-				.append("type", type)
-				.append("slots", slots)
-				.append("title", title)
-				.append("usingTitle", useTitle)
+				.append("type", this.type)
+				.append("slots", this.slots)
+				.append("title", this.title)
+				.append("usingTitle", this.useTitle)
 				.toString();
 	}
 
@@ -94,5 +94,16 @@ public final class WindowOpenMessage extends WindowMessage {
 				.append(this.title, other.title)
 				.append(this.useTitle, other.useTitle)
 				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.getWindowInstanceId())
+				.append(this.type)
+				.append(this.slots)
+				.append(this.title)
+				.append(this.useTitle)
+				.toHashCode();
 	}
 }

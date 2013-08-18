@@ -32,6 +32,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.util.SpoutToStringStyle;
@@ -83,6 +84,15 @@ public class EntityPropertiesMessage extends EntityMessage {
 			return false;
 		}
 		return equalsBuilder.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		HashCodeBuilder hashBuilder = new HashCodeBuilder().append(this.getEntityId());
+		for (Map.Entry<EntityPropertiesMessage.EntityProperties, Double> value : properties.entrySet()) {
+			hashBuilder.append(value.getKey()).append(value.getValue());
+		}
+		return hashBuilder.toHashCode();
 	}
 
 	public enum EntityProperties {

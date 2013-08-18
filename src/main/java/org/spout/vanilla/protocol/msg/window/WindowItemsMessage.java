@@ -53,7 +53,7 @@ public final class WindowItemsMessage extends WindowMessage {
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
 				.append("id", this.getWindowInstanceId())
-				.append("items", items, true)
+				.append("items", this.items, true)
 				.toString();
 	}
 
@@ -70,5 +70,13 @@ public final class WindowItemsMessage extends WindowMessage {
 				.append(this.getWindowInstanceId(), other.getWindowInstanceId())
 				.append(this.items, other.items)
 				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.getWindowInstanceId())
+				.append(this.items)
+				.toHashCode();
 	}
 }

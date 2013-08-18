@@ -66,4 +66,12 @@ public class EntityHeadYawMessage extends EntityMessage {
 				.append(this.headYaw, other.headYaw)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.getEntityId())
+				.append(this.headYaw)
+				.toHashCode();
+	}
 }

@@ -59,4 +59,10 @@ public final class WindowCloseMessage extends WindowMessage {
 		final WindowCloseMessage other = (WindowCloseMessage) obj;
 		return this.getWindowInstanceId() == other.getWindowInstanceId();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.getWindowInstanceId())
+				.toHashCode();
 }

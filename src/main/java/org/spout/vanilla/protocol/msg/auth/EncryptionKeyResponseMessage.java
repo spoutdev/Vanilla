@@ -102,4 +102,13 @@ public class EncryptionKeyResponseMessage extends VanillaMainChannelMessage impl
 				.append("verifyToken", this.getVerifyTokenArray())
 				.toString();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.isChannelLocking())
+				.append(this.getSecretArray())
+				.append(this.getVerifyTokenArray())
+				.toHashCode();
+	}
 }

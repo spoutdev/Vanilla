@@ -81,9 +81,18 @@ public class ScoreboardObjectiveMessage extends VanillaMainChannelMessage {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("name", name)
-				.append("display", display)
-				.append("action", action)
+				.append("name", this.name)
+				.append("display", this.display)
+				.append("action", this.action)
 				.toString();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.name)
+				.append(this.display)
+				.append(this.action)
+				.toHashCode();
 	}
 }

@@ -57,8 +57,8 @@ public final class WindowPropertyMessage extends WindowMessage {
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
 				.append("id", this.getWindowInstanceId())
-				.append("progressBar", progressBar)
-				.append("value", value)
+				.append("progressBar", this.progressBar)
+				.append("value", this.value)
 				.toString();
 	}
 
@@ -76,5 +76,14 @@ public final class WindowPropertyMessage extends WindowMessage {
 				.append(this.progressBar, other.progressBar)
 				.append(this.value, other.value)
 				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.getWindowInstanceId())
+				.append(this.progressBar)
+				.append(this.value)
+				.toHashCode();
 	}
 }

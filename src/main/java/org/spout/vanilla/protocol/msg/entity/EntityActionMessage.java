@@ -76,4 +76,13 @@ public final class EntityActionMessage extends EntityMessage {
 				.append(this.jumpBoost, other.jumpBoost)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.getEntityId())
+				.append(this.action)
+				.append(this.jumpBoost)
+				.toHashCode();
+	}
 }

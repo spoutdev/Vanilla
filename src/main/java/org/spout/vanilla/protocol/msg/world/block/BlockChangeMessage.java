@@ -74,11 +74,11 @@ public final class BlockChangeMessage extends VanillaBlockDataChannelMessage {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("x", x)
-				.append("y", y)
-				.append("z", z)
-				.append("type", type)
-				.append("metadata", metadata)
+				.append("x", this.x)
+				.append("y", this.y)
+				.append("z", this.z)
+				.append("type", this.type)
+				.append("metadata", this.metadata)
 				.toString();
 	}
 
@@ -98,5 +98,16 @@ public final class BlockChangeMessage extends VanillaBlockDataChannelMessage {
 				.append(this.type, other.type)
 				.append(this.metadata, other.metadata)
 				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.x)
+				.append(this.y)
+				.append(this.z)
+				.append(this.type)
+				.append(this.metadata)
+				.toHashCode();
 	}
 }

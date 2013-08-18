@@ -64,16 +64,16 @@ public class ServerPluginMessage extends VanillaMainChannelMessage implements Dy
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("data", data)
-				.append("type", type)
+				.append("data", this.data)
+				.append("type", this.type)
 				.toString();
 	}
 
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder(61, 33)
-				.append(data)
-				.append(type)
+				.append(this.data)
+				.append(this.type)
 				.toHashCode();
 	}
 

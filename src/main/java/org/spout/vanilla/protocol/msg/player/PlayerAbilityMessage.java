@@ -100,4 +100,16 @@ public class PlayerAbilityMessage extends VanillaMainChannelMessage {
 				.append(this.walkingSpeed, other.walkingSpeed)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.godMode)
+				.append(this.isFlying)
+				.append(this.canFly)
+				.append(this.creativeMode)
+				.append(this.flyingSpeed)
+				.append(this.walkingSpeed)
+				.toHashCode();
+	}
 }

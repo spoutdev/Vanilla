@@ -94,4 +94,16 @@ public final class EntityTeleportMessage extends EntityMessage {
 				.append(this.pitch, other.pitch)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.getEntityId())
+				.append(this.x)
+				.append(this.y)
+				.append(this.z)
+				.append(this.rotation)
+				.append(this.pitch)
+				.toHashCode();
+	}
 }

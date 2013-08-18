@@ -101,4 +101,16 @@ public final class PlayerLoginRequestMessage extends VanillaMainChannelMessage {
 				.append(this.maxPlayers, other.maxPlayers)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.id)
+				.append(this.worldType)
+				.append(this.mode)
+				.append(this.dimension)
+				.append(this.difficulty)
+				.append(this.maxPlayers)
+				.toHashCode();
+	}
 }

@@ -65,4 +65,11 @@ public class PlayerStatusMessage extends VanillaMainChannelMessage {
 				.append(this.status, other.status)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.status)
+				.toHashCode();
+	}
 }

@@ -85,10 +85,20 @@ public class ScoreboardScoreMessage extends VanillaMainChannelMessage {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("item", item)
-				.append("remove", remove)
-				.append("scoreboard", scoreboard)
-				.append("value", value)
+				.append("item", this.item)
+				.append("remove", this.remove)
+				.append("scoreboard", this.scoreboard)
+				.append("value", this.value)
 				.toString();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.item)
+				.append(this.remove)
+				.append(this.scoreboard)
+				.append(this.value)
+				.toHashCode();
 	}
 }

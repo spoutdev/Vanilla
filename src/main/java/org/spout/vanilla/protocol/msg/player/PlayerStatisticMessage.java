@@ -70,4 +70,12 @@ public final class PlayerStatisticMessage extends VanillaMainChannelMessage {
 				.append(this.amount, other.amount)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.id)
+				.append(this.amount)
+				.toHashCode();
+	}
 }

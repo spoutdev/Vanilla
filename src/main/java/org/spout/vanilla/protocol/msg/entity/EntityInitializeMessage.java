@@ -53,4 +53,11 @@ public final class EntityInitializeMessage extends EntityMessage {
 		final EntityInitializeMessage other = (EntityInitializeMessage) obj;
 		return this.getEntityId() == other.getEntityId();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.getEntityId())
+				.toHashCode();
+	}
 }

@@ -67,10 +67,10 @@ public final class SignMessage extends VanillaBlockDataChannelMessage {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("x", x)
-				.append("y", y)
-				.append("z", z)
-				.append("message", message, true)
+				.append("x", this.x)
+				.append("y", this.y)
+				.append("z", this.z)
+				.append("message", this.message, true)
 				.toString();
 	}
 
@@ -89,5 +89,15 @@ public final class SignMessage extends VanillaBlockDataChannelMessage {
 				.append(this.z, other.z)
 				.append(this.message, other.message)
 				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.x)
+				.append(this.y)
+				.append(this.z)
+				.append(this.message)
+				.toHashCode();
 	}
 }

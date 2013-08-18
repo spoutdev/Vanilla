@@ -97,4 +97,15 @@ public final class PlayerRespawnMessage extends VanillaMainChannelMessage {
 				.append(this.worldType, other.worldType)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.difficulty)
+				.append(this.mode)
+				.append(this.worldHeight)
+				.append(this.dimension)
+				.append(worldType)
+				.toHashCode();
+	}
 }

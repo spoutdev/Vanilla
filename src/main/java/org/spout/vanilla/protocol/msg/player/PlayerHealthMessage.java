@@ -78,4 +78,13 @@ public final class PlayerHealthMessage extends VanillaMainChannelMessage {
 				.append(this.foodSaturation, other.foodSaturation)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.health)
+				.append(this.food)
+				.append(this.foodSaturation)
+				.toHashCode();
+	}
 }

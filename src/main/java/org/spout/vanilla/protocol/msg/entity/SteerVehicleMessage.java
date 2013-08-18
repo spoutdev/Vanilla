@@ -85,4 +85,14 @@ public class SteerVehicleMessage extends VanillaMainChannelMessage {
 				.append(this.getForward(), other.getForward())
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.getSideways())
+				.append(this.isUnmount())
+				.append(this.isJumping())
+				.append(this.getForward())
+				.toHashCode();
+	}
 }

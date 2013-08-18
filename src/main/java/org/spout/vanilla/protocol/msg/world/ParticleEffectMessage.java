@@ -125,15 +125,15 @@ public class ParticleEffectMessage extends VanillaMainChannelMessage {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("name", name)
-				.append("x", x)
-				.append("y", y)
-				.append("z", z)
-				.append("xOffset", xOffset)
-				.append("yOffset", yOffset)
-				.append("zOffset", zOffset)
-				.append("velocity", velocity)
-				.append("amount", amount)
+				.append("name", this.name)
+				.append("x", this.x)
+				.append("y", this.y)
+				.append("z", this.z)
+				.append("xOffset", this.xOffset)
+				.append("yOffset", this.yOffset)
+				.append("zOffset", this.zOffset)
+				.append("velocity", this.velocity)
+				.append("amount", this.amount)
 				.toString();
 	}
 
@@ -157,5 +157,20 @@ public class ParticleEffectMessage extends VanillaMainChannelMessage {
 				.append(this.velocity, other.velocity)
 				.append(this.amount, other.amount)
 				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.name)
+				.append(this.x)
+				.append(this.y)
+				.append(this.z)
+				.append(this.xOffset)
+				.append(this.yOffset)
+				.append(this.zOffset)
+				.append(this.velocity)
+				.append(this.amount)
+				.toHashCode();
 	}
 }

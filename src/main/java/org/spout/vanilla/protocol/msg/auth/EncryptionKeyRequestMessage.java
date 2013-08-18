@@ -68,4 +68,14 @@ public final class EncryptionKeyRequestMessage extends EncryptionKeyResponseMess
 				.append("verifyToken", this.getVerifyTokenArray())
 				.toString();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.sessionId)
+				.append(this.isChannelLocking())
+				.append(this.getSecretArray())
+				.append(this.getVerifyTokenArray())
+				.toHashCode();
+	}
 }

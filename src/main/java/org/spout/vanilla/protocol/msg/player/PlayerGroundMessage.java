@@ -59,6 +59,15 @@ public final class PlayerGroundMessage extends VanillaMainChannelMessage {
 			return false;
 		}
 		final PlayerGroundMessage other = (PlayerGroundMessage) obj;
-		return this.onGround == other.onGround;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.onGround, other.onGround)
+				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.onGround)
+				.toHashCode();
 	}
 }

@@ -40,13 +40,13 @@ public final class PlayerPingMessage extends VanillaMainChannelMessage {
 	}
 
 	public int getPingId() {
-		return pingId;
+		return this.pingId;
 	}
 
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("pingId", pingId)
+				.append("pingId", this.pingId)
 				.toString();
 	}
 
@@ -60,5 +60,12 @@ public final class PlayerPingMessage extends VanillaMainChannelMessage {
 		}
 		final PlayerPingMessage other = (PlayerPingMessage) obj;
 		return this.pingId == other.pingId;
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.pingId)
+				.toHashCode();
 	}
 }

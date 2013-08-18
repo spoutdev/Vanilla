@@ -87,4 +87,13 @@ public final class EntityAttachEntityMessage extends EntityMessage {
 				.append(this.leashed, other.leashed)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.getEntityId())
+				.append(this.vehicle)
+				.append(this.leashed)
+				.toHashCode();
+	}
 }

@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.protocol.msg.player;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.util.SpoutToStringStyle;
@@ -59,6 +60,15 @@ public final class PlayerHeldItemChangeMessage extends VanillaMainChannelMessage
 			return false;
 		}
 		final PlayerHeldItemChangeMessage other = (PlayerHeldItemChangeMessage) obj;
-		return this.slot == other.slot;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.slot, other.slot)
+				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.slot)
+				.toHashCode();
 	}
 }

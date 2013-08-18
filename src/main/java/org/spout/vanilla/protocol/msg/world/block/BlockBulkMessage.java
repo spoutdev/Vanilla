@@ -87,11 +87,11 @@ public final class BlockBulkMessage extends VanillaBlockDataChannelMessage {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("chunkX", chunkX)
-				.append("chunkZ", chunkZ)
-				.append("coordinates", coordinates, false)
-				.append("types", types, false)
-				.append("metadata", metadata, false)
+				.append("chunkX", this.chunkX)
+				.append("chunkZ", this.chunkZ)
+				.append("coordinates", this.coordinates, false)
+				.append("types", this.types, false)
+				.append("metadata", this.metadata, false)
 				.toString();
 	}
 
@@ -111,5 +111,16 @@ public final class BlockBulkMessage extends VanillaBlockDataChannelMessage {
 				.append(this.types, other.types)
 				.append(this.metadata, other.metadata)
 				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.chunkX)
+				.append(this.chunkZ)
+				.append(this.coordinates)
+				.append(this.types)
+				.append(this.metadata)
+				.toHashCode();
 	}
 }

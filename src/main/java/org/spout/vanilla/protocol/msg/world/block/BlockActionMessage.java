@@ -79,12 +79,12 @@ public final class BlockActionMessage extends VanillaBlockDataChannelMessage {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("x", x)
-				.append("y", y)
-				.append("z", z)
-				.append("firstByte", firstByte)
-				.append("secondByte", secondByte)
-				.append("blockId", blockId)
+				.append("x", this.x)
+				.append("y", this.y)
+				.append("z", this.z)
+				.append("firstByte", this.firstByte)
+				.append("secondByte", this.secondByte)
+				.append("blockId", this.blockId)
 				.toString();
 	}
 
@@ -105,5 +105,17 @@ public final class BlockActionMessage extends VanillaBlockDataChannelMessage {
 				.append(this.secondByte, other.secondByte)
 				.append(this.blockId, other.blockId)
 				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.x)
+				.append(this.y)
+				.append(this.z)
+				.append(this.firstByte)
+				.append(this.secondByte)
+				.append(this.blockId)
+				.toHashCode();
 	}
 }

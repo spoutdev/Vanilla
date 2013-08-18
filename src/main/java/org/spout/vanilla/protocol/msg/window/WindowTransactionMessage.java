@@ -58,8 +58,8 @@ public final class WindowTransactionMessage extends WindowMessage {
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
 				.append("id", this.getWindowInstanceId())
-				.append("transaction", transaction)
-				.append("accepted", accepted)
+				.append("transaction", this.transaction)
+				.append("accepted", this.accepted)
 				.toString();
 	}
 
@@ -77,5 +77,14 @@ public final class WindowTransactionMessage extends WindowMessage {
 				.append(this.transaction, other.transaction)
 				.append(this.accepted, other.accepted)
 				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.getWindowInstanceId())
+				.append(this.transaction)
+				.append(this.accepted)
+				.toHashCode();
 	}
 }

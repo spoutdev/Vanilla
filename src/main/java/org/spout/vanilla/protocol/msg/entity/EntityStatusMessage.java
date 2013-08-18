@@ -71,4 +71,12 @@ public final class EntityStatusMessage extends EntityMessage {
 				.append(this.status, other.status)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.getEntityId())
+				.append(this.status)
+				.toHashCode();
+	}
 }

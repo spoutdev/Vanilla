@@ -63,4 +63,10 @@ public final class PlayerChatMessage extends VanillaMainChannelMessage {
 				.append(this.message, other.message)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.message)
+				.toHashCode();
 }

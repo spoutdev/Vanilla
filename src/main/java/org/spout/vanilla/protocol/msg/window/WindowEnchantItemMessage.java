@@ -51,8 +51,8 @@ public class WindowEnchantItemMessage extends VanillaMainChannelMessage {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("transaction", transaction)
-				.append("enchantment", enchantment)
+				.append("transaction", this.transaction)
+				.append("enchantment", this.enchantment)
 				.toString();
 	}
 
@@ -69,5 +69,13 @@ public class WindowEnchantItemMessage extends VanillaMainChannelMessage {
 				.append(this.transaction, other.transaction)
 				.append(this.enchantment, other.enchantment)
 				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.transaction)
+				.append(this.enchantment)
+				.toHashCode();
 	}
 }

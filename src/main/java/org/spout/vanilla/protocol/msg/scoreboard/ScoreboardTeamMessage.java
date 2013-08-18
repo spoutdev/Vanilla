@@ -109,13 +109,26 @@ public class ScoreboardTeamMessage extends VanillaMainChannelMessage {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("name", name)
-				.append("action", action)
-				.append("displayName", displayName)
-				.append("prefix", prefix)
-				.append("suffix", suffix)
-				.append("friendlyFire", friendlyFire)
-				.append("players", players)
+				.append("name", this.name)
+				.append("action", this.action)
+				.append("displayName", this.displayName)
+				.append("prefix", this.prefix)
+				.append("suffix", this.suffix)
+				.append("friendlyFire", this.friendlyFire)
+				.append("players", this.players)
 				.toString();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.name)
+				.append(this.action)
+				.append(this.displayName)
+				.append(this.prefix)
+				.append(this.suffix)
+				.append(this.friendlyFire)
+				.append(this.players)
+				.toHashCode();
 	}
 }

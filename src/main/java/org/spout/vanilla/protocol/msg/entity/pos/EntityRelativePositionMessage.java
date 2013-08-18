@@ -85,4 +85,14 @@ public final class EntityRelativePositionMessage extends EntityMessage {
 				.append(this.deltaZ, other.deltaZ)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.getEntityId())
+				.append(this.deltaX)
+				.append(this.deltaY)
+				.append(this.deltaZ)
+				.toHashCode();
+	}
 }

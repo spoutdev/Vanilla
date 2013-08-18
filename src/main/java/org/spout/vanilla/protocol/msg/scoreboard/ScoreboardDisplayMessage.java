@@ -72,8 +72,16 @@ public class ScoreboardDisplayMessage extends VanillaMainChannelMessage {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("position", position)
-				.append("name", name)
+				.append("position", this.position)
+				.append("name", this.name)
 				.toString();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.position)
+				.append(this.name)
+				.toHashCode();
 	}
 }

@@ -120,7 +120,7 @@ public class Human extends Living {
 				viewDistance = config.NORMAL_VIEW_DISTANCE.getInt();
 				break;
 		}
-		getOwner().getNetwork().setSyncDistance(viewDistance);
+		//TODO: Client View distance, set it here
 	}
 
 	public boolean isAdventure() {

@@ -50,6 +50,7 @@ import org.spout.vanilla.event.player.PlayerRespawnEvent;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.msg.player.PlayerStatusMessage;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerLoginRequestMessage;
+import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnPositionMessage;
 
 public class PlayerStatusHandler extends MessageHandler<PlayerStatusMessage> {
 	@Override
@@ -72,17 +73,19 @@ public class PlayerStatusHandler extends MessageHandler<PlayerStatusMessage> {
 			int entityId = session.getPlayer().getId();
 
 			//  MC Packet Order: 0x01 Login, 0xFA Custom (ServerTypeName), 0x06 SpawnPos, 0xCA PlayerAbilities, 0x10 BlockSwitch
-			if (human != null && human.getAttachedCount() > 1) {
+			if (human.getAttachedCount() > 1) {
 				gamemode = human.getGameMode();
 			} else {
 				gamemode = data.get(VanillaData.GAMEMODE);
-				if (human != null) {
-					human.setGamemode(gamemode);
-				}
+				human.setGamemode(gamemode);
 			}
-			PlayerLoginRequestMessage idMsg = new PlayerLoginRequestMessage(entityId, worldType.toString(), gamemode.getId(), (byte) dimension.getId(), difficulty.getId(), (byte) server.getMaxPlayers());
+			final PlayerLoginRequestMessage idMsg = new PlayerLoginRequestMessage(entityId, worldType.toString(), gamemode.getId(), (byte) dimension.getId(), difficulty.getId(), (byte) server.getMaxPlayers());
 			session.send(true, idMsg);
 			session.setState(Session.State.GAME);
+
+			final Point position = session.getPlayer().getPhysics().getPosition();
+			PlayerSpawnPositionMessage pspMsg = new PlayerSpawnPositionMessage((int) position.getX(), (int) position.getY(), (int) position.getZ(), session.getPlayer().getNetwork().getRepositionManager());
+			session.send(pspMsg);
 		} else if (message.getStatus() == PlayerStatusMessage.RESPAWN) {
 			Player player = session.getPlayer();
 			Point point = player.getWorld().getSpawnPoint().getPosition();

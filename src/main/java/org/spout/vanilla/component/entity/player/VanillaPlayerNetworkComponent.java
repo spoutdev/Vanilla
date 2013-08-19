@@ -36,6 +36,7 @@ import gnu.trove.set.TIntSet;
 
 import org.spout.api.Spout;
 import org.spout.api.component.BlockComponentOwner;
+import org.spout.api.component.Component;
 import org.spout.api.component.entity.EntityComponent;
 import org.spout.api.component.entity.PlayerNetworkComponent;
 import org.spout.api.datatable.ManagedMap;
@@ -209,7 +210,6 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 	private static final int FORCE_MASK = 0xFF; // force an update to be sent every 5 seconds
 	private static final int HASH_SEED = 0xB346D76A;
 	public static final int WORLD_HEIGHT = 256;
-	private boolean first = true;
 	private final TSyncIntPairObjectHashMap<TSyncIntHashSet> initChunks = new TSyncIntPairObjectHashMap<TSyncIntHashSet>();
 	private final ConcurrentLinkedQueue<Long> emptyColumns = new ConcurrentLinkedQueue<Long>();
 	// TODO rename -> activeColumns
@@ -462,14 +462,7 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 		return chunks;
 	}
 
-	public void sendPosition() {
-		Point p = getOwner().getPhysics().getPosition();
-		Quaternion rot = getOwner().getPhysics().getRotation();
-		PlayerPositionLookMessage PPLMsg = new PlayerPositionLookMessage(p.getX(), p.getY() + STANCE, p.getZ(), p.getY(), rot.getYaw(), rot.getPitch(), true, VanillaBlockDataChannelMessage.CHANNEL_ID, getRepositionManager());
-		getSession().send(PPLMsg);
-	}
-
-	@EventHandler
+	@EventHandler (order = Order.MONITOR)
 	public void onPositionSend(EntityUpdateEvent event) {
 		if (event.getAction() != EntityUpdateEvent.UpdateAction.TRANSFORM) {
 			return;
@@ -500,8 +493,6 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 		maxY = node.MAX_Y.getInt() & (~Chunk.BLOCKS.MASK);
 		minY = node.MIN_Y.getInt() & (~Chunk.BLOCKS.MASK);
 		stepY = node.STEP_Y.getInt() & (~Chunk.BLOCKS.MASK);
-		int lowY = maxY - stepY;
-		int highY = minY + stepY;
 		lastY = Integer.MAX_VALUE;
 
 		final ManagedMap data = world.getData();
@@ -511,20 +502,12 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 		Dimension dimension = data.get(VanillaData.DIMENSION);
 		WorldType worldType = data.get(VanillaData.WORLD_TYPE);
 
-		if (first) {
-			first = false;
-		} else {
-			if (human != null) {
-				gamemode = human.getGameMode();
-			}
-			getSession().send(new PlayerRespawnMessage(0, difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
-			getSession().send(new PlayerRespawnMessage(1, difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
-			getSession().send(new PlayerRespawnMessage(dimension.getId(), difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
+		if (human != null) {
+			gamemode = human.getGameMode();
 		}
-
-		Point pos = world.getSpawnPoint().getPosition();
-		PlayerSpawnPositionMessage SPMsg = new PlayerSpawnPositionMessage((int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), getRepositionManager());
-		getSession().send(SPMsg);
+		getSession().send(new PlayerRespawnMessage(0, difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
+		getSession().send(new PlayerRespawnMessage(1, difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
+		getSession().send(new PlayerRespawnMessage(dimension.getId(), difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
 
 		if (human != null) {
 			human.updateAbilities();
@@ -539,23 +522,9 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 		}
 
 		// TODO: Send scoreboard data here
-		Sky sky;
-
-		switch (dimension) {
-			case NETHER:
-				sky = world.add(NetherSky.class);
-				break;
-			case THE_END:
-				sky = world.add(TheEndSky.class);
-				break;
-			default:
-				sky = world.add(NormalSky.class);
-		}
-		sky.updatePlayer((Player) getOwner());
+		world.get(Sky.class).updatePlayer((Player) getOwner());
 		// TODO: notify all connected players of login PacketChat 'using: server'
 		// TODO: Send player all nearby players
-		//this.sendPosition(); // Send LookAndPosition
-		sky.updatePlayer((Player) getOwner());
 		// TODO: Handle custom texture packs
 		// TODO: Send any player effects
 	}
@@ -576,9 +545,6 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 
 	@Override
 	public void finalizeRun(Transform live) {
-		if (first) {
-			getSession().setState(Session.State.GAME);
-		}
 		Point currentPosition = live.getPosition();
 
 		int y = currentPosition.getBlockY();
@@ -629,10 +595,6 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 		if (!(e.getNetwork() instanceof VanillaNetworkProtocol)) {
 			return;
 		}
-		// Do not synchronize a Player to itself - this causes bugs
-		if (this.getOwner() == e) {
-			return;
-		}
 		Transform liveTransform = event.getTransform();
 		boolean spawn = event.shouldAdd();
 		boolean destroy = event.shouldRemove();
@@ -656,13 +618,8 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 			}
 		} else if (spawn) {
 			// For debugging purposes: log all entities with a missing protocol
-			Spout.getLogger().warning("Could not spawn Entity (" + e.getUID() + "): No Entity Protocol is set on network " + e.getNetwork());
-			StringBuilder bldr = new StringBuilder();
-			for (EntityComponent comp : e.getAll(EntityComponent.class)) {
-				bldr.append(" ");
-				bldr.append(comp.getClass().getSimpleName());
-			}
-			Spout.getLogger().warning("Set components:" + bldr.toString());
+			Spout.getLogger().warning("Failure to spawn entity due to no EntityProtocol. Dropping entity toString...");
+			Spout.getLogger().warning(e.toString());
 		}
 	}
 
@@ -1025,7 +982,6 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 
 	@EventHandler
 	public void onEntityRemoveEffect(EntityRemoveEffectEvent event) {
-		System.out.println("Removing effect");
 		event.getMessages().add(new EntityRemoveEffectMessage(event.getEntity().getId(), (byte) event.getEffect().getId()));
 	}
 
@@ -1042,12 +998,8 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 	@EventHandler
 	public void onExperienceChange(PlayerExperienceChangeEvent event) {
 		Player player = event.getPlayer();
-		Level level = player.get(Level.class);
-
-		//TODO: This is at the protocol level, this should never be null...
-		if (level != null) {
-			event.getMessages().add(new PlayerExperienceMessage(level.getProgress(), level.getLevel(), event.getNewExp()));
-		}
+		Level level = player.add(Level.class);
+		event.getMessages().add(new PlayerExperienceMessage(level.getProgress(), level.getLevel(), event.getNewExp()));
 	}
 
 	@EventHandler

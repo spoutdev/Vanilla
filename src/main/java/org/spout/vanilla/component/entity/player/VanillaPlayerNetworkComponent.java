@@ -36,8 +36,6 @@ import gnu.trove.set.TIntSet;
 
 import org.spout.api.Spout;
 import org.spout.api.component.BlockComponentOwner;
-import org.spout.api.component.Component;
-import org.spout.api.component.entity.EntityComponent;
 import org.spout.api.component.entity.PlayerNetworkComponent;
 import org.spout.api.datatable.ManagedMap;
 import org.spout.api.entity.Entity;
@@ -58,7 +56,6 @@ import org.spout.api.math.IntVector3;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
-import org.spout.api.protocol.Session;
 import org.spout.api.protocol.event.BlockUpdateEvent;
 import org.spout.api.protocol.event.ChunkFreeEvent;
 import org.spout.api.protocol.event.ChunkSendEvent;
@@ -79,10 +76,7 @@ import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.component.entity.misc.Hunger;
 import org.spout.vanilla.component.entity.misc.Level;
 import org.spout.vanilla.component.entity.substance.test.ForceMessages;
-import org.spout.vanilla.component.world.sky.NetherSky;
-import org.spout.vanilla.component.world.sky.NormalSky;
 import org.spout.vanilla.component.world.sky.Sky;
-import org.spout.vanilla.component.world.sky.TheEndSky;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.Dimension;
 import org.spout.vanilla.data.GameMode;
@@ -131,6 +125,7 @@ import org.spout.vanilla.material.block.component.TileMaterial;
 import org.spout.vanilla.protocol.EntityProtocol;
 import org.spout.vanilla.protocol.VanillaNetworkProtocol;
 import org.spout.vanilla.protocol.container.VanillaContainer;
+import org.spout.vanilla.protocol.entity.PlayerEntityProtocol;
 import org.spout.vanilla.protocol.msg.VanillaBlockDataChannelMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
@@ -152,7 +147,6 @@ import org.spout.vanilla.protocol.msg.player.conn.PlayerListMessage;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerPingMessage;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionLookMessage;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerRespawnMessage;
-import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnPositionMessage;
 import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardDisplayMessage;
 import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardObjectiveMessage;
 import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardScoreMessage;
@@ -596,13 +590,49 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 			return;
 		}
 		Transform liveTransform = event.getTransform();
+		boolean self = (e == getOwner());
 		boolean spawn = event.shouldAdd();
 		boolean destroy = event.shouldRemove();
 		boolean update = event.shouldSync();
 		EntityProtocol ep = ((VanillaNetworkProtocol) e.getNetwork()).getEntityProtocol();
-		if (ep != null) {
-			List<Message> messages = new ArrayList<Message>();
+		if (ep == null) {
+			if (spawn) {
+				// For debugging purposes: log all entities with a missing protocol
+				// Only do it for spawning - update is called too often
+				Spout.getLogger().warning("Failure to spawn entity due to no EntityProtocol. Dropping entity toString...");
+				Spout.getLogger().warning(e.toString());
+			}
+			// Do not send any messages - no protocol to do so
+			return;
+		}
+		if (self && !(ep instanceof PlayerEntityProtocol)) {
+			if (spawn) {
+				// For debugging purposes: Log all Player entities that can't synchronize to self
+				// Only do it for spawning - update is called too often
+				Spout.getLogger().warning("Failure to spawn Player entity to self: No PlayerEntityProtocol is used. Dropping entity toString...");
+				Spout.getLogger().warning(e.toString());
+			}
+			// Do not send any messages - no protocol to do so
+			return;
+		}
+		if (self) {
+			// Sync using vanilla Player 'self' protocol
+			// Note: No messages gathered because all update methods send to the Player
+			PlayerEntityProtocol pep = (PlayerEntityProtocol) ep;
+			Player player = (Player) e;
+			if (destroy) {
+				pep.doSelfDestroy(player);
+			}
+			if (spawn) {
+				pep.doSelfSpawn(player, getRepositionManager());
+			}
+			if (update) {
+				boolean force = shouldForce(e.getId());
+				pep.doSelfUpdate(player, liveTransform, getRepositionManager(), force);
+			}
+		} else {
 			// Sync using vanilla protocol
+			List<Message> messages = new ArrayList<Message>();
 			if (destroy) {
 				messages.addAll(ep.getDestroyMessages(e));
 			}
@@ -613,13 +643,10 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 				boolean force = shouldForce(e.getId());
 				messages.addAll(ep.getUpdateMessages(e, liveTransform, getRepositionManager(), force));
 			}
+			// Send all messages gathered
 			for (Message message : messages) {
 				getSession().send(message);
 			}
-		} else if (spawn) {
-			// For debugging purposes: log all entities with a missing protocol
-			Spout.getLogger().warning("Failure to spawn entity due to no EntityProtocol. Dropping entity toString...");
-			Spout.getLogger().warning(e.toString());
 		}
 	}
 

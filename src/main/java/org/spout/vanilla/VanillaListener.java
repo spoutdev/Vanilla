@@ -80,6 +80,7 @@ import org.spout.vanilla.input.VanillaInputExecutor;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.protocol.ClientAuthentification;
 import org.spout.vanilla.protocol.PasteExceptionHandler;
+import org.spout.vanilla.protocol.entity.PlayerEntityProtocol;
 
 public class VanillaListener implements Listener {
 	private final VanillaPlugin plugin;
@@ -107,6 +108,7 @@ public class VanillaListener implements Listener {
 		// TODO: Connection times out when using Spout Protocol because no Ping Message; need a Ping component client-side that somehow updates server
 		if (player.getNetwork() instanceof VanillaPlayerNetworkComponent) {
 			player.add(Ping.class);
+			((VanillaPlayerNetworkComponent) player.getNetwork()).setEntityProtocol(new PlayerEntityProtocol());
 		}
 		player.add(PlayerItemCollector.class);
 		player.add(Sleep.class);

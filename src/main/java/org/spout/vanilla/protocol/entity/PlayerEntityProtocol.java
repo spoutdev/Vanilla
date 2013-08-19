@@ -24,44 +24,52 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol;
+package org.spout.vanilla.protocol.entity;
 
-import java.util.List;
-
-import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Transform;
-import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.RepositionManager;
 
 /**
- * A class that generates messages associated with entities
+ * Human Entity Protocol extension that adds methods for spawning a Player Human
+ * to the Player itself. This involves sending information such as Player inventory,
+ * player list information and other information players can only see for themselves.
  */
-public interface EntityProtocol {
-	/**
-	 * Gets the messages to spawn the entity. The entity should spawn at the location at the last snapshot
-	 *
-	 * @param entity the entity
-	 * @param em the reposition manager
-	 * @return messages to send
-	 */
-	public List<Message> getSpawnMessages(Entity entity, RepositionManager rm);
+public class PlayerEntityProtocol extends HumanEntityProtocol {
 
 	/**
-	 * Gets the messages to destroy the entity.
-	 *
-	 * @param entity the entity
-	 * @return messages to send
+	 * Sends the messages to the Player (self) when destroying.
+	 * This typically is used to clear Player information when changing worlds.
+	 * This method should return all messages needed so that no glitched information
+	 * stays behind when sending the spawn messages again later on.
+	 * 
+	 * @param player to be destroyed
 	 */
-	public List<Message> getDestroyMessages(Entity entity);
+	public void doSelfDestroy(Player player) {
+	}
 
 	/**
-	 * Gets the messages to update the entity. This should move the entity from its snapshot position to its live position.
+	 * Sends the messages to the Player (self) when spawning.
+	 * The entity should spawn at the location at the last snapshot.
+	 * 
+	 * @param player to spawn
+	 * @param rm to use for positioning adjustments
+	 */
+	public void doSelfSpawn(Player player, RepositionManager rm) {
+		// This is for debugging the 'double-spawn' issue when players rejoin the server
+		// When fixed this log line can be removed again
+		System.out.println("SPAWNING PLAYER");
+	}
+
+	/**
+	 * Sends the messages to update the Player to itself.
+	 * This should move the entity from its snapshot position to its live position.
 	 *
-	 * @param entity the entity
+	 * @param player to update
 	 * @param liveTransform the latest transform for the entity
 	 * @param rm the reposition manager
 	 * @param force true to send an absolute update even if no update is required
-	 * @return messages to send
 	 */
-	public List<Message> getUpdateMessages(Entity entity, Transform liveTransform, RepositionManager rm, boolean force);
+	public void doSelfUpdate(Player player, Transform liveTransform, RepositionManager rm, boolean force) {
+	}
 }

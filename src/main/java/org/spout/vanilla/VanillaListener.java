@@ -245,8 +245,8 @@ public class VanillaListener implements Listener {
 			((Server) Spout.getEngine()).getAccessManager().ban(BanType.PLAYER, event.getPlayer().getName(), true, "Banned from server. Reason: Death on hardcore.");
 		}
 	}
-	
-	@EventHandler
+
+	@EventHandler (order = Order.EARLIEST)
 	public void onEntitySpawn(EntitySpawnEvent event) {
 		WorldConfigurationNode node = VanillaConfiguration.WORLDS.get(event.getEntity().getWorld());
 		Living mob = event.getEntity().get(Living.class);

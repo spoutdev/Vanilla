@@ -252,7 +252,7 @@ public class VanillaListener implements Listener {
 		Living mob = event.getEntity().get(Living.class);
 		if (!(mob instanceof Player)) {
 			if (!node.SPAWN_ANIMALS.getBoolean()) {
-				if ((mob instanceof Neutral) || (mob instanceof Passive)) {
+				if (mob instanceof Neutral || mob instanceof Passive) {
 					event.setCancelled(true);
 				}
 			}

@@ -40,6 +40,7 @@ import org.spout.api.event.block.BlockChangeEvent;
 import org.spout.api.event.engine.EngineStartEvent;
 import org.spout.api.event.entity.EntityHiddenEvent;
 import org.spout.api.event.entity.EntityShownEvent;
+import org.spout.api.event.entity.EntitySpawnEvent;
 import org.spout.api.event.player.ClientPlayerConnectedEvent;
 import org.spout.api.event.player.PlayerJoinEvent;
 import org.spout.api.event.server.permissions.PermissionNodeEvent;
@@ -49,7 +50,11 @@ import org.spout.api.util.access.BanType;
 
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
+import org.spout.vanilla.component.entity.living.Aggressive;
 import org.spout.vanilla.component.entity.living.Human;
+import org.spout.vanilla.component.entity.living.Living;
+import org.spout.vanilla.component.entity.living.Neutral;
+import org.spout.vanilla.component.entity.living.Passive;
 import org.spout.vanilla.component.entity.living.hostile.EnderDragon;
 import org.spout.vanilla.component.entity.misc.EntityHead;
 import org.spout.vanilla.component.entity.misc.Health;
@@ -73,6 +78,8 @@ import org.spout.vanilla.component.world.sky.Sky;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
+import org.spout.vanilla.data.configuration.WorldConfiguration;
+import org.spout.vanilla.data.configuration.WorldConfigurationNode;
 import org.spout.vanilla.event.entity.EntityDeathEvent;
 import org.spout.vanilla.event.material.RedstoneChangeEvent;
 import org.spout.vanilla.event.player.PlayerDeathEvent;
@@ -236,6 +243,29 @@ public class VanillaListener implements Listener {
 		Difficulty difficulty = event.getPlayer().getData().get(VanillaData.DIFFICULTY);
 		if (difficulty == Difficulty.HARDCORE) {
 			((Server) Spout.getEngine()).getAccessManager().ban(BanType.PLAYER, event.getPlayer().getName(), true, "Banned from server. Reason: Death on hardcore.");
+		}
+	}
+	
+	@EventHandler
+	public void onEntitySpawn(EntitySpawnEvent event) {
+		WorldConfigurationNode node = VanillaConfiguration.WORLDS.get(event.getEntity().getWorld());
+		Living mob = event.getEntity().get(Living.class);
+		if (!(mob instanceof Player)) {
+			if (!node.SPAWN_ANIMALS.getBoolean()) {
+				if (mob instanceof Neutral) {
+					event.setCancelled(true);
+				}
+
+				if (mob instanceof Passive) {
+					event.setCancelled(true);
+				}
+			}
+
+			if (!node.SPAWN_MONSTERS.getBoolean()) {
+				if (mob instanceof Aggressive) {
+					event.setCancelled(true);	
+				}
+			}
 		}
 	}
 }

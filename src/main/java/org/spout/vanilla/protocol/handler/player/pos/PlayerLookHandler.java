@@ -45,7 +45,7 @@ public final class PlayerLookHandler extends MessageHandler<PlayerLookMessage> {
 			session.getDataMap().put("first_login", 1);
 			Transform transform = session.getPlayer().getPhysics().getTransform();
 			Player player = session.getPlayer();
-			player.getNetwork().callProtocolEvent(new EntityUpdateEvent(player.getId(), transform, EntityUpdateEvent.UpdateAction.TRANSFORM, player.getNetwork().getRepositionManager()), player);
+			player.getNetwork().callProtocolEvent(new EntityUpdateEvent(player, transform, EntityUpdateEvent.UpdateAction.TRANSFORM, player.getNetwork().getRepositionManager()), player);
 			return;
 		}
 

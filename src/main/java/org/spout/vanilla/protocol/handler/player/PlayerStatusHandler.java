@@ -37,7 +37,7 @@ import org.spout.api.geo.discrete.Transform;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.ServerSession;
 import org.spout.api.protocol.Session;
-import org.spout.api.protocol.event.EntitySyncEvent;
+import org.spout.api.protocol.event.EntityUpdateEvent;
 
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.data.Difficulty;
@@ -111,7 +111,7 @@ public class PlayerStatusHandler extends MessageHandler<PlayerStatusMessage> {
 				if (player == otherPlayer) {
 					continue;
 				}
-				otherPlayer.getNetwork().callProtocolEvent(new EntitySyncEvent(player, spawn, true, false, false), player);
+				otherPlayer.getNetwork().callProtocolEvent(new EntityUpdateEvent(player, spawn, EntityUpdateEvent.UpdateAction.ADD, otherPlayer.getNetwork().getRepositionManager()), player);
 			}
 		}
 	}

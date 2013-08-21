@@ -388,7 +388,7 @@ public class TestCommands {
 	@Filter (PlayerFilter.class)
 	public void resetPosition(Player player, CommandArguments args) throws CommandException {
 		args.assertCompletelyParsed();
-		player.getNetwork().callProtocolEvent(new EntityUpdateEvent(player.getId(), new Transform(player.getPhysics().getPosition(), player.getPhysics().getRotation(), Vector3.ONE), EntityUpdateEvent.UpdateAction.TRANSFORM, player.getNetwork().getRepositionManager()), player);
+		player.getNetwork().callProtocolEvent(new EntityUpdateEvent(player, new Transform(player.getPhysics().getPosition(), player.getPhysics().getRotation(), Vector3.ONE), EntityUpdateEvent.UpdateAction.TRANSFORM, player.getNetwork().getRepositionManager()), player);
 	}
 
 	@CommandDescription (aliases = "torch", desc = "Place a torch.")

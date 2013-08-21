@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import gnu.trove.set.TIntSet;
+import org.spout.api.Platform;
 
 import org.spout.api.Spout;
 import org.spout.api.component.BlockComponentOwner;
@@ -59,7 +60,6 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.event.BlockUpdateEvent;
 import org.spout.api.protocol.event.ChunkFreeEvent;
 import org.spout.api.protocol.event.ChunkSendEvent;
-import org.spout.api.protocol.event.EntitySyncEvent;
 import org.spout.api.protocol.event.EntityUpdateEvent;
 import org.spout.api.protocol.event.WorldChangeProtocolEvent;
 import org.spout.api.protocol.reposition.RepositionManager;
@@ -458,7 +458,7 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 
 	@EventHandler (order = Order.MONITOR)
 	public void onPositionSend(EntityUpdateEvent event) {
-		if (event.getAction() != EntityUpdateEvent.UpdateAction.TRANSFORM) {
+		if (event.getAction() != EntityUpdateEvent.UpdateAction.TRANSFORM || event.isFullSync()) {
 			return;
 		}
 		Point p = event.getTransform().getPosition();
@@ -579,21 +579,20 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 		}
 	}
 
-	@Override
-	public void syncEntity(EntitySyncEvent event) {
-		if (getOwner().isRemoved()) {
+	@EventHandler
+	public void syncEntity(EntityUpdateEvent event) {
+		if (Spout.getPlatform() != Platform.SERVER || !event.isFullSync()) {
 			return;
 		}
-		super.syncEntity(event);
 		Entity e = event.getEntity();
-		if (!(e.getNetwork() instanceof VanillaNetworkProtocol)) {
+		if (e != null && !(e.getNetwork() instanceof VanillaNetworkProtocol)) {
 			return;
 		}
 		Transform liveTransform = event.getTransform();
 		boolean self = (e == getOwner());
-		boolean spawn = event.shouldAdd();
-		boolean destroy = event.shouldRemove();
-		boolean update = event.shouldSync();
+		boolean spawn = event.getAction() == EntityUpdateEvent.UpdateAction.ADD;
+		boolean destroy = event.getAction() == EntityUpdateEvent.UpdateAction.REMOVE;
+		boolean update = !spawn && !destroy;
 		EntityProtocol ep = ((VanillaNetworkProtocol) e.getNetwork()).getEntityProtocol();
 		if (ep == null) {
 			if (spawn) {

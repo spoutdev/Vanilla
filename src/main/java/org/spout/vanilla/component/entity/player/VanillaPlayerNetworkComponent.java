@@ -240,6 +240,7 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 
 	@Override
 	public void onAttached() {
+		super.onAttached();
 		// The minimum block distance is a radius for sending chunks before login/respawn
 		// It needs to be > 0 for reliable login and preventing falling through the world
 		setRepositionManager(vrm);
@@ -458,7 +459,7 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 
 	@EventHandler (order = Order.MONITOR)
 	public void onPositionSend(EntityUpdateEvent event) {
-		if (event.getAction() != EntityUpdateEvent.UpdateAction.TRANSFORM || event.isFullSync()) {
+		if (event.getAction() != EntityUpdateEvent.UpdateAction.TRANSFORM || event.isFullSync() || event.getEntity() != getOwner()) {
 			return;
 		}
 		Point p = event.getTransform().getPosition();

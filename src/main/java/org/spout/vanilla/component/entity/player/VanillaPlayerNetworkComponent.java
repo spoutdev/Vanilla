@@ -215,8 +215,6 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 	private int stepY = 160;
 	private int offsetY = 0;
 	private final VanillaRepositionManager vrm = new VanillaRepositionManager();
-	private boolean teleported = false;
-	private boolean teleportPending = false;
 
 	static {
 		int i = 0;
@@ -271,16 +269,6 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 			if (column.isEmpty()) {
 				emptyColumns.add(IntPairHashed.key(x, z));
 			}
-		}
-	}
-
-	public boolean isTeleportPending() {
-		return teleportPending;
-	}
-
-	public void clearTeleportPending() {
-		if (!teleported) {
-			teleportPending = false;
 		}
 	}
 
@@ -544,7 +532,7 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 
 		int y = currentPosition.getBlockY();
 
-		if (y != lastY && !isTeleportPending()) {
+		if (y != lastY) {
 
 			lastY = y;
 			int cY = getRepositionManager().convertY(y);

@@ -100,106 +100,94 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 		if (!(holder.getNetwork() instanceof VanillaPlayerNetworkComponent)) {
 			throw new IllegalStateException("Using Vanilla Protocol without using VanillaNetworkSynchronizer");
 		}
-		VanillaPlayerNetworkComponent sync = (VanillaPlayerNetworkComponent) holder.getNetwork();
-		if (sync.isTeleportPending()) {
-			if (position.getX() == newPosition.getX() && position.getZ() == newPosition.getZ() && Math.abs(position.getY() - newPosition.getY()) < 16) {
-				sync.clearTeleportPending();
+		if (!position.equals(newPosition)) {
+			final Human human = holder.get(Human.class);
+			// TODO: live?
+			holder.getPhysics().setPosition(newPosition);
+
+			//Don't use client onGround value, calculate ourselves
+			//MC Client is on ground if y value is whole number, or half step (e.g 55.0, or 65.5)
+			float yDiff = Math.abs(newPosition.getBlockY() - newPosition.getY());
+			if (yDiff > 0.4) {
+				yDiff -= 0.5F; //half blocks
 			}
-		} else {
-			if (!position.equals(newPosition)) {
-				final Human human = holder.get(Human.class);
-				//Compare against live instead of snapshot value
-				Point livePosition = human.getLivePosition();
-				if (livePosition == null) {
-					livePosition = position;
-				}
-				human.setLivePosition(newPosition);
+			final BlockMaterial ground = newPosition.getBlock().translate(BlockFace.BOTTOM).getMaterial();
+			final boolean onGround = yDiff < 0.01 && (ground instanceof VanillaBlockMaterial && ground.getShape() != null);
+			final boolean wasOnGround = human.isOnGround();
+			human.setOnGround(onGround);
 
-				//Don't use client onGround value, calculate ourselves
-				//MC Client is on ground if y value is whole number, or half step (e.g 55.0, or 65.5)
-				float yDiff = Math.abs(newPosition.getBlockY() - newPosition.getY());
-				if (yDiff > 0.4) {
-					yDiff -= 0.5F; //half blocks
-				}
-				final BlockMaterial ground = newPosition.getBlock().translate(BlockFace.BOTTOM).getMaterial();
-				final boolean onGround = yDiff < 0.01 && (ground instanceof VanillaBlockMaterial && ground.getShape() != null);
-				final boolean wasOnGround = human.isOnGround();
-				human.setOnGround(onGround);
+			//Update falling state
+			final boolean wasFalling = human.isFalling();
+			if (!onGround && newPosition.getY() < position.getY()) {
+				human.setFalling(true);
+			} else {
+				human.setFalling(false);
+			}
 
-				//Update falling state
-				final boolean wasFalling = human.isFalling();
-				if (!onGround && newPosition.getY() < position.getY()) {
-					human.setFalling(true);
-				} else {
-					human.setFalling(false);
-				}
-
-				//Hover tracking
-				if (wasOnGround && !onGround) {
-					human.getData().put("position_on_ground", livePosition);
-					human.getData().put("time_in_air", holder.getWorld().getAge());
-				} else if (!wasOnGround && !onGround) {
-					//Changed directions
-					if (wasFalling && !human.isFalling() || human.isInWater()) {
-						human.getData().remove("time_in_air");
-					}
-					float time = human.getData().get("time_in_air", holder.getWorld().getAge());
-					//hovering or still rising
-					if (time + 2000 < holder.getWorld().getAge() && newPosition.getY() - livePosition.getY() >= 0) {
-						if (!human.canFly()) {
-							holder.sendMessage("Hover cheating?");
-						}
-					}
-				} else if (!wasOnGround && onGround) {
-					human.getData().remove("position_on_ground");
+			//Hover tracking
+			if (wasOnGround && !onGround) {
+				human.getData().put("position_on_ground", position);
+				human.getData().put("time_in_air", holder.getWorld().getAge());
+			} else if (!wasOnGround && !onGround) {
+				//Changed directions
+				if (wasFalling && !human.isFalling() || human.isInWater()) {
 					human.getData().remove("time_in_air");
 				}
-
-				//Movement tracking
-				PositionTracker tracker = null;
-				try {
-					tracker = cache.get(session, loader);
-				} catch (ExecutionException e) {
-					throw new RuntimeException(e);
+				float time = human.getData().get("time_in_air", holder.getWorld().getAge());
+				//hovering or still rising
+				if (time + 2000 < holder.getWorld().getAge() && newPosition.getY() - position.getY() >= 0) {
+					if (!human.canFly()) {
+						holder.sendMessage("Hover cheating?");
+					}
 				}
-				tracker.updateTracker(human, livePosition, newPosition, message.getCreationTimestamp());
-
-				//Debug
-				/*
-				final double dx = livePosition.getX() - newPosition.getX();
-				final double dy = livePosition.getY() - newPosition.getY();
-				final double dz = livePosition.getZ() - newPosition.getZ();
-				System.out.println("Player position packet statistics:");
-				System.out.println("    Stale position: (" + position.getX() + ", " + position.getY() + ", " + position.getZ() + ")");
-				System.out.println("    Prev position: (" + livePosition.getX() + ", " + livePosition.getY() + ", " + livePosition.getZ() + ")");
-				System.out.println("    New position: (" + newPosition.getX() + ", " + newPosition.getY() + ", " + newPosition.getZ() + ")");
-				System.out.println("    DX: " + dx);
-				System.out.println("    DY: " + dy);
-				System.out.println("    DZ: " + dz);
-				System.out.println("    Distance: " + livePosition.distance(newPosition));
-				System.out.println("    Time since last packet: " + (System.nanoTime() - last) / 1E6D + " ms");
-				System.out.println("    Avg Distance: " + tracker.getAvgMovement());
-				System.out.println("    Avg packet delta: " + (tracker.getAvgMessageTime() / 1E6D) + " ms");
-				System.out.println("    Message On Ground: " + message.isOnGround());
-				System.out.println("    Calculated On Ground: " + onGround);
-				System.out.println("    Sneaking: " + human.isSneaking());
-				System.out.println("    Sprinting: " + human.isSprinting());
-				System.out.println("    Swimming: " + human.isInWater());
-				System.out.println("    Ping: " + holder.get(Ping.class).getPing());
-				last = System.nanoTime();
-				*/
-				//TODO This is way too aggressive, needs to be revised.
-				//				if (tracker.isFilled()) {
-				//					//Flying?
-				//					if (tracker.getAvgMovement() > 0.3D && !human.canFly()) {
-				//						holder.sendMessage("Flying? (Speed: " + tracker.getAvgMovement());
-				//					}
-				//					//Flooding packets?
-				//					if (tracker.getAvgMessageTime() < 40F * 1E6F) {
-				//						holder.sendMessage("Speed Hacking?");
-				//					}
-				//				}
+			} else if (!wasOnGround && onGround) {
+				human.getData().remove("position_on_ground");
+				human.getData().remove("time_in_air");
 			}
+
+			//Movement tracking
+			PositionTracker tracker = null;
+			try {
+				tracker = cache.get(session, loader);
+			} catch (ExecutionException e) {
+				throw new RuntimeException(e);
+			}
+			tracker.updateTracker(human, position, newPosition, message.getCreationTimestamp());
+
+			//Debug
+			/*
+			final double dx = position.getX() - newPosition.getX();
+			final double dy = position.getY() - newPosition.getY();
+			final double dz = position.getZ() - newPosition.getZ();
+			System.out.println("Player position packet statistics:");
+			System.out.println("    Snapshotted position: (" + position.getX() + ", " + position.getY() + ", " + position.getZ() + ")");
+			System.out.println("    New position: (" + newPosition.getX() + ", " + newPosition.getY() + ", " + newPosition.getZ() + ")");
+			System.out.println("    DX: " + dx);
+			System.out.println("    DY: " + dy);
+			System.out.println("    DZ: " + dz);
+			System.out.println("    Distance: " + position.distance(newPosition));
+			System.out.println("    Time since last packet: " + (System.nanoTime() - last) / 1E6D + " ms");
+			System.out.println("    Avg Distance: " + tracker.getAvgMovement());
+			System.out.println("    Avg packet delta: " + (tracker.getAvgMessageTime() / 1E6D) + " ms");
+			System.out.println("    Message On Ground: " + message.isOnGround());
+			System.out.println("    Calculated On Ground: " + onGround);
+			System.out.println("    Sneaking: " + human.isSneaking());
+			System.out.println("    Sprinting: " + human.isSprinting());
+			System.out.println("    Swimming: " + human.isInWater());
+			System.out.println("    Ping: " + holder.get(Ping.class).getPing());*/
+			last = System.nanoTime();
+			
+			//TODO This is way too aggressive, needs to be revised.
+			//				if (tracker.isFilled()) {
+			//					//Flying?
+			//					if (tracker.getAvgMovement() > 0.3D && !human.canFly()) {
+			//						holder.sendMessage("Flying? (Speed: " + tracker.getAvgMovement());
+			//					}
+			//					//Flooding packets?
+			//					if (tracker.getAvgMessageTime() < 40F * 1E6F) {
+			//						holder.sendMessage("Speed Hacking?");
+			//					}
+			//				}
 		}
 	}
 
@@ -245,7 +233,7 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 		}
 
 		public double getAvgMovement() {
-			if (distanceDeltas.size() == 0) {
+			if (distanceDeltas.isEmpty()) {
 				return 0;
 			}
 			double total = 0;
@@ -257,7 +245,7 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 		}
 
 		public double getAvgMessageTime() {
-			if (messageTimeDeltas.size() == 0) {
+			if (messageTimeDeltas.isEmpty()) {
 				return 0;
 			}
 			long total = 0;

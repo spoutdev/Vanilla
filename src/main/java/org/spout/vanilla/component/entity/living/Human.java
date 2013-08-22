@@ -391,8 +391,6 @@ public class Human extends Living {
 		updateAbilities(true);
 	}
 
-	private final AtomicReference<Point> livePosition = new AtomicReference<Point>(null);
-
 	@Override
 	public boolean canTick() {
 		return true;
@@ -402,16 +400,6 @@ public class Human extends Living {
 	public void onTick(float dt) {
 		super.onTick(dt);
 		final Point position = getOwner().getPhysics().getPosition();
-		livePosition.set(position);
 		setInWater(position.getBlock().getMaterial() instanceof Water);
-	}
-
-	public Point getLivePosition() {
-		return livePosition.get();
-	}
-
-	public void setLivePosition(Point point) {
-		livePosition.set(point);
-		getOwner().getPhysics().setPosition(point);
 	}
 }

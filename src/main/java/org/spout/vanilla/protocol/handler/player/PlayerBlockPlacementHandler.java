@@ -82,9 +82,6 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 
 	@Override
 	public void handleServer(ServerSession session, PlayerBlockPlacementMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
 		Player player = session.getPlayer();
 		RepositionManager rm = player.getNetwork().getRepositionManager();
 		RepositionManager rmInverse = rm.getInverse();

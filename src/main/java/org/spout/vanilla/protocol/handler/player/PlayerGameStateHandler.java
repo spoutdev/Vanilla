@@ -34,10 +34,6 @@ import org.spout.vanilla.protocol.msg.player.PlayerGameStateMessage;
 public class PlayerGameStateHandler extends MessageHandler<PlayerGameStateMessage> {
 	@Override
 	public void handleClient(ClientSession session, PlayerGameStateMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		//TODO: implement
 		System.out.println(message.toString());
 	}

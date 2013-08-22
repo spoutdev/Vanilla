@@ -39,10 +39,6 @@ import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 public class EntityMetadataHandler extends MessageHandler<EntityMetadataMessage> {
 	@Override
 	public void handleClient(ClientSession session, EntityMetadataMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		Player player = session.getPlayer();
 		World world = player.getWorld();
 

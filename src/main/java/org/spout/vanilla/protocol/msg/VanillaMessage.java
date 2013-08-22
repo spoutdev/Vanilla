@@ -44,4 +44,8 @@ public abstract class VanillaMessage implements Message {
 	public boolean isAsync() {
 		return false;
 	}
+
+	public boolean requiresPlayer() {
+		return true;
+	}
 }

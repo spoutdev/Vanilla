@@ -37,10 +37,6 @@ import org.spout.vanilla.protocol.msg.player.conn.PlayerPingMessage;
 public class PlayerPingHandler extends MessageHandler<PlayerPingMessage> {
 	@Override
 	public void handleServer(ServerSession session, PlayerPingMessage message) {
-		if (!session.hasPlayer()) {
-			session.disconnect("Illegal packet!");
-			return;
-		}
 		Ping ping = session.getPlayer().get(Ping.class);
 		if (ping != null) {
 			ping.response(message.getPingId());
@@ -49,10 +45,6 @@ public class PlayerPingHandler extends MessageHandler<PlayerPingMessage> {
 
 	@Override
 	public void handleClient(ClientSession session, PlayerPingMessage message) {
-		if (!session.hasPlayer()) {
-			session.disconnect("Illegal packet!");
-			return;
-		}
 		session.getPlayer().getNetwork().callProtocolEvent(new PingEvent(message.getPingId()), session.getPlayer());
 	}
 }

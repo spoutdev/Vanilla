@@ -37,10 +37,6 @@ import org.spout.vanilla.protocol.msg.player.PlayerTimeMessage;
 public final class PlayerTimeHandler extends MessageHandler<PlayerTimeMessage> {
 	@Override
 	public void handleClient(ClientSession session, PlayerTimeMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		Player player = session.getPlayer();
 		World world = player.getWorld();
 

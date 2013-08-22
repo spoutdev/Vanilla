@@ -40,9 +40,6 @@ import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
 public final class WindowCloseHandler extends MessageHandler<WindowCloseMessage> {
 	@Override
 	public void handleServer(ServerSession session, WindowCloseMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
 		WindowHolder window = session.getPlayer().get(WindowHolder.class);
 		if (window != null) {
 			if (window.getActiveWindow() instanceof ChestWindow) {

@@ -34,10 +34,6 @@ import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 public class EntityStatusHandler extends MessageHandler<EntityStatusMessage> {
 	@Override
 	public void handleClient(ClientSession session, EntityStatusMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		//TODO: implement
 		System.out.println(message.toString());
 	}

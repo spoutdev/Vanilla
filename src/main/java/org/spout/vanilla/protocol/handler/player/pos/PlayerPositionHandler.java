@@ -85,9 +85,6 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 
 	@Override
 	public void handleServer(ServerSession session, PlayerPositionMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
 		final Player holder = session.getPlayer();
 		final RepositionManager rmInverse = holder.getNetwork().getRepositionManager().getInverse();
 

@@ -61,6 +61,11 @@ public final class PlayerHandshakeMessage extends VanillaMainChannelMessage {
 	}
 
 	@Override
+	public boolean requiresPlayer() {
+		return false;
+	}
+
+	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
 				.append("protocol version", protoVersion)

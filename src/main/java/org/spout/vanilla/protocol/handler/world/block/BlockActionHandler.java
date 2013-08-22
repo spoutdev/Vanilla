@@ -34,10 +34,6 @@ import org.spout.vanilla.protocol.msg.world.block.BlockActionMessage;
 public class BlockActionHandler extends MessageHandler<BlockActionMessage> {
 	@Override
 	public void handleClient(ClientSession session, BlockActionMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		//TODO: implement
 		System.out.println(message.toString());
 	}

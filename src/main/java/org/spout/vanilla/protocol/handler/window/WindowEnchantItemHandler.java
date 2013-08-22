@@ -42,9 +42,6 @@ import org.spout.vanilla.protocol.msg.window.WindowEnchantItemMessage;
 public class WindowEnchantItemHandler extends MessageHandler<WindowEnchantItemMessage> {
 	@Override
 	public void handleServer(ServerSession session, WindowEnchantItemMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
 		Player player = session.getPlayer();
 		EnchantmentTableWindow window = (EnchantmentTableWindow) player.get(WindowHolder.class).getActiveWindow();
 		EnchantmentTableInventory inv = (EnchantmentTableInventory) window.getInventoryConverters().get(2).getInventory();

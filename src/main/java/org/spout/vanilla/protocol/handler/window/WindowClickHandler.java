@@ -39,9 +39,6 @@ import org.spout.vanilla.protocol.msg.window.WindowTransactionMessage;
 public final class WindowClickHandler extends MessageHandler<WindowClickMessage> {
 	@Override
 	public void handleServer(ServerSession session, WindowClickMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
 		Player player = session.getPlayer();
 		Window window = player.get(WindowHolder.class).getActiveWindow();
 		boolean result = false;

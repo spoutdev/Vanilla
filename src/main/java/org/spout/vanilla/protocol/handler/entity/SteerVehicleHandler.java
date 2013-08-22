@@ -34,10 +34,6 @@ import org.spout.vanilla.protocol.msg.entity.SteerVehicleMessage;
 
 public final class SteerVehicleHandler extends MessageHandler<SteerVehicleMessage> {
 	public void handleServer(ServerSession session, SteerVehicleMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		Human player = session.getPlayer().get(Human.class);
 		if (!player.isRiding()) {
 			return;

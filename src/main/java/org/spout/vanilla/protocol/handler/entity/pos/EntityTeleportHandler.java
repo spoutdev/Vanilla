@@ -39,10 +39,6 @@ import org.spout.vanilla.protocol.msg.entity.pos.EntityTeleportMessage;
 public class EntityTeleportHandler extends MessageHandler<EntityTeleportMessage> {
 	@Override
 	public void handleClient(ClientSession session, EntityTeleportMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		Player player = session.getPlayer();
 		World world = player.getWorld();
 		Entity entity = session.getPlayer();//world.getEntity(message.getEntityId());

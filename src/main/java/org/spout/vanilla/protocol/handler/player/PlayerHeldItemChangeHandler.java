@@ -41,9 +41,6 @@ import org.spout.vanilla.util.PlayerUtil;
 public final class PlayerHeldItemChangeHandler extends MessageHandler<PlayerHeldItemChangeMessage> {
 	@Override
 	public void handleServer(ServerSession session, PlayerHeldItemChangeMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
 		Human human = session.getPlayer().get(Human.class);
 		if (human == null) {
 			return;

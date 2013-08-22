@@ -53,10 +53,6 @@ import org.spout.vanilla.util.PlayerUtil;
 public class PlayerUseEntityHandler extends MessageHandler<PlayerUseEntityMessage> {
 	@Override
 	public void handleServer(ServerSession session, PlayerUseEntityMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		Player playerEnt = session.getPlayer();
 		Human player = playerEnt.get(Human.class);
 		Entity clickedEntity = playerEnt.getWorld().getEntity(message.getTarget());

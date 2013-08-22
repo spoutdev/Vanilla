@@ -37,10 +37,6 @@ import org.spout.vanilla.protocol.msg.window.WindowSlotMessage;
 public class WindowSlotHandler extends MessageHandler<WindowSlotMessage> {
 	@Override
 	public void handleClient(ClientSession session, WindowSlotMessage msg) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		Player player = session.getPlayer();
 		WindowHolder holder = player.get(WindowHolder.class);
 		if (holder != null) {

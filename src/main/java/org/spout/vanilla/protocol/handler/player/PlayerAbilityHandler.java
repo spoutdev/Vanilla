@@ -37,9 +37,6 @@ import org.spout.vanilla.protocol.msg.player.PlayerAbilityMessage;
 public final class PlayerAbilityHandler extends MessageHandler<PlayerAbilityMessage> {
 	@Override
 	public void handleServer(ServerSession session, PlayerAbilityMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
 		Player player = session.getPlayer();
 		Human human = player.get(Human.class);
 		if (human != null) {
@@ -55,9 +52,6 @@ public final class PlayerAbilityHandler extends MessageHandler<PlayerAbilityMess
 
 	@Override
 	public void handleClient(ClientSession session, PlayerAbilityMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
 		Player player = session.getPlayer();
 		Human human = player.get(Human.class);
 		if (human != null) {

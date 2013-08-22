@@ -34,10 +34,6 @@ import org.spout.vanilla.protocol.msg.entity.effect.EntityRemoveEffectMessage;
 public class EntityRemoveEffectHandler extends MessageHandler<EntityRemoveEffectMessage> {
 	@Override
 	public void handleClient(ClientSession session, EntityRemoveEffectMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		//TODO: implement
 		System.out.println(message.toString());
 	}

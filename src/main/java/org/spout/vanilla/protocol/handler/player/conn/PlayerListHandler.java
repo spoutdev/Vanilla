@@ -34,10 +34,6 @@ import org.spout.vanilla.protocol.msg.player.conn.PlayerListMessage;
 public class PlayerListHandler extends MessageHandler<PlayerListMessage> {
 	@Override
 	public void handleClient(ClientSession session, PlayerListMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		//TODO: implement
 		System.out.println(message.toString());
 	}

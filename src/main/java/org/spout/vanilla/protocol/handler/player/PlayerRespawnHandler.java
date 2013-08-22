@@ -40,10 +40,6 @@ import org.spout.vanilla.protocol.msg.player.pos.PlayerRespawnMessage;
 public final class PlayerRespawnHandler extends MessageHandler<PlayerRespawnMessage> {
 	@Override
 	public void handleClient(ClientSession session, PlayerRespawnMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		Player player = session.getPlayer();
 
 		//TODO : Take Dimension ? : message.getDimension()

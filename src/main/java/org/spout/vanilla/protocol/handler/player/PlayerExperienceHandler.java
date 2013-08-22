@@ -34,10 +34,6 @@ import org.spout.vanilla.protocol.msg.player.PlayerExperienceMessage;
 public class PlayerExperienceHandler extends MessageHandler<PlayerExperienceMessage> {
 	@Override
 	public void handleClient(ClientSession session, PlayerExperienceMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		//TODO: implement
 		System.out.println(message.toString());
 	}

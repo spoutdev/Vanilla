@@ -36,10 +36,6 @@ import org.spout.vanilla.protocol.msg.player.PlayerGroundMessage;
 public class PlayerGroundHandler extends MessageHandler<PlayerGroundMessage> {
 	@Override
 	public void handleServer(ServerSession session, PlayerGroundMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		Player player = session.getPlayer();
 		Human human = player.get(Human.class);
 		if (human != null) {

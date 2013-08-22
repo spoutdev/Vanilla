@@ -72,6 +72,11 @@ public final class PlayerLoginRequestMessage extends VanillaMainChannelMessage {
 	}
 
 	@Override
+	public boolean requiresPlayer() {
+		return false;
+	}
+
+	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
 				.append("id", id)

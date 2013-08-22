@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.protocol.handler.entity;
 
-import org.spout.api.entity.Player;
 import org.spout.api.protocol.ClientSession;
 import org.spout.api.protocol.MessageHandler;
 
@@ -35,12 +34,7 @@ import org.spout.vanilla.protocol.msg.entity.EntityItemDataMessage;
 public final class EntityItemDataHandler extends MessageHandler<EntityItemDataMessage> {
 	@Override
 	public void handleClient(ClientSession session, EntityItemDataMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
-		Player player = session.getPlayer();
-
-		//TODO Handle it !
+		//TODO: implement
+		System.out.println(message.toString());
 	}
 }

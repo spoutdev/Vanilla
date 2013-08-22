@@ -70,10 +70,6 @@ import org.spout.vanilla.util.PlayerUtil;
 public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMessage> {
 	@Override
 	public void handleServer(ServerSession session, PlayerDiggingMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		Player player = session.getPlayer();
 		RepositionManager rm = player.getNetwork().getRepositionManager();
 		RepositionManager rmInverse = rm.getInverse();

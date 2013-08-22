@@ -37,10 +37,6 @@ import org.spout.vanilla.protocol.msg.player.PlayerTabCompleteMessage;
 public final class PlayerTabCompleteHandler extends MessageHandler<PlayerTabCompleteMessage> {
 	@Override
 	public void handleServer(ServerSession session, PlayerTabCompleteMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		String text = message.getText();
 		text = text.trim();
 		String[] text2 = text.split(" ");

@@ -34,10 +34,6 @@ import org.spout.vanilla.protocol.msg.window.WindowTransactionMessage;
 public class WindowTransactionHandler extends MessageHandler<WindowTransactionMessage> {
 	@Override
 	public void handleClient(ClientSession session, WindowTransactionMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		//TODO: implement
 		System.out.println(message.toString());
 	}

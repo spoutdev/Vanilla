@@ -79,6 +79,11 @@ public class EncryptionKeyResponseMessage extends VanillaMainChannelMessage impl
 	}
 
 	@Override
+	public boolean requiresPlayer() {
+		return false;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {
 			return false;

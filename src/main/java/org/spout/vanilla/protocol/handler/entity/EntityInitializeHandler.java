@@ -34,10 +34,6 @@ import org.spout.vanilla.protocol.msg.entity.EntityInitializeMessage;
 public class EntityInitializeHandler extends MessageHandler<EntityInitializeMessage> {
 	@Override
 	public void handleClient(ClientSession session, EntityInitializeMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		//TODO: implement
 		System.out.println(message.toString());
 	}

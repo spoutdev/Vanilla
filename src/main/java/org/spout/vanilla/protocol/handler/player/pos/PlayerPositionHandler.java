@@ -42,6 +42,7 @@ import gnu.trove.list.linked.TLongLinkedList;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.geo.discrete.Transform;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.protocol.ClientSession;
@@ -72,9 +73,6 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 
 	@Override
 	public void handleClient(ClientSession session, PlayerPositionMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
 		Player player = session.getPlayer();
 
 		World world = session.getEngine().getDefaultWorld();
@@ -103,7 +101,7 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 		if (!position.equals(newPosition)) {
 			final Human human = holder.get(Human.class);
 			// TODO: live?
-			holder.getPhysics().setPosition(newPosition);
+			holder.getPhysics().setTransform(new Transform(newPosition, holder.getPhysics().getRotation(), holder.getPhysics().getScale()), false);
 
 			//Don't use client onGround value, calculate ourselves
 			//MC Client is on ground if y value is whole number, or half step (e.g 55.0, or 65.5)

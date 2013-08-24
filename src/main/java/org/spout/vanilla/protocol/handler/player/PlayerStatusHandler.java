@@ -77,15 +77,15 @@ public class PlayerStatusHandler extends MessageHandler<PlayerStatusMessage> {
 				gamemode = human.getGameMode();
 			} else {
 				gamemode = data.get(VanillaData.GAMEMODE);
-				human.setGamemode(gamemode);
+				human.setGamemode(gamemode, false);
 			}
 			final PlayerLoginRequestMessage idMsg = new PlayerLoginRequestMessage(entityId, worldType.toString(), gamemode.getId(), (byte) dimension.getId(), difficulty.getId(), (byte) server.getMaxPlayers());
 			session.send(true, idMsg);
-			session.setState(Session.State.GAME);
 
 			final Point position = session.getPlayer().getPhysics().getPosition();
 			PlayerSpawnPositionMessage pspMsg = new PlayerSpawnPositionMessage((int) position.getX(), (int) position.getY(), (int) position.getZ(), session.getPlayer().getNetwork().getRepositionManager());
-			session.send(pspMsg);
+			session.send(true, pspMsg);
+			session.setState(Session.State.GAME);
 		} else if (message.getStatus() == PlayerStatusMessage.RESPAWN) {
 			Player player = session.getPlayer();
 			Point point = player.getWorld().getSpawnPoint().getPosition();

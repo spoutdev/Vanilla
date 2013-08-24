@@ -51,7 +51,7 @@ public final class PlayerLookHandler extends MessageHandler<PlayerLookMessage> {
 
 		Player holder = session.getPlayer();
 
-		holder.getPhysics().setRotation(QuaternionMath.rotation(message.getPitch(), message.getYaw(), 0));
+		holder.getPhysics().setTransform(new Transform(holder.getPhysics().getPosition(), QuaternionMath.rotation(message.getPitch(), message.getYaw(), 0), holder.getPhysics().getScale()), false);
 		Human human = holder.get(Human.class);
 		if (human != null) {
 			human.setOnGround(message.isOnGround());

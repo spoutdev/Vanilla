@@ -92,7 +92,7 @@ public class NormalSky extends Sky {
 
 		TimeUpdateEvent event = new TimeUpdateEvent(getOwner(), time);
 		for (Player player : getOwner().getPlayers()) {
-			player.getNetwork().callProtocolEvent(event);
+			player.getNetwork().callProtocolEvent(event, player);
 		}
 	}
 

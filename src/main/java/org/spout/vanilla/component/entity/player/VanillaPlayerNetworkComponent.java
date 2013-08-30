@@ -57,6 +57,7 @@ import org.spout.api.math.IntVector3;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
+import org.spout.api.protocol.Session;
 import org.spout.api.protocol.event.BlockUpdateEvent;
 import org.spout.api.protocol.event.ChunkFreeEvent;
 import org.spout.api.protocol.event.ChunkSendEvent;
@@ -147,6 +148,7 @@ import org.spout.vanilla.protocol.msg.player.conn.PlayerListMessage;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerPingMessage;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionLookMessage;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerRespawnMessage;
+import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnPositionMessage;
 import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardDisplayMessage;
 import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardObjectiveMessage;
 import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardScoreMessage;
@@ -445,10 +447,18 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 		return chunks;
 	}
 
+	boolean first = true;
+
 	@EventHandler (order = Order.MONITOR)
 	public void onPositionSend(EntityUpdateEvent event) {
 		if (event.getAction() != EntityUpdateEvent.UpdateAction.TRANSFORM || event.isFullSync() || event.getEntity() != getOwner()) {
 			return;
+		}
+		Transform live = event.getTransform();
+		if (first) {
+			PlayerSpawnPositionMessage pspMsg = new PlayerSpawnPositionMessage((int) live.getPosition().getX(), (int) live.getPosition().getY(), (int) live.getPosition().getZ(), getRepositionManager());
+			event.getMessages().add(pspMsg);
+			first = false;
 		}
 		Point p = event.getTransform().getPosition();
 		Quaternion rot = event.getTransform().getRotation();
@@ -529,7 +539,6 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 	@Override
 	public void finalizeRun(Transform live) {
 		Point currentPosition = live.getPosition();
-
 		int y = currentPosition.getBlockY();
 
 		if (y != lastY) {
@@ -554,6 +563,11 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 			}
 		}
 		super.finalizeRun(live);
+	}
+
+	@Override
+	public void preSnapshotRun(Transform live) {
+		super.preSnapshotRun(live);
 
 		Long key;
 		while ((key = this.emptyColumns.poll()) != null) {
@@ -993,6 +1007,7 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 	@EventHandler
 	public void onTimeUpdate(TimeUpdateEvent event) {
 		event.getMessages().add(new PlayerTimeMessage(event.getWorld().getAge(), event.getNewTime()));
+		event.setSendType(Session.SendType.GAME_ONLY);
 	}
 
 	@EventHandler

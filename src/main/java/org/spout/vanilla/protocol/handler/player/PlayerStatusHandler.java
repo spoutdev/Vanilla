@@ -73,19 +73,14 @@ public class PlayerStatusHandler extends MessageHandler<PlayerStatusMessage> {
 			int entityId = session.getPlayer().getId();
 
 			//  MC Packet Order: 0x01 Login, 0xFA Custom (ServerTypeName), 0x06 SpawnPos, 0xCA PlayerAbilities, 0x10 BlockSwitch
-			if (human.getAttachedCount() > 1) {
-				gamemode = human.getGameMode();
-			} else {
-				gamemode = data.get(VanillaData.GAMEMODE);
+			gamemode = data.get(VanillaData.GAMEMODE);
+			final PlayerLoginRequestMessage idMsg = new PlayerLoginRequestMessage(entityId, worldType.toString(), gamemode.getId(), (byte) dimension.getId(), difficulty.getId(), (byte) server.getMaxPlayers());
+			session.send(Session.SendType.FORCE, idMsg);
+			session.setState(Session.State.GAME);
+			if (human.getAttachedCount() <= 1) {
+				// If we haven't logged in before, we want to set all abilities to the default gamemode
 				human.setGamemode(gamemode, false);
 			}
-			final PlayerLoginRequestMessage idMsg = new PlayerLoginRequestMessage(entityId, worldType.toString(), gamemode.getId(), (byte) dimension.getId(), difficulty.getId(), (byte) server.getMaxPlayers());
-			session.send(true, idMsg);
-
-			final Point position = session.getPlayer().getPhysics().getPosition();
-			PlayerSpawnPositionMessage pspMsg = new PlayerSpawnPositionMessage((int) position.getX(), (int) position.getY(), (int) position.getZ(), session.getPlayer().getNetwork().getRepositionManager());
-			session.send(true, pspMsg);
-			session.setState(Session.State.GAME);
 		} else if (message.getStatus() == PlayerStatusMessage.RESPAWN) {
 			Player player = session.getPlayer();
 			Point point = player.getWorld().getSpawnPoint().getPosition();
@@ -105,14 +100,6 @@ public class PlayerStatusHandler extends MessageHandler<PlayerStatusMessage> {
 
 			final Transform spawn = new Transform(player.getPhysics().getTransform());
 			spawn.setPosition(point);
-			//send spawn to everyone else
-			Set<? extends Player> observers = player.getChunk().getObservingPlayers();
-			for (Player otherPlayer : observers) {
-				if (player == otherPlayer) {
-					continue;
-				}
-				otherPlayer.getNetwork().callProtocolEvent(new EntityUpdateEvent(player, spawn, EntityUpdateEvent.UpdateAction.ADD, otherPlayer.getNetwork().getRepositionManager()), player);
-			}
 		}
 	}
 }

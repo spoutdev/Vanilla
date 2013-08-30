@@ -69,7 +69,7 @@ public class EncryptionKeyResponseHandler extends MessageHandler<EncryptionKeyRe
 		EncryptionChannelProcessor fromServerProcessor = new EncryptionChannelProcessor(fromServerCipher, 32);
 		message.getProcessorHandler().setProcessor(fromServerProcessor);
 
-		session.send(true, new PlayerStatusMessage(PlayerStatusMessage.INITIAL_SPAWN)); // Ready to login;
+		session.send(Session.SendType.FORCE, new PlayerStatusMessage(PlayerStatusMessage.INITIAL_SPAWN)); // Ready to login;
 	}
 
 	@Override
@@ -136,7 +136,7 @@ public class EncryptionKeyResponseHandler extends MessageHandler<EncryptionKeyRe
 
 					message.getProcessorHandler().setProcessor(fromClientProcessor);
 
-					session.send(true, response);
+					session.send(Session.SendType.FORCE, response);
 				}
 			};
 

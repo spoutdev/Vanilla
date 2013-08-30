@@ -39,6 +39,7 @@ import org.bouncycastle.crypto.util.PublicKeyFactory;
 
 import org.spout.api.protocol.ClientSession;
 import org.spout.api.protocol.MessageHandler;
+import org.spout.api.protocol.Session;
 import org.spout.api.security.EncryptionChannelProcessor;
 import org.spout.api.security.SecurityHandler;
 
@@ -80,7 +81,7 @@ public class EncryptionKeyRequestHandler extends MessageHandler<EncryptionKeyReq
 					EncryptionKeyResponseMessage response = new EncryptionKeyResponseMessage(false, encodedSecret, encodedToken);
 					response.setProcessor(toServerProcessor);
 
-					session.send(true, response);
+					session.send(Session.SendType.FORCE, response);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

@@ -31,9 +31,7 @@ import java.util.Random;
 import org.spout.api.event.cause.EntityCause;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.ai.action.FollowMaterialHolderAction;
 import org.spout.vanilla.ai.goal.FollowMaterialHolderGoal;
 import org.spout.vanilla.ai.sensor.NearbyMaterialHolderSensor;
@@ -41,12 +39,15 @@ import org.spout.vanilla.component.entity.living.Animal;
 import org.spout.vanilla.component.entity.living.Passive;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.component.entity.misc.MetadataComponent;
+import org.spout.vanilla.data.Metadata;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.entity.network.EntityStatusEvent;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.solid.Wool;
 import org.spout.vanilla.material.block.solid.Wool.WoolColor;
-import org.spout.vanilla.protocol.entity.creature.SheepEntityProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureType;
 import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 
 /**
@@ -61,7 +62,7 @@ public class Sheep extends Animal implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SheepEntityProtocol());
+		setEntityProtocol(new CreatureProtocol(CreatureType.SHEEP));
 		DeathDrops dropComponent = getOwner().add(DeathDrops.class);
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.WOOL, 1));
 		dropComponent.addXpDrop((short) (getRandom().nextInt(3) + 1));
@@ -74,6 +75,25 @@ public class Sheep extends Animal implements Passive {
 		getAI().registerSensor(materialHolderSensor);
 		getAI().registerGoal(new FollowMaterialHolderGoal(getAI()));
 		getAI().registerAction(new FollowMaterialHolderAction(getAI()));
+
+		// Add metadata for the wool state of the Sheep
+		getOwner().add(MetadataComponent.class).addMeta(new Metadata<Byte>(Metadata.TYPE_BYTE, 16) {
+			@Override
+			public Byte getValue() {
+				int colorData = getColor().getData() & 15;
+				if (isSheared()) {
+					colorData |= 16;
+				}
+				return (byte) colorData;
+			}
+
+			@Override
+			public void setValue(Byte value) {
+				int data = value.intValue();
+				setSheared((data & 16) == 16);
+				setColor(Wool.WoolColor.getById((short) (data & 15)));
+			}
+		});
 	}
 
 	@Override
@@ -89,13 +109,6 @@ public class Sheep extends Animal implements Passive {
 
 	public void setSheared(boolean sheared) {
 		getOwner().getData().put(VanillaData.SHEARED, sheared);
-		Parameter<Byte> param;
-		if (sheared) {
-			param = new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) (getColor().getData() | 16));
-		} else {
-			param = new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) (getColor().getData() & -17));
-		}
-		setMetadata(param);
 	}
 
 	/**
@@ -111,10 +124,7 @@ public class Sheep extends Animal implements Passive {
 	 * Sets the color of the sheep.
 	 */
 	public void setColor(Wool.WoolColor color) {
-		short oldData = getColor().getData();
-		short newData = color.getData();
-		getOwner().getData().put(VanillaData.WOOL_COLOR, newData);
-		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) (oldData & 240 | newData & 15)));
+		getOwner().getData().put(VanillaData.WOOL_COLOR, color.getData());
 	}
 
 	private boolean isBlockEatableTallGrass(int x, int y, int z) {

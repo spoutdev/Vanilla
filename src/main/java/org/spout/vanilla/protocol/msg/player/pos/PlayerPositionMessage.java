@@ -100,6 +100,17 @@ public final class PlayerPositionMessage extends VanillaMainChannelMessage {
 				.isEquals();
 	}
 
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.x)
+				.append(this.y)
+				.append(this.z)
+				.append(this.stance)
+				.append(this.onGround)
+				.toHashCode();
+	}
+
 	public long getCreationTimestamp() {
 		return creationTimestamp;
 	}

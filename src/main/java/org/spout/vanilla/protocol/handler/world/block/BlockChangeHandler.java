@@ -39,13 +39,9 @@ import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
 public class BlockChangeHandler extends MessageHandler<BlockChangeMessage> {
 	@Override
 	public void handleClient(ClientSession session, BlockChangeMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		Player player = session.getPlayer();
 		World world = player.getWorld();
-		RepositionManager rm = player.getNetworkSynchronizer().getRepositionManager();
+		RepositionManager rm = player.getNetwork().getRepositionManager();
 
 		int x = rm.convertX(message.getX());
 		int y = rm.convertY(message.getY());

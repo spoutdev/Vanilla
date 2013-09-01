@@ -35,7 +35,7 @@ import org.spout.vanilla.material.block.DoorBlock;
 public class IronDoorBlock extends DoorBlock implements InitializableMaterial {
 	public IronDoorBlock(String name, int id) {
 		super(name, id, VanillaMaterialModels.IRON_DOOR);
-		this.setHardness(5.0F).setResistance(8.3F).setOpacity((byte) 1);
+		this.setHardness(5.0F).setResistance(25.0F).setOpacity((byte) 1);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 

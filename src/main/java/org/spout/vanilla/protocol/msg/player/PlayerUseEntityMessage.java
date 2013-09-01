@@ -88,4 +88,13 @@ public final class PlayerUseEntityMessage extends EntityMessage {
 				.append(this.punching, other.punching)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.getEntityId())
+				.append(this.target)
+				.append(this.punching)
+				.toHashCode();
+	}
 }

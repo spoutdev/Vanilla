@@ -32,6 +32,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
+
 import org.spout.physics.collision.shape.BoxShape;
 
 import org.spout.vanilla.component.block.material.chest.AbstractChest;
@@ -43,7 +44,7 @@ import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.util.PlayerUtil;
 
 public abstract class AbstractChestBlock extends VanillaBlockMaterial implements Directional, Fuel {
-	public final float BURN_TIME = 15;
+	public static final float BURN_TIME = 15;
 
 	public AbstractChestBlock(String name, int id, Class<? extends AbstractChest> componentType, String model) {
 		super(name, id, model, new BoxShape(1, 1, 1), componentType);

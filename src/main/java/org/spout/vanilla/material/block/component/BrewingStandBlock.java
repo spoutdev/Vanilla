@@ -32,6 +32,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.physics.collision.shape.BoxShape;
 
 import org.spout.vanilla.component.block.material.BrewingStand;

@@ -67,13 +67,13 @@ public abstract class Armor extends VanillaItemMaterial {
 		int amount = 0;
 		int level = 0;
 		// Armor can only have one of these protection enchantments
-		if (Enchantment.hasEnchantment(item, VanillaEnchantments.PROTECTION) && !type.equals(DamageType.COMMAND, DamageType.VOID)) {
+		if (Enchantment.hasEnchantment(item, VanillaEnchantments.PROTECTION) && (type != DamageType.COMMAND && type != DamageType.VOID)) {
 			level = Enchantment.getEnchantmentLevel(item, VanillaEnchantments.PROTECTION);
 		} else if (Enchantment.hasEnchantment(item, VanillaEnchantments.BLAST_PROTECTION) && type.equals(DamageType.EXPLOSION)) {
 			level = Enchantment.getEnchantmentLevel(item, VanillaEnchantments.BLAST_PROTECTION);
-		} else if (Enchantment.hasEnchantment(item, VanillaEnchantments.FIRE_PROTECTION) && type.equals(DamageType.BURN, DamageType.FIRE_SOURCE)) {
+		} else if (Enchantment.hasEnchantment(item, VanillaEnchantments.FIRE_PROTECTION) && (type == DamageType.BURN && type == DamageType.FIRE_SOURCE)) {
 			level = Enchantment.getEnchantmentLevel(item, VanillaEnchantments.FIRE_PROTECTION);
-		} else if (Enchantment.hasEnchantment(item, VanillaEnchantments.PROJECTILE_PROTECTION) && type.equals(DamageType.PROJECTILE, DamageType.FIREBALL)) {
+		} else if (Enchantment.hasEnchantment(item, VanillaEnchantments.PROJECTILE_PROTECTION) && (type == DamageType.PROJECTILE && type == DamageType.FIREBALL)) {
 			level = Enchantment.getEnchantmentLevel(item, VanillaEnchantments.PROJECTILE_PROTECTION);
 		}
 		amount += level * 3;

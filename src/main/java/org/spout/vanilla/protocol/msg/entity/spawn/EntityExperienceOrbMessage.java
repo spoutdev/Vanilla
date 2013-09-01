@@ -89,4 +89,15 @@ public class EntityExperienceOrbMessage extends EntityMessage {
 				.append(this.count, other.count)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.getEntityId())
+				.append(this.x)
+				.append(this.y)
+				.append(this.z)
+				.append(this.count)
+				.toHashCode();
+	}
 }

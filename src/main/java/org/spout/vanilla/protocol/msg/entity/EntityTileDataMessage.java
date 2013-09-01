@@ -97,4 +97,15 @@ public class EntityTileDataMessage extends VanillaMainChannelMessage {
 				.append(this.data, other.data)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.x)
+				.append(this.y)
+				.append(this.z)
+				.append(this.action)
+				.append(this.data)
+				.toHashCode();
+	}
 }

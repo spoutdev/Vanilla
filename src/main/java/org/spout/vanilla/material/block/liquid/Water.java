@@ -50,6 +50,7 @@ public class Water extends Liquid implements DynamicMaterial, InitializableMater
 	public Water(String name, int id, boolean flowing) {
 		super(name, id, flowing, VanillaMaterialModels.WATER);
 		this.setFlowDelay(250);
+		this.setResistance(500.0F);
 		if (getEngine().getPlatform() == Platform.CLIENT) {
 			if (!getModel().getRenderMaterial().getBufferEffects().contains(VanillaEffects.BIOME_WATER_COLOR)) {
 				getModel().getRenderMaterial().addBufferEffect(VanillaEffects.BIOME_WATER_COLOR);
@@ -62,6 +63,7 @@ public class Water extends Liquid implements DynamicMaterial, InitializableMater
 
 	@Override
 	public void initialize() {
+		// TODO: Configurations can not be stored in non-linked ConfigurationHolders
 		this.setFlowDelay(VanillaConfiguration.WATER_DELAY.getInt());
 	}
 
@@ -166,5 +168,10 @@ public class Water extends Liquid implements DynamicMaterial, InitializableMater
 				}
 			}
 		}
+	}
+
+	@Override
+	public boolean hasPhysics() {
+		return super.hasPhysics() && VanillaConfiguration.WATER_PHYSICS.getBoolean();
 	}
 }

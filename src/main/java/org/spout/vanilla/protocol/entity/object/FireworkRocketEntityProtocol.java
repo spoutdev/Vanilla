@@ -26,19 +26,8 @@
  */
 package org.spout.vanilla.protocol.entity.object;
 
-import java.util.List;
-
-import org.spout.api.entity.Entity;
-import org.spout.api.util.Parameter;
-
 public class FireworkRocketEntityProtocol extends ObjectEntityProtocol {
 	public FireworkRocketEntityProtocol() {
 		super(ObjectType.FIREWORKS_ROCKET);
-	}
-
-	@Override
-	public List<Parameter<?>> getSpawnParameters(Entity entity) {
-		List<Parameter<?>> params = super.getSpawnParameters(entity);
-		return params;
 	}
 }

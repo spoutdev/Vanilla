@@ -72,6 +72,11 @@ public final class PlayerLoginRequestMessage extends VanillaMainChannelMessage {
 	}
 
 	@Override
+	public boolean requiresPlayer() {
+		return false;
+	}
+
+	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
 				.append("id", id)
@@ -100,5 +105,17 @@ public final class PlayerLoginRequestMessage extends VanillaMainChannelMessage {
 				.append(this.difficulty, other.difficulty)
 				.append(this.maxPlayers, other.maxPlayers)
 				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.id)
+				.append(this.worldType)
+				.append(this.mode)
+				.append(this.dimension)
+				.append(this.difficulty)
+				.append(this.maxPlayers)
+				.toHashCode();
 	}
 }

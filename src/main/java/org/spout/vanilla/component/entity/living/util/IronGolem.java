@@ -29,13 +29,12 @@ package org.spout.vanilla.component.entity.living.util;
 import java.util.Random;
 
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.living.Utility;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.component.entity.misc.MetadataComponent;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
@@ -48,7 +47,7 @@ public class IronGolem extends Living implements Utility {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.IRON_GOLEM)); //Index 16 (byte): Unknown, example: 1
+		setEntityProtocol(new CreatureProtocol(CreatureType.IRON_GOLEM)); //Index 16 (byte): Unknown, example: 1
 		DeathDrops dropComponent = getOwner().add(DeathDrops.class);
 		Random random = getRandom();
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.IRON_INGOT, random.nextInt(2) + 3));
@@ -56,6 +55,9 @@ public class IronGolem extends Living implements Utility {
 		if (getAttachedCount() == 1) {
 			getOwner().add(Health.class).setSpawnHealth(100);
 		}
+
+		// Add metadata for whether the Entity was created by a player (opposite of naturally spawned)
+		getOwner().add(MetadataComponent.class).addBoolMeta(16, VanillaData.NATURALLY_SPAWNED, true);
 	}
 
 	public boolean wasNaturallySpawned() {
@@ -64,6 +66,5 @@ public class IronGolem extends Living implements Utility {
 
 	public void setNaturallySpawned(boolean naturallySpawned) {
 		getData().put(VanillaData.NATURALLY_SPAWNED, naturallySpawned);
-		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, naturallySpawned ? 0 : (byte) 1));
 	}
 }

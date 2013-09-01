@@ -28,7 +28,6 @@ package org.spout.vanilla.component.entity.substance.projectile;
 
 import org.spout.api.entity.Entity;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.substance.Substance;
 import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
 import org.spout.vanilla.protocol.entity.object.ObjectType;
@@ -38,7 +37,7 @@ public class FishingBob extends Substance implements Projectile {
 
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.FISHING_BOB));
+		setEntityProtocol(new ObjectEntityProtocol(ObjectType.FISHING_BOB));
 		super.onAttached();
 	}
 

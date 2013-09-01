@@ -145,7 +145,7 @@ public abstract class Window extends AbstractWindow {
 		switch (VanillaPlugin.getInstance().getEngine().getPlatform()) {
 			case PROXY:
 			case SERVER:
-				callProtocolEvent(new WindowOpenEvent(this));
+				getPlayer().getNetwork().callProtocolEvent(new WindowOpenEvent(this), getPlayer());
 				reload();
 				break;
 			case CLIENT:
@@ -166,7 +166,7 @@ public abstract class Window extends AbstractWindow {
 				if (getHuman() == null || getHuman().isSurvival()) {
 					dropCursorItem();
 				}
-				callProtocolEvent(new WindowCloseEvent(this));
+				getPlayer().getNetwork().callProtocolEvent(new WindowCloseEvent(this), getPlayer());
 				break;
 			case CLIENT:
 				((Client) VanillaPlugin.getInstance().getEngine()).getScreenStack().closeScreen(popup);
@@ -668,7 +668,7 @@ public abstract class Window extends AbstractWindow {
 		switch (VanillaPlugin.getInstance().getEngine().getPlatform()) {
 			case PROXY:
 			case SERVER:
-				callProtocolEvent(new WindowPropertyEvent(this, id, value));
+				getPlayer().getNetwork().callProtocolEvent(new WindowPropertyEvent(this, id, value), getPlayer());
 				break;
 			case CLIENT:
 				// TODO: Window properties
@@ -688,7 +688,7 @@ public abstract class Window extends AbstractWindow {
 			case PROXY:
 			case SERVER:
 				QuickbarInventory quickbar = getPlayerInventory().getQuickbar();
-				debug("[Window - " + title + "] Slot changed: " + slot + " = " + item);
+				//debug("[Window - " + title + "] Slot changed: " + slot + " = " + item);
 				//callProtocolEvent(new WindowSlotEvent(this, inventory, slots.revert(slot), item));
 				reload();
 				// Update the held item

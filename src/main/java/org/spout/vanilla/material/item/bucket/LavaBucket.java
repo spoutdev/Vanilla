@@ -30,7 +30,7 @@ import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class LavaBucket extends FullBucket implements Fuel {
-	public final float BURN_TIME = 1000;
+	public static final float BURN_TIME = 1000;
 
 	public LavaBucket(String name, int id) {
 		super(name, id, VanillaMaterials.LAVA);

@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.data;
 
+import java.util.HashMap;
+
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyArray;
@@ -35,6 +37,8 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.ChatStyle;
+import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.data.effect.EntityEffectType;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
 import org.spout.vanilla.inventory.block.ChestInventory;
@@ -44,6 +48,8 @@ import org.spout.vanilla.inventory.block.FurnaceInventory;
 import org.spout.vanilla.inventory.block.HopperInventory;
 import org.spout.vanilla.inventory.entity.EntityArmorInventory;
 import org.spout.vanilla.inventory.entity.EntityQuickbarInventory;
+import org.spout.vanilla.inventory.entity.HorseInventory;
+import org.spout.vanilla.inventory.entity.VillagerInventory;
 import org.spout.vanilla.inventory.player.DropInventory;
 import org.spout.vanilla.inventory.player.PlayerArmorInventory;
 import org.spout.vanilla.inventory.player.PlayerCraftingInventory;
@@ -65,8 +71,8 @@ public class VanillaData {
 	public static final DefaultedKey<Float> AIR_SECS = new DefaultedKeyImpl<Float>("air_secs", 15f);
 	public static final DefaultedKey<Integer> DEATH_TICKS = new DefaultedKeyImpl<Integer>("death_ticks", 0);
 	public static final DefaultedKey<Long> GROWTH_TICKS = new DefaultedKeyImpl<Long>("growth_ticks", Long.valueOf(0));
-	public static final DefaultedKey<Integer> HEALTH = new DefaultedKeyImpl<Integer>("health", 1);
-	public static final DefaultedKey<Integer> MAX_HEALTH = new DefaultedKeyImpl<Integer>("max_health", 1);
+	public static final DefaultedKey<Float> HEALTH = new DefaultedKeyImpl<Float>("health", 1.0f);
+	public static final DefaultedKey<Float> MAX_HEALTH = new DefaultedKeyImpl<Float>("max_health", 1.0f);
 	public static final DefaultedKey<Vector3> MAX_SPEED = new DefaultedKeyImpl<Vector3>("max_speed", Vector3.ZERO);
 	public static final DefaultedKey<Vector3> MOVEMENT_SPEED = new DefaultedKeyImpl<Vector3>("movement_speed", Vector3.ZERO);
 	public static final DefaultedKey<Integer> INTERACT_REACH = new DefaultedKeyImpl<Integer>("interact_reach", 5);
@@ -102,7 +108,7 @@ public class VanillaData {
 	public static final DefaultedKey<Float> MAX_UPDATE_DELAY = new DefaultedKeyImpl<Float>("max_update_delay", 4f);
 	public static final DefaultedKey<Float> EFFECT_DURATION = new DefaultedKeyImpl<Float>("effect_duration", 9f);
 	//Entity data
-	public static final DefaultedKey<Integer> ATTACHED_COUNT = new DefaultedKeyImpl<Integer>("attached_count", 0);
+	public static final DefaultedKey<HashMap<Class<? extends VanillaEntityComponent>, Integer>> ATTACHED_COUNT = new DefaultedKeyFactory<>("attached_count", HashMap.class);
 	public static final DefaultedKey<Boolean> IS_FALLING = new DefaultedKeyImpl<Boolean>("is_falling", false);
 	public static final DefaultedKey<Boolean> IS_ON_GROUND = new DefaultedKeyImpl<Boolean>("is_on_Ground", true);
 	public static final DefaultedKey<Boolean> IS_JUMPING = new DefaultedKeyImpl<Boolean>("is_jumping", false);
@@ -117,18 +123,20 @@ public class VanillaData {
 	public static final DefaultedKey<Float> FIRE_TICK = new DefaultedKeyImpl<Float>("is_on_fire", 0.0f);
 	public static final DefaultedKey<Boolean> FIRE_HURT = new DefaultedKeyImpl<Boolean>("fire_hurt", false);
 	public static final DefaultedKey<Boolean> IS_CUSTOM_NAME_VISIBLE = new DefaultedKeyImpl<Boolean>("is_custom_name_visible", false);
+	public static final DefaultedKey<Float> DURABILITY = new DefaultedKeyImpl<Float>("durability", 0.0f);
 	//Human-specific
 	public static final DefaultedKey<Boolean> IS_SPRINTING = new DefaultedKeyImpl<Boolean>("is_sprinting", false);
 	public static final DefaultedKey<Boolean> IS_SNEAKING = new DefaultedKeyImpl<Boolean>("is_sneaking", false);
 	public static final DefaultedKey<Boolean> IS_FLYING = new DefaultedKeyImpl<Boolean>("is_flying", false);
 	public static final DefaultedKey<Boolean> CAN_FLY = new DefaultedKeyImpl<Boolean>("can_fly", false);
 	public static final DefaultedKey<Boolean> GOD_MODE = new DefaultedKeyImpl<Boolean>("god_mode", false);
-	public static final DefaultedKey<Number> FLYING_SPEED = new DefaultedKeyImpl<Number>("flying_speed", (byte) 12);
-	public static final DefaultedKey<Number> WALKING_SPEED = new DefaultedKeyImpl<Number>("walking_speed", (byte) 25);
+	public static final DefaultedKey<Number> FLYING_SPEED = new DefaultedKeyImpl<Number>("flying_speed", 0.1f);
+	public static final DefaultedKey<Number> WALKING_SPEED = new DefaultedKeyImpl<Number>("walking_speed", 0.10f);
 	public static final DefaultedKey<ViewDistance> VIEW_DISTANCE = new DefaultedKeyImpl<ViewDistance>("view_distance", ViewDistance.NORMAL);
 	public static final DefaultedKey<Byte> ARROWS_IN_BODY = new DefaultedKeyImpl<Byte>("arrows_in_body", (byte) 0);
 	//Creature-specific
 	public static final DefaultedKey<Integer> LINE_OF_SIGHT = new DefaultedKeyImpl<Integer>("line_of_sight", 1);
+	public static final DefaultedKey<Byte> ENTITY_CATEGORY = new DefaultedKeyImpl<Byte>("category", (byte) 0);
 	//Item-specific
 	public static final DefaultedKey<Number> UNCOLLECTABLE_TICKS = new DefaultedKeyImpl<Number>("uncollectable_ticks", (long) 0);
 	// Arrow-specific
@@ -175,6 +183,15 @@ public class VanillaData {
 	public static final DefaultedKey<Byte> HELD_MATERIAL_DATA = new DefaultedKeyImpl<Byte>("held_material_data", (byte) 0);
 	// Bat
 	public static final DefaultedKey<Boolean> HANGING = new DefaultedKeyImpl<Boolean>("hanging", false);
+	// Horse
+	public static final DefaultedKey<Integer> TEMPER = new DefaultedKeyImpl<Integer>("temper", 5);
+	public static final DefaultedKey<Integer> VARIANT = new DefaultedKeyImpl<Integer>("variant", 0);
+	// Minecart Specific
+	public static final DefaultedKey<Integer> MINECART_SHAKE_DIR = new DefaultedKeyImpl<Integer>("shakingDirection", 1);
+	public static final DefaultedKey<Integer> MINECART_SHAKE_FORCE = new DefaultedKeyImpl<Integer>("shakingForce", 0);
+	public static final DefaultedKey<Short> MINECART_BLOCK_ID = new DefaultedKeyImpl<Short>("displayblockid", (short) 0);
+	public static final DefaultedKey<Short> MINECART_BLOCK_DATA = new DefaultedKeyImpl<Short>("displayblockdata", (short) 0);
+	public static final DefaultedKey<Integer> MINECART_BLOCK_OFFSET = new DefaultedKeyImpl<Integer>("displayblockoffset", 6);
 	//Sky specific
 	public static final DefaultedKey<Long> MAX_TIME = new DefaultedKeyImpl<Long>("max_time", 24000L);
 	public static final DefaultedKey<Long> TIME_RATE = new DefaultedKeyImpl<Long>("time_rate", 1L);
@@ -208,12 +225,20 @@ public class VanillaData {
 	public static final DefaultedKey<EntityQuickbarInventory> ENTITY_HELD_INVENTORY = new DefaultedKeyFactory<EntityQuickbarInventory>("held", EntityQuickbarInventory.class);
 	public static final DefaultedKey<PlayerMainInventory> MAIN_INVENTORY = new DefaultedKeyFactory<PlayerMainInventory>("main", PlayerMainInventory.class);
 	public static final DefaultedKey<PlayerCraftingInventory> CRAFTING_INVENTORY = new DefaultedKeyFactory<PlayerCraftingInventory>("crafting", PlayerCraftingInventory.class);
-	public static final DefaultedKey<PlayerArmorInventory> PLAYER_ARMOR_INVENTORY = new DefaultedKeyFactory<PlayerArmorInventory>("armor", PlayerArmorInventory.class);
 	public static final DefaultedKey<PlayerQuickbar> QUICKBAR_INVENTORY = new DefaultedKeyFactory<PlayerQuickbar>("quickbar", PlayerQuickbar.class);
+	public static final DefaultedKey<PlayerArmorInventory> PLAYER_ARMOR_INVENTORY = new DefaultedKeyFactory<PlayerArmorInventory>("armor", PlayerArmorInventory.class);
 	public static final DefaultedKey<ChestInventory> ENDER_CHEST_INVENTORY = new DefaultedKeyFactory<ChestInventory>("ender_chest_inventory", ChestInventory.class);
 	public static final DefaultedKey<DropInventory> DROP_INVENTORY = new DefaultedKeyFactory<DropInventory>("drops", DropInventory.class);
 	public static final DefaultedKey<BrewingStandInventory> BREWING_STAND_INVENTORY = new DefaultedKeyFactory<BrewingStandInventory>("brewing_inventory", BrewingStandInventory.class);
 	public static final DefaultedKey<DispenserInventory> DISPENSER_INVENTORY = new DefaultedKeyFactory<DispenserInventory>("dispenser_inventory", DispenserInventory.class);
 	public static final DefaultedKey<HopperInventory> HOPPER_INVENTORY = new DefaultedKeyFactory<HopperInventory>("hopper_inventory", HopperInventory.class);
 	public static final DefaultedKey<DropperInventory> DROPPER_INVENTORY = new DefaultedKeyFactory<DropperInventory>("dropper_inventory", DropperInventory.class);
+	public static final DefaultedKey<VillagerInventory> VILLAGER_INVENTORY = new DefaultedKeyFactory<VillagerInventory>("villager_inventory", VillagerInventory.class);
+	public static final DefaultedKey<HorseInventory> HORSE_INVENTORY = new DefaultedKeyFactory<HorseInventory>("horse_inventory", HorseInventory.class);
+	// Team Data
+	public static final DefaultedKey<Boolean> SEE_FRIENDLY_INVISIBLES = new DefaultedKeyImpl<Boolean>("see_friendly_invisibles", false);
+	public static final DefaultedKey<Boolean> FRIENDLY_FIRE = new DefaultedKeyImpl<Boolean>("friendly_fire", false);
+	public static final DefaultedKey<String> DISPLAY_NAME = new DefaultedKeyImpl<String>("display_name", "");
+	public static final DefaultedKey<String> PREFIX = new DefaultedKeyImpl<String>("prefix", "");
+	public static final DefaultedKey<String> SUFFIX = new DefaultedKeyImpl<String>("suffix", ChatStyle.RESET.toString());
 }

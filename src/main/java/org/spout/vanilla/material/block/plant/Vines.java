@@ -46,13 +46,13 @@ import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.misc.EntityHead;
+import org.spout.vanilla.component.entity.player.VanillaPlayerNetworkComponent;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Spreading;
-import org.spout.vanilla.protocol.VanillaServerNetworkSynchronizer;
 import org.spout.vanilla.render.VanillaEffects;
 import org.spout.vanilla.world.lighting.VanillaLighting;
 
@@ -62,7 +62,7 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 
 	public Vines(String name, int id) {
 		super(name, id, VanillaMaterialModels.VINES, null);
-		this.setLiquidObstacle(false).setHardness(0.2F).setResistance(0.3F).setTransparent().setGhost(true);
+		this.setLiquidObstacle(false).setHardness(0.2F).setResistance(1.0F).setTransparent().setGhost(true);
 		this.getDrops().DEFAULT.clear().add(this).addFlags(ToolTypeFlags.SHEARS);
 		if (VanillaPlugin.getInstance().getEngine().getPlatform() == Platform.CLIENT) {
 			if (!getModel().getRenderMaterial().getBufferEffects().contains(VanillaEffects.BIOME_FOLIAGE_COLOR)) {
@@ -327,7 +327,7 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 		int randomData = rand.nextInt(16) & block.getBlockData();
 
 		// Upwards spreading
-		if (spreadDirection == BlockFace.TOP && block.getY() < VanillaServerNetworkSynchronizer.WORLD_HEIGHT) {
+		if (spreadDirection == BlockFace.TOP && block.getY() < VanillaPlayerNetworkComponent.WORLD_HEIGHT) {
 			Block above = block.translate(BlockFace.TOP);
 			if (above.isMaterial(VanillaMaterials.AIR)) {
 				// spread up

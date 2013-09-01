@@ -63,4 +63,11 @@ public class PlayerTabCompleteMessage extends VanillaMainChannelMessage {
 				.append(this.text, other.text)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.text)
+				.toHashCode();
+	}
 }

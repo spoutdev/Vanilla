@@ -26,14 +26,13 @@
  */
 package org.spout.vanilla.component.entity.substance;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
 import org.spout.vanilla.protocol.entity.object.ObjectType;
 
 public class EyeOfEnder extends Substance {
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.EYE_OF_ENDER));
+		setEntityProtocol(new ObjectEntityProtocol(ObjectType.EYE_OF_ENDER));
 		super.onAttached();
 	}
 }

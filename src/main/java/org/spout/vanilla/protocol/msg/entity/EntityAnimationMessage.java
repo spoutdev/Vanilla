@@ -70,4 +70,12 @@ public final class EntityAnimationMessage extends EntityMessage {
 				.append(this.animation, other.animation)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.getEntityId())
+				.append(this.animation)
+				.toHashCode();
+	}
 }

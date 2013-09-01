@@ -36,6 +36,7 @@ import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.GenericMath;
+
 import org.spout.physics.collision.shape.BoxShape;
 
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
@@ -50,7 +51,7 @@ public class Cactus extends StackGrowingBase implements TimedCraftable {
 
 	public Cactus(String name, int id) {
 		super(name, id, VanillaMaterialModels.CACTUS, new BoxShape(1, 1, 1));
-		this.setHardness(0.4F).setResistance(0.7F).setTransparent();
+		this.setHardness(0.4F).setResistance(2.0F).setTransparent();
 		this.addDeniedNeighbour(VanillaMaterials.WEB, VanillaMaterials.STONE_PRESSURE_PLATE, VanillaMaterials.WOODEN_PRESSURE_PLATE);
 	}
 
@@ -114,5 +115,10 @@ public class Cactus extends StackGrowingBase implements TimedCraftable {
 	@Override
 	public boolean grow(Block block, Material material) {
 		return false; //Cannot grow cactus with any materials
+	}
+
+	@Override
+	public boolean hasPhysics() {
+		return super.hasPhysics() && VanillaConfiguration.CACTUS_PHYSICS.getBoolean();
 	}
 }

@@ -29,14 +29,14 @@ package org.spout.vanilla.protocol.codec.entity.spawn;
 import java.io.IOException;
 import java.util.List;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.reposition.NullRepositionManager;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityMobMessage;
 
 public final class EntityMobCodec extends MessageCodec<EntityMobMessage> {
@@ -45,7 +45,7 @@ public final class EntityMobCodec extends MessageCodec<EntityMobMessage> {
 	}
 
 	@Override
-	public EntityMobMessage decode(ChannelBuffer buffer) throws IOException {
+	public EntityMobMessage decode(ByteBuf buffer) throws IOException {
 		int id = buffer.readInt();
 		int type = buffer.readUnsignedByte();
 		int x = buffer.readInt();
@@ -57,13 +57,13 @@ public final class EntityMobCodec extends MessageCodec<EntityMobMessage> {
 		short velocityZ = buffer.readShort();
 		short velocityX = buffer.readShort();
 		short velocityY = buffer.readShort();
-		List<Parameter<?>> parameters = VanillaChannelBufferUtils.readParameters(buffer);
+		List<Parameter<?>> parameters = VanillaByteBufUtils.readParameters(buffer);
 		return new EntityMobMessage(id, type, x, y, z, yaw, pitch, headYaw, velocityZ, velocityX, velocityY, parameters, NullRepositionManager.getInstance());
 	}
 
 	@Override
-	public ChannelBuffer encode(EntityMobMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+	public ByteBuf encode(EntityMobMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer();
 		buffer.writeInt(message.getEntityId());
 		buffer.writeByte(message.getType());
 		buffer.writeInt(message.getX());
@@ -75,7 +75,7 @@ public final class EntityMobCodec extends MessageCodec<EntityMobMessage> {
 		buffer.writeShort(message.getVelocityZ());
 		buffer.writeShort(message.getVelocityX());
 		buffer.writeShort(message.getVelocityY());
-		VanillaChannelBufferUtils.writeParameters(buffer, message.getParameters());
+		VanillaByteBufUtils.writeParameters(buffer, message.getParameters());
 		return buffer;
 	}
 }

@@ -96,15 +96,15 @@ public final class ChunkDataMessage extends VanillaBlockDataChannelMessage {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("x", x)
-				.append("z", z)
-				.append("hasAdditionalData", hasAdditionalData)
-				.append("contiguous", contiguous)
-				.append("data", data, false)
-				.append("data(hash)", hash(data))
-				.append("biomeData", data, false)
-				.append("biomeData(hash)", hash(biomeData))
-				.append("unload", unload, false)
+				.append("x", this.x)
+				.append("z", this.z)
+				.append("hasAdditionalData", this.hasAdditionalData)
+				.append("contiguous", this.contiguous)
+				.append("data", this.data, false)
+				.append("data(hash)", hash(this.data))
+				.append("biomeData", this.data, false)
+				.append("biomeData(hash)", hash(this.biomeData))
+				.append("unload", this.unload, false)
 				.toString();
 	}
 
@@ -126,6 +126,19 @@ public final class ChunkDataMessage extends VanillaBlockDataChannelMessage {
 				.append(this.biomeData, other.biomeData)
 				.append(this.unload, other.unload)
 				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.x)
+				.append(this.z)
+				.append(this.contiguous)
+				.append(this.hasAdditionalData)
+				.append(this.data)
+				.append(this.biomeData)
+				.append(this.unload)
+				.toHashCode();
 	}
 
 	private static int hash(byte[][] arr) {

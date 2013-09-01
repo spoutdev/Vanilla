@@ -34,10 +34,6 @@ import org.spout.vanilla.protocol.msg.world.ParticleEffectMessage;
 public class ParticleEffectHandler extends MessageHandler<ParticleEffectMessage> {
 	@Override
 	public void handleClient(ClientSession session, ParticleEffectMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		//TODO: implement
 		System.out.println(message.toString());
 	}

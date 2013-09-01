@@ -29,13 +29,13 @@ package org.spout.vanilla.protocol.codec.player.pos;
 import java.io.IOException;
 import java.util.List;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnMessage;
 
 public final class PlayerSpawnCodec extends MessageCodec<PlayerSpawnMessage> {
@@ -44,31 +44,31 @@ public final class PlayerSpawnCodec extends MessageCodec<PlayerSpawnMessage> {
 	}
 
 	@Override
-	public PlayerSpawnMessage decode(ChannelBuffer buffer) throws IOException {
+	public PlayerSpawnMessage decode(ByteBuf buffer) throws IOException {
 		int id = buffer.readInt();
-		String name = VanillaChannelBufferUtils.readString(buffer);
+		String name = VanillaByteBufUtils.readString(buffer);
 		int x = buffer.readInt();
 		int y = buffer.readInt();
 		int z = buffer.readInt();
 		int rotation = buffer.readUnsignedByte();
 		int pitch = buffer.readUnsignedByte();
 		int item = buffer.readUnsignedShort();
-		List<Parameter<?>> parameters = VanillaChannelBufferUtils.readParameters(buffer);
+		List<Parameter<?>> parameters = VanillaByteBufUtils.readParameters(buffer);
 		return new PlayerSpawnMessage(id, name, x, y, z, rotation, pitch, item, parameters);
 	}
 
 	@Override
-	public ChannelBuffer encode(PlayerSpawnMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+	public ByteBuf encode(PlayerSpawnMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer();
 		buffer.writeInt(message.getEntityId());
-		VanillaChannelBufferUtils.writeString(buffer, message.getName());
+		VanillaByteBufUtils.writeString(buffer, message.getName());
 		buffer.writeInt(message.getX());
 		buffer.writeInt(message.getY());
 		buffer.writeInt(message.getZ());
 		buffer.writeByte(message.getYaw());
 		buffer.writeByte(message.getPitch());
 		buffer.writeShort(message.getId());
-		VanillaChannelBufferUtils.writeParameters(buffer, message.getParameters());
+		VanillaByteBufUtils.writeParameters(buffer, message.getParameters());
 		return buffer;
 	}
 }

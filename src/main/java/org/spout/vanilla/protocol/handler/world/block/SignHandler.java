@@ -39,12 +39,8 @@ import org.spout.vanilla.protocol.msg.world.block.SignMessage;
 public class SignHandler extends MessageHandler<SignMessage> {
 	@Override
 	public void handleServer(ServerSession session, SignMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		Player player = session.getPlayer();
-		RepositionManager rmInverse = player.getNetworkSynchronizer().getRepositionManager().getInverse();
+		RepositionManager rmInverse = player.getNetwork().getRepositionManager().getInverse();
 
 		int x = rmInverse.convertX(message.getX());
 		int y = rmInverse.convertY(message.getY());
@@ -65,12 +61,8 @@ public class SignHandler extends MessageHandler<SignMessage> {
 
 	@Override
 	public void handleClient(ClientSession session, SignMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		Player player = session.getPlayer();
-		RepositionManager rm = player.getNetworkSynchronizer().getRepositionManager();
+		RepositionManager rm = player.getNetwork().getRepositionManager();
 
 		int x = rm.convertX(message.getX());
 		int y = rm.convertY(message.getY());

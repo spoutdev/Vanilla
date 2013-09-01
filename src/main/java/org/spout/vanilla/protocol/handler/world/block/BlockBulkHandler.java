@@ -40,13 +40,9 @@ import org.spout.vanilla.protocol.msg.world.block.BlockBulkMessage;
 public class BlockBulkHandler extends MessageHandler<BlockBulkMessage> {
 	@Override
 	public void handleClient(ClientSession session, BlockBulkMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		Player player = session.getPlayer();
 		World world = player.getWorld();
-		RepositionManager rm = player.getNetworkSynchronizer().getRepositionManager();
+		RepositionManager rm = player.getNetwork().getRepositionManager();
 		int baseX = message.getChunkX() << Chunk.BLOCKS.BITS;
 		int baseZ = message.getChunkZ() << Chunk.BLOCKS.BITS;
 

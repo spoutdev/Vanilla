@@ -33,7 +33,6 @@ import org.spout.api.component.entity.TextModelComponent;
 import org.spout.api.data.Data;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
-import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.ItemStack;
@@ -41,16 +40,16 @@ import org.spout.api.inventory.Slot;
 import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector3;
 import org.spout.api.math.VectorMath;
-import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.misc.Digging;
 import org.spout.vanilla.component.entity.misc.EntityHead;
 import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.component.entity.misc.MetadataComponent;
 import org.spout.vanilla.component.entity.misc.PlayerItemCollector;
 import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.data.Metadata;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.ViewDistance;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
@@ -67,27 +66,25 @@ import org.spout.vanilla.protocol.msg.player.PlayerGameStateMessage;
  * A component that identifies the entity as a Vanilla player.
  */
 public class Human extends Living {
-	public static final int SPAWN_HEALTH = 20;
-
 	@Override
 	public void onAttached() {
 		super.onAttached();
 		Entity holder = getOwner();
 		holder.add(PlayerItemCollector.class);
 		holder.add(Digging.class);
-		holder.getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new HumanEntityProtocol());
-		//Add height offset if loading from disk
-		//		if (holder instanceof Player) {
-		//			((Player) holder).teleport(holder.getTransform().getPosition().add(0, 1.85F, 0));
-		//		}
+		setEntityProtocol(new HumanEntityProtocol());
 		if (getAttachedCount() == 1) {
-			holder.add(Health.class).setSpawnHealth(SPAWN_HEALTH);
+			holder.add(Health.class).setSpawnHealth(20);
 		}
 		TextModelComponent textModel = getOwner().get(TextModelComponent.class);
 		if (textModel != null) {
 			textModel.setSize(0.5f);
 			textModel.setTranslation(new Vector3(0, 3f, 0));
 		}
+		//holder.getPhysics().activate(1, new BoxShape(1f, 2.3f, 1f), false, true);
+
+		// Add metadata associated with the amount of arrows attached to the body
+		holder.add(MetadataComponent.class).addMeta(Metadata.TYPE_BYTE, 10, VanillaData.ARROWS_IN_BODY);
 	}
 
 	public byte getArrowsInBody() {
@@ -96,7 +93,6 @@ public class Human extends Living {
 
 	public void setArrowsInBody(byte amount) {
 		getData().put(VanillaData.ARROWS_IN_BODY, amount);
-		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 10, amount));
 	}
 
 	public ViewDistance getViewDistance() {
@@ -124,7 +120,7 @@ public class Human extends Living {
 				viewDistance = config.NORMAL_VIEW_DISTANCE.getInt();
 				break;
 		}
-		getOwner().setViewDistance(viewDistance * Chunk.BLOCKS.SIZE);
+		//TODO: Client View distance, set it here
 	}
 
 	public boolean isAdventure() {
@@ -145,7 +141,6 @@ public class Human extends Living {
 
 	public void setSprinting(boolean isSprinting) {
 		getOwner().getData().put(VanillaData.IS_SPRINTING, isSprinting);
-		sendMetaData();
 	}
 
 	public boolean isFalling() {
@@ -263,10 +258,10 @@ public class Human extends Living {
 		return getOwner().getData().get(VanillaData.IS_FLYING);
 	}
 
-	public void setFlyingSpeed(byte speed, boolean updateClient) {
+	public void setFlyingSpeed(float speed, boolean updateClient) {
 		Number value = getOwner().getData().put(VanillaData.FLYING_SPEED, speed);
 
-		byte previous = value == null ? VanillaData.FLYING_SPEED.getDefaultValue().byteValue() : value.byteValue();
+		float previous = value == null ? VanillaData.FLYING_SPEED.getDefaultValue().byteValue() : value.byteValue();
 
 		if (callAbilityChangeEvent().isCancelled()) {
 			getOwner().getData().put(VanillaData.FLYING_SPEED, previous);
@@ -275,16 +270,16 @@ public class Human extends Living {
 		updateAbilities(updateClient);
 	}
 
-	public void setFlyingSpeed(byte speed) {
+	public void setFlyingSpeed(float speed) {
 		setFlyingSpeed(speed, true);
 	}
 
-	public byte getFlyingSpeed() {
-		return getOwner().getData().get(VanillaData.FLYING_SPEED).byteValue();
+	public float getFlyingSpeed() {
+		return getOwner().getData().get(VanillaData.FLYING_SPEED).floatValue();
 	}
 
-	public void setWalkingSpeed(byte speed, boolean updateClient) {
-		byte previous = getOwner().getData().put(VanillaData.WALKING_SPEED, speed).byteValue();
+	public void setWalkingSpeed(float speed, boolean updateClient) {
+		float previous = getOwner().getData().put(VanillaData.WALKING_SPEED, speed).floatValue();
 		if (callAbilityChangeEvent().isCancelled()) {
 			getOwner().getData().put(VanillaData.WALKING_SPEED, previous);
 			return;
@@ -292,12 +287,12 @@ public class Human extends Living {
 		updateAbilities(updateClient);
 	}
 
-	public void setWalkingSpeed(byte speed) {
+	public void setWalkingSpeed(float speed) {
 		setWalkingSpeed(speed, true);
 	}
 
-	public byte getWalkingSpeed() {
-		return getOwner().getData().get(VanillaData.WALKING_SPEED).byteValue();
+	public float getWalkingSpeed() {
+		return getOwner().getData().get(VanillaData.WALKING_SPEED).floatValue();
 	}
 
 	public void setCanFly(boolean canFly, boolean updateClient) {
@@ -359,7 +354,7 @@ public class Human extends Living {
 			mode = event.getMode();
 
 			//In Survival we shoudn't be able to fly.
-			setCanFly(mode == GameMode.CREATIVE);
+			setCanFly(mode == GameMode.CREATIVE, updateClient);
 			if (changeToFromCreative) {
 				if (callAbilityChangeEvent().isCancelled()) {
 					mode = old;
@@ -389,14 +384,12 @@ public class Human extends Living {
 		if (!updateClient || !(getOwner() instanceof Player)) {
 			return;
 		}
-		((Player) getOwner()).getNetworkSynchronizer().callProtocolEvent(new PlayerAbilityUpdateEvent((Player) getOwner()));
+		((Player) getOwner()).getNetwork().callProtocolEvent(new PlayerAbilityUpdateEvent((Player) getOwner()));
 	}
 
 	public void updateAbilities() {
 		updateAbilities(true);
 	}
-
-	private final AtomicReference<Point> livePosition = new AtomicReference<Point>(null);
 
 	@Override
 	public boolean canTick() {
@@ -407,16 +400,6 @@ public class Human extends Living {
 	public void onTick(float dt) {
 		super.onTick(dt);
 		final Point position = getOwner().getPhysics().getPosition();
-		livePosition.set(position);
 		setInWater(position.getBlock().getMaterial() instanceof Water);
-	}
-
-	public Point getLivePosition() {
-		return livePosition.get();
-	}
-
-	public void setLivePosition(Point point) {
-		livePosition.set(point);
-		getOwner().getPhysics().setPosition(point);
 	}
 }

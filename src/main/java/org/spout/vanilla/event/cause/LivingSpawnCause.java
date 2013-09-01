@@ -75,12 +75,4 @@ public enum LivingSpawnCause {
 	 */
 	UNKNOWN;
 
-	public boolean equals(LivingSpawnCause... causes) {
-		for (LivingSpawnCause cause : causes) {
-			if (equals(cause)) {
-				return true;
-			}
-		}
-		return false;
-	}
 }

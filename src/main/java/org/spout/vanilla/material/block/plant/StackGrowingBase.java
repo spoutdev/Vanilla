@@ -31,6 +31,7 @@ import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
+
 import org.spout.physics.collision.shape.CollisionShape;
 
 import org.spout.vanilla.material.VanillaBlockMaterial;

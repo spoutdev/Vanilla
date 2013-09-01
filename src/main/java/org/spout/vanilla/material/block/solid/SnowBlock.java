@@ -38,7 +38,7 @@ import org.spout.vanilla.material.block.Solid;
 public class SnowBlock extends Solid implements InitializableMaterial {
 	public SnowBlock(String name, int id) {
 		super(name, id, VanillaMaterialModels.SNOW_BLOCK);
-		this.setHardness(0.2F).setResistance(0.3F).setStepSound(SoundEffects.STEP_CLOTH);
+		this.setHardness(0.2F).setResistance(1.0F).setStepSound(SoundEffects.STEP_CLOTH);
 		this.addMiningType(ToolType.SPADE).setMiningLevel(ToolLevel.WOOD);
 	}
 

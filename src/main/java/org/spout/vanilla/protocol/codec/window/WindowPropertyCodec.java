@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.codec.window;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
@@ -41,7 +41,7 @@ public final class WindowPropertyCodec extends MessageCodec<WindowPropertyMessag
 	}
 
 	@Override
-	public WindowPropertyMessage decode(ChannelBuffer buffer) throws IOException {
+	public WindowPropertyMessage decode(ByteBuf buffer) throws IOException {
 		int id = buffer.readUnsignedByte();
 		int progressBar = buffer.readUnsignedShort();
 		int value = buffer.readUnsignedShort();
@@ -49,8 +49,8 @@ public final class WindowPropertyCodec extends MessageCodec<WindowPropertyMessag
 	}
 
 	@Override
-	public ChannelBuffer encode(WindowPropertyMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(5);
+	public ByteBuf encode(WindowPropertyMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer(5);
 		buffer.writeByte(message.getWindowInstanceId());
 		buffer.writeShort(message.getProgressBar());
 		buffer.writeShort(message.getValue());

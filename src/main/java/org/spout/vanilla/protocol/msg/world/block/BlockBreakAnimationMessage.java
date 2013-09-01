@@ -75,11 +75,11 @@ public class BlockBreakAnimationMessage extends VanillaBlockDataChannelMessage {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("entity_id", entityId)
-				.append("x", x)
-				.append("y", y)
-				.append("z", z)
-				.append("stage", stage)
+				.append("entity_id", this.entityId)
+				.append("x", this.x)
+				.append("y", this.y)
+				.append("z", this.z)
+				.append("stage", this.stage)
 				.toString();
 	}
 
@@ -99,5 +99,16 @@ public class BlockBreakAnimationMessage extends VanillaBlockDataChannelMessage {
 				.append(this.z, other.z)
 				.append(this.stage, other.stage)
 				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.entityId)
+				.append(this.x)
+				.append(this.y)
+				.append(this.z)
+				.append(this.stage)
+				.toHashCode();
 	}
 }

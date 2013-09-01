@@ -94,7 +94,7 @@ public class RemoteConnectionSession {
 	}
 
 	public void send(RconMessage message) {
-		getChannel().write(message);
+		getChannel().writeAndFlush(message);
 	}
 
 	public void addMessage(ChatArguments message) {

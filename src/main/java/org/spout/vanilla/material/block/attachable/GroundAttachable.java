@@ -29,6 +29,7 @@ package org.spout.vanilla.material.block.attachable;
 import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.physics.collision.shape.CollisionShape;
 
 import org.spout.vanilla.material.VanillaBlockMaterial;

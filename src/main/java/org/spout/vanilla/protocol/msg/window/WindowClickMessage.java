@@ -100,4 +100,16 @@ public final class WindowClickMessage extends WindowMessage {
 				.append(this.item, other.item)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.getWindowInstanceId())
+				.append(this.slot)
+				.append(this.button)
+				.append(this.mode)
+				.append(this.transaction)
+				.append(this.item)
+				.toHashCode();
+	}
 }

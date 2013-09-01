@@ -28,11 +28,10 @@ package org.spout.vanilla.material.item.misc;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.Action;
-import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.Slot;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.component.entity.living.hostile.Blaze;
@@ -46,24 +45,26 @@ import org.spout.vanilla.component.entity.living.hostile.Slime;
 import org.spout.vanilla.component.entity.living.hostile.Spider;
 import org.spout.vanilla.component.entity.living.hostile.Witch;
 import org.spout.vanilla.component.entity.living.hostile.Zombie;
-import org.spout.vanilla.component.entity.living.neutral.Bat;
 import org.spout.vanilla.component.entity.living.neutral.Enderman;
 import org.spout.vanilla.component.entity.living.neutral.PigZombie;
 import org.spout.vanilla.component.entity.living.neutral.Wolf;
+import org.spout.vanilla.component.entity.living.passive.Bat;
 import org.spout.vanilla.component.entity.living.passive.Chicken;
 import org.spout.vanilla.component.entity.living.passive.Cow;
+import org.spout.vanilla.component.entity.living.passive.Horse;
 import org.spout.vanilla.component.entity.living.passive.MooshroomCow;
 import org.spout.vanilla.component.entity.living.passive.Ocelot;
 import org.spout.vanilla.component.entity.living.passive.Pig;
 import org.spout.vanilla.component.entity.living.passive.Sheep;
 import org.spout.vanilla.component.entity.living.passive.Squid;
 import org.spout.vanilla.component.entity.living.passive.Villager;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.item.VanillaItemMaterial;
-import org.spout.vanilla.util.PlayerUtil;
+import org.spout.vanilla.material.item.EntitySpawnItem;
 
-public class SpawnEgg extends VanillaItemMaterial {
-	public static final SpawnEgg PARENT = new SpawnEgg("Spawn Egg"); //There is no entity with the ID 0 so this egg is invalid
+public class SpawnEgg extends EntitySpawnItem<VanillaEntityComponent> {
+	/**
+	 * There is no entity with the ID 0 so this egg is invalid
+	 */
+	public static final SpawnEgg PARENT = new SpawnEgg("Spawn Egg");
 	public static final SpawnEgg BAT = new SpawnEgg("Spawn Bat", 65, Bat.class, PARENT);
 	public static final SpawnEgg CREEPER = new SpawnEgg("Spawn Creeper", 50, Creeper.class, PARENT);
 	public static final SpawnEgg SKELETON = new SpawnEgg("Spawn Skeleton", 51, Skeleton.class, PARENT);
@@ -87,7 +88,7 @@ public class SpawnEgg extends VanillaItemMaterial {
 	public static final SpawnEgg WITCH = new SpawnEgg("Spawn Witch", 66, Witch.class, PARENT);
 	public static final SpawnEgg VILLAGER = new SpawnEgg("Spawn Villager", 120, Villager.class, PARENT);
 	public static final SpawnEgg OCELOT = new SpawnEgg("Spawn Ocelot", 98, Ocelot.class, PARENT);
-	private Class<? extends VanillaEntityComponent> entityComponent;
+	public static final SpawnEgg HORSE = new SpawnEgg("Spawn Horse", 100, Horse.class, PARENT);
 
 	private SpawnEgg(String name) {
 		super((short) 0x007F, name, 383, null);
@@ -95,7 +96,6 @@ public class SpawnEgg extends VanillaItemMaterial {
 
 	private SpawnEgg(String name, int data, Class<? extends VanillaEntityComponent> entityComponent, Material parent) {
 		super(name, 383, data, parent, null);
-		this.entityComponent = entityComponent;
 	}
 
 	@Override
@@ -103,14 +103,7 @@ public class SpawnEgg extends VanillaItemMaterial {
 		if (type != Action.RIGHT_CLICK) {
 			return;
 		}
-		Slot slot = PlayerUtil.getHeldSlot(entity);
-		if (!PlayerUtil.isCostSuppressed(entity) && slot != null && slot.get() != null && slot.get().getMaterial().isMaterial(VanillaMaterials.SPAWN_EGG)) {
-			slot.addAmount(-1);
-		}
-		block.getWorld().createAndSpawnEntity(block.translate(clickedface).getPosition(), LoadOption.NO_LOAD, entityComponent);
-	}
-
-	public Class<? extends VanillaEntityComponent> getComponent() {
-		return entityComponent;
+		spawnEntity(block.translate(clickedface), Vector3.ZERO);
+		handleSelectionRemove(entity);
 	}
 }

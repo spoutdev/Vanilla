@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.codec.player;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.util.LogicUtil;
@@ -42,28 +42,28 @@ public class PlayerAbilityCodec extends MessageCodec<PlayerAbilityMessage> {
 	}
 
 	@Override
-	public ChannelBuffer encode(PlayerAbilityMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+	public ByteBuf encode(PlayerAbilityMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer(10);
 		byte flag = 0;
 		flag = LogicUtil.setBit(flag, 0x1, message.isGodMode());
 		flag = LogicUtil.setBit(flag, 0x2, message.isFlying());
 		flag = LogicUtil.setBit(flag, 0x4, message.canFly());
 		flag = LogicUtil.setBit(flag, 0x8, message.isCreativeMode());
 		buffer.writeByte(flag);
-		buffer.writeByte(message.getFlyingSpeed());
-		buffer.writeByte(message.getWalkingSpeed());
+		buffer.writeFloat(message.getFlyingSpeed());
+		buffer.writeFloat(message.getWalkingSpeed());
 		return buffer;
 	}
 
 	@Override
-	public PlayerAbilityMessage decode(ChannelBuffer buffer) throws IOException {
+	public PlayerAbilityMessage decode(ByteBuf buffer) throws IOException {
 		byte flag = buffer.readByte();
 		boolean godMode = LogicUtil.getBit(flag, 0x1);
 		boolean isFlying = LogicUtil.getBit(flag, 0x2);
 		boolean canFly = LogicUtil.getBit(flag, 0x4);
 		boolean creativeMode = LogicUtil.getBit(flag, 0x8);
-		byte flyingSpeed = buffer.readByte();
-		byte walkingSpeed = buffer.readByte();
+		float flyingSpeed = buffer.readFloat();
+		float walkingSpeed = buffer.readFloat();
 		return new PlayerAbilityMessage(godMode, isFlying, canFly, creativeMode, flyingSpeed, walkingSpeed);
 	}
 }

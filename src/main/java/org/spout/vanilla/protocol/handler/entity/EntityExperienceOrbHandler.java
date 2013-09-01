@@ -34,10 +34,6 @@ import org.spout.vanilla.protocol.msg.entity.spawn.EntityExperienceOrbMessage;
 public class EntityExperienceOrbHandler extends MessageHandler<EntityExperienceOrbMessage> {
 	@Override
 	public void handleClient(ClientSession session, EntityExperienceOrbMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		//TODO: implement
 		System.out.println(message.toString());
 	}

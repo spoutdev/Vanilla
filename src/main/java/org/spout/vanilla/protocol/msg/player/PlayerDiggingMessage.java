@@ -100,4 +100,15 @@ public final class PlayerDiggingMessage extends VanillaMainChannelMessage {
 				.append(this.face, other.face)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.state)
+				.append(this.x)
+				.append(this.y)
+				.append(this.z)
+				.append(this.face)
+				.toHashCode();
+	}
 }

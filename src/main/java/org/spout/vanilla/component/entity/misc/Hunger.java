@@ -37,6 +37,7 @@ import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.component.entity.player.HUD;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.event.cause.HealCause;
 import org.spout.vanilla.event.cause.NullDamageCause;
@@ -70,7 +71,7 @@ public class Hunger extends VanillaEntityComponent {
 
 	@Override
 	public boolean canTick() {
-		return !human.isCreative() && !human.getHealth().isDead();
+		return !human.isCreative() && !human.getHealth().isDead() && VanillaConfiguration.PLAYER_SURVIVAL_ENABLE_HUNGER.getBoolean();
 	}
 
 	@SuppressWarnings ("incomplete-switch")
@@ -96,13 +97,13 @@ public class Hunger extends VanillaEntityComponent {
 			case PROXY:
 			case SERVER:
 				final Health healthComponent = human.getHealth();
-				final int health = healthComponent.getHealth();
+				final float health = healthComponent.getHealth();
 				final int hunger = getHunger();
 
 				//Timer when eating. Sends a Enting done if the player eated the food the whole time.
 				if (eatingTimer != 0f) {
 					if (eatingTimer >= 1.5f) {
-						((Player) getOwner()).getSession().send(new EntityStatusMessage(getOwner().getId(), EntityStatusMessage.EATING_ACCEPTED));
+						((Player) getOwner()).getNetwork().getSession().send(new EntityStatusMessage(getOwner().getId(), EntityStatusMessage.EATING_ACCEPTED));
 						if (foodEating.get() != null) {
 							if (foodEating.get().getMaterial() instanceof Food) {
 								((Food) foodEating.get().getMaterial()).onEat(getOwner(), foodEating);
@@ -121,7 +122,7 @@ public class Hunger extends VanillaEntityComponent {
 				if (health < 20 && hunger > 17) {
 					timer -= dt;
 					if (timer <= 0) {
-						healthComponent.heal(1, HealCause.REGENERATION);
+						healthComponent.heal(1.0f, HealCause.REGENERATION);
 						timer = TIMER_START;
 					}
 				}
@@ -131,7 +132,7 @@ public class Hunger extends VanillaEntityComponent {
 				if (hunger <= 0) {
 					timer -= dt;
 					if (timer <= 0) {
-						healthComponent.damage(1, new NullDamageCause(DamageType.STARVATION));
+						healthComponent.damage(1.0f, new NullDamageCause(DamageType.STARVATION));
 						timer = TIMER_START;
 					}
 				}
@@ -312,7 +313,7 @@ public class Hunger extends VanillaEntityComponent {
 
 	public void reload() {
 		if (getOwner().getEngine() instanceof Server) {
-			getPlayer().getNetworkSynchronizer().callProtocolEvent(new PlayerHealthEvent(getPlayer()));
+			getPlayer().getNetwork().callProtocolEvent(new PlayerHealthEvent(getPlayer()));
 		}
 	}
 

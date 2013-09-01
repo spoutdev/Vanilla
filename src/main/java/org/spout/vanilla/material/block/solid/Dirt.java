@@ -39,7 +39,7 @@ public class Dirt extends Solid {
 
 	public Dirt(String name, int id) {
 		super(name, id, VanillaMaterialModels.DIRT);
-		this.setHardness(0.5F).setResistance(0.8F).setStepSound(SoundEffects.STEP_GRAVEL);
+		this.setHardness(0.5F).setResistance(2.5F).setStepSound(SoundEffects.STEP_GRAVEL);
 		this.addMiningType(ToolType.SPADE);
 	}
 

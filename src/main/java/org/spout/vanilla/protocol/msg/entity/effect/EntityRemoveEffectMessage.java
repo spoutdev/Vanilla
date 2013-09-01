@@ -66,4 +66,12 @@ public class EntityRemoveEffectMessage extends EntityMessage {
 				.append(this.effect, other.effect)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.getEntityId())
+				.append(this.effect)
+				.toHashCode();
+	}
 }

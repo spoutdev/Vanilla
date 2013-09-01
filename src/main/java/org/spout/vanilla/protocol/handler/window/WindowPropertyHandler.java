@@ -36,9 +36,6 @@ import org.spout.vanilla.protocol.msg.window.WindowPropertyMessage;
 public class WindowPropertyHandler extends MessageHandler<WindowPropertyMessage> {
 	@Override
 	public void handleClient(ClientSession session, WindowPropertyMessage msg) {
-		if (!session.hasPlayer()) {
-			return;
-		}
 		Player player = session.getPlayer();
 		WindowHolder holder = player.get(WindowHolder.class);
 		if (holder != null) {

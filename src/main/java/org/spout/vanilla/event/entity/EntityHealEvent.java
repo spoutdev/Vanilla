@@ -40,12 +40,12 @@ public class EntityHealEvent extends EntityHealthChangeEvent {
 	private static final HandlerList handlers = new HandlerList();
 	private final HealCause cause;
 
-	public EntityHealEvent(Entity e, int heal) {
+	public EntityHealEvent(Entity e, float heal) {
 		super(e, HealthChangeCause.HEAL, heal);
 		this.cause = HealCause.UNKNOWN;
 	}
 
-	public EntityHealEvent(Entity e, int heal, HealCause cause) {
+	public EntityHealEvent(Entity e, float heal, HealCause cause) {
 		super(e, HealthChangeCause.DAMAGE, heal);
 		this.cause = cause;
 	}
@@ -64,7 +64,7 @@ public class EntityHealEvent extends EntityHealthChangeEvent {
 	 *
 	 * @return The damage to the health component.
 	 */
-	public int getHealAmount() {
+	public float getHealAmount() {
 		return getChange();
 	}
 
@@ -73,7 +73,7 @@ public class EntityHealEvent extends EntityHealthChangeEvent {
 	 *
 	 * @param amount The amount of health given
 	 */
-	public void setHealAmount(int amount) {
+	public void setHealAmount(float amount) {
 		setChange(amount);
 	}
 

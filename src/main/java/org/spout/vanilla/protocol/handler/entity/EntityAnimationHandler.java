@@ -42,10 +42,6 @@ import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
 public final class EntityAnimationHandler extends MessageHandler<EntityAnimationMessage> {
 	@Override
 	public void handleServer(ServerSession session, EntityAnimationMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		Player player = session.getPlayer();
 
 		switch (message.getAnimation()) {
@@ -58,10 +54,6 @@ public final class EntityAnimationHandler extends MessageHandler<EntityAnimation
 
 	@Override
 	public void handleClient(ClientSession session, EntityAnimationMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		Player player = session.getPlayer();
 
 		Entity entity = player.getWorld().getEntity(message.getEntityId());

@@ -27,7 +27,6 @@
 package org.spout.vanilla.protocol.entity.object;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -35,19 +34,17 @@ import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.RepositionManager;
-import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.entity.substance.Painting;
 import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
-import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityPaintingMessage;
 
 public class PaintingEntityProtocol extends VanillaEntityProtocol {
 	@Override
 	public List<Message> getSpawnMessages(Entity entity, RepositionManager rm) {
-		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
-		parameters.add(new Parameter<Short>(Parameter.TYPE_SHORT, 1, (short) 300));
-		return Arrays.<Message>asList(new EntityPaintingMessage(entity.add(Painting.class), rm), new EntityMetadataMessage(entity.getId(), parameters));
+		List<Message> messages = new ArrayList<>();
+		messages.add(new EntityPaintingMessage(entity.add(Painting.class), rm));
+		return messages;
 	}
 
 	@Override

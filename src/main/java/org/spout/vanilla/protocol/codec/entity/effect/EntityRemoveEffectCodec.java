@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.codec.entity.effect;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
@@ -41,15 +41,15 @@ public class EntityRemoveEffectCodec extends MessageCodec<EntityRemoveEffectMess
 	}
 
 	@Override
-	public EntityRemoveEffectMessage decode(ChannelBuffer buffer) throws IOException {
+	public EntityRemoveEffectMessage decode(ByteBuf buffer) throws IOException {
 		int id = buffer.readInt();
 		byte effect = buffer.readByte();
 		return new EntityRemoveEffectMessage(id, effect);
 	}
 
 	@Override
-	public ChannelBuffer encode(EntityRemoveEffectMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(5);
+	public ByteBuf encode(EntityRemoveEffectMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer(5);
 		buffer.writeInt(message.getEntityId());
 		buffer.writeByte(message.getEffect());
 		return buffer;

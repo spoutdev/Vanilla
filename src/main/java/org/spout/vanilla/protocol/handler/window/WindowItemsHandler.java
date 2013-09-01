@@ -37,11 +37,8 @@ import org.spout.vanilla.inventory.window.Window;
 import org.spout.vanilla.protocol.msg.window.WindowItemsMessage;
 
 public class WindowItemsHandler extends MessageHandler<WindowItemsMessage> {
+	@Override
 	public void handleClient(ClientSession session, WindowItemsMessage msg) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		Player player = session.getPlayer();
 		WindowHolder holder = player.get(WindowHolder.class);
 		if (holder == null) {

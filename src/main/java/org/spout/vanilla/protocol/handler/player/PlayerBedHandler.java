@@ -39,9 +39,6 @@ import org.spout.vanilla.protocol.msg.player.PlayerBedMessage;
 public final class PlayerBedHandler extends MessageHandler<PlayerBedMessage> {
 	@Override
 	public void handleClient(ClientSession session, PlayerBedMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
 		Player player = session.getPlayer();
 
 		World world = player.getWorld();

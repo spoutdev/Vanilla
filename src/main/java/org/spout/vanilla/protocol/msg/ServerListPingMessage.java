@@ -41,4 +41,10 @@ public class ServerListPingMessage extends VanillaMainChannelMessage {
 	public boolean isAsync() {
 		return true;
 	}
+
+	@Override
+	public boolean requiresPlayer() {
+		return false;
+	}
+
 }

@@ -111,4 +111,12 @@ public final class PlayerPositionLookMessage extends VanillaMainChannelMessage {
 				.append(this.rotation, other.rotation)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.position)
+				.append(this.rotation)
+				.toHashCode();
+	}
 }

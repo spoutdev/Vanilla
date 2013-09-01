@@ -26,12 +26,15 @@
  */
 package org.spout.vanilla.material.item;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.inventory.Slot;
 import org.spout.api.material.Material;
 import org.spout.api.math.Vector2;
 import org.spout.api.render.RenderMaterial;
 
 import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.material.VanillaMaterial;
+import org.spout.vanilla.util.PlayerUtil;
 
 public class VanillaItemMaterial extends Material implements VanillaMaterial {
 	private final int minecraftId;
@@ -117,5 +120,22 @@ public class VanillaItemMaterial extends Material implements VanillaMaterial {
 	public VanillaItemMaterial setDamage(int damage) {
 		this.meleeDamage = damage;
 		return this;
+	}
+
+	/**
+	 * Handles the removal of this Item Material from the selected slot of an Entity. If this is suppressed by the Entity (for example, is in creative) nothing happens. If the selected item is not this
+	 * material, no item is subtracted.<br><br>
+	 *
+	 * @param entity to handle the selected item removal of
+	 */
+	public void handleSelectionRemove(Entity entity) {
+		if (PlayerUtil.isCostSuppressed(entity)) {
+			return;
+		}
+		Slot slot = PlayerUtil.getHeldSlot(entity);
+		if (slot == null || slot.get() == null || !slot.get().isMaterial(this)) {
+			return;
+		}
+		slot.addAmount(-1);
 	}
 }

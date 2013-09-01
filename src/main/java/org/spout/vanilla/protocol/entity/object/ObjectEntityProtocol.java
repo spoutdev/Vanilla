@@ -44,7 +44,7 @@ public class ObjectEntityProtocol extends BasicEntityProtocol {
 
 	@Override
 	public List<Message> getSpawnMessages(Entity entity, RepositionManager rm) {
-		List<Message> messages = new ArrayList<Message>();
+		List<Message> messages = new ArrayList<>();
 		messages.add(new EntityObjectMessage(entity, (byte) typeId, rm));
 		messages.add(new EntityMetadataMessage(entity.getId(), getSpawnParameters(entity)));
 		return messages;

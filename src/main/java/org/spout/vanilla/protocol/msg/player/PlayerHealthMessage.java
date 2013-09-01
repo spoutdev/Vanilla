@@ -33,16 +33,16 @@ import org.spout.api.util.SpoutToStringStyle;
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
 public final class PlayerHealthMessage extends VanillaMainChannelMessage {
-	private final short health, food;
-	private final float foodSaturation;
+	private final short food;
+	private final float health, foodSaturation;
 
-	public PlayerHealthMessage(short health, short food, float foodSaturation) {
+	public PlayerHealthMessage(float health, short food, float foodSaturation) {
 		this.health = health;
 		this.food = food;
 		this.foodSaturation = foodSaturation;
 	}
 
-	public short getHealth() {
+	public float getHealth() {
 		return health;
 	}
 
@@ -77,5 +77,14 @@ public final class PlayerHealthMessage extends VanillaMainChannelMessage {
 				.append(this.food, other.food)
 				.append(this.foodSaturation, other.foodSaturation)
 				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.health)
+				.append(this.food)
+				.append(this.foodSaturation)
+				.toHashCode();
 	}
 }

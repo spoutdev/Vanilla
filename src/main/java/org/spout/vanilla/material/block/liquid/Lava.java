@@ -47,6 +47,7 @@ public class Lava extends Liquid implements InitializableMaterial {
 	public Lava(String name, int id, boolean flowing) {
 		super(name, id, flowing, VanillaMaterialModels.LAVA);
 		this.setFlowDelay(1500);
+		this.setResistance(flowing ? 0.0F : 500.0F);
 		if (getEngine().getPlatform() == Platform.CLIENT) {
 			if (!getModel().getRenderMaterial().getRenderEffects().contains(VanillaEffects.LIQUID)) {
 				getModel().getRenderMaterial().addRenderEffect(VanillaEffects.LIQUID);
@@ -56,6 +57,7 @@ public class Lava extends Liquid implements InitializableMaterial {
 
 	@Override
 	public void initialize() {
+		// TODO: Configurations can not be stored in non-linked ConfigurationHolders
 		this.setFlowDelay(VanillaConfiguration.LAVA_DELAY.getInt());
 	}
 
@@ -153,5 +155,10 @@ public class Lava extends Liquid implements InitializableMaterial {
 	@Override
 	public VanillaItemMaterial getContainerMaterial() {
 		return VanillaMaterials.LAVA_BUCKET;
+	}
+
+	@Override
+	public boolean hasPhysics() {
+		return super.hasPhysics() && VanillaConfiguration.LAVA_PHYSICS.getBoolean();
 	}
 }

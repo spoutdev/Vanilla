@@ -91,4 +91,14 @@ public final class PlayerLookMessage extends VanillaMainChannelMessage {
 				.append(this.onGround, other.onGround)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.yaw)
+				.append(this.pitch)
+				.append(this.roll)
+				.append(this.onGround)
+				.toHashCode();
+	}
 }

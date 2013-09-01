@@ -46,6 +46,11 @@ public class PlayerStatusMessage extends VanillaMainChannelMessage {
 	}
 
 	@Override
+	public boolean requiresPlayer() {
+		return false;
+	}
+
+	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
 				.append("status", status)
@@ -64,5 +69,12 @@ public class PlayerStatusMessage extends VanillaMainChannelMessage {
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
 				.append(this.status, other.status)
 				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.status)
+				.toHashCode();
 	}
 }

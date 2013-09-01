@@ -34,19 +34,16 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.RepositionManager;
-import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.entity.inventory.EntityInventory;
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.inventory.entity.ArmorInventory;
-import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnMessage;
 import org.spout.vanilla.util.PlayerUtil;
 
 public class HumanEntityProtocol extends VanillaEntityProtocol {
-	public final static int ARROWS_INDEX = 10; // The MC metadata index to determine the arrows in the players body.
-
 	@Override
 	public List<Message> getSpawnMessages(Entity entity, RepositionManager rm) {
 
@@ -55,22 +52,20 @@ public class HumanEntityProtocol extends VanillaEntityProtocol {
 		Human human = entity.add(Human.class);
 
 		int id = entity.getId();
-		int x = VanillaChannelBufferUtils.protocolifyPosition(rm.convertX(entity.getPhysics().getPosition().getX()));
-		int y = VanillaChannelBufferUtils.protocolifyPosition(rm.convertY(entity.getPhysics().getPosition().getY()));
-		int z = VanillaChannelBufferUtils.protocolifyPosition(rm.convertZ(entity.getPhysics().getPosition().getZ()));
-		int r = VanillaChannelBufferUtils.protocolifyYaw(entity.getPhysics().getRotation().getYaw());
-		int p = VanillaChannelBufferUtils.protocolifyPitch(entity.getPhysics().getRotation().getPitch());
+		int x = VanillaByteBufUtils.protocolifyPosition(rm.convertX(entity.getPhysics().getPosition().getX()));
+		int y = VanillaByteBufUtils.protocolifyPosition(rm.convertY(entity.getPhysics().getPosition().getY()));
+		int z = VanillaByteBufUtils.protocolifyPosition(rm.convertZ(entity.getPhysics().getPosition().getZ()));
+		int r = VanillaByteBufUtils.protocolifyYaw(entity.getPhysics().getRotation().getYaw());
+		int p = VanillaByteBufUtils.protocolifyPitch(entity.getPhysics().getRotation().getPitch());
 
 		int item = 0;
 		Slot hand = PlayerUtil.getHeldSlot(entity);
 		if (hand != null && hand.get() != null) {
 			item = hand.get().getMaterial().getId();
 		}
-		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
-		parameters.add(new Parameter<Short>(Parameter.TYPE_SHORT, 1, (short) 100));
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, ARROWS_INDEX, human.getArrowsInBody()));
 
-		messages.add(new PlayerSpawnMessage(id, human.getName(), x, y, z, r, p, item, parameters));
+		// Spawn message
+		messages.add(new PlayerSpawnMessage(id, human.getName(), x, y, z, r, p, item, getSpawnParameters(entity)));
 
 		// Armor
 		EntityInventory inventory = entity.get(EntityInventory.class);

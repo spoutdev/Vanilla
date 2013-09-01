@@ -31,7 +31,6 @@ import org.spout.api.Spout;
 import org.spout.api.component.world.SkydomeComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.model.Model;
-import org.spout.api.protocol.NetworkSynchronizer;
 
 import org.spout.vanilla.data.Weather;
 import org.spout.vanilla.event.world.TimeUpdateEvent;
@@ -71,10 +70,7 @@ public class NormalSky extends Sky {
 		}
 		if (oldWeather != newWeather) {
 			for (Player player : getOwner().getPlayers()) {
-				final NetworkSynchronizer networkSynchronizer = player.getNetworkSynchronizer();
-				if (networkSynchronizer != null) {
-					networkSynchronizer.callProtocolEvent(event);
-				}
+				player.getNetwork().callProtocolEvent(event, player);
 			}
 		}
 	}
@@ -96,20 +92,17 @@ public class NormalSky extends Sky {
 
 		TimeUpdateEvent event = new TimeUpdateEvent(getOwner(), time);
 		for (Player player : getOwner().getPlayers()) {
-			final NetworkSynchronizer networkSynchronizer = player.getNetworkSynchronizer();
-			if (networkSynchronizer != null) {
-				networkSynchronizer.callProtocolEvent(event);
-			}
+			player.getNetwork().callProtocolEvent(event, player);
 		}
 	}
 
 	@Override
 	public void updatePlayer(Player player) {
 		TimeUpdateEvent event = new TimeUpdateEvent(getOwner(), getTime());
-		player.getNetworkSynchronizer().callProtocolEvent(event);
+		player.getNetwork().callProtocolEvent(event, player);
 		if (Weather.CLEAR != getWeather()) {
 			WeatherChangeEvent weatherEvent = new WeatherChangeEvent(getOwner(), Weather.CLEAR, getWeather());
-			player.getNetworkSynchronizer().callProtocolEvent(weatherEvent);
+			player.getNetwork().callProtocolEvent(weatherEvent, player);
 		}
 	}
 }

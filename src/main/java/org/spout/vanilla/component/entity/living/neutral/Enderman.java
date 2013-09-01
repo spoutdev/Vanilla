@@ -28,19 +28,21 @@ package org.spout.vanilla.component.entity.living.neutral;
 
 import org.spout.api.component.entity.PhysicsComponent;
 import org.spout.api.material.Material;
-import org.spout.api.util.Parameter;
+
 import org.spout.physics.collision.shape.BoxShape;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.living.Neutral;
 import org.spout.vanilla.component.entity.misc.Damage;
 import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.component.entity.misc.MetadataComponent;
 import org.spout.vanilla.data.Difficulty;
+import org.spout.vanilla.data.Metadata;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.entity.creature.EndermanEntityProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureType;
 
 /**
  * A component that identifies the entity as an Enderman.
@@ -49,7 +51,7 @@ public class Enderman extends Living implements Neutral {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new EndermanEntityProtocol());
+		setEntityProtocol(new CreatureProtocol(CreatureType.ENDERMAN));
 
 		//Physics
 		PhysicsComponent physics = getOwner().getPhysics();
@@ -66,6 +68,12 @@ public class Enderman extends Living implements Neutral {
 		damage.getDamageLevel(Difficulty.NORMAL).setAmount(7);
 		damage.getDamageLevel(Difficulty.HARD).setAmount(10);
 		damage.getDamageLevel(Difficulty.HARDCORE).setAmount(damage.getDamageLevel(Difficulty.HARD).getAmount());
+
+		// Add metadata properties of the enderman
+		MetadataComponent metadata = getOwner().add(MetadataComponent.class);
+		metadata.addMeta(Metadata.TYPE_BYTE, 16, VanillaData.HELD_MATERIAL);
+		metadata.addMeta(Metadata.TYPE_BYTE, 17, VanillaData.HELD_MATERIAL_DATA);
+		metadata.addBoolMeta(18, VanillaData.AGGRESSIVE);
 	}
 
 	public Material getHeldMaterial() {
@@ -73,9 +81,7 @@ public class Enderman extends Living implements Neutral {
 	}
 
 	public void setHeldMaterial(VanillaMaterial mat) {
-		byte id = (byte) mat.getMinecraftId();
-		getData().put(VanillaData.HELD_MATERIAL, id);
-		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, id));
+		getData().put(VanillaData.HELD_MATERIAL, (byte) mat.getMinecraftId());
 	}
 
 	public byte getHeldMaterialData() {
@@ -84,7 +90,6 @@ public class Enderman extends Living implements Neutral {
 
 	public void setHeldMaterialData(byte data) {
 		getData().put(VanillaData.HELD_MATERIAL_DATA, data);
-		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 17, data));
 	}
 
 	public boolean isAggressive() {
@@ -93,6 +98,5 @@ public class Enderman extends Living implements Neutral {
 
 	public void setAggressive(boolean aggro) {
 		getData().put(VanillaData.AGGRESSIVE, aggro);
-		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 18, aggro ? (byte) 1 : 0));
 	}
 }

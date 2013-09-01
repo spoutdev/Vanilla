@@ -61,7 +61,7 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 	public BedBlock(String name, int id) {
 		//TODO: Box Shape
 		super(name, id, VanillaMaterialModels.BED_BLOCK, null);
-		this.setHardness(0.2F).setResistance(0.3F).setTransparent();
+		this.setHardness(0.2F).setResistance(1.0F).setTransparent();
 	}
 
 	@Override

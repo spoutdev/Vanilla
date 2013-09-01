@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.codec.world;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.reposition.NullRepositionManager;
@@ -42,7 +42,7 @@ public final class ExplosionCodec extends MessageCodec<ExplosionMessage> {
 	}
 
 	@Override
-	public ExplosionMessage decode(ChannelBuffer buffer) throws IOException {
+	public ExplosionMessage decode(ByteBuf buffer) throws IOException {
 		double x = buffer.readDouble();
 		double y = buffer.readDouble();
 		double z = buffer.readDouble();
@@ -57,8 +57,8 @@ public final class ExplosionCodec extends MessageCodec<ExplosionMessage> {
 	}
 
 	@Override
-	public ChannelBuffer encode(ExplosionMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+	public ByteBuf encode(ExplosionMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer();
 		buffer.writeDouble(message.getX());
 		buffer.writeDouble(message.getY());
 		buffer.writeDouble(message.getZ());

@@ -26,19 +26,35 @@
  */
 package org.spout.vanilla.protocol.handler.entity;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
+import org.spout.api.geo.World;
 import org.spout.api.protocol.ClientSession;
 import org.spout.api.protocol.MessageHandler;
+import org.spout.api.util.Parameter;
 
+import org.spout.vanilla.component.entity.misc.MetadataComponent;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 
 public class EntityMetadataHandler extends MessageHandler<EntityMetadataMessage> {
 	@Override
 	public void handleClient(ClientSession session, EntityMetadataMessage message) {
-		if (!session.hasPlayer()) {
+		Player player = session.getPlayer();
+		World world = player.getWorld();
+
+		int entityId = message.getEntityId();
+
+		Entity entity = world.getEntity(entityId);
+		if (entity == null) {
+			player.getEngine().getLogger().warning("EntityMetadataHandler entity doesn't exist");
 			return;
 		}
 
-		//TODO: implement
-		System.out.println(message.toString());
+		MetadataComponent metadataComponent = entity.get(MetadataComponent.class);
+		if (metadataComponent != null) {
+			for (Parameter<?> parameter : message.getParameters()) {
+				metadataComponent.setParameter(parameter);
+			}
+		}
 	}
 }

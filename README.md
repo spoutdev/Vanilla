@@ -1,6 +1,6 @@
 [![Vanilla][Project Logo]][Homepage]
 
-Vanilla is a plugin for the [Spout voxel game platform](https://github.com/SpoutDev/Spout) that provides vanilla [Minecraft](http://minecraft.net) 1.5.2 functionality and gameplay.
+Vanilla is a plugin for the [Spout voxel game platform](https://github.com/SpoutDev/Spout) that provides vanilla [Minecraft](http://minecraft.net) 1.6.2 functionality and gameplay.
 
 [Homepage] | [Forums] | [Twitter] | [Facebook]
 
@@ -45,7 +45,7 @@ If you're using [Maven](http://maven.apache.org/download.html) to manage project
     <dependency>
         <groupId>org.spout</groupId>
         <artifactId>vanilla</artifactId>
-        <version>1.5.2-SNAPSHOT</version>
+        <version>1.6.2-SNAPSHOT</version>
     </dependency>
 
 If you do not already have repo.spout.org in your repository list, you will need to add this as well:

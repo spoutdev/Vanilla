@@ -48,7 +48,7 @@ public class Lever extends AttachedRedstoneSource implements Toggleable {
 	//TODO: Box Shape
 	public Lever(String name, int id) {
 		super(name, id, VanillaMaterialModels.LEVER, null);
-		this.setAttachable(BlockFaces.NESWBT).setLiquidObstacle(false).setHardness(0.5F).setResistance(1.7F).setTransparent();
+		this.setAttachable(BlockFaces.NESWBT).setLiquidObstacle(false).setHardness(0.5F).setResistance(2.5F).setTransparent();
 	}
 
 	@Override

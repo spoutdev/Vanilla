@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.codec.window;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
@@ -41,15 +41,15 @@ public class WindowEnchantItemCodec extends MessageCodec<WindowEnchantItemMessag
 	}
 
 	@Override
-	public WindowEnchantItemMessage decode(ChannelBuffer buffer) throws IOException {
+	public WindowEnchantItemMessage decode(ByteBuf buffer) throws IOException {
 		int transaction = buffer.readByte();
 		int enchantment = buffer.readByte();
 		return new WindowEnchantItemMessage(transaction, enchantment);
 	}
 
 	@Override
-	public ChannelBuffer encode(WindowEnchantItemMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(2);
+	public ByteBuf encode(WindowEnchantItemMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer(2);
 		buffer.writeByte(message.getTransaction());
 		buffer.writeByte(message.getEnchantment());
 		return buffer;

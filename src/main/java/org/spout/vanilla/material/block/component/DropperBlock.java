@@ -33,6 +33,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
+
 import org.spout.physics.collision.shape.BoxShape;
 
 import org.spout.vanilla.component.block.material.Dropper;
@@ -52,7 +53,7 @@ public class DropperBlock extends VanillaBlockMaterial implements Directional, R
 
 	public DropperBlock(String name, int id) {
 		super(name, id, VanillaMaterialModels.DROPPER, new BoxShape(1, 1, 1), Dropper.class);
-		this.setHardness(3.5F).setResistance(5.8F);
+		this.setHardness(3.5F).setResistance(17.5F);
 	}
 
 	@Override

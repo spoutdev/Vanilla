@@ -66,7 +66,8 @@ public class Slab extends VanillaBlockMaterial implements Burnable {
 	private Slab(short datamask, String name, int id, boolean wood, String model) {
 		super(datamask, name, id, model, null);
 		this.wood = wood;
-		this.setHardness(2.0F).setResistance(10.0F).setOpacity(0);
+		this.setHardness(2.0F).setOpacity(0);
+		this.setResistance(wood ? 15.0F : 30.0F);
 		this.addMiningType(wood ? ToolType.AXE : ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
 	}
 
@@ -74,7 +75,8 @@ public class Slab extends VanillaBlockMaterial implements Burnable {
 	private Slab(String name, int data, Slab parent, String model) {
 		super(name, parent.getMinecraftId(), data, parent, model, null);
 		this.wood = parent.wood;
-		this.setHardness(2.0F).setResistance(10.0F).setOpacity(0);
+		this.setHardness(2.0F).setOpacity(0);
+		this.setResistance(wood ? 15.0F : 30.0F);
 		this.addMiningType(wood ? ToolType.AXE : ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
 	}
 

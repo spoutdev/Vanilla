@@ -147,4 +147,22 @@ public final class EntityMobMessage extends EntityMessage {
 				.append(this.parameters, other.parameters)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.getEntityId())
+				.append(this.type)
+				.append(this.x)
+				.append(this.y)
+				.append(this.z)
+				.append(this.yaw)
+				.append(this.pitch)
+				.append(this.headYaw)
+				.append(this.velocityX)
+				.append(this.velocityY)
+				.append(this.velocityZ)
+				.append(this.parameters)
+				.toHashCode();
+	}
 }

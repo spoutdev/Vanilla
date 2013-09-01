@@ -30,7 +30,6 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.entity.EntityCollideEntityEvent;
 import org.spout.api.event.entity.EntityCollideEvent;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.component.entity.substance.Substance;
 import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
@@ -41,7 +40,7 @@ public class Snowball extends Substance implements Projectile {
 
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.SNOWBALL));
+		setEntityProtocol(new ObjectEntityProtocol(ObjectType.SNOWBALL));
 		super.onAttached();
 	}
 

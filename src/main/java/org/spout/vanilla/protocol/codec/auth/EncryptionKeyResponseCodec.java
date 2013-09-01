@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.protocol.codec.auth;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
@@ -39,7 +39,7 @@ public class EncryptionKeyResponseCodec extends MessageCodec<EncryptionKeyRespon
 	}
 
 	@Override
-	public EncryptionKeyResponseMessage decode(ChannelBuffer buffer) {
+	public EncryptionKeyResponseMessage decode(ByteBuf buffer) {
 		int length = buffer.readShort() & 0xFFFF;
 		byte[] secret = new byte[length];
 		buffer.readBytes(secret);
@@ -50,8 +50,8 @@ public class EncryptionKeyResponseCodec extends MessageCodec<EncryptionKeyRespon
 	}
 
 	@Override
-	public ChannelBuffer encode(EncryptionKeyResponseMessage message) {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+	public ByteBuf encode(EncryptionKeyResponseMessage message) {
+		ByteBuf buffer = Unpooled.buffer();
 		buffer.writeShort((short) message.getSecretArray().length);
 		buffer.writeBytes(message.getSecretArray());
 		buffer.writeShort((short) message.getVerifyTokenArray().length);

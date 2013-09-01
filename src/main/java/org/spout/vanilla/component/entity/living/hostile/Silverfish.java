@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.component.entity.living.hostile;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.living.Hostile;
 import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.misc.Damage;
@@ -43,7 +42,7 @@ public class Silverfish extends Living implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.SILVERFISH));
+		setEntityProtocol(new CreatureProtocol(CreatureType.SILVERFISH));
 		if (getAttachedCount() == 1) {
 			getOwner().add(Health.class).setSpawnHealth(8);
 		}

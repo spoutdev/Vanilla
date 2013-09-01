@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.codec.server;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
@@ -43,12 +43,12 @@ public class ServerListPingCodec extends MessageCodec<ServerListPingMessage> {
 	}
 
 	@Override
-	public ServerListPingMessage decode(ChannelBuffer buffer) throws IOException {
+	public ServerListPingMessage decode(ByteBuf buffer) throws IOException {
 		return LIST_PING_MESSAGE;
 	}
 
 	@Override
-	public ChannelBuffer encode(ServerListPingMessage message) throws IOException {
-		return ChannelBuffers.EMPTY_BUFFER;
+	public ByteBuf encode(ServerListPingMessage message) throws IOException {
+		return Unpooled.EMPTY_BUFFER;
 	}
 }

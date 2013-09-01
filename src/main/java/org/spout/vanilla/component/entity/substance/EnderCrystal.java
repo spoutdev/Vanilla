@@ -26,7 +26,8 @@
  */
 package org.spout.vanilla.component.entity.substance;
 
-import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.entity.misc.MetadataComponent;
+import org.spout.vanilla.data.Metadata;
 import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
 import org.spout.vanilla.protocol.entity.object.ObjectType;
 
@@ -34,9 +35,32 @@ import org.spout.vanilla.protocol.entity.object.ObjectType;
  * A component that identifies the entity as an EnderCrystal.
  */
 public class EnderCrystal extends Substance {
+	private int health = 5; //Note: health doesn't seem to be used, it's here for the protocol
+
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.ENDER_CRYSTAL));
+		setEntityProtocol(new ObjectEntityProtocol(ObjectType.ENDER_CRYSTAL));
 		super.onAttached();
+
+		// Add metadata value for the health status of this crystal
+		getOwner().add(MetadataComponent.class).addMeta(new Metadata<Integer>(Metadata.TYPE_INT, 8) {
+			@Override
+			public Integer getValue() {
+				return getHealth();
+			}
+
+			@Override
+			public void setValue(Integer value) {
+				setHealth(value);
+			}
+		});
+	}
+
+	public int getHealth() {
+		return health;
+	}
+
+	public void setHealth(int health) {
+		this.health = health;
 	}
 }

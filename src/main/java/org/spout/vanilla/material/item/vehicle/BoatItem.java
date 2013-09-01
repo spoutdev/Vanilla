@@ -29,20 +29,20 @@ package org.spout.vanilla.material.item.vehicle;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.player.Action;
-import org.spout.api.geo.LoadOption;
-import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector2;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.component.entity.misc.EntityHead;
 import org.spout.vanilla.component.entity.substance.vehicle.Boat;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.item.VanillaItemMaterial;
+import org.spout.vanilla.material.item.EntitySpawnItem;
 
-public class BoatItem extends VanillaItemMaterial {
+public class BoatItem extends EntitySpawnItem<Boat> {
 	public BoatItem(String name, int id, Vector2 pos) {
 		super(name, id, pos);
+		this.setSpawnedComponent(Boat.class);
 	}
 
 	@Override
@@ -56,9 +56,7 @@ public class BoatItem extends VanillaItemMaterial {
 		if (!b.isMaterial(VanillaMaterials.WATER)) {
 			return;
 		}
-
-		World world = b.getWorld();
-		world.createAndSpawnEntity(b.getPosition().add(0, 0.25f, 0), LoadOption.LOAD_ONLY, Boat.class);
+		this.spawnEntity(b, new Vector3(0.0, 0.25, 0.0));
 	}
 
 	@Override

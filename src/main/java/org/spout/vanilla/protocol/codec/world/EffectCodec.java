@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.codec.world;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.reposition.NullRepositionManager;
@@ -42,7 +42,7 @@ public final class EffectCodec extends MessageCodec<EffectMessage> {
 	}
 
 	@Override
-	public EffectMessage decode(ChannelBuffer buffer) throws IOException {
+	public EffectMessage decode(ByteBuf buffer) throws IOException {
 		int id = buffer.readInt();
 		int x = buffer.readInt();
 		int y = buffer.readUnsignedByte();
@@ -53,8 +53,8 @@ public final class EffectCodec extends MessageCodec<EffectMessage> {
 	}
 
 	@Override
-	public ChannelBuffer encode(EffectMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(18);
+	public ByteBuf encode(EffectMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer(18);
 		buffer.writeInt(message.getId());
 		buffer.writeInt(message.getX());
 		buffer.writeByte(message.getY());

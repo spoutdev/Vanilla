@@ -34,10 +34,6 @@ import org.spout.vanilla.protocol.msg.entity.pos.EntityYawMessage;
 public class EntityYawHandler extends MessageHandler<EntityYawMessage> {
 	@Override
 	public void handleClient(ClientSession session, EntityYawMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		//TODO: implement
 		System.out.println(message.toString());
 	}

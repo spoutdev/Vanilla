@@ -30,14 +30,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.Material;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.RepositionManager;
-import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.entity.substance.ItemFrame;
-import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityObjectMessage;
 
@@ -49,18 +46,8 @@ public class ItemFrameProtocol extends ObjectEntityProtocol {
 	@Override
 	public List<Message> getSpawnMessages(Entity entity, RepositionManager rm) {
 		List<Message> msgs = new ArrayList<Message>();
-		msgs.add(new EntityObjectMessage(entity, (byte) typeId, VanillaChannelBufferUtils.getNativeDirection(entity.add(ItemFrame.class).getOrientation()), rm));
-		msgs.add(new EntityMetadataMessage(entity.getId(), getSpawnParameters(entity)));
+		msgs.add(new EntityObjectMessage(entity, (byte) typeId, VanillaByteBufUtils.getNativeDirection(entity.add(ItemFrame.class).getOrientation()), rm));
+		msgs.add(new EntityMetadataMessage(entity.getId(), this.getSpawnParameters(entity)));
 		return msgs;
-	}
-
-	@Override
-	public List<Parameter<?>> getSpawnParameters(Entity entity) {
-		List<Parameter<?>> params = super.getSpawnParameters(entity);
-		ItemFrame frame = entity.add(ItemFrame.class);
-		Material mat = frame.getMaterial();
-		params.add(new Parameter<ItemStack>(Parameter.TYPE_ITEM, 2, mat == null ? null : new ItemStack(mat, 1)));
-		System.out.println("Face: " + frame.getOrientation());
-		return params;
 	}
 }

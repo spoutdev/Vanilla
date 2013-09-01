@@ -30,8 +30,7 @@ import java.io.IOException;
 
 import gnu.trove.set.TIntSet;
 import gnu.trove.set.hash.TIntHashSet;
-
-import org.jboss.netty.buffer.ChannelBuffer;
+import io.netty.buffer.ByteBuf;
 import org.junit.Test;
 
 import org.spout.api.protocol.CodecLookupService;
@@ -66,16 +65,17 @@ public abstract class BaseProtocolTest {
 	}
 
 	@Test
-	@SuppressWarnings({"unchecked", "rawtypes"})
+	@SuppressWarnings ({"unchecked", "rawtypes"})
 	public void testMessageEncoding() throws IOException {
 		for (Message message : testMessages) {
 			MessageCodec codec = codecLookup.find(message.getClass());
-			ChannelBuffer encoded;
+			ByteBuf encoded;
 			Message decoded;
 			try {
 				encoded = codec.encodeToServer(message);
 				decoded = codec.decodeFromClient(encoded);
 			} catch (Throwable t) {
+				t.printStackTrace();
 				fail("Failed (C -> S) for: " + message.getClass().getName() + ", " + message);
 				return;
 			}
@@ -84,6 +84,7 @@ public abstract class BaseProtocolTest {
 				encoded = codec.encodeToClient(message);
 				decoded = codec.decodeFromServer(encoded);
 			} catch (Throwable t) {
+				t.printStackTrace();
 				fail("Failed (S -> C) for: " + message.getClass().getName() + ", " + message);
 				return;
 			}
@@ -101,7 +102,7 @@ public abstract class BaseProtocolTest {
 			}
 		}
 		for (MessageCodec<?> codec : codecLookup.getCodecs()) {
-			assertTrue("Opcode " + codec.getOpcode() + " not tested", testedOpcodes.contains(codec.getOpcode()));
+			assertTrue("Opcode " + codec.getOpcode() + " not tested for class: " + codec.getClass().toString(), testedOpcodes.contains(codec.getOpcode()));
 		}
 	}
 }

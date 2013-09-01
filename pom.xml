@@ -5,11 +5,11 @@
 	<name>Vanilla</name>
 	<groupId>org.spout</groupId>
 	<artifactId>vanilla</artifactId>
-	<version>1.5.2-SNAPSHOT</version>
+	<version>1.6.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<url>http://www.spout.org</url>
 	<inceptionYear>2011</inceptionYear>
-	<description>Vanilla is a plugin for the Spout voxel game platform that provides vanilla Minecraft 1.5.2 functionality and gameplay.</description>
+	<description>Minecraft functionality and gameplay for the Spout voxel game platform.</description>
 
 	<!-- Parent information -->
 	<parent>
@@ -26,7 +26,7 @@
 		<commit>unknown</commit>
 		<mainClass>${project.groupId}.${project.artifactId}.${project.name}Plugin</mainClass>
 		<protocolClass>${project.groupId}.${project.artifactId}.protocol.${project.name}Protocol</protocolClass>
-		<protocolVersion>61</protocolVersion>
+		<protocolVersion>74</protocolVersion>
 		<!-- See http://wiki.vg/Protocol_version_numbers -->
 	</properties>
 
@@ -79,6 +79,13 @@
 
 	<!-- Project dependencies -->
 	<dependencies>
+		<!-- Include in final JAR -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.2.4</version>
+			<scope>compile</scope>
+		</dependency>
 		<!-- Provided by third-party -->
 		<dependency>
 			<groupId>org.spout</groupId>
@@ -224,6 +231,43 @@
 						</manifestSections>
 					</archive>
 				</configuration>
+			</plugin>
+			<!-- Dependency addition plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>2.1</version>
+				<executions>
+					<execution>
+						<configuration>
+							<minimizeJar>true</minimizeJar>
+							<relocations>
+								<relocation>
+									<pattern>com.google.gson</pattern>
+									<shadedPattern>${project.groupId}.lib.gson</shadedPattern>
+								</relocation>
+							</relocations>
+							<filters>
+								<filter>
+									<artifact>*:*</artifact>
+									<excludes>
+										<exclude>lib/**</exclude>
+										<exclude>templates/**</exclude>
+										<exclude>META-INF/*.xml</exclude>
+										<exclude>META-INF/*.txt</exclude>
+										<exclude>**/LICENSE</exclude>
+										<exclude>**/NOTICE</exclude>
+										<exclude>**/DEPENDENCIES</exclude>
+									</excludes>
+								</filter>
+							</filters>
+						</configuration>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

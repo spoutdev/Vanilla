@@ -78,4 +78,13 @@ public class PlayerExperienceMessage extends VanillaMainChannelMessage {
 				.append(this.totalExp, other.totalExp)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.barValue)
+				.append(this.level)
+				.append(this.totalExp)
+				.toHashCode();
+	}
 }

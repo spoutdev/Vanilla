@@ -108,4 +108,16 @@ public final class EntityPaintingMessage extends EntityMessage {
 				.append(this.title, other.title)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.getEntityId())
+				.append(this.x)
+				.append(this.y)
+				.append(this.z)
+				.append(this.direction)
+				.append(this.title)
+				.toHashCode();
+	}
 }

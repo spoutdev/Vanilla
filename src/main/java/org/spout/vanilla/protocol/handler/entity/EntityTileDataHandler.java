@@ -36,13 +36,7 @@ import org.spout.vanilla.protocol.msg.entity.EntityTileDataMessage;
 public final class EntityTileDataHandler extends MessageHandler<EntityTileDataMessage> {
 	@Override
 	public void handleClient(ClientSession session, EntityTileDataMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
-		Player player = session.getPlayer();
-		World world = player.getWorld();
-
-		//TODO : Handle it !
+		//TODO: implement
+		System.out.println(message.toString());
 	}
 }

@@ -59,8 +59,8 @@ public final class WindowSlotMessage extends WindowMessage {
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
 				.append("id", this.getWindowInstanceId())
-				.append("slot", slot)
-				.append("item", item)
+				.append("slot", this.slot)
+				.append("item", this.item)
 				.toString();
 	}
 
@@ -78,5 +78,14 @@ public final class WindowSlotMessage extends WindowMessage {
 				.append(this.slot, other.slot)
 				.append(this.item, other.item)
 				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.getWindowInstanceId())
+				.append(this.slot)
+				.append(this.item)
+				.toHashCode();
 	}
 }

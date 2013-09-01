@@ -26,25 +26,27 @@
  */
 package org.spout.vanilla.component.entity.living.neutral;
 
-import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.entity.living.Aggressive;
 import org.spout.vanilla.component.entity.living.Animal;
 import org.spout.vanilla.component.entity.living.Neutral;
+import org.spout.vanilla.component.entity.living.Tameable;
 import org.spout.vanilla.component.entity.misc.Damage;
 import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.component.entity.misc.MetadataComponent;
 import org.spout.vanilla.data.Difficulty;
+import org.spout.vanilla.data.Metadata;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.protocol.entity.creature.WolfEntityProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureType;
 
 /**
  * A component that identifies the entity as a Wolf.
  */
-public class Wolf extends Animal implements Neutral {
-	private boolean redEyes = false;
-
+public class Wolf extends Animal implements Neutral, Aggressive, Tameable {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new WolfEntityProtocol());
+		setEntityProtocol(new CreatureProtocol(CreatureType.WOLF));
 		if (getAttachedCount() == 1) {
 			getOwner().add(Health.class).setSpawnHealth(8);
 		}
@@ -54,12 +56,58 @@ public class Wolf extends Animal implements Neutral {
 		damage.getDamageLevel(Difficulty.NORMAL).setAmount(damage.getDamageLevel(Difficulty.EASY).getAmount());
 		damage.getDamageLevel(Difficulty.HARD).setAmount(damage.getDamageLevel(Difficulty.NORMAL).getAmount());
 		damage.getDamageLevel(Difficulty.HARDCORE).setAmount(damage.getDamageLevel(Difficulty.HARD).getAmount());
+
+		// Add wolf metadata
+		MetadataComponent metadata = getOwner().add(MetadataComponent.class);
+		metadata.addMeta(new Metadata<Byte>(Metadata.TYPE_BYTE, 16) {
+			@Override
+			public Byte getValue() {
+				byte data = 0;
+				if (isSitting()) {
+					data |= 0x01;
+				}
+				if (isAggressive()) {
+					data |= 0x02;
+				}
+				if (isTamed()) {
+					data |= 0x04;
+				}
+				return data;
+			}
+
+			@Override
+			public void setValue(Byte value) {
+				int data = value.intValue();
+				setSitting((data & 0x01) == 0x01);
+				setAggressive((data & 0x02) == 0x02);
+				setTamed((data & 0x04) == 0x04);
+			}
+		});
+		metadata.addMeta(Metadata.TYPE_STRING, 17, VanillaData.OWNER);
+		metadata.addMeta(Metadata.TYPE_FLOAT, 18, VanillaData.HEALTH);
 	}
 
+	@Override
+	public boolean isAggressive() {
+		return getOwner().getData().get(VanillaData.AGGRESSIVE);
+	}
+
+	@Override
+	public void setAggressive(boolean aggressive) {
+		getOwner().getData().put(VanillaData.AGGRESSIVE, aggressive);
+	}
+
+	@Override
+	public boolean canBeTamed() {
+		return true;
+	}
+
+	@Override
 	public boolean isTamed() {
 		return getOwner().getData().get(VanillaData.TAMED);
 	}
 
+	@Override
 	public void setTamed(boolean tamed) {
 		getOwner().getData().put(VanillaData.TAMED, tamed);
 		if (tamed) {
@@ -69,28 +117,32 @@ public class Wolf extends Animal implements Neutral {
 		}
 	}
 
+	@Override
 	public String getOwnerName() {
 		return getOwner().getData().get(VanillaData.OWNER);
 	}
 
+	@Override
 	public void setOwnerName(String owner) {
 		if (isTamed()) {
 			getOwner().getData().put(VanillaData.OWNER, owner);
 		}
 	}
 
-	public boolean haveRedEyes() {
-		return redEyes;
-	}
-
-	public void setRedEyes(boolean redEyes) {
-		this.redEyes = redEyes;
-	}
-
+	/**
+	 * Gets whether the Wolf is sitting down on command
+	 *
+	 * @return True if sitting down, False if not (standing upright)
+	 */
 	public boolean isSitting() {
 		return getOwner().getData().get(VanillaData.SITTING);
 	}
 
+	/**
+	 * Sets whether the Wolf is sitting down on command
+	 *
+	 * @param sitting state to set to
+	 */
 	public void setSitting(boolean sitting) {
 		getOwner().getData().put(VanillaData.SITTING, sitting);
 	}

@@ -57,6 +57,7 @@ import org.spout.api.math.Vector2;
 import org.spout.api.render.RenderMaterial;
 import org.spout.api.util.flag.Flag;
 import org.spout.api.util.flag.FlagBundle;
+
 import org.spout.physics.collision.shape.CollisionShape;
 
 import org.spout.vanilla.VanillaPlugin;
@@ -443,7 +444,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	public static void playBlockAction(Block block, byte arg1, byte arg2) {
 		BlockActionEvent event = new BlockActionEvent(block, block.getMaterial(), arg1, arg2);
 		for (Player player : block.getChunk().getObservingPlayers()) {
-			player.getNetworkSynchronizer().callProtocolEvent(event);
+			player.getNetwork().callProtocolEvent(event, player);
 		}
 	}
 

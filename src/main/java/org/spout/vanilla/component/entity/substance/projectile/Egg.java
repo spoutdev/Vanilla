@@ -32,7 +32,6 @@ import org.spout.api.event.entity.EntityCollideEvent;
 import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.discrete.Point;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.living.passive.Chicken;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.component.entity.substance.Substance;
@@ -44,7 +43,7 @@ public class Egg extends Substance implements Projectile {
 
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.EGG));
+		setEntityProtocol(new ObjectEntityProtocol(ObjectType.EGG));
 		super.onAttached();
 	}
 

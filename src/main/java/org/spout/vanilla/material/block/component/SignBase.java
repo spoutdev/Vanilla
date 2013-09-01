@@ -49,7 +49,7 @@ public abstract class SignBase extends AbstractAttachable implements Initializab
 	public SignBase(String name, int id) {
 		//TODO: Box Shape
 		super(name, id, VanillaMaterialModels.SIGN, null, Sign.class);
-		this.setAttachable(BlockFaces.NESWB).setHardness(1.0F).setResistance(1.6F).setTransparent();
+		this.setAttachable(BlockFaces.NESWB).setHardness(1.0F).setResistance(5.0F).setTransparent();
 	}
 
 	@Override

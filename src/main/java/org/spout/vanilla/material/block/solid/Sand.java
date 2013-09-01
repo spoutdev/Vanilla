@@ -29,6 +29,7 @@ package org.spout.vanilla.material.block.solid;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.data.Instrument;
+import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.data.tool.ToolType;
@@ -40,7 +41,7 @@ import org.spout.vanilla.material.block.component.FurnaceBlock;
 public class Sand extends SolidMoving implements TimedCraftable {
 	public Sand(String name, int id) {
 		super(name, id, VanillaMaterialModels.SAND);
-		this.setHardness(0.5F).setResistance(0.8F).setStepSound(SoundEffects.STEP_SAND);
+		this.setHardness(0.5F).setResistance(2.5F).setStepSound(SoundEffects.STEP_SAND);
 		this.addMiningType(ToolType.SPADE);
 	}
 
@@ -57,5 +58,10 @@ public class Sand extends SolidMoving implements TimedCraftable {
 	@Override
 	public Instrument getInstrument() {
 		return Instrument.SNARE_DRUM;
+	}
+
+	@Override
+	public boolean hasPhysics() {
+		return super.hasPhysics() && VanillaConfiguration.SAND_PHYSICS.getBoolean();
 	}
 }

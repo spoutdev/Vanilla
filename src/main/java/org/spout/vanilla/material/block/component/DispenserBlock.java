@@ -44,6 +44,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector3;
+
 import org.spout.physics.collision.shape.BoxShape;
 
 import org.spout.vanilla.component.block.material.Dispenser;
@@ -53,7 +54,6 @@ import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.component.entity.substance.Tnt;
 import org.spout.vanilla.component.entity.substance.projectile.Arrow;
 import org.spout.vanilla.component.entity.substance.vehicle.Boat;
-import org.spout.vanilla.component.entity.substance.vehicle.minecart.MinecartBase;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.data.effect.Effect;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
@@ -72,7 +72,8 @@ import org.spout.vanilla.material.item.bucket.FullBucket;
 import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.material.item.misc.SpawnEgg;
 import org.spout.vanilla.material.item.potion.PotionItem;
-import org.spout.vanilla.material.item.vehicle.minecart.MinecartItem;
+import org.spout.vanilla.material.item.vehicle.BoatItem;
+import org.spout.vanilla.material.item.vehicle.MinecartItem;
 import org.spout.vanilla.util.PlayerUtil;
 import org.spout.vanilla.util.RedstoneUtil;
 
@@ -81,7 +82,7 @@ public class DispenserBlock extends VanillaBlockMaterial implements Directional,
 
 	public DispenserBlock(String name, int id) {
 		super(name, id, VanillaMaterialModels.DISPENSER, new BoxShape(1, 1, 1), Dispenser.class);
-		this.setHardness(3.5F).setResistance(5.8F);
+		this.setHardness(3.5F).setResistance(17.5F);
 	}
 
 	@Override
@@ -132,14 +133,14 @@ public class DispenserBlock extends VanillaBlockMaterial implements Directional,
 			if (facingBlock.getMaterial().getShape() != null) {
 				World world = facingBlock.getWorld();
 				Tnt tnt = world.createEntity(facingBlock.getPosition(), Tnt.class).add(Tnt.class);
-				tnt.getOwner().getPhysics().impulse(new Vector3(0.5D, 0.5D, 0.5D));
+				tnt.getOwner().getPhysics().force(new Vector3(0.5D, 0.5D, 0.5D));
 				world.spawnEntity(tnt.getOwner());
 				slot.addAmount(-1);
 				return true;
 			}
 		} else if (item.getMaterial() instanceof SpawnEgg) {
 			if (facingBlock.getMaterial().getShape() != null) {
-				Entity entity = facingBlock.getWorld().createEntity(facingBlock.getPosition(), ((SpawnEgg) item.getMaterial()).getComponent());
+				Entity entity = facingBlock.getWorld().createEntity(facingBlock.getPosition(), ((SpawnEgg) item.getMaterial()).getSpawnedComponent());
 				entity.getPhysics().translate(new Vector3(0.5D, 0.5D, 0.5D));
 				facingBlock.getWorld().spawnEntity(entity);
 				slot.addAmount(-1);
@@ -202,13 +203,12 @@ public class DispenserBlock extends VanillaBlockMaterial implements Directional,
 			}
 		} else if (item.getMaterial() instanceof MinecartItem) {
 			if (facingBlock.getMaterial() instanceof RailBase) {
-				MinecartItem mineItem = (MinecartItem) item.getMaterial();
-				MinecartBase minecart = block.getWorld().createEntity(facingBlock.getPosition(), mineItem.getSpawnedEntity()).add(mineItem.getSpawnedEntity());
-				facingBlock.getWorld().spawnEntity(minecart.getOwner());
+				MinecartItem<?> mineItem = (MinecartItem<?>) item.getMaterial();
+				mineItem.spawnEntity(facingBlock, Vector3.ZERO);
 				slot.addAmount(-1);
 				return true;
 			}
-		} else if (item.getMaterial().equals(VanillaMaterials.BOAT)) {
+		} else if (item.getMaterial() instanceof BoatItem) {
 			Point placePos;
 			if (facingBlock.getMaterial() instanceof Water) {
 				placePos = facingBlock.getPosition().add(.5f, 1f, .5f);
@@ -217,7 +217,7 @@ public class DispenserBlock extends VanillaBlockMaterial implements Directional,
 			} else {
 				return false;
 			}
-			Boat boat = block.getWorld().createEntity(placePos, Boat.class).add(Boat.class);
+			Boat boat = ((BoatItem) item.getMaterial()).spawnEntity(placePos);
 			block.getWorld().spawnEntity(boat.getOwner());
 			slot.addAmount(-1);
 			return true;

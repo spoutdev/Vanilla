@@ -33,10 +33,9 @@ import org.spout.api.util.SpoutToStringStyle;
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
 public final class PlayerStatisticMessage extends VanillaMainChannelMessage {
-	private final int id;
-	private final byte amount;
+	private final int id, amount;
 
-	public PlayerStatisticMessage(int id, byte amount) {
+	public PlayerStatisticMessage(int id, int amount) {
 		this.id = id;
 		this.amount = amount;
 	}
@@ -45,7 +44,7 @@ public final class PlayerStatisticMessage extends VanillaMainChannelMessage {
 		return id;
 	}
 
-	public byte getAmount() {
+	public int getAmount() {
 		return amount;
 	}
 
@@ -70,5 +69,13 @@ public final class PlayerStatisticMessage extends VanillaMainChannelMessage {
 				.append(this.id, other.id)
 				.append(this.amount, other.amount)
 				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.id)
+				.append(this.amount)
+				.toHashCode();
 	}
 }

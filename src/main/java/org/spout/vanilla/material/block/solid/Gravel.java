@@ -27,6 +27,7 @@
 package org.spout.vanilla.material.block.solid;
 
 import org.spout.vanilla.data.Instrument;
+import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.drops.SwitchDrops;
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
@@ -38,7 +39,7 @@ import org.spout.vanilla.material.block.SolidMoving;
 public class Gravel extends SolidMoving implements InitializableMaterial {
 	public Gravel(String name, int id) {
 		super(name, id, VanillaMaterialModels.GRAVEL);
-		this.setHardness(0.6F).setResistance(1.0F).setStepSound(SoundEffects.STEP_GRAVEL);
+		this.setHardness(0.6F).setResistance(3.0F).setStepSound(SoundEffects.STEP_GRAVEL);
 		this.addMiningType(ToolType.SPADE);
 	}
 
@@ -53,5 +54,10 @@ public class Gravel extends SolidMoving implements InitializableMaterial {
 	@Override
 	public Instrument getInstrument() {
 		return Instrument.SNARE_DRUM;
+	}
+
+	@Override
+	public boolean hasPhysics() {
+		return super.hasPhysics() && VanillaConfiguration.GRAVEL_PHYSICS.getBoolean();
 	}
 }

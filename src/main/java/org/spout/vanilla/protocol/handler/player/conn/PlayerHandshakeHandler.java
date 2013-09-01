@@ -72,13 +72,13 @@ public class PlayerHandshakeHandler extends MessageHandler<PlayerHandshakeMessag
 			random.nextBytes(randombyte);
 			session.getDataMap().put("verifytoken", randombyte);
 			byte[] secret = SecurityHandler.getInstance().encodeKey(keys.getPublic());
-			session.send(true, new EncryptionKeyRequestMessage(sessionId, false, secret, randombyte));
+			session.send(Session.SendType.FORCE, new EncryptionKeyRequestMessage(sessionId, false, secret, randombyte));
 		} else {
-			session.disconnect(false, "Handshake already exchanged.");
+			session.disconnect("Handshake already exchanged.");
 		}
 	}
 
-	private final static SecureRandom random = new SecureRandom();
+	private static final SecureRandom random = new SecureRandom();
 
 	static {
 		synchronized (random) {

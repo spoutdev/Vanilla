@@ -35,7 +35,6 @@ import org.spout.api.Engine;
 import org.spout.api.Platform;
 import org.spout.api.ServerOnly;
 import org.spout.api.entity.Player;
-import org.spout.api.event.ProtocolEvent;
 import org.spout.api.event.cause.PlayerCause;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.InventoryViewer;
@@ -120,8 +119,7 @@ public abstract class AbstractWindow implements InventoryViewer {
 				items[i] = entry.get();
 			}
 		}
-
-		callProtocolEvent(new WindowItemsEvent(this, items));
+		getPlayer().getNetwork().callProtocolEvent(new WindowItemsEvent(this, items), getPlayer());
 	}
 
 	/**
@@ -205,7 +203,7 @@ public abstract class AbstractWindow implements InventoryViewer {
 		switch (owner.getEngine().getPlatform()) {
 			case PROXY:
 			case SERVER:
-				callProtocolEvent(new WindowPropertyEvent(this, id, value));
+				getPlayer().getNetwork().callProtocolEvent(new WindowPropertyEvent(this, id, value), getPlayer());
 				break;
 			case CLIENT:
 				// TODO: Window properties
@@ -295,19 +293,6 @@ public abstract class AbstractWindow implements InventoryViewer {
 
 	public boolean isShiftDown() {
 		return shiftDown;
-	}
-
-	protected void callProtocolEvent(ProtocolEvent event) {
-		// TODO: C->S events
-		if (getPlayer() == null) {
-			debug(Level.WARNING, "Sending protocol message with null player");
-			return;
-		}
-		if (getPlayer().getNetworkSynchronizer() == null) {
-			debug(Level.WARNING, "Sending protocol message with null network synchronizer");
-			return;
-		}
-		getPlayer().getNetworkSynchronizer().callProtocolEvent(event);
 	}
 
 	protected void debug(Level level, String msg) {

@@ -78,4 +78,13 @@ public final class PlayerSpawnPositionMessage extends VanillaMainChannelMessage 
 				.append(this.z, other.z)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.x)
+				.append(this.y)
+				.append(this.z)
+				.toHashCode();
+	}
 }

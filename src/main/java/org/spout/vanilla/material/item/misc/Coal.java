@@ -32,7 +32,7 @@ import org.spout.vanilla.material.item.VanillaItemMaterial;
 public class Coal extends VanillaItemMaterial implements Fuel {
 	public static final Coal COAL = new Coal("Coal");
 	public static final Coal CHARCOAL = new Coal("Charcoal", 1, COAL);
-	public final float BURN_TIME = 80;
+	public static final float BURN_TIME = 80;
 
 	private Coal(String name) {
 		super((short) 1, name, 263, null);

@@ -57,7 +57,7 @@ public class ExplosionEffect extends Effect {
 	}
 
 	public void play(Player player, Point position, float size) {
-		player.getSession().getNetworkSynchronizer().callProtocolEvent(new PlayExplosionEffectEvent(position, this, size));
+		player.getNetwork().callProtocolEvent(new PlayExplosionEffectEvent(position, this, size), player);
 	}
 
 	public void play(Collection<Player> players, Point position, float size) {

@@ -34,10 +34,6 @@ import org.spout.vanilla.protocol.msg.world.EffectMessage;
 public class EffectHandler extends MessageHandler<EffectMessage> {
 	@Override
 	public void handleClient(ClientSession session, EffectMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		//TODO: implement
 		System.out.println(message.toString());
 	}

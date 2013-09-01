@@ -32,8 +32,8 @@ import org.spout.api.generator.LayeredWorldGenerator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 
+import org.spout.vanilla.component.entity.player.VanillaPlayerNetworkComponent;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.VanillaServerNetworkSynchronizer;
 import org.spout.vanilla.world.generator.VanillaGenerator;
 
 public class FlatGenerator extends LayeredWorldGenerator implements VanillaGenerator {
@@ -53,8 +53,8 @@ public class FlatGenerator extends LayeredWorldGenerator implements VanillaGener
 		final Random random = new Random();
 		final int x = 16 - random.nextInt(32);
 		final int z = 16 - random.nextInt(32);
-		int y = VanillaServerNetworkSynchronizer.WORLD_HEIGHT - 1;
-		for (; world.getBlockMaterial(x, y, z).getShape() != null; y--) {
+		int y = VanillaPlayerNetworkComponent.WORLD_HEIGHT - 1;
+		for (; world.getBlockMaterial(x, y, z).getShape() == null; y--) {
 		}
 		return new Point(world, x, y + 1.5f, z);
 	}

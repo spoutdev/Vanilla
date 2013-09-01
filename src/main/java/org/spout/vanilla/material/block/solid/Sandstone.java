@@ -40,7 +40,7 @@ public class Sandstone extends Solid {
 	private Sandstone(String name, String model) {
 		super((short) 0x0003, name, 24, model);
 		this.type = SandstoneType.SANDSTONE;
-		this.setHardness(0.8F).setResistance(1.3F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
+		this.setHardness(0.8F).setResistance(4.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
 	}
 
 	private Sandstone(String name, SandstoneType type, Sandstone parent, String model) {

@@ -80,4 +80,12 @@ public final class EntityDestroyMessage extends VanillaMainChannelMessage implem
 		final EntityDestroyMessage other = (EntityDestroyMessage) obj;
 		return Arrays.equals(this.id, other.id);
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.id)
+				.toHashCode();
+	}
+
 }

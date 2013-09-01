@@ -34,9 +34,11 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.material.range.PlusEffectRange;
 import org.spout.api.math.Vector3;
+
 import org.spout.physics.collision.shape.BoxShape;
 
 import org.spout.vanilla.data.MoveReaction;
+import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -54,7 +56,7 @@ public class PistonBlock extends VanillaBlockMaterial implements Directional, Re
 	public PistonBlock(String name, int id, boolean sticky) {
 		super(name, id, null, new BoxShape(1, 1, 1));
 		this.sticky = sticky;
-		this.setHardness(0.5F).setResistance(0.8F).setTransparent();
+		this.setHardness(0.5F).setResistance(2.5F).setTransparent();
 	}
 
 	@Override
@@ -72,7 +74,7 @@ public class PistonBlock extends VanillaBlockMaterial implements Directional, Re
 
 	@Override
 	public boolean hasPhysics() {
-		return true;
+		return super.hasPhysics() && VanillaConfiguration.PISTON_PHYSICS.getBoolean();
 	}
 
 	@Override

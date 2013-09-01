@@ -35,7 +35,7 @@ import org.spout.vanilla.material.block.Solid;
 public class SoulSand extends Solid {
 	public SoulSand(String name, int id) {
 		super(name, id, VanillaMaterialModels.SOUL_SAND);
-		this.setHardness(0.5F).setResistance(0.8F).setStepSound(SoundEffects.STEP_SAND);
+		this.setHardness(0.5F).setResistance(2.5F).setStepSound(SoundEffects.STEP_SAND);
 		this.addMiningType(ToolType.SPADE);
 	}
 

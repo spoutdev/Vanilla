@@ -79,4 +79,13 @@ public class PlayerListMessage extends VanillaMainChannelMessage {
 				.append(this.ping, other.ping)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.playerName)
+				.append(this.playerOnline)
+				.append(this.ping)
+				.toHashCode();
+	}
 }

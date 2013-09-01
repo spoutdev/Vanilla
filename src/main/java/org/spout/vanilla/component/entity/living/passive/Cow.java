@@ -34,7 +34,6 @@ import org.spout.api.event.player.PlayerInteractEntityEvent;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.ai.action.FollowMaterialHolderAction;
 import org.spout.vanilla.ai.goal.FollowMaterialHolderGoal;
 import org.spout.vanilla.ai.sensor.NearbyMaterialHolderSensor;
@@ -55,7 +54,7 @@ public class Cow extends Animal implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.COW));
+		setEntityProtocol(new CreatureProtocol(CreatureType.COW));
 		DeathDrops dropComponent = getOwner().add(DeathDrops.class);
 		Random random = getRandom();
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.RAW_BEEF, random.nextInt(2) + 1));
@@ -72,7 +71,7 @@ public class Cow extends Animal implements Passive {
 	}
 
 	@Override
-	public void onInteract(final EntityInteractEvent event) {
+	public void onInteract(final EntityInteractEvent<?> event) {
 		if (event instanceof PlayerInteractEntityEvent) {
 			final PlayerInteractEntityEvent pie = (PlayerInteractEntityEvent) event;
 			final Player player = (Player) pie.getEntity();

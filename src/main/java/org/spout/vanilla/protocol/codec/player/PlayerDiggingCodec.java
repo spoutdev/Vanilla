@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.codec.player;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
@@ -44,7 +44,7 @@ public final class PlayerDiggingCodec extends MessageCodec<PlayerDiggingMessage>
 	}
 
 	@Override
-	public PlayerDiggingMessage decode(ChannelBuffer buffer) throws IOException {
+	public PlayerDiggingMessage decode(ByteBuf buffer) throws IOException {
 		int state = buffer.readUnsignedByte();
 		int x = buffer.readInt();
 		int y = buffer.readUnsignedByte();
@@ -54,8 +54,8 @@ public final class PlayerDiggingCodec extends MessageCodec<PlayerDiggingMessage>
 	}
 
 	@Override
-	public ChannelBuffer encode(PlayerDiggingMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(11);
+	public ByteBuf encode(PlayerDiggingMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer(11);
 		buffer.writeByte(message.getState());
 		buffer.writeInt(message.getX());
 		buffer.writeByte(message.getY());

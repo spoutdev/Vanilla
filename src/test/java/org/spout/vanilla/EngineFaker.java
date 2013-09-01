@@ -26,9 +26,6 @@
  */
 package org.spout.vanilla;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.logging.Logger;
 
 import org.mockito.Mockito;
@@ -41,15 +38,12 @@ import org.spout.api.event.EventExecutor;
 import org.spout.api.event.EventManager;
 import org.spout.api.event.Listener;
 import org.spout.api.event.Order;
-import org.spout.api.generator.WorldGenerator;
-import org.spout.api.lang.PluginDictionary;
 import org.spout.api.plugin.PluginDescriptionFile;
-import org.spout.api.plugin.PluginLogger;
 import org.spout.api.resource.FileSystem;
 
 import org.spout.vanilla.event.entity.EntityDamageEvent;
 
-@SuppressWarnings("deprecation")
+@SuppressWarnings ("deprecation")
 public class EngineFaker {
 	private final static Engine engineInstance;
 
@@ -72,10 +66,11 @@ public class EngineFaker {
 	public static Engine setupEngine() {
 		return engineInstance;
 	}
-	
+
 	public static void main(String[] args) {
-		
+
 	}
+
 	private static class VanillaTestPlugin extends VanillaPlugin {
 		@Override
 		public void onEnable() {
@@ -101,17 +96,18 @@ public class EngineFaker {
 
 		@Override
 		public <T extends Event> void callDelayedEvent(T event) {
-
 		}
 
 		@Override
 		public void registerEvents(Listener listener, Object owner) {
-
 		}
 
 		@Override
 		public void registerEvent(Class<? extends Event> event, Order priority, EventExecutor executor, Object owner) {
+		}
 
+		@Override
+		public void unRegisterEvents(Listener listener) {
 		}
 	}
 }

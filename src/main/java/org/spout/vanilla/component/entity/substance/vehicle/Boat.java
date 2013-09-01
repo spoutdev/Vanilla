@@ -29,69 +29,26 @@ package org.spout.vanilla.component.entity.substance.vehicle;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.spout.api.event.entity.EntityInteractEvent;
-import org.spout.api.event.player.PlayerInteractEntityEvent;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.component.entity.substance.Substance;
 import org.spout.vanilla.event.entity.network.EntityMetaChangeEvent;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
-import org.spout.vanilla.protocol.entity.object.vehicle.BoatObjectEntityProtocol;
+import org.spout.vanilla.protocol.VanillaByteBufUtils;
+import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
+import org.spout.vanilla.protocol.entity.object.ObjectType;
 
 public class Boat extends Substance {
-	private int timeSinceLastHit = 0;
 	private BlockFace direction = BlockFace.NORTH;
-	private int damageTaken = 0;
 
 	@Override
 	public void onTick(float dt) {
-		timeSinceLastHit++;
-	}
-
-	@Override
-	public void onInteract(final EntityInteractEvent event) {
-		if (event instanceof PlayerInteractEntityEvent) {
-			final PlayerInteractEntityEvent pie = (PlayerInteractEntityEvent) event;
-			switch (pie.getAction()) {
-				case LEFT_CLICK:
-					timeSinceLastHit = 0;
-					damage(10);
-					if (damageTaken > 40) {
-						Item.dropNaturally(getOwner().getPhysics().getPosition(), new ItemStack(VanillaMaterials.BOAT, 1));
-						getOwner().remove();
-					}
-			}
-		}
 	}
 
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BoatObjectEntityProtocol());
+		setEntityProtocol(new ObjectEntityProtocol(ObjectType.BOAT));
 		super.onAttached();
-	}
-
-	public void setDamageTaken(int damageTaken) {
-		this.damageTaken = damageTaken;
-		List<Parameter<?>> params = new ArrayList<Parameter<?>>();
-		params.add(new Parameter<Integer>(Parameter.TYPE_INT, 19, damageTaken));
-		getOwner().getNetwork().callProtocolEvent(new EntityMetaChangeEvent(getOwner(), params));
-	}
-
-	public int getDamageTaken() {
-		return damageTaken;
-	}
-
-	public void damage(int amount) {
-		setDamageTaken(getDamageTaken() + amount);
-	}
-
-	public int getTimeSinceLastHit() {
-		return timeSinceLastHit;
 	}
 
 	public BlockFace getForwardDirection() {
@@ -101,7 +58,7 @@ public class Boat extends Substance {
 	public void setForwardDirection(BlockFace direction) {
 		this.direction = direction;
 		List<Parameter<?>> params = new ArrayList<Parameter<?>>();
-		params.add(new Parameter<Integer>(Parameter.TYPE_INT, 18, (int) VanillaChannelBufferUtils.getNativeDirection(direction)));
+		params.add(new Parameter<Integer>(Parameter.TYPE_INT, 18, (int) VanillaByteBufUtils.getNativeDirection(direction)));
 		getOwner().getNetwork().callProtocolEvent(new EntityMetaChangeEvent(getOwner(), params));
 	}
 }

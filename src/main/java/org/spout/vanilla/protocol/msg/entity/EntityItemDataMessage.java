@@ -89,4 +89,13 @@ public class EntityItemDataMessage extends VanillaMainChannelMessage {
 				.append(this.data, other.data)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.type)
+				.append(this.id)
+				.append(this.data)
+				.toHashCode();
+	}
 }

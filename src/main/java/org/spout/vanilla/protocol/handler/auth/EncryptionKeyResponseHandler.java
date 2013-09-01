@@ -69,16 +69,16 @@ public class EncryptionKeyResponseHandler extends MessageHandler<EncryptionKeyRe
 		EncryptionChannelProcessor fromServerProcessor = new EncryptionChannelProcessor(fromServerCipher, 32);
 		message.getProcessorHandler().setProcessor(fromServerProcessor);
 
-		session.send(true, new PlayerStatusMessage(PlayerStatusMessage.INITIAL_SPAWN)); // Ready to login;
+		session.send(Session.SendType.FORCE, new PlayerStatusMessage(PlayerStatusMessage.INITIAL_SPAWN)); // Ready to login;
 	}
 
 	@Override
 	public void handleServer(final ServerSession session, final EncryptionKeyResponseMessage message) {
 		Session.State state = session.getState();
 		if (state == Session.State.EXCHANGE_HANDSHAKE) {
-			session.disconnect(false, "Handshake not sent");
+			session.disconnect("Handshake not sent");
 		} else if (state != Session.State.EXCHANGE_ENCRYPTION) {
-			session.disconnect(false, "Encryption was not requested");
+			session.disconnect("Encryption was not requested");
 		} else {
 			int keySize = VanillaConfiguration.ENCRYPT_KEY_SIZE.getInt();
 			String keyAlgorithm = VanillaConfiguration.ENCRYPT_KEY_ALGORITHM.getString();
@@ -136,7 +136,7 @@ public class EncryptionKeyResponseHandler extends MessageHandler<EncryptionKeyRe
 
 					message.getProcessorHandler().setProcessor(fromClientProcessor);
 
-					session.send(true, response);
+					session.send(Session.SendType.FORCE, response);
 				}
 			};
 
@@ -178,6 +178,6 @@ public class EncryptionKeyResponseHandler extends MessageHandler<EncryptionKeyRe
 	}
 
 	private static void kickInvalidUser(Session session) {
-		session.disconnect(false, "Failed to verify username!");
+		session.disconnect("Failed to verify username!");
 	}
 }

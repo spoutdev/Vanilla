@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.component.entity.substance;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
 import org.spout.vanilla.protocol.entity.object.ObjectType;
 
@@ -36,7 +35,7 @@ import org.spout.vanilla.protocol.entity.object.ObjectType;
 public class FireworksRocket extends Substance {
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.FIREWORKS_ROCKET));
+		setEntityProtocol(new ObjectEntityProtocol(ObjectType.FIREWORKS_ROCKET));
 		super.onAttached();
 	}
 }

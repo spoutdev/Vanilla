@@ -26,12 +26,12 @@
  */
 package org.spout.vanilla.protocol.codec.player.conn;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerLoginRequestMessage;
 
 public final class PlayerLoginRequestCodec extends MessageCodec<PlayerLoginRequestMessage> {
@@ -40,9 +40,9 @@ public final class PlayerLoginRequestCodec extends MessageCodec<PlayerLoginReque
 	}
 
 	@Override
-	public PlayerLoginRequestMessage decodeFromServer(ChannelBuffer buffer) {
+	public PlayerLoginRequestMessage decodeFromServer(ByteBuf buffer) {
 		int id = buffer.readInt();
-		String worldType = VanillaChannelBufferUtils.readString(buffer);
+		String worldType = VanillaByteBufUtils.readString(buffer);
 		byte mode = buffer.readByte();
 		byte dimension = buffer.readByte();
 		byte difficulty = buffer.readByte();
@@ -54,9 +54,9 @@ public final class PlayerLoginRequestCodec extends MessageCodec<PlayerLoginReque
 	/* This is needed for tests to complete. It is not actually used.
 	 * See the commented-out code below this function */
 	@Override
-	public PlayerLoginRequestMessage decodeFromClient(ChannelBuffer buffer) {
+	public PlayerLoginRequestMessage decodeFromClient(ByteBuf buffer) {
 		int id = buffer.readInt();
-		String worldType = VanillaChannelBufferUtils.readString(buffer);
+		String worldType = VanillaByteBufUtils.readString(buffer);
 		byte mode = buffer.readByte();
 		byte dimension = buffer.readByte();
 		byte difficulty = buffer.readByte();
@@ -66,11 +66,11 @@ public final class PlayerLoginRequestCodec extends MessageCodec<PlayerLoginReque
 	}
 
 	@Override
-	public ChannelBuffer encodeToClient(PlayerLoginRequestMessage message) {
+	public ByteBuf encodeToClient(PlayerLoginRequestMessage message) {
 		PlayerLoginRequestMessage server = message;
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+		ByteBuf buffer = Unpooled.buffer();
 		buffer.writeInt(server.getId());
-		VanillaChannelBufferUtils.writeString(buffer, server.getWorldType());
+		VanillaByteBufUtils.writeString(buffer, server.getWorldType());
 		buffer.writeByte(server.getGameMode());
 		buffer.writeByte(server.getDimension());
 		buffer.writeByte(server.getDifficulty());
@@ -80,11 +80,11 @@ public final class PlayerLoginRequestCodec extends MessageCodec<PlayerLoginReque
 	}
 
 	@Override
-	public ChannelBuffer encodeToServer(PlayerLoginRequestMessage message) {
+	public ByteBuf encodeToServer(PlayerLoginRequestMessage message) {
 		PlayerLoginRequestMessage server = message;
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+		ByteBuf buffer = Unpooled.buffer();
 		buffer.writeInt(server.getId());
-		VanillaChannelBufferUtils.writeString(buffer, server.getWorldType());
+		VanillaByteBufUtils.writeString(buffer, server.getWorldType());
 		buffer.writeByte(server.getGameMode());
 		buffer.writeByte(server.getDimension());
 		buffer.writeByte(server.getDifficulty());

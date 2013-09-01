@@ -32,6 +32,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.Client;
+import org.spout.api.Platform;
+import org.spout.api.Spout;
 import org.spout.api.component.widget.RenderPartPacksComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
@@ -64,6 +66,7 @@ import org.spout.vanilla.event.entity.EntityDamageEvent;
 import org.spout.vanilla.event.entity.EntityDeathEvent;
 import org.spout.vanilla.event.entity.EntityHealEvent;
 import org.spout.vanilla.event.entity.EntityHealthChangeEvent;
+import org.spout.vanilla.event.entity.EntityMaxHealthChangeEvent;
 import org.spout.vanilla.event.entity.network.EntityAnimationEvent;
 import org.spout.vanilla.event.entity.network.EntityMetaChangeEvent;
 import org.spout.vanilla.event.entity.network.EntityStatusEvent;
@@ -130,6 +133,9 @@ public class Health extends VanillaEntityComponent {
 	@SuppressWarnings ("incomplete-switch")
 	@Override
 	public void onTick(float dt) {
+		if (!VanillaConfiguration.PLAYER_SURVIVAL_ENABLE_HEALTH.getBoolean()) {
+			return;
+		}
 		switch (getEngine().getPlatform()) {
 			case PROXY:
 			case SERVER:
@@ -270,7 +276,7 @@ public class Health extends VanillaEntityComponent {
 					Item.drop(entityPosition, stack, Vector3.ZERO);
 				}
 			}
-			if (dropComponent.getXpDrop() > 0) {
+			if (dropComponent.getXpDrop() > 0 && VanillaConfiguration.PLAYER_SURVIVAL_ENABLE_XP.getBoolean()) {
 				org.spout.api.geo.discrete.Point pos = getOwner().getPhysics().getPosition();
 
 				XPOrb xporb = pos.getWorld().createEntity(pos, XPOrb.class).add(XPOrb.class);
@@ -303,7 +309,7 @@ public class Health extends VanillaEntityComponent {
 	 *
 	 * @return the maximum health
 	 */
-	public int getMaxHealth() {
+	public float getMaxHealth() {
 		return getData().get(VanillaData.MAX_HEALTH);
 	}
 
@@ -312,8 +318,15 @@ public class Health extends VanillaEntityComponent {
 	 *
 	 * @param maxHealth to set to
 	 */
-	public void setMaxHealth(int maxHealth) {
-		getData().put(VanillaData.MAX_HEALTH, maxHealth);
+	public void setMaxHealth(float maxHealth) {
+		if (!VanillaConfiguration.PLAYER_SURVIVAL_ENABLE_HEALTH.getBoolean()) {
+			return;
+		}
+        EntityMaxHealthChangeEvent event = new EntityMaxHealthChangeEvent(getOwner(), maxHealth);
+        getEngine().getEventManager().callEvent(event);
+        if (!event.isCancelled()) {
+            getData().put(VanillaData.MAX_HEALTH, event.getMaxHealth());
+        }
 	}
 
 	/**
@@ -321,10 +334,12 @@ public class Health extends VanillaEntityComponent {
 	 *
 	 * @param maxHealth of this health component
 	 */
-	public void setSpawnHealth(int maxHealth) {
+	public void setSpawnHealth(float maxHealth) {
+		if (!VanillaConfiguration.PLAYER_SURVIVAL_ENABLE_HEALTH.getBoolean()) {
+			return;
+		}
 		this.setMaxHealth(maxHealth);
-		//Do not call setHealth yet, network has not been initialized if loading from file
-		getData().put(VanillaData.HEALTH, maxHealth);
+		this.setHealth(maxHealth, HealthChangeCause.SPAWN);
 	}
 
 	/**
@@ -332,7 +347,7 @@ public class Health extends VanillaEntityComponent {
 	 *
 	 * @return the health value
 	 */
-	public int getHealth() {
+	public float getHealth() {
 		return getData().get(VanillaData.HEALTH);
 	}
 
@@ -342,7 +357,10 @@ public class Health extends VanillaEntityComponent {
 	 * @param health hitpoints value to set to
 	 * @param cause of the change
 	 */
-	public void setHealth(int health, HealthChangeCause cause) {
+	public void setHealth(float health, HealthChangeCause cause) {
+		if (!VanillaConfiguration.PLAYER_SURVIVAL_ENABLE_HEALTH.getBoolean()) {
+			return;
+		}
 		EntityHealthChangeEvent event = new EntityHealthChangeEvent(getOwner(), cause, health - getHealth());
 		getEngine().getEventManager().callEvent(event);
 		if (!event.isCancelled()) {
@@ -355,12 +373,14 @@ public class Health extends VanillaEntityComponent {
 
 		// Special cases
 		Entity owner = getOwner();
-		if (owner instanceof Player) {
-			owner.getNetwork().callProtocolEvent(new PlayerHealthEvent((Player) getOwner()));
-		} else if (owner instanceof EnderDragon || owner instanceof Wither) {
-			java.util.List<Parameter<?>> params = new ArrayList<Parameter<?>>(1);
-			params.add(new Parameter<Short>(Parameter.TYPE_SHORT, 16, (short) health));
-			owner.getNetwork().callProtocolEvent(new EntityMetaChangeEvent(owner, params));
+		if (Spout.getPlatform() == Platform.SERVER) {
+			if (owner instanceof Player) {
+				owner.getNetwork().callProtocolEvent(new PlayerHealthEvent((Player) getOwner()));
+			} else if (owner instanceof EnderDragon || owner instanceof Wither) {
+				java.util.List<Parameter<?>> params = new ArrayList<Parameter<?>>(1);
+				params.add(new Parameter<Short>(Parameter.TYPE_SHORT, 16, (short) health));
+				owner.getNetwork().callProtocolEvent(new EntityMetaChangeEvent(owner, params));
+			}
 		}
 	}
 
@@ -369,7 +389,7 @@ public class Health extends VanillaEntityComponent {
 	 *
 	 * @param amount amount the entity will be healed by
 	 */
-	public void heal(int amount) {
+	public void heal(float amount) {
 		heal(amount, HealCause.UNKNOWN);
 	}
 
@@ -379,7 +399,10 @@ public class Health extends VanillaEntityComponent {
 	 * @param amount amount the entity will be healed by
 	 * @param cause cause of this entity being healed
 	 */
-	public void heal(int amount, HealCause cause) {
+	public void heal(float amount, HealCause cause) {
+		if (!VanillaConfiguration.PLAYER_SURVIVAL_ENABLE_HEALTH.getBoolean()) {
+			return;
+		}
 		EntityHealEvent event = new EntityHealEvent(getOwner(), amount, cause);
 		EntityHealEvent healEvent = getOwner().getEngine().getEventManager().callEvent(event);
 		if (!healEvent.isCancelled()) {
@@ -402,7 +425,7 @@ public class Health extends VanillaEntityComponent {
 	 * @return True if the entity is dead (Health less than 0) else false.
 	 */
 	public boolean isDead() {
-		return getHealth() == 0;
+		return getHealth() <= 0.0f;
 	}
 
 	/**
@@ -429,6 +452,9 @@ public class Health extends VanillaEntityComponent {
 	 * @param deathTicks the amount of death ticks.
 	 */
 	public void setDeathTicks(int deathTicks) {
+		if (!VanillaConfiguration.PLAYER_SURVIVAL_ENABLE_HEALTH.getBoolean()) {
+			return;
+		}
 		if (deathTicks > DEATH_TIME_TICKS) {
 			deathTicks = DEATH_TIME_TICKS;
 		}
@@ -440,7 +466,7 @@ public class Health extends VanillaEntityComponent {
 	 *
 	 * @param amount amount the entity will be damaged by, can be modified based on armor and enchantments
 	 */
-	public void damage(int amount) {
+	public void damage(float amount) {
 		damage(amount, new NullDamageCause(DamageCause.DamageType.UNKNOWN));
 	}
 
@@ -450,7 +476,7 @@ public class Health extends VanillaEntityComponent {
 	 * @param amount amount the entity will be damaged by, can be modified based on armor and enchantments
 	 * @param cause cause of this entity being damaged
 	 */
-	public void damage(int amount, DamageCause<?> cause) {
+	public void damage(float amount, DamageCause<?> cause) {
 		damage(amount, cause, true);
 	}
 
@@ -461,7 +487,10 @@ public class Health extends VanillaEntityComponent {
 	 * @param cause cause of this entity being damaged
 	 * @param sendHurtMessage whether to send the hurt packet to all players online
 	 */
-	public void damage(int amount, DamageCause<?> cause, boolean sendHurtMessage) {
+	public void damage(float amount, DamageCause<?> cause, boolean sendHurtMessage) {
+		if (!VanillaConfiguration.PLAYER_SURVIVAL_ENABLE_HEALTH.getBoolean()) {
+			return;
+		}
 		Cause<?> eventCause;
 		if (cause instanceof Cause<?>) {
 			eventCause = (Cause<?>) cause;
@@ -504,6 +533,9 @@ public class Health extends VanillaEntityComponent {
 	 * Sets whether this entity has a death animation or not.
 	 */
 	public void setDeathAnimation(boolean hasDeathAnimation) {
+		if (!VanillaConfiguration.PLAYER_SURVIVAL_ENABLE_HEALTH.getBoolean()) {
+			return;
+		}
 		getData().put(VanillaData.HAS_DEATH_ANIMATION, hasDeathAnimation);
 	}
 
@@ -513,6 +545,6 @@ public class Health extends VanillaEntityComponent {
 	 * @return true if entity has infinite health
 	 */
 	public boolean hasInfiniteHealth() {
-		return getHealth() == -1;
+		return getHealth() == -1.0f;
 	}
 }

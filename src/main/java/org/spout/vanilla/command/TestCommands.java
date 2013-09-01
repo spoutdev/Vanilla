@@ -26,6 +26,9 @@
  */
 package org.spout.vanilla.command;
 
+import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.List;
 import java.util.Set;
 
@@ -38,6 +41,7 @@ import org.spout.api.command.annotated.CommandDescription;
 import org.spout.api.command.annotated.Filter;
 import org.spout.api.command.annotated.Flag;
 import org.spout.api.command.annotated.Permissible;
+import org.spout.api.command.annotated.Platforms;
 import org.spout.api.command.filter.PlayerFilter;
 import org.spout.api.component.Component;
 import org.spout.api.component.entity.InteractComponent;
@@ -52,13 +56,15 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.map.DefaultedKey;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
-import org.spout.api.protocol.ServerNetworkSynchronizer;
 import org.spout.api.protocol.event.ChunkSendEvent;
+import org.spout.api.protocol.event.EntityUpdateEvent;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.ChatStyle;
@@ -71,6 +77,7 @@ import org.spout.vanilla.component.entity.living.Ageable;
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.misc.Burn;
+import org.spout.vanilla.component.entity.misc.Descriptor;
 import org.spout.vanilla.component.entity.misc.Effects;
 import org.spout.vanilla.component.entity.misc.EntityHead;
 import org.spout.vanilla.component.entity.misc.Health;
@@ -98,7 +105,6 @@ import org.spout.vanilla.inventory.window.block.chest.ChestWindow;
 import org.spout.vanilla.inventory.window.entity.VillagerWindow;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.map.Map;
-import org.spout.vanilla.protocol.VanillaServerNetworkSynchronizer;
 import org.spout.vanilla.protocol.entity.creature.CreatureType;
 import org.spout.vanilla.protocol.entity.object.ObjectType;
 import org.spout.vanilla.render.LightRenderEffect;
@@ -106,6 +112,7 @@ import org.spout.vanilla.render.SkyRenderEffect;
 import org.spout.vanilla.scoreboard.Objective;
 import org.spout.vanilla.scoreboard.ObjectiveSlot;
 import org.spout.vanilla.scoreboard.Scoreboard;
+import org.spout.vanilla.scoreboard.Team;
 import org.spout.vanilla.util.explosion.ExplosionModels;
 import org.spout.vanilla.world.generator.normal.object.tree.BigTreeObject;
 import org.spout.vanilla.world.generator.object.RandomizableObject;
@@ -174,10 +181,10 @@ public class TestCommands {
 			throw new CommandException("You do not have an active scoreboard.");
 		}
 
-		scoreboard.createTeam("spoutdev")
-				.setDisplayName(ChatStyle.DARK_AQUA + "Spout")
-				.setPrefix(ChatStyle.GREEN.toString())
-				.addPlayerName(name);
+		Team t = scoreboard.createTeam("spoutdev");
+		t.setDisplayName(ChatStyle.DARK_AQUA + "Spout", false);
+		t.setPrefix(ChatStyle.GREEN.toString(), true);
+		t.addPlayerName(name);
 	}
 
 	@CommandDescription (aliases = "chunklight", usage = "", desc = "Tests lighting in current chunk")
@@ -240,7 +247,7 @@ public class TestCommands {
 
 		BigTreeObject tree = new BigTreeObject();
 		tree.placeObject(pos.getWorld(), pos.getBlockX(), pos.getBlockY(), pos.getBlockZ());
-		player.teleport(pos.add(new Vector3(0, 50, 0)));
+		player.getPhysics().setPosition(pos.add(new Vector3(0, 50, 0)));
 	}
 
 	// TODO - There needs to be a method that guarantees unique data values on a per-server basis
@@ -296,7 +303,7 @@ public class TestCommands {
 			throw new CommandException("by cannot be greater than ty");
 		}
 		for (ProtocolEvent e : m.drawRectangle(i, bx, by, tx, ty, col)) {
-			player.getNetworkSynchronizer().callProtocolEvent(e);
+			player.getNetwork().callProtocolEvent(e);
 		}
 	}
 
@@ -316,17 +323,17 @@ public class TestCommands {
 		Map m = (Map) i.getMaterial();
 		int col = args.popInteger("col");
 		for (ProtocolEvent e : m.flood(i, col)) {
-			player.getNetworkSynchronizer().callProtocolEvent(e);
+			player.getNetwork().callProtocolEvent(e);
 		}
 	}
 
 	@CommandDescription (aliases = "respawn", usage = "", desc = "Forces the client to respawn")
 	@Permissible ("vanilla.command.debug")
-	@org.spout.api.command.annotated.Platform (Platform.SERVER)
+	@Platforms (Platform.SERVER)
 	@Filter (PlayerFilter.class)
 	public void respawn(Player player, CommandArguments args) throws CommandException {
 		args.assertCompletelyParsed();
-		((ServerNetworkSynchronizer) player.getNetworkSynchronizer()).forceRespawn();
+		player.getNetwork().forceRespawn();
 	}
 
 	@CommandDescription (aliases = "sun", usage = "<x> <y> <z>", desc = "Sets the sun direction.")
@@ -381,7 +388,7 @@ public class TestCommands {
 	@Filter (PlayerFilter.class)
 	public void resetPosition(Player player, CommandArguments args) throws CommandException {
 		args.assertCompletelyParsed();
-		((VanillaServerNetworkSynchronizer) player.getNetworkSynchronizer()).sendPosition();
+		player.getNetwork().callProtocolEvent(new EntityUpdateEvent(player, new Transform(player.getPhysics().getPosition(), player.getPhysics().getRotation(), Vector3.ONE), EntityUpdateEvent.UpdateAction.TRANSFORM, player.getNetwork().getRepositionManager()), player);
 	}
 
 	@CommandDescription (aliases = "torch", desc = "Place a torch.")
@@ -557,7 +564,7 @@ public class TestCommands {
 				throw new CommandException("You cannot resend chunks in client mode.");
 			}
 			if (action.contains("resendall")) {
-				Set<Chunk> chunks = ((ServerNetworkSynchronizer) player.getNetworkSynchronizer()).getActiveChunks();
+				Set<Chunk> chunks = player.getNetwork().getActiveChunks();
 				for (Chunk c : chunks) {
 					player.getNetwork().callProtocolEvent(new ChunkSendEvent(c, true));
 				}
@@ -567,6 +574,128 @@ public class TestCommands {
 				player.getNetwork().callProtocolEvent(new ChunkSendEvent(player.getChunk(), true));
 				source.sendMessage("Chunk resent");
 			}
+		}
+	}
+
+	@CommandDescription (aliases = "data", usage = "<key> <value>", desc = "Change Entity data value")
+	@Permissible ("vanilla.command.data")
+	public void data(CommandSource source, CommandArguments args) throws CommandException {
+		String key = args.popString("key");
+		String value = args.popRemainingStrings("value");
+		Player player = args.popPlayerOrMe("player", source);
+		args.assertCompletelyParsed();
+
+		// Figure out what entity to affect
+		// Note: this could be put in a method in the Vanilla human component instead
+		// This version is rather inaccurate...
+		double lastDistanceToEntity = 5.0;
+		Point point = player.getPhysics().getPosition();
+		Human human = player.get(Human.class);
+		Vector3 direction;
+		if (human == null) {
+			direction = player.getPhysics().getRotation().getDirection();
+		} else {
+			direction = human.getHead().getLookingAt();
+		}
+		Entity nearest = null;
+		for (double d = 0.0; d <= 50.0; d += 0.25) {
+			Point pos = point.add(direction.multiply(d));
+			Entity near = point.getWorld().getNearestEntity(pos, player, (int) lastDistanceToEntity);
+			if (near == null) {
+				continue;
+			}
+			double distance = pos.distance(near.getPhysics().getPosition());
+			if (distance < lastDistanceToEntity) {
+				lastDistanceToEntity = distance;
+				nearest = near;
+				if (distance < 0.5) {
+					break;
+				}
+			}
+		}
+		if (nearest == null) {
+			player.sendMessage("Could not find a near Entity you are looking at.");
+			return;
+		}
+
+		// Send entity information
+		Descriptor desc = nearest.get(Descriptor.class);
+		if (desc == null) {
+			player.sendMessage("Selected Entity: Unknown");
+		} else {
+			player.sendMessage("Selected Entity: " + desc.getDescription());
+		}
+
+		Object currentValue = nearest.getData().get(key);
+		if (value == null || value.isEmpty()) {
+			if (nearest.getData().containsKey(key)) {
+				player.sendMessage(key + " = " + currentValue);
+			} else {
+				player.sendMessage("No value is mapped to " + key + " for this Entity");
+			}
+			return;
+		}
+
+		// Figure out what type the key is using VanillaData
+		Class<?> valueType = null;
+		for (Field field : VanillaData.class.getDeclaredFields()) {
+			if (!Modifier.isStatic(field.getModifiers())) {
+				continue;
+			}
+			try {
+				Object fieldValue = field.get(null);
+				if (fieldValue instanceof DefaultedKey) {
+					DefaultedKey<?> defKey = (DefaultedKey<?>) fieldValue;
+					if (!defKey.getKeyString().equals(key)) {
+						continue;
+					}
+					Object defValue = defKey.getDefaultValue();
+					if (defValue != null) {
+						// We found our type!
+						valueType = defValue.getClass();
+						break;
+					}
+				}
+			} catch (Throwable t) {
+				// Ignore any field access issues
+			}
+		}
+		// Try using the current value in the datamap
+		if (valueType == null) {
+			if (currentValue == null) {
+				player.sendMessage("Could not figure out the type of value stored by " + key);
+				return;
+			} else {
+				valueType = currentValue.getClass();
+			}
+		}
+
+		// Set the value in the datamap if possible
+		try {
+			Serializable newValue;
+			if (Double.class.isAssignableFrom(valueType)) {
+				newValue = Double.parseDouble(value);
+			} else if (Float.class.isAssignableFrom(valueType)) {
+				newValue = Float.parseFloat(value);
+			} else if (Long.class.isAssignableFrom(valueType)) {
+				newValue = Long.parseLong(value);
+			} else if (Integer.class.isAssignableFrom(valueType)) {
+				newValue = Integer.parseInt(value);
+			} else if (Short.class.isAssignableFrom(valueType)) {
+				newValue = Short.parseShort(value);
+			} else if (Byte.class.isAssignableFrom(valueType)) {
+				newValue = Byte.parseByte(value);
+			} else if (String.class.isAssignableFrom(valueType)) {
+				newValue = value;
+			} else {
+				player.sendMessage("No idea how to turn " + value + " into " + valueType.getSimpleName());
+				return;
+			}
+			nearest.getData().put(key, newValue);
+			player.sendMessage("Value of " + key + " set to " + newValue);
+		} catch (Throwable t) {
+			player.sendMessage("Error occurred while parsing value " + value);
+			player.sendMessage(t.getMessage());
 		}
 	}
 

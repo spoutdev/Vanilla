@@ -65,13 +65,15 @@ public class ChunkCacheMessage extends VanillaMainChannelMessage {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ChunkCacheMessage) {
-			final ChunkCacheMessage other = (ChunkCacheMessage) obj;
-			return new EqualsBuilder()
-					.append(data, other.data)
-					.isEquals();
-		} else {
+		if (obj == null) {
 			return false;
 		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final ChunkCacheMessage other = (ChunkCacheMessage) obj;
+		return new EqualsBuilder()
+				.append(data, other.data)
+				.isEquals();
 	}
 }

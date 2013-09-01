@@ -94,15 +94,6 @@ public interface DamageCause<T> {
 		 * Damaged due to the wither effect.
 		 */
 		WITHERED;
-
-		public boolean equals(DamageType... types) {
-			for (DamageType type : types) {
-				if (equals(type)) {
-					return true;
-				}
-			}
-			return false;
-		}
 	}
 
 	/**

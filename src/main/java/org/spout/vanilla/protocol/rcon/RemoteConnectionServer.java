@@ -33,18 +33,16 @@ import java.net.SocketAddress;
 import java.nio.ByteOrder;
 import java.util.logging.Logger;
 
-import org.jboss.netty.bootstrap.ServerBootstrap;
-import org.jboss.netty.buffer.HeapChannelBufferFactory;
-import org.jboss.netty.channel.ChannelFuture;
-import org.jboss.netty.channel.ChannelHandlerContext;
-import org.jboss.netty.channel.ChannelPipeline;
-import org.jboss.netty.channel.ChannelStateEvent;
-import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
-import org.jboss.netty.channel.group.ChannelGroup;
-import org.jboss.netty.channel.group.ChannelGroupFuture;
-import org.jboss.netty.channel.group.DefaultChannelGroup;
-import org.jboss.netty.channel.socket.ServerSocketChannel;
-import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
+import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelPipeline;
+import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.group.ChannelGroup;
+import io.netty.channel.group.ChannelGroupFuture;
+import io.netty.channel.group.DefaultChannelGroup;
+import io.netty.channel.socket.ServerSocketChannel;
+import io.netty.util.concurrent.GlobalEventExecutor;
 
 import org.spout.api.Server;
 import org.spout.api.protocol.PortBinding;
@@ -57,7 +55,7 @@ import org.spout.vanilla.protocol.VanillaProtocol;
  */
 public class RemoteConnectionServer extends RemoteConnectionCore {
 	private final RconConfiguration config;
-	private final ChannelGroup group = new DefaultChannelGroup("RconChannels");
+	private final ChannelGroup group = new DefaultChannelGroup("RconChannels", GlobalEventExecutor.INSTANCE);
 	private final ServerBootstrap bootstrap = new ServerBootstrap();
 
 	public RemoteConnectionServer(Logger logger, File dataFolder) {
@@ -72,19 +70,6 @@ public class RemoteConnectionServer extends RemoteConnectionCore {
 						new RconHandler(session));
 			}
 		});*/
-
-		NioServerSocketChannelFactory factory = new NioServerSocketChannelFactory() {
-			@Override
-			public ServerSocketChannel newChannel(ChannelPipeline pipeline) {
-				ServerSocketChannel channel = super.newChannel(pipeline);
-				// This is the factory type used in org.jboss.netty.channel.DefaultServerChannelConfig, modified to be little-endian
-				// Netty 4.x should no longer need this, since the byte-order conversion can be done through the ChannelBuffer.
-				// This type of fix may reduce object creation though.
-				channel.getConfig().setBufferFactory(HeapChannelBufferFactory.getInstance(ByteOrder.LITTLE_ENDIAN));
-				return channel;
-			}
-		};
-		bootstrap.setFactory(factory);
 	}
 
 	public void bindDefaultPorts(Server server) {
@@ -109,7 +94,7 @@ public class RemoteConnectionServer extends RemoteConnectionCore {
 	}
 
 	public void bind(SocketAddress address) {
-		group.add(bootstrap.bind(address));
+		group.add(bootstrap.bind(address).awaitUninterruptibly().channel());
 	}
 
 	public String getPassword() {
@@ -118,25 +103,31 @@ public class RemoteConnectionServer extends RemoteConnectionCore {
 
 	public void close() throws IOException {
 		ChannelGroupFuture f = group.close().awaitUninterruptibly();
-		if (!f.isCompleteSuccess()) {
+		if (!f.isSuccess()) {
 			for (ChannelFuture future : f) {
 				if (!future.isSuccess()) {
-					throw new IOException(future.getCause());
+					throw new IOException(future.cause());
 				}
 			}
 		}
-		bootstrap.releaseExternalResources();
+		bootstrap.group().shutdownGracefully();
 	}
 
 	/**
 	 * See {@link ChannelGroup}
 	 */
-	private final class ChannelTracker extends SimpleChannelUpstreamHandler {
+	private final class ChannelTracker extends SimpleChannelInboundHandler<Object> {
 		@Override
-		public void channelOpen(ChannelHandlerContext ctx, ChannelStateEvent e) {
+		public void channelActive(ChannelHandlerContext ctx) {
 			// Add all open channels to the global group so that they are
 			// closed on shutdown.
-			group.add(e.getChannel());
+			group.add(ctx.channel());
 		}
+
+		@Override
+		protected void channelRead0(ChannelHandlerContext chc, Object i) throws Exception {
+			chc.fireChannelRead(i);
+		}
+
 	}
 }

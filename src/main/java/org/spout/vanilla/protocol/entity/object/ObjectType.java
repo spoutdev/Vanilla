@@ -46,7 +46,7 @@ import org.spout.vanilla.component.entity.substance.projectile.Potion;
 import org.spout.vanilla.component.entity.substance.projectile.Snowball;
 import org.spout.vanilla.component.entity.substance.projectile.XPBottle;
 import org.spout.vanilla.component.entity.substance.vehicle.Boat;
-import org.spout.vanilla.component.entity.substance.vehicle.minecart.Minecart;
+import org.spout.vanilla.component.entity.substance.vehicle.Minecart;
 
 public enum ObjectType {
 	BOAT(1, Boat.class),

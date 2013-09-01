@@ -30,17 +30,21 @@ import java.util.Random;
 
 import org.spout.api.component.entity.PhysicsComponent;
 import org.spout.api.inventory.ItemStack;
+
 import org.spout.physics.collision.shape.BoxShape;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.inventory.EntityInventory;
 import org.spout.vanilla.component.entity.living.Hostile;
 import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.misc.EntityItemCollector;
 import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.component.entity.misc.MetadataComponent;
+import org.spout.vanilla.data.Metadata;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.entity.creature.SkeletonEntityProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureType;
 
 /**
  * A component that identifies the entity as a Skeleton.
@@ -51,7 +55,7 @@ public class Skeleton extends Living implements Hostile {
 		super.onAttached();
 		Random random = getRandom();
 
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SkeletonEntityProtocol());
+		setEntityProtocol(new CreatureProtocol(CreatureType.SKELETON));
 		getOwner().add(EntityInventory.class);
 		getOwner().add(EntityItemCollector.class);
 
@@ -69,7 +73,16 @@ public class Skeleton extends Living implements Hostile {
 		if (getAttachedCount() == 1) {
 			getOwner().add(Health.class).setSpawnHealth(20);
 		}
+		//TODO: There are 2 kinds of damage for Skeles : Sword & Bow, along with different AI when either is equipped
 
-		//TODO: There's 2 kind of damage for Skele's : Sword & Bow
+		// Default category of 0
+		getOwner().getData().put(VanillaData.ENTITY_CATEGORY, (byte) 0);
+
+		// Add metadata for Entity category
+		getOwner().add(MetadataComponent.class).addMeta(Metadata.TYPE_BYTE, 13, VanillaData.ENTITY_CATEGORY);
+	}
+
+	public byte getTypeId() {
+		return getOwner().getData().get(VanillaData.ENTITY_CATEGORY);
 	}
 }

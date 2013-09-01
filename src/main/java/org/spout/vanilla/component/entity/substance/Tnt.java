@@ -28,7 +28,6 @@ package org.spout.vanilla.component.entity.substance;
 
 import org.spout.api.entity.Entity;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
@@ -69,7 +68,7 @@ public class Tnt extends Substance {
 
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.PRIMED_TNT));
+		setEntityProtocol(new ObjectEntityProtocol(ObjectType.PRIMED_TNT));
 		holder = getOwner();
 		super.onAttached();
 		//TODO: Correct mass

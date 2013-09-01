@@ -82,11 +82,11 @@ public final class ExplosionMessage extends VanillaMainChannelMessage {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("x", x)
-				.append("y", y)
-				.append("z", z)
-				.append("radius", radius)
-				.append("coordinates", coordinates)
+				.append("x", this.x)
+				.append("y", this.y)
+				.append("z", this.z)
+				.append("radius", this.radius)
+				.append("coordinates", this.coordinates)
 				.toString();
 	}
 
@@ -106,5 +106,16 @@ public final class ExplosionMessage extends VanillaMainChannelMessage {
 				.append(this.radius, other.radius)
 				.append(this.coordinates, other.coordinates)
 				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.x)
+				.append(this.y)
+				.append(this.z)
+				.append(this.radius)
+				.append(this.coordinates)
+				.toHashCode();
 	}
 }

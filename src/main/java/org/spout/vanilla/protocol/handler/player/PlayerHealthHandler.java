@@ -38,10 +38,6 @@ import org.spout.vanilla.protocol.msg.player.PlayerHealthMessage;
 public class PlayerHealthHandler extends MessageHandler<PlayerHealthMessage> {
 	@Override
 	public void handleClient(ClientSession session, PlayerHealthMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		Player player = session.getPlayer();
 
 		Health health = player.get(Health.class);

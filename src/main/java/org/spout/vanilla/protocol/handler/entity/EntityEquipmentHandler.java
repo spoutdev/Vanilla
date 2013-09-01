@@ -39,10 +39,6 @@ import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
 public final class EntityEquipmentHandler extends MessageHandler<EntityEquipmentMessage> {
 	@Override
 	public void handleClient(ClientSession session, EntityEquipmentMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		Player player = session.getPlayer();
 		World world = player.getWorld();
 

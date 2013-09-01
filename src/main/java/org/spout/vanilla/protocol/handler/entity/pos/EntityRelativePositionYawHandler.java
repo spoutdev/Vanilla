@@ -34,9 +34,6 @@ import org.spout.vanilla.protocol.msg.entity.pos.EntityRelativePositionYawMessag
 public class EntityRelativePositionYawHandler extends MessageHandler<EntityRelativePositionYawMessage> {
 	@Override
 	public void handleClient(ClientSession session, EntityRelativePositionYawMessage message) {
-		if (!session.hasPlayer()) {
-		}
-		
 		/*Player player = session.getPlayer();
 		World world = player.getWorld();
 		Entity entity = world.getEntity(message.getEntityId());

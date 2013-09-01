@@ -39,7 +39,7 @@ import org.spout.vanilla.material.block.component.FurnaceBlock;
 public class IronOre extends Ore implements TimedCraftable {
 	public IronOre(String name, int id) {
 		super(name, id, VanillaMaterialModels.IRON_ORE);
-		this.setHardness(3.0F).setResistance(5.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.STONE);
+		this.setHardness(3.0F).setResistance(15.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.STONE);
 	}
 
 	@Override

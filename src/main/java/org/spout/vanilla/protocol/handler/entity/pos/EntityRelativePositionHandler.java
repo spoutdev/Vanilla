@@ -38,10 +38,6 @@ import org.spout.vanilla.protocol.msg.entity.pos.EntityRelativePositionMessage;
 public class EntityRelativePositionHandler extends MessageHandler<EntityRelativePositionMessage> {
 	@Override
 	public void handleClient(ClientSession session, EntityRelativePositionMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		Player player = session.getPlayer();
 		World world = player.getWorld();
 		Entity entity = world.getEntity(message.getEntityId());

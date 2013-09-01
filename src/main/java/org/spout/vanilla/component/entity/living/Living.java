@@ -29,15 +29,19 @@ package org.spout.vanilla.component.entity.living;
 import org.spout.api.ai.goap.GoapAIComponent;
 import org.spout.api.component.entity.NavigationComponent;
 import org.spout.api.entity.Entity;
-import org.spout.api.util.Parameter;
+import org.spout.api.entity.Player;
 
 import org.spout.vanilla.ai.examiner.VanillaBlockExaminer;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
+import org.spout.vanilla.component.entity.VanillaNetworkComponent;
 import org.spout.vanilla.component.entity.misc.Burn;
+import org.spout.vanilla.component.entity.misc.Descriptor;
 import org.spout.vanilla.component.entity.misc.Drowning;
 import org.spout.vanilla.component.entity.misc.Effects;
 import org.spout.vanilla.component.entity.misc.EntityHead;
 import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.component.entity.misc.MetadataComponent;
+import org.spout.vanilla.data.Metadata;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.effect.EntityEffectType;
 
@@ -59,7 +63,47 @@ public abstract class Living extends VanillaEntityComponent {
 		navigation.setDefaultExaminers(new VanillaBlockExaminer());
 		ai = holder.add(GoapAIComponent.class);
 		holder.add(Burn.class);
-		holder.setSavable(true);
+		if (!(holder instanceof Player)) {
+			holder.add(VanillaNetworkComponent.class);
+		}
+
+		// Description (use Class name as default)
+		holder.add(Descriptor.class).setName(getClass().getSimpleName());
+
+		// Add metadata associated with general living Entity properties
+		getOwner().add(MetadataComponent.class).addMeta(new Metadata<Byte>(Metadata.TYPE_BYTE, 0) {
+			@Override
+			public Byte getValue() {
+				byte value = 0;
+				Burn burn = getOwner().get(Burn.class);
+				if (burn != null) {
+					value = (byte) (value | (burn.isOnFire() ? 1 : 0));
+				}
+
+				value = (byte) (value | ((isSneaking() ? 1 : 0) << 1));
+				value = (byte) (value | ((isRiding() ? 1 : 0) << 2));
+
+				Human human = getOwner().get(Human.class);
+				if (human != null) {
+					value = (byte) (value | ((human.isSprinting() ? 1 : 0) << 3));
+				}
+
+				value = (byte) (value | ((isEatingBlocking() ? 1 : 0) << 4));
+
+				Effects effects = getOwner().get(Effects.class);
+				if (effects != null) {
+					value = (byte) (value | ((effects.contains(EntityEffectType.INVISIBILITY) ? 1 : 0) << 5));
+				}
+
+				return value;
+			}
+
+			@Override
+			public void setValue(Byte value) {
+				// TODO Read a new value (as client) and apply it in the Entity
+				// Requires the same logic as above, but in the opposite way
+			}
+		});
 	}
 
 	public boolean isOnGround() {
@@ -90,38 +134,12 @@ public abstract class Living extends VanillaEntityComponent {
 		return ai;
 	}
 
-	protected byte getCommonMetadata() {
-		byte value = 0;
-		Burn burn = getOwner().get(Burn.class);
-		if (burn != null) {
-			value = (byte) (value | (burn.isOnFire() ? 1 : 0));
-		}
-
-		value = (byte) (value | ((isSneaking() ? 1 : 0) << 1));
-		value = (byte) (value | ((isRiding() ? 1 : 0) << 2));
-
-		Human human = getOwner().get(Human.class);
-		if (human != null) {
-			value = (byte) (value | ((human.isSprinting() ? 1 : 0) << 3));
-		}
-
-		value = (byte) (value | ((isEatingBlocking() ? 1 : 0) << 4));
-
-		Effects effects = getOwner().get(Effects.class);
-		if (effects != null) {
-			value = (byte) (value | ((effects.contains(EntityEffectType.INVISIBILITY) ? 1 : 0) << 5));
-		}
-
-		return value;
-	}
-
 	public boolean isRiding() {
 		return getOwner().getData().get(VanillaData.IS_RIDING);
 	}
 
 	public void setRiding(boolean isRiding) {
 		getOwner().getData().put(VanillaData.IS_RIDING, isRiding);
-		sendMetaData();
 	}
 
 	public boolean isEatingBlocking() {
@@ -130,7 +148,6 @@ public abstract class Living extends VanillaEntityComponent {
 
 	public void setEatingBlocking(boolean isEatingBlocking) {
 		getOwner().getData().put(VanillaData.IS_EATING_BLOCKING, isEatingBlocking);
-		sendMetaData();
 	}
 
 	public boolean isSneaking() {
@@ -139,10 +156,5 @@ public abstract class Living extends VanillaEntityComponent {
 
 	public void setSneaking(boolean isSneaking) {
 		getOwner().getData().put(VanillaData.IS_SNEAKING, isSneaking);
-		sendMetaData();
-	}
-
-	public void sendMetaData() {
-		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 0, getCommonMetadata()));
 	}
 }

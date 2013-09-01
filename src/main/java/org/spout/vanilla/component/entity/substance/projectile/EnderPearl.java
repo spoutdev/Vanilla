@@ -32,7 +32,6 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.component.entity.substance.Substance;
 import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
@@ -44,7 +43,7 @@ public class EnderPearl extends Substance implements Projectile {
 
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.ENDER_PEARL));
+		setEntityProtocol(new ObjectEntityProtocol(ObjectType.ENDER_PEARL));
 		super.onAttached();
 	}
 
@@ -72,7 +71,7 @@ public class EnderPearl extends Substance implements Projectile {
 				if (!PlayerUtil.isCreativePlayer(getShooter())) {
 					health.damage(5);
 				}
-				((Player) getShooter()).teleport(block.translate(BlockFace.TOP).getPosition());
+				((Player) getShooter()).getPhysics().setPosition(block.translate(BlockFace.TOP).getPosition());
 			}
 		}
 		getOwner().remove();

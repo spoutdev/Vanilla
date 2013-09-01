@@ -26,23 +26,8 @@
  */
 package org.spout.vanilla.protocol.entity.object;
 
-import java.util.List;
-
-import org.spout.api.entity.Entity;
-import org.spout.api.inventory.ItemStack;
-import org.spout.api.util.Parameter;
-
-import org.spout.vanilla.component.entity.substance.Item;
-
 public class ItemEntityProtocol extends ObjectEntityProtocol {
 	public ItemEntityProtocol() {
 		super(ObjectType.ITEM);
-	}
-
-	@Override
-	public List<Parameter<?>> getSpawnParameters(Entity entity) {
-		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<ItemStack>(Parameter.TYPE_ITEM, 10, entity.get(Item.class).getItemStack()));
-		return parameters;
 	}
 }

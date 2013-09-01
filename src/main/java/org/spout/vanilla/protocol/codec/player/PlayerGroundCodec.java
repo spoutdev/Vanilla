@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.codec.player;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
@@ -41,13 +41,13 @@ public final class PlayerGroundCodec extends MessageCodec<PlayerGroundMessage> {
 	}
 
 	@Override
-	public PlayerGroundMessage decode(ChannelBuffer buffer) throws IOException {
+	public PlayerGroundMessage decode(ByteBuf buffer) throws IOException {
 		return new PlayerGroundMessage(buffer.readByte() == 1);
 	}
 
 	@Override
-	public ChannelBuffer encode(PlayerGroundMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(1);
+	public ByteBuf encode(PlayerGroundMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer(1);
 		buffer.writeByte(message.isOnGround() ? 1 : 0);
 		return buffer;
 	}

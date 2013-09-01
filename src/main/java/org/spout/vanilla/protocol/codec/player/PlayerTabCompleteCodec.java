@@ -26,12 +26,12 @@
  */
 package org.spout.vanilla.protocol.codec.player;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.player.PlayerTabCompleteMessage;
 
 public class PlayerTabCompleteCodec extends MessageCodec<PlayerTabCompleteMessage> {
@@ -40,15 +40,15 @@ public class PlayerTabCompleteCodec extends MessageCodec<PlayerTabCompleteMessag
 	}
 
 	@Override
-	public PlayerTabCompleteMessage decode(ChannelBuffer buffer) {
-		String message = VanillaChannelBufferUtils.readString(buffer);
+	public PlayerTabCompleteMessage decode(ByteBuf buffer) {
+		String message = VanillaByteBufUtils.readString(buffer);
 		return new PlayerTabCompleteMessage(message);
 	}
 
 	@Override
-	public ChannelBuffer encode(PlayerTabCompleteMessage message) {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		VanillaChannelBufferUtils.writeString(buffer, message.getText());
+	public ByteBuf encode(PlayerTabCompleteMessage message) {
+		ByteBuf buffer = Unpooled.buffer();
+		VanillaByteBufUtils.writeString(buffer, message.getText());
 		return buffer;
 	}
 }

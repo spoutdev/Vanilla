@@ -78,12 +78,12 @@ public class SoundEffectMessage extends VanillaMainChannelMessage {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("sound", soundName)
-				.append("x", x)
-				.append("y", y)
-				.append("z", z)
-				.append("volume", volume)
-				.append("pitch", pitch)
+				.append("sound", this.soundName)
+				.append("x", this.x)
+				.append("y", this.y)
+				.append("z", this.z)
+				.append("volume", this.volume)
+				.append("pitch", this.pitch)
 				.toString();
 	}
 
@@ -104,5 +104,17 @@ public class SoundEffectMessage extends VanillaMainChannelMessage {
 				.append(this.volume, other.volume)
 				.append(this.pitch, other.pitch)
 				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.soundName)
+				.append(this.x)
+				.append(this.y)
+				.append(this.z)
+				.append(this.volume)
+				.append(this.pitch)
+				.toHashCode();
 	}
 }

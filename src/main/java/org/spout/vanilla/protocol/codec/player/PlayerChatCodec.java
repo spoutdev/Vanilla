@@ -26,29 +26,60 @@
  */
 package org.spout.vanilla.protocol.codec.player;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import java.io.IOException;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
+import org.spout.api.util.ByteBufUtils;
 
-import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.player.PlayerChatMessage;
 
 public final class PlayerChatCodec extends MessageCodec<PlayerChatMessage> {
+	private static final JsonParser parser = new JsonParser();
+
 	public PlayerChatCodec() {
 		super(PlayerChatMessage.class, 0x03);
 	}
 
 	@Override
-	public PlayerChatMessage decode(ChannelBuffer buffer) {
-		String message = VanillaChannelBufferUtils.readString(buffer);
+	public PlayerChatMessage decodeFromClient(ByteBuf buffer) throws IOException {
+		// As a server we read messages from the client as plain text
+		String message = VanillaByteBufUtils.readString(buffer);
 		return new PlayerChatMessage(message);
 	}
 
 	@Override
-	public ChannelBuffer encode(PlayerChatMessage message) {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		VanillaChannelBufferUtils.writeString(buffer, message.getMessage());
+	public PlayerChatMessage decodeFromServer(ByteBuf buffer) throws IOException {
+		// As a client we read messages from the server using the JSON parser
+		String message = VanillaByteBufUtils.readString(buffer);
+
+		return new PlayerChatMessage(parser.parse(message).getAsJsonObject().get("text").getAsString());
+	}
+
+	@Override
+	public ByteBuf encodeToClient(PlayerChatMessage message) {
+		// As a server we send messages to the client in JSON format
+		JsonObject json = new JsonObject();
+		json.addProperty("text", message.getMessage());
+		return bufferMessage(json.toString());
+	}
+
+	@Override
+	public ByteBuf encodeToServer(PlayerChatMessage message) {
+		// As a client we send messages to the server in plain text format
+		return bufferMessage(message.getMessage());
+	}
+
+	private ByteBuf bufferMessage(String message) {
+		ByteBuf buffer = Unpooled.buffer(VanillaByteBufUtils.getStringLength(message));
+		VanillaByteBufUtils.writeString(buffer, message);
+
 		return buffer;
 	}
 }

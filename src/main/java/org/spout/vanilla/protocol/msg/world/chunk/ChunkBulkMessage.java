@@ -81,11 +81,11 @@ public final class ChunkBulkMessage extends VanillaBlockDataChannelMessage {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("x", x)
-				.append("z", z)
-				.append("hasAdditionalData", addData)
-				.append("data", data, false)
-				.append("biomeData", data, false)
+				.append("x", this.x)
+				.append("z", this.z)
+				.append("hasAdditionalData", this.addData)
+				.append("data", this.data, false)
+				.append("biomeData", this.data, false)
 				.toString();
 	}
 
@@ -105,5 +105,16 @@ public final class ChunkBulkMessage extends VanillaBlockDataChannelMessage {
 				.append(this.data, other.data)
 				.append(this.biomeData, other.biomeData)
 				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.x)
+				.append(this.z)
+				.append(this.addData)
+				.append(this.data)
+				.append(this.biomeData)
+				.toHashCode();
 	}
 }

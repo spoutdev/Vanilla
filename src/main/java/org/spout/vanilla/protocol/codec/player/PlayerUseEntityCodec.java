@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.codec.player;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 
@@ -41,7 +41,7 @@ public final class PlayerUseEntityCodec extends MessageCodec<PlayerUseEntityMess
 	}
 
 	@Override
-	public PlayerUseEntityMessage decode(ChannelBuffer buffer) throws IOException {
+	public PlayerUseEntityMessage decode(ByteBuf buffer) throws IOException {
 		int id = buffer.readInt();
 		int target = buffer.readInt();
 		boolean punching = buffer.readByte() != 0;
@@ -49,8 +49,8 @@ public final class PlayerUseEntityCodec extends MessageCodec<PlayerUseEntityMess
 	}
 
 	@Override
-	public ChannelBuffer encode(PlayerUseEntityMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(9);
+	public ByteBuf encode(PlayerUseEntityMessage message) throws IOException {
+		ByteBuf buffer = Unpooled.buffer(9);
 		buffer.writeInt(message.getEntityId());
 		buffer.writeInt(message.getTarget());
 		buffer.writeByte(message.isPunching() ? 1 : 0);

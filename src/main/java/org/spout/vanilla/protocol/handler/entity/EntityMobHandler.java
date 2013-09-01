@@ -34,10 +34,6 @@ import org.spout.vanilla.protocol.msg.entity.spawn.EntityMobMessage;
 public class EntityMobHandler extends MessageHandler<EntityMobMessage> {
 	@Override
 	public void handleClient(ClientSession session, EntityMobMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		//TODO: implement
 		System.out.println(message.toString());
 	}

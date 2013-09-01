@@ -79,6 +79,11 @@ public class EncryptionKeyResponseMessage extends VanillaMainChannelMessage impl
 	}
 
 	@Override
+	public boolean requiresPlayer() {
+		return false;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {
 			return false;
@@ -101,5 +106,14 @@ public class EncryptionKeyResponseMessage extends VanillaMainChannelMessage impl
 				.append("secret", this.getSecretArray())
 				.append("verifyToken", this.getVerifyTokenArray())
 				.toString();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.isChannelLocking())
+				.append(this.getSecretArray())
+				.append(this.getVerifyTokenArray())
+				.toHashCode();
 	}
 }

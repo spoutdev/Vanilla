@@ -40,12 +40,9 @@ import org.spout.vanilla.protocol.msg.world.chunk.ChunkBulkMessage;
 public class ChunkBulkHandler extends MessageHandler<ChunkBulkMessage> {
 	@Override
 	public void handleClient(ClientSession session, ChunkBulkMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
 		Player player = session.getPlayer();
 		World world = player.getEngine().getDefaultWorld();//player.getWorld();
-		RepositionManager rm = player.getNetworkSynchronizer().getRepositionManager();
+		RepositionManager rm = player.getNetwork().getRepositionManager();
 
 		for (int c = 0; c < message.getX().length; c++) {
 			int baseX = message.getX()[c] << Chunk.BLOCKS.BITS;

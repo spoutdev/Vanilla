@@ -64,6 +64,7 @@ public class EntityMocker {
 	}
 
 	public static Entity mockEntity() {
+		// TODO: this is broken, please fix.
 		Engine engine = EngineFaker.setupEngine();
 
 		final Entity entity = Mockito.mock(Entity.class);
@@ -86,6 +87,7 @@ public class EntityMocker {
 
 	private static class EntityEngineAnswer implements Answer<Engine> {
 		private final Engine engine;
+
 		EntityEngineAnswer(Engine engine) {
 			this.engine = engine;
 		}
@@ -94,8 +96,8 @@ public class EntityMocker {
 		public Engine answer(InvocationOnMock invocation) throws Throwable {
 			return engine;
 		}
-		
 	}
+
 	private static class EntityTickAnswer implements Answer<Object> {
 		private final Entity entity;
 
@@ -123,19 +125,12 @@ public class EntityMocker {
 		@Override
 		protected void attachComponent(Class<? extends Component> key, Component component, boolean attach) throws Exception {
 			if (component.attachTo(entity)) {
-				components.put(key, component);
-				if (attach) {
-					try {
-						component.onAttached();
-					} catch (Exception e) {
-						components.remove(key);
-						throw e;
-					}
-				}
+				// Uh....tests
+				super.attachComponent(key, component, attach);
 			}
 		}
 
-		@SuppressWarnings("unchecked")
+		@SuppressWarnings ("unchecked")
 		@Override
 		public Component answer(InvocationOnMock invocation) throws Throwable {
 			Class<? extends EntityComponent> clazz = (Class<? extends EntityComponent>) invocation.getArguments()[0];
@@ -158,7 +153,7 @@ public class EntityMocker {
 			this.targetClass = targetClass;
 		}
 
-		@SuppressWarnings("unchecked")
+		@SuppressWarnings ("unchecked")
 		public boolean matches(Object obj) {
 			if (obj instanceof Class) {
 				return targetClass.isAssignableFrom((Class<T>) obj);

@@ -34,7 +34,7 @@ import org.spout.vanilla.material.block.Fence;
 public class NetherBrickFence extends Fence {
 	public NetherBrickFence(String name, int id) {
 		super(name, id, VanillaMaterialModels.NETHER_BRICK_FENCE);
-		this.setResistance(30.F);
+		this.setResistance(30.0F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 

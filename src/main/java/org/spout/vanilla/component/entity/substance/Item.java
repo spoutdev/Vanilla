@@ -33,10 +33,12 @@ import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector3;
+
 import org.spout.physics.collision.shape.BoxShape;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.component.entity.misc.MetadataComponent;
+import org.spout.vanilla.data.Metadata;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -52,11 +54,15 @@ public class Item extends Substance {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ItemEntityProtocol());
+		setEntityProtocol(new ItemEntityProtocol());
 		PhysicsComponent physics = getOwner().getPhysics();
 		physics.activate(1f, new BoxShape(0.27f, 0.27f, 0.27f), false, true);
-		physics.
-				getOwner().add(Health.class).setMaxHealth(20);
+		if (getAttachedCount() == 1) {
+			getOwner().add(Health.class).setSpawnHealth(20);
+		}
+
+		// Add metadata for ItemStack contained
+		getOwner().add(MetadataComponent.class).addMeta(Metadata.TYPE_ITEM, 10, Data.HELD_ITEM);
 	}
 
 	@Override
@@ -128,12 +134,12 @@ public class Item extends Substance {
 			throw new IllegalArgumentException("The dropped item can not be null or air!");
 		}
 		Entity entity = position.getWorld().createEntity(position, Item.class);
-		Item item = entity.add(Item.class);
+		Item item = entity.get(Item.class);
 		item.setUncollectableDelay(DROP_PICKUP_DELAY);
 		item.setItemStack(itemStack);
-		entity.getPhysics().impulse(velocity);
 		if (position.getChunk(LoadOption.NO_LOAD) != null) {
 			position.getWorld().spawnEntity(entity);
+			entity.getPhysics().force(velocity);
 		}
 		return item;
 	}

@@ -36,10 +36,12 @@ import org.spout.vanilla.protocol.proxy.VanillaConnectionInfo;
 
 public final class EntityAttachEntityMessage extends EntityMessage {
 	private int vehicle;
+	private boolean leashed;
 
-	public EntityAttachEntityMessage(int id, int vehicle) {
+	public EntityAttachEntityMessage(int id, int vehicle, boolean leashed) {
 		super(id);
 		this.vehicle = vehicle;
+		this.leashed = leashed;
 	}
 
 	@Override
@@ -57,11 +59,16 @@ public final class EntityAttachEntityMessage extends EntityMessage {
 		return vehicle;
 	}
 
+	public boolean isLeashed() {
+		return leashed;
+	}
+
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
 				.append("id", this.getEntityId())
 				.append("vehicle", vehicle)
+				.append("leashed", leashed)
 				.toString();
 	}
 
@@ -77,6 +84,16 @@ public final class EntityAttachEntityMessage extends EntityMessage {
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
 				.append(this.getEntityId(), other.getEntityId())
 				.append(this.vehicle, other.vehicle)
+				.append(this.leashed, other.leashed)
 				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.getEntityId())
+				.append(this.vehicle)
+				.append(this.leashed)
+				.toHashCode();
 	}
 }

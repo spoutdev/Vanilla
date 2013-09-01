@@ -28,41 +28,64 @@ package org.spout.vanilla.protocol.handler.player;
 
 import java.util.Set;
 
-import org.spout.api.Spout;
+import org.spout.api.Server;
+import org.spout.api.datatable.ManagedMap;
 import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerConnectEvent;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.ServerNetworkSynchronizer;
 import org.spout.api.protocol.ServerSession;
+import org.spout.api.protocol.Session;
+import org.spout.api.protocol.event.EntityUpdateEvent;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.living.Human;
+import org.spout.vanilla.data.Difficulty;
+import org.spout.vanilla.data.Dimension;
+import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.WorldType;
 import org.spout.vanilla.event.cause.HealthChangeCause;
 import org.spout.vanilla.event.player.PlayerRespawnEvent;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.msg.player.PlayerStatusMessage;
+import org.spout.vanilla.protocol.msg.player.conn.PlayerLoginRequestMessage;
+import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnPositionMessage;
 
 public class PlayerStatusHandler extends MessageHandler<PlayerStatusMessage> {
 	@Override
 	public void handleServer(ServerSession session, PlayerStatusMessage message) {
+		final Server server = session.getEngine();
+
 		if (message.getStatus() == PlayerStatusMessage.INITIAL_SPAWN) {
-			if (PlayerConnectEvent.getHandlerList().getRegisteredListeners().length > 0) {
-				// TODO: get correct view distance
-				VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(new PlayerConnectEvent(session, (String) session.getDataMap().get("username"), 10 * 16));
+			server.getEventManager().callEvent(new PlayerConnectEvent(session, (String) session.getDataMap().get("username"), 10));
+			if (server.debugMode()) {
+				server.getLogger().info("Login took " + (System.currentTimeMillis() - session.getDataMap().get(VanillaProtocol.LOGIN_TIME)) + " ms");
 			}
-			if (VanillaPlugin.getInstance().getEngine().debugMode()) {
-				Spout.getLogger().info("Login took " + (System.currentTimeMillis() - session.getDataMap().get(VanillaProtocol.LOGIN_TIME)) + " ms");
+			final ManagedMap data = session.getPlayer().getWorld().getData();
+			final Human human = session.getPlayer().add(Human.class);
+			final Difficulty difficulty = data.get(VanillaData.DIFFICULTY);
+			final Dimension dimension = data.get(VanillaData.DIMENSION);
+			final WorldType worldType = data.get(VanillaData.WORLD_TYPE);
+
+			GameMode gamemode;
+
+			int entityId = session.getPlayer().getId();
+
+			//  MC Packet Order: 0x01 Login, 0xFA Custom (ServerTypeName), 0x06 SpawnPos, 0xCA PlayerAbilities, 0x10 BlockSwitch
+			gamemode = data.get(VanillaData.GAMEMODE);
+			final PlayerLoginRequestMessage idMsg = new PlayerLoginRequestMessage(entityId, worldType.toString(), gamemode.getId(), (byte) dimension.getId(), difficulty.getId(), (byte) server.getMaxPlayers());
+			session.send(Session.SendType.FORCE, idMsg);
+			session.setState(Session.State.GAME);
+			if (human.getAttachedCount() <= 1) {
+				// If we haven't logged in before, we want to set all abilities to the default gamemode
+				human.setGamemode(gamemode, false);
 			}
 		} else if (message.getStatus() == PlayerStatusMessage.RESPAWN) {
-			if (!session.hasPlayer()) {
-				return;
-			}
 			Player player = session.getPlayer();
 			Point point = player.getWorld().getSpawnPoint().getPosition();
 			if (PlayerRespawnEvent.getHandlerList().getRegisteredListeners().length > 0) {
-				PlayerRespawnEvent event = VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(new PlayerRespawnEvent(player, point));
+				PlayerRespawnEvent event = server.getEventManager().callEvent(new PlayerRespawnEvent(player, point));
 
 				if (event.isCancelled()) {
 					return;
@@ -70,23 +93,13 @@ public class PlayerStatusHandler extends MessageHandler<PlayerStatusMessage> {
 				point = event.getPoint();
 			}
 			//Set position for the server
-			player.teleport(point);
-			session.getNetworkSynchronizer().forceRespawn();
-			Human human = player.get(Human.class);
-			if (human != null) {
-				human.getHealth().setHealth(human.getHealth().getMaxHealth(), HealthChangeCause.SPAWN);
-			}
+			player.getPhysics().setPosition(point);
+			player.getNetwork().forceRespawn();
+			Human human = player.add(Human.class);
+			human.getHealth().setHealth(human.getHealth().getMaxHealth(), HealthChangeCause.SPAWN);
 
 			final Transform spawn = new Transform(player.getPhysics().getTransform());
 			spawn.setPosition(point);
-			//send spawn to everyone else
-			Set<? extends Player> observers = player.getChunk().getObservingPlayers();
-			for (Player otherPlayer : observers) {
-				if (player == otherPlayer) {
-					continue;
-				}
-				((ServerNetworkSynchronizer) otherPlayer.getNetworkSynchronizer()).syncEntity(player, spawn, true, false, false);
-			}
 		}
 	}
 }

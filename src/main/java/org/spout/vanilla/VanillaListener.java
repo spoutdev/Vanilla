@@ -28,6 +28,8 @@ package org.spout.vanilla;
 
 import org.spout.api.Client;
 import org.spout.api.Platform;
+import org.spout.api.Server;
+import org.spout.api.Spout;
 import org.spout.api.component.entity.CameraComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.event.EventHandler;
@@ -38,14 +40,22 @@ import org.spout.api.event.block.BlockChangeEvent;
 import org.spout.api.event.engine.EngineStartEvent;
 import org.spout.api.event.entity.EntityHiddenEvent;
 import org.spout.api.event.entity.EntityShownEvent;
+import org.spout.api.event.entity.EntitySpawnEvent;
+import org.spout.api.event.player.ClientPlayerConnectedEvent;
 import org.spout.api.event.player.PlayerJoinEvent;
 import org.spout.api.event.server.permissions.PermissionNodeEvent;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockSnapshot;
+import org.spout.api.util.access.BanType;
 
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
+import org.spout.vanilla.component.entity.living.Aggressive;
 import org.spout.vanilla.component.entity.living.Human;
+import org.spout.vanilla.component.entity.living.Living;
+import org.spout.vanilla.component.entity.living.Neutral;
+import org.spout.vanilla.component.entity.living.Passive;
+import org.spout.vanilla.component.entity.living.hostile.EnderDragon;
 import org.spout.vanilla.component.entity.misc.EntityHead;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.component.entity.misc.Hunger;
@@ -57,6 +67,7 @@ import org.spout.vanilla.component.entity.player.Ping;
 import org.spout.vanilla.component.entity.player.PlayerHead;
 import org.spout.vanilla.component.entity.player.PlayerInteract;
 import org.spout.vanilla.component.entity.player.PlayerList;
+import org.spout.vanilla.component.entity.player.VanillaPlayerNetworkComponent;
 import org.spout.vanilla.component.entity.player.hud.VanillaArmorWidget;
 import org.spout.vanilla.component.entity.player.hud.VanillaCrosshair;
 import org.spout.vanilla.component.entity.player.hud.VanillaDrowning;
@@ -64,12 +75,19 @@ import org.spout.vanilla.component.entity.player.hud.VanillaExpBar;
 import org.spout.vanilla.component.entity.player.hud.VanillaHunger;
 import org.spout.vanilla.component.entity.player.hud.VanillaQuickbar;
 import org.spout.vanilla.component.world.sky.Sky;
+import org.spout.vanilla.data.Difficulty;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
+import org.spout.vanilla.data.configuration.WorldConfiguration;
+import org.spout.vanilla.data.configuration.WorldConfigurationNode;
+import org.spout.vanilla.event.entity.EntityDeathEvent;
 import org.spout.vanilla.event.material.RedstoneChangeEvent;
+import org.spout.vanilla.event.player.PlayerDeathEvent;
 import org.spout.vanilla.input.VanillaInputExecutor;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.protocol.ClientAuthentification;
 import org.spout.vanilla.protocol.PasteExceptionHandler;
+import org.spout.vanilla.protocol.entity.PlayerEntityProtocol;
 
 public class VanillaListener implements Listener {
 	private final VanillaPlugin plugin;
@@ -88,16 +106,21 @@ public class VanillaListener implements Listener {
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
+		// TODO: this must here, because when health gets updated on first attach, protocol event uses hunger too. Sleaker?
+		player.add(Hunger.class);
 		player.add(Human.class).setName(player.getName());
 		player.add(PlayerInventory.class);
 		player.add(WindowHolder.class);
 		player.add(PlayerList.class);
-		player.add(Ping.class);
+		// TODO: Connection times out when using Spout Protocol because no Ping Message; need a Ping component client-side that somehow updates server
+		if (player.getNetwork() instanceof VanillaPlayerNetworkComponent) {
+			player.add(Ping.class);
+			((VanillaPlayerNetworkComponent) player.getNetwork()).setEntityProtocol(new PlayerEntityProtocol());
+		}
 		player.add(PlayerItemCollector.class);
 		player.add(Sleep.class);
-		player.add(Hunger.class);
 		player.add(Level.class);
-		player.getSession().setUncaughtExceptionHandler(new PasteExceptionHandler(player.getSession()));
+		player.getNetwork().getSession().setUncaughtExceptionHandler(new PasteExceptionHandler(player.getNetwork().getSession()));
 		Sky sky = player.getWorld().get(Sky.class);
 		if (sky != null) {
 			sky.updatePlayer(player);
@@ -122,21 +145,28 @@ public class VanillaListener implements Listener {
 		HUD.setupHUD();
 		HUD.openHUD();
 
-		player.add(Human.class);
+		((Client) player.getEngine()).getInputManager().addInputExecutor(new VanillaInputExecutor(player));
 
 		// Remove Head and default Camera
 		player.detach(EntityHead.class);
 		player.detach(CameraComponent.class);
 
 		player.add(PlayerHead.class);
+	}
+
+	@EventHandler
+	public void onClientConnect(ClientPlayerConnectedEvent event) {
+		if (plugin.getEngine().getPlatform() != Platform.CLIENT) {
+			return;
+		}
+		Player player = ((Client) plugin.getEngine()).getPlayer();
+
+		player.add(Human.class);
 		player.add(PlayerInventory.class);
 		player.add(WindowHolder.class);
 		player.add(Health.class);
 		player.add(Hunger.class);
 		player.add(PlayerInteract.class).setRange(5f);
-
-		((Client) player.getEngine()).getInputManager().addInputExecutor(new VanillaInputExecutor(player));
-		player.add(PlayerHead.class);
 
 		if (VanillaConfiguration.ONLINE_MODE.getBoolean()) {
 			String username = VanillaConfiguration.USERNAME.getString();
@@ -194,6 +224,46 @@ public class VanillaListener implements Listener {
 	public void onEntityShow(EntityShownEvent event) {
 		if (event.getEntity() instanceof Player) {
 			event.getHiddenFrom().get(PlayerList.class).force();
+		}
+	}
+
+	@EventHandler
+	public void onDeath(EntityDeathEvent event) {
+		EnderDragon get = event.getEntity().get(EnderDragon.class);
+		if (get != null) {
+			if (VanillaConfiguration.END_CREDITS.getBoolean()) {
+				// TODO: do awesome end credit stuff
+			}
+		}
+	}
+
+	@EventHandler
+	public void onDeath(PlayerDeathEvent event) {
+		if (Spout.getPlatform() != Platform.SERVER) {
+			return;
+		}
+		Difficulty difficulty = event.getPlayer().getData().get(VanillaData.DIFFICULTY);
+		if (difficulty == Difficulty.HARDCORE) {
+			((Server) Spout.getEngine()).getAccessManager().ban(BanType.PLAYER, event.getPlayer().getName(), true, "Banned from server. Reason: Death on hardcore.");
+		}
+	}
+
+	@EventHandler (order = Order.EARLIEST)
+	public void onEntitySpawn(EntitySpawnEvent event) {
+		WorldConfigurationNode node = VanillaConfiguration.WORLDS.get(event.getEntity().getWorld());
+		Living mob = event.getEntity().get(Living.class);
+		if (!(mob instanceof Player)) {
+			if (!node.SPAWN_ANIMALS.getBoolean()) {
+				if (mob instanceof Neutral || mob instanceof Passive) {
+					event.setCancelled(true);
+				}
+			}
+
+			if (!node.SPAWN_MONSTERS.getBoolean()) {
+				if (mob instanceof Aggressive) {
+					event.setCancelled(true);	
+				}
+			}
 		}
 	}
 }

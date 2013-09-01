@@ -35,11 +35,11 @@ import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class WoodenStairs extends Stairs implements Fuel, Burnable {
-	public final float BURN_TIME = 15;
+	public static final float BURN_TIME = 15;
 
 	public WoodenStairs(String name, int id) {
 		super(name, id, null);
-		this.setHardness(2.0F).setResistance(10.0F);
+		this.setHardness(2.0F).setResistance(15.0F);
 	}
 
 	@Override

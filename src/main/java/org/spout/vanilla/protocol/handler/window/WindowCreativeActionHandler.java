@@ -40,9 +40,6 @@ import org.spout.vanilla.protocol.msg.window.WindowCreativeActionMessage;
 public class WindowCreativeActionHandler extends MessageHandler<WindowCreativeActionMessage> {
 	@Override
 	public void handleServer(ServerSession session, WindowCreativeActionMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
 		Player holder = session.getPlayer();
 		Human human = holder.get(Human.class);
 		if (human == null) {

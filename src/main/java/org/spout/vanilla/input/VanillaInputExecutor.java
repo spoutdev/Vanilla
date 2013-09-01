@@ -43,11 +43,11 @@ public class VanillaInputExecutor implements InputExecutor {
 		this.player = player;
 	}
 
+	// TODO: vanilla input
 	@Override
-	public void execute(float dt, Transform playerTransform) {
+	public void execute(float dt, Transform ts) {
 		PlayerInputState inputState = player.input();
 		PhysicsComponent sc = player.getPhysics();
-		Transform ts = sc.getTransform(); //TODO: Maybe need getTransformLive?
 
 		Vector3 offset = Vector3.ZERO;
 		float speed = 50;

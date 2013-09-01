@@ -35,7 +35,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.entity.EntityMessage;
 
 public final class EntityObjectMessage extends EntityMessage {
@@ -73,8 +73,8 @@ public final class EntityObjectMessage extends EntityMessage {
 		speedY = (short) (velocity.getY() * s);
 		speedZ = (short) (velocity.getZ() * s);
 
-		pitch = (byte) VanillaChannelBufferUtils.protocolifyPitch(transform.getRotation().getPitch());
-		yaw = (byte) VanillaChannelBufferUtils.protocolifyYaw(transform.getRotation().getYaw());
+		pitch = (byte) VanillaByteBufUtils.protocolifyPitch(transform.getRotation().getPitch());
+		yaw = (byte) VanillaByteBufUtils.protocolifyYaw(transform.getRotation().getYaw());
 	}
 
 	public EntityObjectMessage(Entity entity, byte type, RepositionManager rm) {
@@ -176,5 +176,21 @@ public final class EntityObjectMessage extends EntityMessage {
 				.append(this.yaw, other.yaw)
 				.append(this.pitch, other.pitch)
 				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.getEntityId())
+				.append(this.type)
+				.append(this.x)
+				.append(this.y)
+				.append(this.z)
+				.append(this.speedX)
+				.append(this.speedY)
+				.append(this.speedZ)
+				.append(this.yaw)
+				.append(this.pitch)
+				.toHashCode();
 	}
 }

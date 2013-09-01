@@ -78,6 +78,17 @@ public class PlayerLocaleViewDistanceMessage extends VanillaMainChannelMessage {
 				.isEquals();
 	}
 
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.locale)
+				.append(this.viewDistance)
+				.append(this.chatFlags)
+				.append(this.difficulty)
+				.append(this.showCape)
+				.toHashCode();
+	}
+
 	public String getLocale() {
 		return locale;
 	}

@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.component.entity.substance;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.entity.object.LightningEntityProtocol;
 
 public class Lightning extends Substance {
@@ -34,7 +33,7 @@ public class Lightning extends Substance {
 
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new LightningEntityProtocol());
+		setEntityProtocol(new LightningEntityProtocol());
 	}
 
 	@Override

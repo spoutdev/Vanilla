@@ -27,6 +27,15 @@
 package org.spout.vanilla.component.entity.substance;
 
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
+import org.spout.vanilla.component.entity.misc.Descriptor;
 
 public abstract class Substance extends VanillaEntityComponent {
+
+	@Override
+	public void onAttached() {
+		super.onAttached();
+
+		// Description (use Class name as default)
+		getOwner().add(Descriptor.class).setName(getClass().getSimpleName());
+	}
 }

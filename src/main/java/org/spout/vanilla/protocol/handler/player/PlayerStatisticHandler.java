@@ -34,10 +34,8 @@ import org.spout.vanilla.protocol.msg.player.PlayerStatisticMessage;
 public class PlayerStatisticHandler extends MessageHandler<PlayerStatisticMessage> {
 	@Override
 	public void handleClient(ClientSession session, PlayerStatisticMessage message) {
-		if (!session.hasPlayer()) {
-		}
-
-		//TODO Implement Statistic
+		//TODO: implement
+		System.out.println(message.toString());
 
 	}
 }

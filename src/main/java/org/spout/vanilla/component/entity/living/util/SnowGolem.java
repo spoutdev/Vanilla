@@ -28,7 +28,6 @@ package org.spout.vanilla.component.entity.living.util;
 
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.living.Utility;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
@@ -44,7 +43,7 @@ public class SnowGolem extends Living implements Utility {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.SNOW_GOLEM));
+		setEntityProtocol(new CreatureProtocol(CreatureType.SNOW_GOLEM));
 		getOwner().add(DeathDrops.class).addDrop(new ItemStack(VanillaMaterials.SNOWBALL, getRandom().nextInt(15)));
 		if (getAttachedCount() == 1) {
 			getOwner().add(Health.class).setSpawnHealth(100);

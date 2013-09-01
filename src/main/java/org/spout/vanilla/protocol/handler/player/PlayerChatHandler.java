@@ -36,18 +36,11 @@ import org.spout.vanilla.protocol.msg.player.PlayerChatMessage;
 public final class PlayerChatHandler extends MessageHandler<PlayerChatMessage> {
 	@Override
 	public void handleClient(ClientSession session, PlayerChatMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
 		session.getPlayer().sendMessage(message.getMessage());
 	}
 
 	@Override
 	public void handleServer(ServerSession session, PlayerChatMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		Player player = session.getPlayer();
 		String text = message.getMessage().trim();
 		if (text.length() > 100) {

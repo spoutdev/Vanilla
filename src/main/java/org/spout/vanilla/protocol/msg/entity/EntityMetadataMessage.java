@@ -116,4 +116,12 @@ public final class EntityMetadataMessage extends EntityMessage {
 				.append(this.parameters, other.parameters)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.getEntityId())
+				.append(this.parameters)
+				.toHashCode();
+	}
 }

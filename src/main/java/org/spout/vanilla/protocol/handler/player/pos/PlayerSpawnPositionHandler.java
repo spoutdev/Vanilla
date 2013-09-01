@@ -37,9 +37,6 @@ import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnPositionMessage;
 public final class PlayerSpawnPositionHandler extends MessageHandler<PlayerSpawnPositionMessage> {
 	@Override
 	public void handleClient(ClientSession session, PlayerSpawnPositionMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
 		Player player = session.getPlayer();
 
 		World world = player.getWorld();

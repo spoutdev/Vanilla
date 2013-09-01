@@ -44,10 +44,6 @@ import org.spout.vanilla.protocol.msg.entity.EntityActionMessage;
 public final class EntityActionHandler extends MessageHandler<EntityActionMessage> {
 	@Override
 	public void handleServer(ServerSession session, EntityActionMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		Player player = session.getPlayer();
 		Human human = player.get(Human.class);
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();

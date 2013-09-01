@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.component.entity.living.neutral;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.inventory.EntityInventory;
 import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.living.Neutral;
@@ -44,7 +43,7 @@ public class PigZombie extends Living implements Neutral {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.PIG_ZOMBIE));
+		setEntityProtocol(new CreatureProtocol(CreatureType.PIG_ZOMBIE));
 		getOwner().add(EntityInventory.class);
 		getOwner().add(EntityItemCollector.class);
 		if (getAttachedCount() == 1) {

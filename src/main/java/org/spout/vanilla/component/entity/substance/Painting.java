@@ -34,7 +34,6 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.data.PaintingType;
 import org.spout.vanilla.data.VanillaData;
@@ -47,11 +46,10 @@ public class Painting extends Substance {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new PaintingEntityProtocol());
+		setEntityProtocol(new PaintingEntityProtocol());
 		if (getAttachedCount() == 1) {
 			getOwner().add(DeathDrops.class).addDrop(new ItemStack(VanillaMaterials.PAINTING, 1));
 		}
-		getOwner().setSavable(true);
 	}
 
 	@Override

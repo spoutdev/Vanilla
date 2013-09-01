@@ -38,7 +38,8 @@ import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.entity.misc.MetadataComponent;
+import org.spout.vanilla.data.Metadata;
 import org.spout.vanilla.event.entity.network.EntityMetaChangeEvent;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.object.ItemFrameProtocol;
@@ -50,7 +51,31 @@ public class ItemFrame extends Substance {
 
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ItemFrameProtocol());
+		setEntityProtocol(new ItemFrameProtocol());
+
+		// Add metadata for the displayed item
+		getOwner().add(MetadataComponent.class).addMeta(new Metadata<ItemStack>(Metadata.TYPE_ITEM, 2) {
+			private ItemStack lastItem = null;
+
+			@Override
+			public ItemStack getValue() {
+				Material mat = getMaterial();
+				if (mat == null) {
+					return null;
+				}
+				// Re-use last item to avoid the creation of too many items
+				// If material changes, create a new item to break the reference
+				if (lastItem == null || !lastItem.isMaterial(mat)) {
+					lastItem = new ItemStack(mat, 1);
+				}
+				return lastItem;
+			}
+
+			@Override
+			public void setValue(ItemStack value) {
+				setMaterial(value == null ? null : value.getMaterial());
+			}
+		});
 	}
 
 	@Override

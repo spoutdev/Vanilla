@@ -81,4 +81,12 @@ public final class PlayerGameStateMessage extends VanillaMainChannelMessage {
 				.append(this.gameMode, other.gameMode)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.reason)
+				.append(this.gameMode)
+				.toHashCode();
+	}
 }

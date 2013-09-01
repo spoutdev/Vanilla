@@ -31,20 +31,25 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.util.SpoutToStringStyle;
 
 public final class EntityActionMessage extends EntityMessage {
-	public static final int ACTION_CROUCH = 1;
-	public static final int ACTION_UNCROUCH = 2;
-	public static final int ACTION_LEAVE_BED = 3;
-	public static final int ACTION_START_SPRINTING = 4;
-	public static final int ACTION_STOP_SPRINTING = 5;
-	private final int action;
+	public static final byte ACTION_CROUCH = 0x1;
+	public static final byte ACTION_UNCROUCH = 0x2;
+	public static final byte ACTION_LEAVE_BED = 0x3;
+	public static final byte ACTION_START_SPRINTING = 0x4;
+	public static final byte ACTION_STOP_SPRINTING = 0x5;
+	private final int action, jumpBoost;
 
-	public EntityActionMessage(int id, int action) {
+	public EntityActionMessage(int id, int action, int jumpBoost) {
 		super(id);
 		this.action = action;
+		this.jumpBoost = jumpBoost;
 	}
 
 	public int getAction() {
 		return action;
+	}
+
+	public int getJumpBoost() {
+		return jumpBoost;
 	}
 
 	@Override
@@ -52,6 +57,7 @@ public final class EntityActionMessage extends EntityMessage {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
 				.append("id", this.getEntityId())
 				.append("action", action)
+				.append("jumpboost", jumpBoost)
 				.toString();
 	}
 
@@ -67,6 +73,16 @@ public final class EntityActionMessage extends EntityMessage {
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
 				.append(this.getEntityId(), other.getEntityId())
 				.append(this.action, other.action)
+				.append(this.jumpBoost, other.jumpBoost)
 				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.getEntityId())
+				.append(this.action)
+				.append(this.jumpBoost)
+				.toHashCode();
 	}
 }

@@ -37,7 +37,7 @@ public class RconDecoder /*extends ReplayingDecoder<VoidEnum>*/ {
 		this.session = session;
 	}
 
-	protected Object decode(ChannelHandlerContext channelHandlerContext, Channel channel, ChannelBuffer buffer, VoidEnum state) throws Exception {
+	protected Object decode(ChannelHandlerContext channelHandlerContext, Channel channel, ByteBuf buffer, VoidEnum state) throws Exception {
 		int length = buffer.readInt();
 		if (buffer.readableBytes() < length) {
 			return null;

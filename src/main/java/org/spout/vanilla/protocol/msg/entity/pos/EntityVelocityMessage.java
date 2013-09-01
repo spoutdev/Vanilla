@@ -85,4 +85,14 @@ public final class EntityVelocityMessage extends EntityMessage {
 				.append(this.velocityZ, other.velocityZ)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.getEntityId())
+				.append(this.velocityX)
+				.append(this.velocityY)
+				.append(this.velocityZ)
+				.toHashCode();
+	}
 }

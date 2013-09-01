@@ -40,8 +40,8 @@ import org.spout.vanilla.material.block.misc.BedBlock;
  * Component that handle the player sleeping on a bed or any similar blocks.
  */
 public class Sleep extends VanillaEntityComponent {
-	private final float sleepSeconds = 5;
-	private float sleepTimer = sleepSeconds;
+	private static final float SLEEP_SECONDS = 5;
+	private float sleepTimer = SLEEP_SECONDS;
 	private boolean sleeping, skipNight;
 	private Block bed;
 	private Player player;
@@ -75,7 +75,7 @@ public class Sleep extends VanillaEntityComponent {
 		skipNight = false;
 		occupy(false);
 		bed = null;
-		player.getNetworkSynchronizer().callProtocolEvent(new EntityAnimationEvent(player, Animation.LEAVE_BED));
+		player.getNetwork().callProtocolEvent(new EntityAnimationEvent(player, Animation.LEAVE_BED));
 	}
 
 	/**
@@ -112,7 +112,7 @@ public class Sleep extends VanillaEntityComponent {
 		if (sleeping) {
 			sleepTimer -= dt;
 		} else {
-			sleepTimer = sleepSeconds;
+			sleepTimer = SLEEP_SECONDS;
 		}
 
 		// If sleep timer if finished try and skip to day

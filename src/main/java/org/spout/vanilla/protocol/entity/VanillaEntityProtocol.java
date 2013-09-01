@@ -34,13 +34,14 @@ import java.util.List;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.math.Vector3;
-import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.entity.misc.EntityHead;
-import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
+import org.spout.vanilla.component.entity.misc.MetadataComponent;
+import org.spout.vanilla.protocol.EntityProtocol;
+import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.entity.EntityDestroyMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityHeadYawMessage;
@@ -49,15 +50,39 @@ import org.spout.vanilla.protocol.msg.entity.pos.EntityRelativePositionYawMessag
 import org.spout.vanilla.protocol.msg.entity.pos.EntityTeleportMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityYawMessage;
 
-import static org.spout.vanilla.protocol.VanillaChannelBufferUtils.protocolifyPitch;
-import static org.spout.vanilla.protocol.VanillaChannelBufferUtils.protocolifyPosition;
-import static org.spout.vanilla.protocol.VanillaChannelBufferUtils.protocolifyYaw;
+import static org.spout.vanilla.protocol.VanillaByteBufUtils.protocolifyPitch;
+import static org.spout.vanilla.protocol.VanillaByteBufUtils.protocolifyPosition;
+import static org.spout.vanilla.protocol.VanillaByteBufUtils.protocolifyYaw;
 
 public abstract class VanillaEntityProtocol implements EntityProtocol {
-	private List<Parameter<?>> lastMeta;
+	/**
+	 * Gets all the Metadata Parameters associated with this Entity when spawning
+	 *
+	 * @param entity to get it for
+	 * @return List of metadata Parameters
+	 */
+	public List<Parameter<?>> getSpawnParameters(Entity entity) {
+		MetadataComponent metadataComponent = entity.get(MetadataComponent.class);
+		if (metadataComponent == null) {
+			return Collections.emptyList();
+		} else {
+			return metadataComponent.getSpawnParameters();
+		}
+	}
 
+	/**
+	 * Gets all the Metadata Parameters required for updating this Entity.
+	 *
+	 * @param entity to get it for
+	 * @return List of metadata Parameters to update
+	 */
 	public List<Parameter<?>> getUpdateParameters(Entity entity) {
-		return Collections.emptyList();
+		MetadataComponent metadataComponent = entity.get(MetadataComponent.class);
+		if (metadataComponent == null) {
+			return Collections.emptyList();
+		} else {
+			return metadataComponent.getUpdateParameters();
+		}
 	}
 
 	@Override
@@ -114,7 +139,7 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 		// Head movement
 		EntityHead head = entity.get(EntityHead.class);
 		if (head != null && head.isDirty()) {
-			final int headYawProt = VanillaChannelBufferUtils.protocolifyYaw(head.getOrientation().getYaw());
+			final int headYawProt = VanillaByteBufUtils.protocolifyYaw(head.getOrientation().getYaw());
 			messages.add(new EntityHeadYawMessage(entity.getId(), headYawProt));
 		}
 
@@ -124,13 +149,11 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 			messages.add(new EntityVelocityMessage(entity.getId(), new Vector3(0, 0, 0)));
 		}*/
 
-		// Extra metadata
+		// Refresh metadata
 		List<Parameter<?>> params = getUpdateParameters(entity);
-		if (lastMeta == null || !lastMeta.equals(params)) {
+		if (!params.isEmpty()) {
 			messages.add(new EntityMetadataMessage(entity.getId(), params));
-			lastMeta = params;
 		}
-
 		return messages;
 	}
 

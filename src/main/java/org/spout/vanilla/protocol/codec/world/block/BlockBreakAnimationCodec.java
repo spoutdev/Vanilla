@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.codec.world.block;
 
 import java.io.IOException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.reposition.NullRepositionManager;
@@ -42,7 +42,7 @@ public class BlockBreakAnimationCodec extends MessageCodec<BlockBreakAnimationMe
 	}
 
 	@Override
-	public BlockBreakAnimationMessage decode(ChannelBuffer buffer) throws IOException {
+	public BlockBreakAnimationMessage decode(ByteBuf buffer) throws IOException {
 		int entityId = buffer.readInt();
 		int x = buffer.readInt();
 		int y = buffer.readInt();
@@ -52,8 +52,8 @@ public class BlockBreakAnimationCodec extends MessageCodec<BlockBreakAnimationMe
 	}
 
 	@Override
-	public ChannelBuffer encode(BlockBreakAnimationMessage msg) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(17);
+	public ByteBuf encode(BlockBreakAnimationMessage msg) throws IOException {
+		ByteBuf buffer = Unpooled.buffer(17);
 		buffer.writeInt(msg.getEntityId());
 		buffer.writeInt(msg.getX());
 		buffer.writeInt(msg.getY());

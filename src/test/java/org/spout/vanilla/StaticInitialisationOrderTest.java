@@ -31,6 +31,7 @@ import java.lang.reflect.Modifier;
 
 import org.junit.Test;
 
+import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.solid.Stone;
@@ -40,6 +41,11 @@ import static org.junit.Assert.fail;
 public class StaticInitialisationOrderTest {
 	@Test
 	public void materialStaticInitialisationTest() {
+		TestVanilla.init();
+		VanillaConfiguration config = TestVanilla.getInstance().getConfig();
+		VanillaConfiguration.LAVA_DELAY.setConfiguration(config);
+		VanillaConfiguration.WATER_DELAY.setConfiguration(config);
+
 		EngineFaker.setupEngine();
 		try {
 			new Stone("Test Stone", 87945);

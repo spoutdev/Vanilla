@@ -61,6 +61,11 @@ public final class PlayerHandshakeMessage extends VanillaMainChannelMessage {
 	}
 
 	@Override
+	public boolean requiresPlayer() {
+		return false;
+	}
+
+	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
 				.append("protocol version", protoVersion)
@@ -85,5 +90,15 @@ public final class PlayerHandshakeMessage extends VanillaMainChannelMessage {
 				.append(this.hostname, other.hostname)
 				.append(this.port, other.port)
 				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.protoVersion)
+				.append(this.username)
+				.append(this.hostname)
+				.append(this.port)
+				.toHashCode();
 	}
 }

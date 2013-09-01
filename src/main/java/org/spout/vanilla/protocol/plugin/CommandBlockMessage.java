@@ -26,6 +26,11 @@
  */
 package org.spout.vanilla.protocol.plugin;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import org.spout.api.util.SpoutToStringStyle;
+
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
 public class CommandBlockMessage extends VanillaMainChannelMessage {
@@ -53,5 +58,32 @@ public class CommandBlockMessage extends VanillaMainChannelMessage {
 
 	public String getCommand() {
 		return cmd;
+	}
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("x", x)
+				.append("y", y)
+				.append("z", z)
+				.append("command", cmd)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final CommandBlockMessage other = (CommandBlockMessage) obj;
+		return new EqualsBuilder()
+				.append(x, other.x)
+				.append(y, other.y)
+				.append(z, other.z)
+				.append(cmd, other.cmd)
+				.isEquals();
 	}
 }

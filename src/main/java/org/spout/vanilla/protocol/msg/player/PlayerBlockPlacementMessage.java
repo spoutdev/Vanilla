@@ -113,4 +113,16 @@ public final class PlayerBlockPlacementMessage extends VanillaMainChannelMessage
 				.append(this.heldItem, other.heldItem)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+				.append(this.x)
+				.append(this.y)
+				.append(this.z)
+				.append(this.direction)
+				.append(this.face)
+				.append(this.heldItem)
+				.toHashCode();
+	}
 }

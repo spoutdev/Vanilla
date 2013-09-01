@@ -26,24 +26,40 @@
  */
 package org.spout.vanilla.component.entity;
 
-import java.util.Arrays;
+import java.util.HashMap;
 
 import org.spout.api.component.entity.EntityComponent;
-import org.spout.api.util.Parameter;
+import org.spout.api.entity.Player;
 
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.event.entity.network.EntityMetaChangeEvent;
+import org.spout.vanilla.protocol.VanillaNetworkProtocol;
+import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
 
 public class VanillaEntityComponent extends EntityComponent {
+
 	@Override
 	public void onAttached() {
-		//Tracks the number of times this component has been attached (i.e how many times it's been saved, then loaded. 1 = fresh entity)
-		getOwner().getData().put(VanillaData.ATTACHED_COUNT, getAttachedCount() + 1);
+		HashMap<Class<? extends VanillaEntityComponent>, Integer> map = getOwner().getData().get(VanillaData.ATTACHED_COUNT);
+		Integer count = map.get(getClass());
+		if (count == null) {
+			count = 0;
+		}
+		count++;
+		map.put(getClass(), count);
+		getOwner().getData().put(VanillaData.ATTACHED_COUNT, map);
 		getOwner().setSavable(true);
+
+		// Players initialized in initializeSession
+		if (!(getOwner() instanceof Player)) {
+			getOwner().add(VanillaNetworkComponent.class);
+		}
 	}
 
-	protected void setMetadata(Parameter<?>... p) {
-		getOwner().getNetwork().callProtocolEvent(new EntityMetaChangeEvent(getOwner(), Arrays.asList(p)));
+	protected void setEntityProtocol(VanillaEntityProtocol p) {
+		if (!(getOwner().getNetwork() instanceof VanillaNetworkProtocol)) {
+			return;
+		}
+		((VanillaNetworkProtocol) getOwner().getNetwork()).setEntityProtocol(p);
 	}
 
 	/**
@@ -53,6 +69,6 @@ public class VanillaEntityComponent extends EntityComponent {
 	 * @return attached count
 	 */
 	public final int getAttachedCount() {
-		return getOwner().getData().get(VanillaData.ATTACHED_COUNT);
+		return (Integer) getOwner().getData().get(VanillaData.ATTACHED_COUNT).get(getClass());
 	}
 }

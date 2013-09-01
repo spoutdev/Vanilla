@@ -70,12 +70,8 @@ import org.spout.vanilla.util.PlayerUtil;
 public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMessage> {
 	@Override
 	public void handleServer(ServerSession session, PlayerDiggingMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
 		Player player = session.getPlayer();
-		RepositionManager rm = player.getNetworkSynchronizer().getRepositionManager();
+		RepositionManager rm = player.getNetwork().getRepositionManager();
 		RepositionManager rmInverse = rm.getInverse();
 
 		int x = rmInverse.convertX(message.getX());
@@ -105,7 +101,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 			Collection<Protection> protections = player.getEngine().getServiceManager().getRegistration(ProtectionService.class).getProvider().getAllProtections(point);
 			for (Protection p : protections) {
 				if (p.contains(point) && !human.isOp()) {
-					player.getSession().send(new BlockChangeMessage(x, y, z, minecraftID, block.getBlockData() & 0xF, rm));
+					player.getNetwork().getSession().send(new BlockChangeMessage(x, y, z, minecraftID, block.getBlockData() & 0xF, rm));
 					player.sendMessage(ChatStyle.DARK_RED + "This area is a protected spawn point!");
 					return;
 				}
@@ -129,10 +125,10 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 					final PlayerInteractBlockEvent event = new PlayerInteractBlockEvent(player, block, point, clickedFace, Action.LEFT_CLICK);
 					if (player.getEngine().getEventManager().callEvent(event).isCancelled()) {
 						if (human.isCreative() || blockMaterial.getHardness() == 0.0f) {
-							session.send(new BlockChangeMessage(block, session.getPlayer().getNetworkSynchronizer().getRepositionManager()));
+							session.send(new BlockChangeMessage(block, player.getNetwork().getRepositionManager()));
 							Sign sign = block.get(Sign.class);
 							if (sign != null) {
-								session.send(new SignMessage(block.getX(), block.getY(), block.getZ(), sign.getText(), player.getNetworkSynchronizer().getRepositionManager()));
+								session.send(new SignMessage(block.getX(), block.getY(), block.getZ(), sign.getText(), player.getNetwork().getRepositionManager()));
 							}
 						}
 					} else {
@@ -183,10 +179,10 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 
 					if (!diggingComponent.stopDigging(new Point(w, x, y, z), true) || !isInteractable) {
 						if (!diggingComponent.isDigging()) {
-							session.send(new BlockChangeMessage(block, session.getPlayer().getNetworkSynchronizer().getRepositionManager()));
+							session.send(new BlockChangeMessage(block, player.getNetwork().getRepositionManager()));
 							Sign sign = block.get(Sign.class);
 							if (sign != null) {
-								session.send(new SignMessage(block.getX(), block.getY(), block.getZ(), sign.getText(), player.getNetworkSynchronizer().getRepositionManager()));
+								session.send(new SignMessage(block.getX(), block.getY(), block.getZ(), sign.getText(), player.getNetwork().getRepositionManager()));
 							}
 						}
 						return;
@@ -257,7 +253,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 			heldItem.getMaterial().getItemFlags(heldItem, flags);
 		}
 		if (!blockMaterial.destroy(block, flags, new PlayerBreakCause((Player) human.getOwner(), block))) {
-			RepositionManager rm = session.getPlayer().getNetworkSynchronizer().getRepositionManager();
+			RepositionManager rm = session.getPlayer().getNetwork().getRepositionManager();
 			session.send(new BlockChangeMessage(block, rm));
 			Sign sign = block.get(Sign.class);
 			if (sign != null) {
@@ -273,7 +269,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		Collection<Protection> protections = player.getEngine().getServiceManager().getRegistration(ProtectionService.class).getProvider().getAllProtections(point);
 		for (Protection p : protections) {
 			if (p.contains(point) && !player.get(Human.class).isOp()) {
-				player.getSession().send(new BlockChangeMessage(x, y, z, minecraftID, block.getBlockData() & 0xF, rm));
+				player.getNetwork().getSession().send(new BlockChangeMessage(x, y, z, minecraftID, block.getBlockData() & 0xF, rm));
 				player.sendMessage(ChatStyle.DARK_RED + "This area is a protected spawn point!");
 				return true;
 			}

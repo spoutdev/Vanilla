@@ -50,7 +50,7 @@ public abstract class PressurePlate extends AttachedRedstoneSource implements Dy
 	public PressurePlate(String name, int id, String model) {
 		super(name, id, model, null);
 		//TODO Ghostable?
-		this.setAttachable(BlockFace.BOTTOM).setHardness(0.5F).setResistance(0.8F).setTransparent().setGhost(true);
+		this.setAttachable(BlockFace.BOTTOM).setHardness(0.5F).setResistance(2.5F).setTransparent().setGhost(true);
 		//TODO: Create the box model and different up/down collision shapes
 		// UP height = 0.0625F
 		// DOWN height = 0.03125F

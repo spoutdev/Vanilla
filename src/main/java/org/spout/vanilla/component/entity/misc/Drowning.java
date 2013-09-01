@@ -34,6 +34,7 @@ import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.component.entity.player.HUD;
 import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.data.Metadata;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.cause.BlockDamageCause;
 import org.spout.vanilla.event.cause.DamageCause.DamageType;
@@ -54,6 +55,19 @@ public class Drowning extends VanillaEntityComponent {
 		owner = getOwner();
 		health = owner.add(Health.class);
 		head = owner.add(EntityHead.class);
+
+		// Add metadata associated with air ticks
+		owner.add(MetadataComponent.class).addMeta(new Metadata<Short>(Metadata.TYPE_SHORT, 1) {
+			@Override
+			public Short getValue() {
+				return (short) (20.0f * getAir());
+			}
+
+			@Override
+			public void setValue(Short value) {
+				setAir((short) value / 20.0f);
+			}
+		});
 	}
 
 	@Override

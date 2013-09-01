@@ -30,6 +30,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.RepositionManager;
 
@@ -39,6 +40,7 @@ import org.spout.vanilla.protocol.msg.entity.spawn.EntityThunderboltMessage;
 public class LightningEntityProtocol extends VanillaEntityProtocol {
 	@Override
 	public List<Message> getSpawnMessages(Entity entity, RepositionManager rm) {
-		return Arrays.<Message>asList(new EntityThunderboltMessage(entity.getId(), entity.getPhysics().getPosition().getBlockX(), entity.getPhysics().getPosition().getBlockY(), entity.getPhysics().getPosition().getBlockZ(), rm));
+		Point pos = entity.getPhysics().getPosition();
+		return Arrays.<Message>asList(new EntityThunderboltMessage(entity.getId(), pos.getBlockX(), pos.getBlockY(), pos.getBlockZ(), rm));
 	}
 }

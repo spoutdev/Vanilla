@@ -41,7 +41,6 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.IntVector3;
 import org.spout.api.math.IntVector4;
-import org.spout.api.math.Vector3;
 import org.spout.api.util.IntVector3Array;
 import org.spout.api.util.bytebit.ByteBitSet;
 import org.spout.api.util.cuboid.ChunkCuboidLightBufferWrapper;
@@ -51,6 +50,8 @@ import org.spout.api.util.hashing.Int10TripleHashed;
 import org.spout.api.util.list.IntVector3FIFO;
 import org.spout.api.util.list.IntVector4ExpandableFIFO;
 import org.spout.api.util.set.TInt10TripleSet;
+
+import org.spout.math.vector.Vector3;
 
 public abstract class VanillaLightingManager extends LightingManager<VanillaCuboidLightBuffer> {
 	private static final BlockFace[] allFaces = BlockFaces.NESWBT.toArray();

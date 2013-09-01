@@ -34,9 +34,9 @@ import org.spout.api.map.DefaultedKeyArray;
 import org.spout.api.map.DefaultedKeyFactory;
 import org.spout.api.map.DefaultedKeyImpl;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.Quaternion;
-import org.spout.api.math.Vector3;
 
+import org.spout.math.imaginary.Quaternion;
+import org.spout.math.vector.Vector3;
 import org.spout.vanilla.ChatStyle;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.data.effect.EntityEffectType;

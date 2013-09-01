@@ -27,7 +27,6 @@
 package org.spout.vanilla.component.entity.living;
 
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicReference;
 
 import org.spout.api.component.entity.TextModelComponent;
 import org.spout.api.data.Data;
@@ -37,10 +36,10 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
-import org.spout.api.math.GenericMath;
-import org.spout.api.math.Vector3;
-import org.spout.api.math.VectorMath;
 
+import org.spout.math.GenericMath;
+import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector3;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.misc.Digging;
 import org.spout.vanilla.component.entity.misc.EntityHead;
@@ -202,20 +201,20 @@ public class Human extends Living {
 		final float maxYForce = 0.1f;
 
 		// Create a velocity vector using the transform, apply (random) force
-		Vector3 impulse = dropFrom.getRotation().getDirection().multiply(impulseForce);
+		Vector3 impulse = dropFrom.getRotation().getDirection().mul(impulseForce);
 
 		// Random rotational offset to avoid dropping at the same position
 		Random rand = GenericMath.getRandom();
 		float xzLength = maxXZForce * rand.nextFloat();
 		float yLength = maxYForce * (rand.nextFloat() - rand.nextFloat());
-		impulse = impulse.add(VectorMath.getRandomDirection2D(rand).multiply(xzLength).toVector3(yLength));
+		impulse = impulse.add(Vector2.createRandomDirection(rand).mul(xzLength).toVector3(yLength));
 
 		// Slightly dropping upwards
 		impulse = impulse.add(0.0, 0.1, 0.0);
 
 		// Conversion factor, some sort of unit problem
 		//TODO: This needs an actual value and this value might change when gravity changes!
-		impulse = impulse.multiply(100);
+		impulse = impulse.mul(100);
 
 		// Finally drop using a 4 second pickup delay
 		Item spawnedItem = Item.drop(dropFrom.getPosition(), item, impulse);

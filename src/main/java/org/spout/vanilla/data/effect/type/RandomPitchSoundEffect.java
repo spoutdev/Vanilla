@@ -26,8 +26,7 @@
  */
 package org.spout.vanilla.data.effect.type;
 
-import org.spout.api.math.GenericMath;
-
+import org.spout.math.GenericMath;
 import org.spout.vanilla.data.effect.SoundEffect;
 
 /**

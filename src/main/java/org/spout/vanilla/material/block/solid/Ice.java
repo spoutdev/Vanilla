@@ -33,8 +33,8 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.CubicEffectRange;
 import org.spout.api.material.range.EffectRange;
-import org.spout.api.math.GenericMath;
 
+import org.spout.math.GenericMath;
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.data.Climate;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;

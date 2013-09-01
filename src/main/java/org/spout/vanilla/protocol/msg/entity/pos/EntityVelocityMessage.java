@@ -28,9 +28,9 @@ package org.spout.vanilla.protocol.msg.entity.pos;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import org.spout.api.math.Vector3;
 import org.spout.api.util.SpoutToStringStyle;
 
+import org.spout.math.vector.Vector3;
 import org.spout.vanilla.protocol.msg.entity.EntityMessage;
 
 public final class EntityVelocityMessage extends EntityMessage {

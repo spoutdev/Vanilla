@@ -37,9 +37,9 @@ import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectRange;
-import org.spout.api.math.GenericMath;
 import org.spout.api.util.flag.Flag;
 
+import org.spout.math.GenericMath;
 import org.spout.vanilla.data.drops.flag.BlockFlags;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaBlockMaterial;

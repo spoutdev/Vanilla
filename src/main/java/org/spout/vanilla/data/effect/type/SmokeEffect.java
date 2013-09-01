@@ -28,8 +28,8 @@ package org.spout.vanilla.data.effect.type;
 
 import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.math.Vector3;
 
+import org.spout.math.vector.Vector3;
 import org.spout.vanilla.data.effect.GeneralEffect;
 
 public class SmokeEffect extends GeneralEffect {

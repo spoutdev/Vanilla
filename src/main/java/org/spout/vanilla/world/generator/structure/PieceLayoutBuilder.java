@@ -28,9 +28,10 @@ package org.spout.vanilla.world.generator.structure;
 
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.IntVector3;
-import org.spout.api.math.Quaternion;
-import org.spout.api.math.Vector3;
-import org.spout.api.math.VectorMath;
+
+import org.spout.math.imaginary.Quaternion;
+import org.spout.math.matrix.Matrix3;
+import org.spout.math.vector.Vector3;
 
 /**
  * Draws a plane with the defined block material layout
@@ -114,7 +115,7 @@ public class PieceLayoutBuilder extends PieceBuilder {
 
 	private Vector3 transform(int x, int z) {
 		final Vector3 rotPoint = new Vector3(rotationPoint.getX(), rotationPoint.getY(), rotationPoint.getZ());
-		return VectorMath.transform(new Vector3(x, 0, z).subtract(rotPoint), rotation).
+		return Matrix3.createRotation(rotation).transform(new Vector3(x, 0, z).sub(rotPoint)).
 				add(rotPoint).add(position.getX(), position.getY(), position.getZ()).round();
 	}
 }

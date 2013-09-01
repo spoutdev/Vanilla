@@ -31,8 +31,7 @@ import java.util.Random;
 import org.junit.Assert;
 import org.junit.Test;
 
-import org.spout.api.math.GenericMath;
-
+import org.spout.math.GenericMath;
 import org.spout.vanilla.util.MathHelper;
 
 public class MathHelperTest {

@@ -29,9 +29,9 @@ package org.spout.vanilla.material.item;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
-import org.spout.api.math.GenericMath;
-import org.spout.api.math.Vector2;
 
+import org.spout.math.GenericMath;
+import org.spout.math.vector.Vector2;
 import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.misc.Effects;
 import org.spout.vanilla.component.entity.misc.Hunger;

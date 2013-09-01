@@ -26,12 +26,14 @@
  */
 package org.spout.vanilla.protocol.msg.player.pos;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import org.spout.api.math.Quaternion;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
+import org.spout.math.imaginary.Quaternion;
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
 public final class PlayerPositionLookMessage extends VanillaMainChannelMessage {
@@ -78,11 +80,11 @@ public final class PlayerPositionLookMessage extends VanillaMainChannelMessage {
 	}
 
 	public float getYaw() {
-		return getRotation().getYaw();
+		return getRotation().getAxesAngleDeg().getY();
 	}
 
 	public float getPitch() {
-		return getRotation().getPitch();
+		return getRotation().getAxesAngleDeg().getX();
 	}
 
 	public boolean isOnGround() {
@@ -106,7 +108,7 @@ public final class PlayerPositionLookMessage extends VanillaMainChannelMessage {
 			return false;
 		}
 		final PlayerPositionLookMessage other = (PlayerPositionLookMessage) obj;
-		return new org.apache.commons.lang3.builder.EqualsBuilder()
+		return new EqualsBuilder()
 				.append(this.position, other.position)
 				.append(this.rotation, other.rotation)
 				.isEquals();
@@ -114,7 +116,7 @@ public final class PlayerPositionLookMessage extends VanillaMainChannelMessage {
 
 	@Override
 	public int hashCode() {
-		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+		return new HashCodeBuilder()
 				.append(this.position)
 				.append(this.rotation)
 				.toHashCode();

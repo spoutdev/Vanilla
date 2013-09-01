@@ -29,9 +29,9 @@ package org.spout.vanilla.material.item;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.Slot;
 import org.spout.api.material.Material;
-import org.spout.api.math.Vector2;
 import org.spout.api.render.RenderMaterial;
 
+import org.spout.math.vector.Vector2;
 import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.util.PlayerUtil;

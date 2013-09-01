@@ -31,8 +31,9 @@ import java.util.Random;
 import org.spout.api.generator.GeneratorPopulator;
 import org.spout.api.generator.biome.BiomeManager;
 import org.spout.api.geo.cuboid.Chunk;
-import org.spout.api.math.Vector3;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
+
+import org.spout.math.vector.Vector3;
 
 public abstract class OverlapingPopulator implements GeneratorPopulator {
 	protected static final byte OVERLAP = 8;

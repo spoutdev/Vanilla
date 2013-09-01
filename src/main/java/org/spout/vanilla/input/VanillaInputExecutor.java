@@ -31,9 +31,9 @@ import org.spout.api.entity.Player;
 import org.spout.api.entity.state.PlayerInputState;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.input.InputExecutor;
-import org.spout.api.math.QuaternionMath;
-import org.spout.api.math.Vector3;
 
+import org.spout.math.imaginary.Quaternion;
+import org.spout.math.vector.Vector3;
 import org.spout.vanilla.component.entity.misc.EntityHead;
 
 public class VanillaInputExecutor implements InputExecutor {
@@ -52,26 +52,26 @@ public class VanillaInputExecutor implements InputExecutor {
 		Vector3 offset = Vector3.ZERO;
 		float speed = 50;
 		if (inputState.getForward()) {
-			offset = offset.subtract(ts.forwardVector().multiply(speed * dt));
+			offset = offset.sub(ts.forwardVector().mul(speed * dt));
 		}
 		if (inputState.getBackward()) {
-			offset = offset.add(ts.forwardVector().multiply(speed * dt));
+			offset = offset.add(ts.forwardVector().mul(speed * dt));
 		}
 		if (inputState.getLeft()) {
-			offset = offset.subtract(ts.rightVector().multiply(speed * dt));
+			offset = offset.sub(ts.rightVector().mul(speed * dt));
 		}
 		if (inputState.getRight()) {
-			offset = offset.add(ts.rightVector().multiply(speed * dt));
+			offset = offset.add(ts.rightVector().mul(speed * dt));
 		}
 		if (inputState.getJump()) {
-			offset = offset.add(ts.upVector().multiply(speed * dt));
+			offset = offset.add(ts.upVector().mul(speed * dt));
 		}
 		if (inputState.getCrouch()) {
-			offset = offset.subtract(ts.upVector().multiply(speed * dt));
+			offset = offset.sub(ts.upVector().mul(speed * dt));
 		}
 
-		player.get(EntityHead.class).setOrientation(QuaternionMath.rotation(inputState.pitch(), inputState.yaw(), ts.getRotation().getRoll()));
-		ts.translateAndSetRotation(offset, QuaternionMath.rotation(inputState.pitch(), inputState.yaw(), ts.getRotation().getRoll()));
+		player.get(EntityHead.class).setOrientation(Quaternion.fromAxesAnglesDeg(inputState.pitch(), inputState.yaw(), ts.getRotation().getAxesAngleDeg().getZ()));
+		ts.translateAndSetRotation(offset, Quaternion.fromAxesAnglesDeg(inputState.pitch(), inputState.yaw(), ts.getRotation().getAxesAngleDeg().getZ()));
 		sc.setTransform(ts);
 	}
 }

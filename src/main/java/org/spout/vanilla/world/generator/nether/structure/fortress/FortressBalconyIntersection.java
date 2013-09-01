@@ -29,6 +29,7 @@ package org.spout.vanilla.world.generator.nether.structure.fortress;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.spout.math.imaginary.Quaternion;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
@@ -118,12 +119,12 @@ public class FortressBalconyIntersection extends WeightedNextStructurePiece {
 		final List<StructurePiece> pieces = new ArrayList<StructurePiece>(2);
 		final StructurePiece right = getNextPiece();
 		right.setPosition(position.add(rotate(-2, 0, 0)));
-		right.setRotation(rotation.rotate(-90, 0, 1, 0));
+		right.setRotation(Quaternion.fromAngleDegAxis(-90, 0, 1, 0).mul(rotation));
 		right.randomize();
 		pieces.add(right);
 		final StructurePiece left = getNextPiece();
 		left.setPosition(position.add(rotate(7, 0, 4)));
-		left.setRotation(rotation.rotate(90, 0, 1, 0));
+		left.setRotation(Quaternion.fromAngleDegAxis(90, 0, 1, 0).mul(rotation));
 		left.randomize();
 		pieces.add(left);
 		return pieces;

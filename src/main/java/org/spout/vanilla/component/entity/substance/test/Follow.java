@@ -32,8 +32,8 @@ import java.util.Random;
 import org.spout.api.component.entity.NavigationComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.math.GenericMath;
 
+import org.spout.math.GenericMath;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
 
 public class Follow extends VanillaEntityComponent {

@@ -32,12 +32,12 @@ import java.util.Random;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.NullRepositionManager;
 import org.spout.api.util.Parameter;
-import org.spout.nbt.CompoundMap;
 
+import org.spout.math.vector.Vector3;
+import org.spout.nbt.CompoundMap;
 import org.spout.vanilla.data.Animation;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.inventory.window.WindowType;
@@ -152,7 +152,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new PlayerGroundMessage(true),
 			new PlayerPositionMessage(128, 256, 512, 3.4D, true, NullRepositionManager.getInstance()),
 			new PlayerLookMessage(1F, 2F, false),
-			new PlayerPositionLookMessage(1, 2, 5, 3.62, 4.1f, 3, false, NullRepositionManager.getInstance()),
+			new PlayerPositionLookMessage(1, 2, 5, 3.62, 4.0979004f, 2.9992678f, false, NullRepositionManager.getInstance()),
 			new PlayerDiggingMessage(PlayerDiggingMessage.STATE_START_DIGGING, 1, 2, 3, BlockFace.NORTH, NullRepositionManager.getInstance()),
 			new PlayerBlockPlacementMessage(1, 2, 3, BlockFace.NORTH, new Vector3(0.1875F, 0.5F, 0.0F), NullRepositionManager.getInstance()),
 			new PlayerHeldItemChangeMessage(4),

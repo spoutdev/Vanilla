@@ -28,8 +28,8 @@ package org.spout.vanilla.material.item.misc;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.Action;
-import org.spout.api.math.Vector2;
 
+import org.spout.math.vector.Vector2;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public class NameTag extends VanillaItemMaterial {

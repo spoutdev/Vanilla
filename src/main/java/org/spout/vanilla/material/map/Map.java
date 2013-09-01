@@ -31,8 +31,8 @@ import java.util.List;
 
 import org.spout.api.event.ProtocolEvent;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.math.Vector2;
 
+import org.spout.math.vector.Vector2;
 import org.spout.vanilla.event.material.network.MapItemUpdateEvent;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 

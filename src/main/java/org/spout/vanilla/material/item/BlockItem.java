@@ -32,8 +32,9 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.Placeable;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.Vector2;
-import org.spout.api.math.Vector3;
+
+import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector3;
 
 /**
  * A simplistic class which redirects placement requests to another (official) block material<br> Can be used to store multi-block creations

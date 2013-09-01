@@ -26,16 +26,17 @@
  */
 package org.spout.vanilla.render;
 
-import org.spout.api.math.TrigMath;
-import org.spout.api.math.Vector3;
-import org.spout.api.math.Vector4;
 import org.spout.api.render.effect.RenderEffect;
 import org.spout.api.render.effect.SnapshotRender;
 import org.spout.api.render.shader.Shader;
 
+import org.spout.math.TrigMath;
+import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector4;
+
 public class SkyRenderEffect implements RenderEffect {
 	private static final float size = 256f;
-	private static final float lat = (float) (25.0 * TrigMath.DEGTORAD);
+	private static final float lat = (float) (25.0 * TrigMath.DEG_TO_RAD);
 	private static final float sunSize = 0.2f;
 	private static final float ambient = 0.33f;
 	private static final Vector4 nightColor = new Vector4(1.0f, 1.0f, 1.0f, 0f);

@@ -35,6 +35,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.protocol.entity.object.FallingBlockProtocol;
 import org.spout.vanilla.protocol.entity.object.ObjectType;
 
@@ -82,5 +83,24 @@ public class FallingBlock extends Substance {
 			}
 			getOwner().remove();
 		}
+	}
+
+	/**
+	 * Whether the material can stop a falling block from falling, acting as the new ground block.
+	 *
+	 * @param material The material to check
+	 * @return True if it obstructs further falling, False if not
+	 */
+	public static boolean isFallingObstacle(BlockMaterial material) {
+		if (material == BlockMaterial.AIR || material.getShape() == null) {
+			return false;
+		}
+		if (material instanceof VanillaBlockMaterial) {
+			VanillaBlockMaterial vbm = (VanillaBlockMaterial) material;
+			if (!vbm.isPlacementObstacle()) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

@@ -32,8 +32,8 @@ import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.Vector3;
 
+import org.spout.math.vector.Vector3;
 import org.spout.vanilla.component.entity.minecart.MinecartType;
 import org.spout.vanilla.component.entity.substance.vehicle.Minecart;
 import org.spout.vanilla.material.block.rail.RailBase;

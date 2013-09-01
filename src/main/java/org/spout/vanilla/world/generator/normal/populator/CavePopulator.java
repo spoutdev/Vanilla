@@ -29,12 +29,11 @@ package org.spout.vanilla.world.generator.normal.populator;
 import java.util.Random;
 
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.math.GenericMath;
-import org.spout.api.math.TrigMath;
-import org.spout.api.math.Vector3;
-import org.spout.api.math.VectorMath;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
+import org.spout.math.GenericMath;
+import org.spout.math.TrigMath;
+import org.spout.math.vector.Vector3;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.liquid.Water;
 
@@ -101,7 +100,7 @@ public class CavePopulator extends OverlapingPopulator {
 		for (; startingNode < nodeAmount; startingNode++) {
 			final double horizontalSize = 1.5 + TrigMath.sin((float) (startingNode * Math.PI / nodeAmount)) * horizontalScale;
 			final double verticalSize = horizontalSize * verticalScale;
-			target = target.add(VectorMath.getDirection3D((float) horizontalAngle, (float) verticalAngle));
+			target = target.add(Vector3.createDirection((float) horizontalAngle, (float) verticalAngle));
 
 			if (extraVerticalScale) {
 				verticalAngle *= 0.92;

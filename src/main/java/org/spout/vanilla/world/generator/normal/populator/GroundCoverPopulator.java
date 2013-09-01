@@ -34,11 +34,11 @@ import org.spout.api.generator.biome.Biome;
 import org.spout.api.generator.biome.BiomeManager;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.MaterialRegistry;
-import org.spout.api.math.GenericMath;
-import org.spout.api.math.Vector3;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
-import org.spout.cereal.config.ConfigurationNode;
 
+import org.spout.cereal.config.ConfigurationNode;
+import org.spout.math.GenericMath;
+import org.spout.math.vector.Vector3;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.MathHelper;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
@@ -67,7 +67,6 @@ public class GroundCoverPopulator implements GeneratorPopulator {
 					if (yy < 0) {
 						break;
 					}
-					int layerNumber = 0;
 					for (GroundCoverLayer layer : layers) {
 						final int depthY = yy - layer.getDepth(x + xx, z + zz, (int) seed);
 						final BlockMaterial cover = layer.getMaterial(y + yy < NormalGenerator.SEA_LEVEL);
@@ -81,7 +80,6 @@ public class GroundCoverPopulator implements GeneratorPopulator {
 						}
 					}
 					yy = getNextAir(blockData, x + xx, y, z + zz, yy);
-					layerNumber++;
 				}
 			}
 		}

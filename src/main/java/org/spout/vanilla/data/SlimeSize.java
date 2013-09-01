@@ -27,7 +27,8 @@
 package org.spout.vanilla.data;
 
 import org.spout.api.map.DefaultedKeyImpl;
-import org.spout.api.math.GenericMath;
+
+import org.spout.math.GenericMath;
 
 public class SlimeSize extends DefaultedKeyImpl<Byte> {
 	public SlimeSize(String keyString) {

@@ -31,10 +31,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
-import org.spout.api.math.Vector3;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
+import org.spout.math.vector.Vector3;
 import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.entity.EntityMessage;
 
@@ -66,15 +66,16 @@ public final class EntityObjectMessage extends EntityMessage {
 			velocity = Vector3.ZERO;
 		}
 
-		velocity = velocity.max(factor.multiply(-1)).min(factor);
+		velocity = velocity.max(factor.mul(-1)).min(factor);
 
 		double s = 8000d;
 		speedX = (short) (velocity.getX() * s);
 		speedY = (short) (velocity.getY() * s);
 		speedZ = (short) (velocity.getZ() * s);
 
-		pitch = (byte) VanillaByteBufUtils.protocolifyPitch(transform.getRotation().getPitch());
-		yaw = (byte) VanillaByteBufUtils.protocolifyYaw(transform.getRotation().getYaw());
+		final Vector3 axesAngles = transform.getRotation().getAxesAngleDeg();
+		pitch = (byte) VanillaByteBufUtils.protocolifyPitch(axesAngles.getX());
+		yaw = (byte) VanillaByteBufUtils.protocolifyYaw(axesAngles.getY());
 	}
 
 	public EntityObjectMessage(Entity entity, byte type, RepositionManager rm) {

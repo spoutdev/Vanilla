@@ -69,7 +69,7 @@ public abstract class SignBase extends AbstractAttachable implements Initializab
 			short data = 0;
 			if (cause instanceof EntityCause) {
 				Entity entity = ((EntityCause) cause).getSource();
-				float yaw = entity.getPhysics().getRotation().getYaw() * -1.0f;
+				float yaw = entity.getPhysics().getRotation().getAxesAngleDeg().getY() * -1.0f;
 				float rotation = (yaw + 180F) * 16F / 360F;
 				data = (short) (rotation + 0.5F);
 				data &= 15;

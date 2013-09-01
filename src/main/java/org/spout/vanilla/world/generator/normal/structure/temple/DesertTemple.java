@@ -31,9 +31,9 @@ import java.util.List;
 
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-import org.spout.api.math.Quaternion;
-import org.spout.api.math.Vector3;
 
+import org.spout.math.imaginary.Quaternion;
+import org.spout.math.vector.Vector3;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.misc.Slab;
 import org.spout.vanilla.material.block.solid.Sandstone;
@@ -217,7 +217,7 @@ public class DesertTemple extends StructurePiece {
 		// Apply the center cross above the loot pit, in the center of the pyramid
 		painter.setLayout(CENTER_CROSS).setPosition(7, 0, 7).fill();
 		// Apply the glyphs on the towers
-		painter.setLayout(TOWER).setPosition(1, 8, 0).setRotation(new Quaternion(90, 1, 0, 0)).fill();
+		painter.setLayout(TOWER).setPosition(1, 8, 0).setRotation(Quaternion.fromAngleDegAxis(90, 1, 0, 0)).fill();
 		painter.offsetPosition(16, 0, 0).fill();
 		// Apply the glyph on the main door
 		painter.setLayout(DOOR).setPosition(8, 6, 0).fill();
@@ -253,7 +253,7 @@ public class DesertTemple extends StructurePiece {
 		// Place the loot chests
 		chestObject.setRandom(getRandom());
 		for (BlockFace face : BlockFaces.NSEW) {
-			final Vector3 chestPos = face.getOffset().multiply(2).add(10, -11, 10);
+			final Vector3 chestPos = face.getOffset().mul(2).add(10, -11, 10);
 			placeObject(chestPos.getFloorX(), chestPos.getFloorY(), chestPos.getFloorZ(), chestObject);
 		}
 	}

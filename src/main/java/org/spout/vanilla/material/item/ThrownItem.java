@@ -29,11 +29,9 @@ package org.spout.vanilla.material.item;
 import org.spout.api.component.entity.PhysicsComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.Action;
-import org.spout.api.math.Vector3;
-import org.spout.api.math.VectorMath;
 
+import org.spout.math.vector.Vector3;
 import org.spout.physics.collision.shape.SphereShape;
-
 import org.spout.vanilla.component.entity.substance.Substance;
 import org.spout.vanilla.component.entity.substance.projectile.Projectile;
 
@@ -91,7 +89,7 @@ public abstract class ThrownItem extends EntitySpawnItem<Substance> {
 			if (item instanceof Projectile) {
 				((Projectile) item).setShooter(entity);
 			}
-			physics.force(VectorMath.getDirection(entity.getPhysics().getRotation()).multiply(getLaunchForce()));
+			physics.force(entity.getPhysics().getRotation().getDirection().mul(getLaunchForce()));
 			this.onThrown(item, entity);
 		}
 	}

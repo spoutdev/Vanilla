@@ -30,6 +30,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import org.spout.math.imaginary.Quaternion;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
@@ -113,7 +114,7 @@ public class FortressStairRoom extends WeightedNextStructurePiece {
 	public List<StructurePiece> getNextPieces() {
 		final StructurePiece piece = getNextPiece();
 		piece.setPosition(position.add(rotate(6, 6, 5)));
-		piece.setRotation(rotation.rotate(90, 0, 1, 0));
+		piece.setRotation(Quaternion.fromAngleDegAxis(90, 0, 1, 0).mul(rotation));
 		piece.randomize();
 		return Lists.newArrayList(piece);
 	}

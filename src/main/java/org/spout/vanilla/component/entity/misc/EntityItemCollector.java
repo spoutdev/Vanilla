@@ -26,13 +26,13 @@
  */
 package org.spout.vanilla.component.entity.misc;
 
-import java.util.List;
 import javax.tools.Tool;
+import java.util.List;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.math.Vector3;
 
+import org.spout.math.vector.Vector3;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.component.entity.inventory.EntityInventory;
 import org.spout.vanilla.component.entity.substance.Item;

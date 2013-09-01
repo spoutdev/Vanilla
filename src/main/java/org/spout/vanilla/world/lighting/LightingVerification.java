@@ -38,9 +38,10 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.IntVector3;
-import org.spout.api.math.Vector3;
 import org.spout.api.util.bytebit.ByteBitSet;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
+
+import org.spout.math.vector.Vector3;
 
 public class LightingVerification {
 	private static final BlockFace[] allFaces = BlockFaces.NESWBT.toArray();

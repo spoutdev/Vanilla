@@ -28,12 +28,10 @@ package org.spout.vanilla.component.entity.misc;
 
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
-import org.spout.api.math.Quaternion;
-import org.spout.api.math.QuaternionMath;
-import org.spout.api.math.Vector3;
-import org.spout.api.math.VectorMath;
 import org.spout.api.util.BlockIterator;
 
+import org.spout.math.imaginary.Quaternion;
+import org.spout.math.vector.Vector3;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.data.VanillaData;
 
@@ -60,10 +58,10 @@ public class EntityHead extends VanillaEntityComponent {
 	/**
 	 * Sets the rotation of the head to look into a certain direction
 	 *
-	 * @param lookingAt {@link org.spout.api.math.Vector3} to look at
+	 * @param lookingAt {@link org.spout.math.vector.Vector3} to look at
 	 */
 	public void setLooking(Vector3 lookingAt) {
-		setOrientation(QuaternionMath.rotationTo(Vector3.FORWARD, lookingAt));
+		setOrientation(Quaternion.fromRotationTo(Vector3.FORWARD, lookingAt));
 	}
 
 	/**
@@ -72,7 +70,7 @@ public class EntityHead extends VanillaEntityComponent {
 	 * @return Head direction vector
 	 */
 	public Vector3 getLookingAt() {
-		return VectorMath.getDirection(getOrientation());
+		return getOrientation().getDirection();
 	}
 
 	/**

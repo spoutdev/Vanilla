@@ -36,8 +36,8 @@ import org.spout.api.inventory.Slot;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.GenericMath;
 
+import org.spout.math.GenericMath;
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.data.tool.ToolType;

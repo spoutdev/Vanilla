@@ -35,8 +35,8 @@ import org.spout.api.ai.pathfinder.BlockSource;
 import org.spout.api.ai.pathfinder.PathPoint;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
-import org.spout.api.math.Vector3;
 
+import org.spout.math.vector.Vector3;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.plant.TallGrass;
 

@@ -26,12 +26,13 @@
  */
 package org.spout.vanilla.protocol.msg.player.pos;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import org.spout.api.math.Quaternion;
-import org.spout.api.math.QuaternionMath;
 import org.spout.api.util.SpoutToStringStyle;
 
+import org.spout.math.imaginary.Quaternion;
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
 public final class PlayerLookMessage extends VanillaMainChannelMessage {
@@ -46,7 +47,7 @@ public final class PlayerLookMessage extends VanillaMainChannelMessage {
 	}
 
 	public Quaternion getRotation() {
-		return QuaternionMath.rotation(this.pitch, this.yaw, this.roll);
+		return Quaternion.fromAxesAnglesDeg(this.pitch, this.yaw, this.roll);
 	}
 
 	public float getYaw() {
@@ -84,7 +85,7 @@ public final class PlayerLookMessage extends VanillaMainChannelMessage {
 			return false;
 		}
 		final PlayerLookMessage other = (PlayerLookMessage) obj;
-		return new org.apache.commons.lang3.builder.EqualsBuilder()
+		return new EqualsBuilder()
 				.append(this.yaw, other.yaw)
 				.append(this.pitch, other.pitch)
 				.append(this.roll, other.roll)
@@ -94,7 +95,7 @@ public final class PlayerLookMessage extends VanillaMainChannelMessage {
 
 	@Override
 	public int hashCode() {
-		return new org.apache.commons.lang3.builder.HashCodeBuilder()
+		return new HashCodeBuilder()
 				.append(this.yaw)
 				.append(this.pitch)
 				.append(this.roll)

@@ -36,8 +36,8 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-import org.spout.api.math.Vector3;
 
+import org.spout.math.vector.Vector3;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.object.RandomObject;
 import org.spout.vanilla.world.generator.object.RandomizableObject;
@@ -86,7 +86,7 @@ public class GlowstonePatchObject extends RandomObject implements RandomizableOb
 	}
 
 	private boolean isInBounds(Vector3 seed, Vector3 target) {
-		final Vector3 diff = target.subtract(seed);
+		final Vector3 diff = target.sub(seed);
 		return Math.abs(diff.getFloorX()) < maxXRadius && Math.abs(diff.getFloorZ()) < maxZRadius
 				&& diff.getFloorY() > -maxYDepth;
 	}

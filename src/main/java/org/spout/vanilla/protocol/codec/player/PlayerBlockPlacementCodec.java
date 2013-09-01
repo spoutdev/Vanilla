@@ -34,10 +34,10 @@ import io.netty.buffer.Unpooled;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-import org.spout.api.math.Vector3;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.reposition.NullRepositionManager;
 
+import org.spout.math.vector.Vector3;
 import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.player.PlayerBlockPlacementMessage;
 

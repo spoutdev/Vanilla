@@ -29,7 +29,8 @@ package org.spout.vanilla.service.protection;
 import org.spout.api.geo.Protection;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.math.Vector3;
+
+import org.spout.math.vector.Vector3;
 
 public class SpawnProtection extends Protection {
 	private final Vector3 center;

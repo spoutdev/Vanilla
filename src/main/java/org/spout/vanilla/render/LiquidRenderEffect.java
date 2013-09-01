@@ -26,11 +26,12 @@
  */
 package org.spout.vanilla.render;
 
-import org.spout.api.math.GenericMath;
-import org.spout.api.math.TrigMath;
-import org.spout.api.math.Vector2;
 import org.spout.api.render.effect.RenderEffect;
 import org.spout.api.render.effect.SnapshotRender;
+
+import org.spout.math.GenericMath;
+import org.spout.math.TrigMath;
+import org.spout.math.vector.Vector2;
 
 public class LiquidRenderEffect implements RenderEffect {
 	private static final float size = 1.0f / 16.0f;

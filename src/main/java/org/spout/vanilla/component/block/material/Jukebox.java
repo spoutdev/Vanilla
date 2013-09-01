@@ -31,8 +31,8 @@ import org.spout.api.event.player.PlayerInteractEntityEvent;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
 import org.spout.api.material.Material;
-import org.spout.api.math.Vector3;
 
+import org.spout.math.vector.Vector3;
 import org.spout.vanilla.component.block.VanillaBlockComponent;
 import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.data.Music;
@@ -83,7 +83,7 @@ public class Jukebox extends VanillaBlockComponent {
 		ItemStack old = getData().put(VanillaData.JUKEBOX_ITEM, item);
 		if (old != null) {
 			// Drop the old item
-			Item.drop(getPoint(), old, Vector3.UP.multiply(0.5));
+			Item.drop(getPoint(), old, Vector3.UP.mul(0.5));
 		}
 		setPlaying(item != null);
 	}
@@ -101,7 +101,7 @@ public class Jukebox extends VanillaBlockComponent {
 	/**
 	 * Tests whether this Jukebox can play the itemstack specified
 	 *
-	 * @param itemstack to play
+	 * @param item to play
 	 * @return True if it can play it, False if not
 	 */
 	public boolean canPlay(ItemStack item) {

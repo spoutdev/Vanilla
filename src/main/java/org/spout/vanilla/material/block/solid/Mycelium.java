@@ -28,8 +28,8 @@ package org.spout.vanilla.material.block.solid;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.GenericMath;
 
+import org.spout.math.GenericMath;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.InitializableMaterial;

@@ -29,9 +29,10 @@ package org.spout.vanilla.component.entity.player;
 import org.spout.api.component.entity.InteractComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Transform;
-import org.spout.api.math.QuaternionMath;
-import org.spout.api.math.Vector3;
 import org.spout.api.util.BlockIterator;
+
+import org.spout.math.imaginary.Quaternion;
+import org.spout.math.vector.Vector3;
 
 public class PlayerInteract extends InteractComponent {
 	@Override
@@ -39,7 +40,7 @@ public class PlayerInteract extends InteractComponent {
 		Player player = (Player) getOwner();
 		Transform ptr = player.get(PlayerHead.class).getHeadTransform();
 		Transform tr = new Transform();
-		tr.setRotation(QuaternionMath.rotationTo(Vector3.FORWARD, ptr.getRotation().getDirection().multiply(-1)));
+		tr.setRotation(Quaternion.fromRotationTo(Vector3.FORWARD, ptr.getRotation().getDirection().mul(-1)));
 		tr.setPosition(ptr.getPosition());
 		return new BlockIterator(player.getWorld(), tr, getRange());
 	}

@@ -36,10 +36,10 @@ import org.spout.api.geo.cuboid.Region;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.GenericMath;
-import org.spout.api.math.Vector3;
 import org.spout.api.scheduler.TaskPriority;
 
+import org.spout.math.GenericMath;
+import org.spout.math.vector.Vector3;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;

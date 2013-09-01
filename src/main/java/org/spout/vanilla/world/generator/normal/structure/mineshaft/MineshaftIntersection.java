@@ -32,6 +32,7 @@ import java.util.Random;
 
 import org.spout.api.geo.cuboid.Block;
 
+import org.spout.math.imaginary.Quaternion;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
@@ -113,14 +114,14 @@ public class MineshaftIntersection extends WeightedNextStructurePiece {
 		if (random.nextBoolean()) {
 			final StructurePiece bottomRight = getNextPiece();
 			bottomRight.setPosition(position.add(rotate(-1, 0, 1)));
-			bottomRight.setRotation(rotation.rotate(-90, 0, 1, 0));
+			bottomRight.setRotation(Quaternion.fromAngleDegAxis(-90, 0, 1, 0).mul(rotation));
 			bottomRight.randomize();
 			pieces.add(bottomRight);
 		}
 		if (random.nextBoolean()) {
 			final StructurePiece bottomLeft = getNextPiece();
 			bottomLeft.setPosition(position.add(rotate(4, 0, 3)));
-			bottomLeft.setRotation(rotation.rotate(90, 0, 1, 0));
+			bottomLeft.setRotation(Quaternion.fromAngleDegAxis(90, 0, 1, 0).mul(rotation));
 			bottomLeft.randomize();
 			pieces.add(bottomLeft);
 		}
@@ -134,21 +135,21 @@ public class MineshaftIntersection extends WeightedNextStructurePiece {
 		if (twoFloors && random.nextBoolean()) {
 			final StructurePiece topRight = getNextPiece();
 			topRight.setPosition(position.add(rotate(-1, 4, 1)));
-			topRight.setRotation(rotation.rotate(-90, 0, 1, 0));
+			topRight.setRotation(Quaternion.fromAngleDegAxis(-90, 0, 1, 0).mul(rotation));
 			topRight.randomize();
 			pieces.add(topRight);
 		}
 		if (twoFloors && random.nextBoolean()) {
 			final StructurePiece topLeft = getNextPiece();
 			topLeft.setPosition(position.add(rotate(4, 4, 3)));
-			topLeft.setRotation(rotation.rotate(90, 0, 1, 0));
+			topLeft.setRotation(Quaternion.fromAngleDegAxis(90, 0, 1, 0).mul(rotation));
 			topLeft.randomize();
 			pieces.add(topLeft);
 		}
 		if (twoFloors && random.nextBoolean()) {
 			final StructurePiece topBack = getNextPiece();
 			topBack.setPosition(position.add(rotate(2, 4, 0)));
-			topBack.setRotation(rotation.rotate(180, 0, 1, 0));
+			topBack.setRotation(Quaternion.fromAngleDegAxis(180, 0, 1, 0).mul(rotation));
 			topBack.randomize();
 			pieces.add(topBack);
 		}

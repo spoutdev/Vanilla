@@ -61,12 +61,12 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
-import org.spout.api.math.Quaternion;
-import org.spout.api.math.Vector3;
 import org.spout.api.protocol.event.ChunkSendEvent;
 import org.spout.api.protocol.event.EntityUpdateEvent;
 import org.spout.api.util.BlockIterator;
 
+import org.spout.math.imaginary.Quaternion;
+import org.spout.math.vector.Vector3;
 import org.spout.vanilla.ChatStyle;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.block.material.chest.Chest;
@@ -550,13 +550,14 @@ public class TestCommands {
 		if (action.contains("look")) {
 			Quaternion rotation = player.getData().get(VanillaData.HEAD_ROTATION);
 			Point startPosition = player.getPhysics().getPosition();
-			Vector3 offset = rotation.getDirection().multiply(0.1);
+			Vector3 offset = rotation.getDirection().mul(0.1);
 			for (int i = 0; i < 100; i++) {
 				startPosition = startPosition.add(offset);
 				GeneralEffects.NOTE_PARTICLE.playGlobal(startPosition);
 			}
-			player.sendMessage("Yaw = " + rotation.getYaw());
-			player.sendMessage("Pitch = " + rotation.getPitch());
+			final Vector3 axesAngles = rotation.getAxesAngleDeg();
+			player.sendMessage("Yaw = " + axesAngles.getY());
+			player.sendMessage("Pitch = " + axesAngles.getX());
 		} else if (action.contains("packets")) {
 			player.add(ForceMessages.class);
 		} else {
@@ -599,7 +600,7 @@ public class TestCommands {
 		}
 		Entity nearest = null;
 		for (double d = 0.0; d <= 50.0; d += 0.25) {
-			Point pos = point.add(direction.multiply(d));
+			Point pos = point.add(direction.mul(d));
 			Entity near = point.getWorld().getNearestEntity(pos, player, (int) lastDistanceToEntity);
 			if (near == null) {
 				continue;

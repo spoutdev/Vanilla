@@ -33,9 +33,9 @@ import org.spout.api.Platform;
 import org.spout.api.Spout;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.World;
-import org.spout.api.math.GenericMath;
 import org.spout.api.tickable.BasicTickable;
 
+import org.spout.math.GenericMath;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.world.sky.Sky;
 import org.spout.vanilla.data.VanillaData;

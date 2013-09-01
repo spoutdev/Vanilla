@@ -36,8 +36,8 @@ import org.spout.api.entity.Player;
 import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.math.GenericMath;
 
+import org.spout.math.GenericMath;
 import org.spout.vanilla.component.entity.substance.Lightning;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.Weather;

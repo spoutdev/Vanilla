@@ -31,8 +31,8 @@ import org.spout.api.event.player.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.Vector2;
 
+import org.spout.math.vector.Vector2;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.event.cause.DamageCause;
 import org.spout.vanilla.event.cause.DamageCause.DamageType;

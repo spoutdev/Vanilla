@@ -52,14 +52,14 @@ import org.spout.api.input.Binding;
 import org.spout.api.input.InputManager;
 import org.spout.api.input.Keyboard;
 import org.spout.api.input.Mouse;
-import org.spout.api.math.Quaternion;
-import org.spout.api.math.Vector3;
 import org.spout.api.plugin.Plugin;
 import org.spout.api.plugin.PluginLogger;
 import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.plugin.services.ServiceManager;
 import org.spout.api.util.FlatIterator;
 
+import org.spout.math.imaginary.Quaternion;
+import org.spout.math.vector.Vector3;
 import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.command.AdministrationCommands.TPSMonitor;
 import org.spout.vanilla.command.InputCommands;

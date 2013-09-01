@@ -34,10 +34,10 @@ import java.util.Set;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.math.GenericMath;
-import org.spout.api.math.Vector2;
 import org.spout.api.util.flag.Flag;
 
+import org.spout.math.GenericMath;
+import org.spout.math.vector.Vector2;
 import org.spout.vanilla.component.entity.living.hostile.Silverfish;
 import org.spout.vanilla.component.entity.living.hostile.Skeleton;
 import org.spout.vanilla.component.entity.living.hostile.Spider;

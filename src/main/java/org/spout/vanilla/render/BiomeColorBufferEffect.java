@@ -34,10 +34,10 @@ import gnu.trove.list.array.TFloatArrayList;
 
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.ChunkSnapshotModel;
-import org.spout.api.math.GenericMath;
 import org.spout.api.render.BufferContainer;
 import org.spout.api.render.effect.BufferEffect;
 
+import org.spout.math.GenericMath;
 import org.spout.vanilla.world.generator.biome.VanillaBiome;
 import org.spout.vanilla.world.generator.biome.VanillaBiomes;
 

@@ -43,10 +43,10 @@ import org.spout.api.gui.render.RenderPart;
 import org.spout.api.gui.render.RenderPartPack;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.math.GenericMath;
-import org.spout.api.math.Vector3;
 import org.spout.api.util.Parameter;
 
+import org.spout.math.GenericMath;
+import org.spout.math.vector.Vector3;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.component.entity.inventory.EntityInventory;
 import org.spout.vanilla.component.entity.living.hostile.EnderDragon;

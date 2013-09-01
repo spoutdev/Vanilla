@@ -42,11 +42,10 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-import org.spout.api.math.GenericMath;
-import org.spout.api.math.Vector3;
 
+import org.spout.math.GenericMath;
+import org.spout.math.vector.Vector3;
 import org.spout.physics.collision.shape.BoxShape;
-
 import org.spout.vanilla.component.block.material.Dispenser;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
@@ -227,13 +226,13 @@ public class DispenserBlock extends VanillaBlockMaterial implements Directional,
 			Vector3 direction = this.getFacing(block).getOffset();
 
 			// Calculate position to shoot from
-			Point position = block.getPosition().add(direction.multiply(0.6));
+			Point position = block.getPosition().add(direction.mul(0.6));
 			VanillaEntityComponent toLaunch = null;
 
 			// Calculate shooting velocity using facing direction
-			Vector3 velocity = direction.multiply(rand.nextDouble() * 0.1 + 0.2);
+			Vector3 velocity = direction.mul(rand.nextDouble() * 0.1 + 0.2);
 			// Set velocity y to above (0.2)
-			velocity = velocity.multiply(1.0, 0.0, 1.0).add(0.0, 0.2, 0.0);
+			velocity = velocity.mul(1.0, 0.0, 1.0).add(0.0, 0.2, 0.0);
 			velocity = velocity.add(0.045 * rand.nextGaussian(), 0.045 * rand.nextGaussian(), 0.045 * rand.nextGaussian());
 
 			Effect shootEffect;
@@ -266,7 +265,7 @@ public class DispenserBlock extends VanillaBlockMaterial implements Directional,
 				//TODO: Spawn
 			} else {
 				shootEffect = GeneralEffects.RANDOM_CLICK1;
-				position = position.subtract(0.0, 0.3, 0.0);
+				position = position.sub(0.0, 0.3, 0.0);
 				toLaunch = new Item();
 				((Item) toLaunch).setItemStack(item);
 			}

@@ -30,10 +30,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.Vector3;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
+import org.spout.math.vector.Vector3;
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
 public final class PlayerBlockPlacementMessage extends VanillaMainChannelMessage {

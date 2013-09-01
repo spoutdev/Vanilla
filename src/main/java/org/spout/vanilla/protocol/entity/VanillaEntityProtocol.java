@@ -33,11 +33,11 @@ import java.util.List;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Transform;
-import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.Parameter;
 
+import org.spout.math.vector.Vector3;
 import org.spout.vanilla.component.entity.misc.EntityHead;
 import org.spout.vanilla.component.entity.misc.MetadataComponent;
 import org.spout.vanilla.protocol.EntityProtocol;
@@ -87,7 +87,7 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 
 	@Override
 	public final List<Message> getDestroyMessages(Entity entity) {
-		return Arrays.<Message>asList(new EntityDestroyMessage(new int[] {entity.getId()}));
+		return Arrays.<Message>asList(new EntityDestroyMessage(new int[]{entity.getId()}));
 	}
 
 	@Override
@@ -101,14 +101,16 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 		final int lastX = protocolifyPosition(prevTransform.getPosition().getX());
 		final int lastY = protocolifyPosition(prevTransform.getPosition().getY());
 		final int lastZ = protocolifyPosition(prevTransform.getPosition().getZ());
-		final int lastYaw = protocolifyYaw(prevTransform.getRotation().getYaw());
-		final int lastPitch = protocolifyPitch(prevTransform.getRotation().getPitch());
+		final Vector3 lastAxesAngles = prevTransform.getRotation().getAxesAngleDeg();
+		final int lastYaw = protocolifyYaw(lastAxesAngles.getY());
+		final int lastPitch = protocolifyPitch(lastAxesAngles.getX());
 
 		final int newX = protocolifyPosition(newTransform.getPosition().getX());
 		final int newY = protocolifyPosition(newTransform.getPosition().getY());
 		final int newZ = protocolifyPosition(newTransform.getPosition().getZ());
-		final int newYaw = protocolifyYaw(newTransform.getRotation().getYaw());
-		final int newPitch = protocolifyPitch(newTransform.getRotation().getPitch());
+		final Vector3 newAxesAngles = newTransform.getRotation().getAxesAngleDeg();
+		final int newYaw = protocolifyYaw(newAxesAngles.getY());
+		final int newPitch = protocolifyPitch(newAxesAngles.getX());
 
 		final int deltaX = newX - lastX;
 		final int deltaY = newY - lastY;
@@ -139,7 +141,7 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 		// Head movement
 		EntityHead head = entity.get(EntityHead.class);
 		if (head != null && head.isDirty()) {
-			final int headYawProt = VanillaByteBufUtils.protocolifyYaw(head.getOrientation().getYaw());
+			final int headYawProt = VanillaByteBufUtils.protocolifyYaw(head.getOrientation().getAxesAngleDeg().getY());
 			messages.add(new EntityHeadYawMessage(entity.getId(), headYawProt));
 		}
 

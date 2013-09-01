@@ -29,8 +29,8 @@ package org.spout.vanilla.inventory.window.gui;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Rectangle;
-import org.spout.api.math.Vector2;
 
+import org.spout.math.vector.Vector2;
 import org.spout.vanilla.material.VanillaMaterial;
 
 public class RenderItemStack extends RenderPart {

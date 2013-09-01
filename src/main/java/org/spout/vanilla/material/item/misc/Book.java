@@ -26,8 +26,7 @@
  */
 package org.spout.vanilla.material.item.misc;
 
-import org.spout.api.math.Vector2;
-
+import org.spout.math.vector.Vector2;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public class Book extends VanillaItemMaterial {

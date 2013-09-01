@@ -29,12 +29,13 @@ package org.spout.vanilla.world.lighting;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.IntVector3;
-import org.spout.api.math.Vector3;
 import org.spout.api.util.IntVector3CuboidArray;
 import org.spout.api.util.cuboid.ChunkCuboidLightBufferWrapper;
 import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;
 import org.spout.api.util.cuboid.ImmutableHeightMapBuffer;
 import org.spout.api.util.cuboid.procedure.CuboidBlockMaterialProcedure;
+
+import org.spout.math.vector.Vector3;
 
 public class VanillaSkylightLightingManager extends VanillaBlocklightLightingManager {
 	public VanillaSkylightLightingManager(String name) {

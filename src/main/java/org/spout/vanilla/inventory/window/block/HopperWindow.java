@@ -27,8 +27,8 @@
 package org.spout.vanilla.inventory.window.block;
 
 import org.spout.api.entity.Player;
-import org.spout.api.math.Vector2;
 
+import org.spout.math.vector.Vector2;
 import org.spout.vanilla.inventory.block.HopperInventory;
 import org.spout.vanilla.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.inventory.window.Window;

@@ -31,8 +31,8 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-import org.spout.api.math.Vector3;
 
+import org.spout.math.vector.Vector3;
 import org.spout.vanilla.component.block.material.Skull;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.VanillaBlockMaterial;

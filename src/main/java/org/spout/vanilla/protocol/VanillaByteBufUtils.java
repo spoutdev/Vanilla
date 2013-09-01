@@ -35,10 +35,10 @@ import io.netty.buffer.ByteBuf;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.GenericMath;
 import org.spout.api.util.Parameter;
-import org.spout.nbt.CompoundMap;
 
+import org.spout.math.GenericMath;
+import org.spout.nbt.CompoundMap;
 import org.spout.vanilla.material.VanillaMaterials;
 
 import static org.spout.api.util.ByteBufUtils.readCompound;
@@ -163,7 +163,7 @@ public final class VanillaByteBufUtils {
 
 	/**
 	 * Gets the size of a String represented in the formats read and written by
-	 * {@link #writeString(ChannelBuffer, String)} and {@link #readString(ChannelBuffer)}.
+	 * {@link #writeString(ByteBuf, String)} and {@link #readString(ByteBuf)}.
 	 * 
 	 * @param str to get the written length of
 	 * @return String length

@@ -26,11 +26,12 @@
  */
 package org.spout.vanilla.render;
 
-import org.spout.api.math.TrigMath;
-import org.spout.api.math.Vector3;
-import org.spout.api.math.Vector4;
 import org.spout.api.render.effect.RenderEffect;
 import org.spout.api.render.effect.SnapshotRender;
+
+import org.spout.math.TrigMath;
+import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector4;
 
 public class LightRenderEffect implements RenderEffect {
 	private static final float size = 256f;
@@ -90,9 +91,9 @@ public class LightRenderEffect implements RenderEffect {
 				weightedSun = dawnColor;
 			} else {
 				float dawnWeight = y / sunSize;
-				weightedSun = sunColor.multiply(dawnWeight).add(dawnColor.multiply(1 - dawnWeight));
+				weightedSun = sunColor.mul(dawnWeight).add(dawnColor.mul(1 - dawnWeight));
 			}
-			skyColor = weightedSun.multiply(sunWeight).add(moonColor.multiply((1 - sunWeight)));
+			skyColor = weightedSun.mul(sunWeight).add(moonColor.mul((1 - sunWeight)));
 		} else {
 			if (y < 0) {
 				sunWeight = 0;
@@ -105,8 +106,8 @@ public class LightRenderEffect implements RenderEffect {
 
 		snapshotRender.getMaterial().getShader().setUniform("ambient", ambient);
 		snapshotRender.getMaterial().getShader().setUniform("skyColor", skyColor);
-		snapshotRender.getMaterial().getShader().setUniform("sunColor", sunColor.multiply(sunWeight));
-		snapshotRender.getMaterial().getShader().setUniform("moonColor", moonColor.multiply(1 - sunWeight));
+		snapshotRender.getMaterial().getShader().setUniform("sunColor", sunColor.mul(sunWeight));
+		snapshotRender.getMaterial().getShader().setUniform("moonColor", moonColor.mul(1 - sunWeight));
 
 		Vector4 sunDir = new Vector4(x * size, y * size, z * size, 1.0f);
 

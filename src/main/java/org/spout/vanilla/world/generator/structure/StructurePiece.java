@@ -35,10 +35,10 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-import org.spout.api.math.Quaternion;
-import org.spout.api.math.Vector3;
-import org.spout.api.math.VectorMath;
 
+import org.spout.math.imaginary.Quaternion;
+import org.spout.math.matrix.Matrix3;
+import org.spout.math.vector.Vector3;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.DoorBlock;
@@ -85,16 +85,16 @@ public abstract class StructurePiece {
 			final Block block = position.getWorld().getBlock(transformed);
 			final BlockFace face = directional.getFacing(block);
 			if (face != BlockFace.BOTTOM && face != BlockFace.TOP) {
-				directional.setFacing(block, BlockFace.fromYaw(face.getDirection().getYaw()
-						+ rotation.getYaw()));
+				directional.setFacing(block, BlockFace.fromYaw(face.getDirection().getAxesAngleDeg().getY()
+						+ rotation.getAxesAngleDeg().getY()));
 			}
 		} else if (material instanceof Attachable) {
 			final Attachable attachable = (Attachable) material;
 			final Block block = position.getWorld().getBlock(transformed);
 			final BlockFace face = attachable.getAttachedFace(block);
 			if (face != BlockFace.BOTTOM && face != BlockFace.TOP) {
-				attachable.setAttachedFace(block, BlockFace.fromYaw(face.getDirection().getYaw()
-						+ rotation.getYaw()), null);
+				attachable.setAttachedFace(block, BlockFace.fromYaw(face.getDirection().getAxesAngleDeg().getY()
+						+ rotation.getAxesAngleDeg().getY()), null);
 			}
 		}
 	}
@@ -150,7 +150,7 @@ public abstract class StructurePiece {
 	public void placeDoor(int xx, int yy, int zz, DoorBlock door, BlockFace facing) {
 		final Block bottom = getBlock(xx, yy, zz);
 		door.create(getBlock(xx, yy, zz), bottom.translate(BlockFace.TOP),
-				BlockFace.fromYaw(facing.getDirection().getYaw() + rotation.getYaw()), false, false);
+				BlockFace.fromYaw(facing.getDirection().getAxesAngleDeg().getY() + rotation.getAxesAngleDeg().getY()), false, false);
 	}
 
 	protected Vector3 transform(int x, int y, int z) {
@@ -158,7 +158,7 @@ public abstract class StructurePiece {
 	}
 
 	protected Vector3 rotate(int x, int y, int z) {
-		return VectorMath.transform(new Vector3(x, y, z).subtract(rotationPoint), rotation).add(rotationPoint);
+		return Matrix3.createRotation(rotation).transform(new Vector3(x, y, z).sub(rotationPoint)).add(rotationPoint);
 	}
 
 	public Point getPosition() {
@@ -226,7 +226,7 @@ public abstract class StructurePiece {
 		}
 
 		public Vector3 getSize() {
-			return max.subtract(min);
+			return max.sub(min);
 		}
 
 		public float getXSize() {

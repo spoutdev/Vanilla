@@ -34,8 +34,8 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Slot;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.Vector3;
 
+import org.spout.math.vector.Vector3;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.misc.EntityHead;
 import org.spout.vanilla.data.GameMode;
@@ -115,7 +115,7 @@ public class PlayerUtil {
 		EntityHead head = entity.get(EntityHead.class);
 		position = head != null ? head.getPosition() : entity.getPhysics().getPosition();
 
-		Vector3 diff = position.subtract(block.getX(), block.getY(), block.getZ());
+		Vector3 diff = position.sub(block.getX(), block.getY(), block.getZ());
 		if (Math.abs(diff.getX()) < 2.0f && Math.abs(diff.getZ()) < 2.0f) {
 			if (diff.getY() > 1.8f) {
 				return BlockFace.TOP;
@@ -148,7 +148,7 @@ public class PlayerUtil {
 	 */
 	public static float getYaw(Entity entity) {
 		EntityHead head = entity.get(EntityHead.class);
-		return head != null ? head.getOrientation().getYaw() : entity.getPhysics().getRotation().getYaw();
+		return head != null ? head.getOrientation().getAxesAngleDeg().getY() : entity.getPhysics().getRotation().getAxesAngleDeg().getY();
 	}
 
 	/**

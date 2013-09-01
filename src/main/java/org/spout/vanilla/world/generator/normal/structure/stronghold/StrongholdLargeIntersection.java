@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.spout.math.imaginary.Quaternion;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
@@ -131,28 +132,28 @@ public class StrongholdLargeIntersection extends WeightedNextStructurePiece {
 		if (nextComponentRightLow) {
 			final StructurePiece next = getNextPiece();
 			next.setPosition(position.add(rotate(-4, 0, 0)));
-			next.setRotation(rotation.rotate(-90, 0, 1, 0));
+			next.setRotation(Quaternion.fromAngleDegAxis(-90, 0, 1, 0).mul(rotation));
 			next.randomize();
 			pieces.add(next);
 		}
 		if (nextComponentRightHigh) {
 			final StructurePiece next = getNextPiece();
 			next.setPosition(position.add(rotate(-4, 2, 6)));
-			next.setRotation(rotation.rotate(-90, 0, 1, 0));
+			next.setRotation(Quaternion.fromAngleDegAxis(-90, 0, 1, 0).mul(rotation));
 			next.randomize();
 			pieces.add(next);
 		}
 		if (nextComponentLeftLow) {
 			final StructurePiece next = getNextPiece();
 			next.setPosition(position.add(rotate(7, 0, 4)));
-			next.setRotation(rotation.rotate(90, 0, 1, 0));
+			next.setRotation(Quaternion.fromAngleDegAxis(90, 0, 1, 0).mul(rotation));
 			next.randomize();
 			pieces.add(next);
 		}
 		if (nextComponentLeftHigh) {
 			final StructurePiece next = getNextPiece();
 			next.setPosition(position.add(rotate(7, 2, 10)));
-			next.setRotation(rotation.rotate(90, 0, 1, 0));
+			next.setRotation(Quaternion.fromAngleDegAxis(90, 0, 1, 0).mul(rotation));
 			next.randomize();
 			pieces.add(next);
 		}

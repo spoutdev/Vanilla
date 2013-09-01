@@ -40,8 +40,8 @@ import java.util.Set;
 
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.math.Quaternion;
 
+import org.spout.math.imaginary.Quaternion;
 import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructurePiece;
 import org.spout.vanilla.world.generator.structure.StructurePiece.BoundingBox;
@@ -70,7 +70,7 @@ public class Fortress extends Structure {
 		final FortressCorridor corridor = new FortressCorridor(this);
 		corridor.setStartOfFortress(true);
 		corridor.setPosition(new Point(w, x, y, z));
-		corridor.setRotation(new Quaternion(random.nextInt(4) * 90, 0, 1, 0));
+		corridor.setRotation(Quaternion.fromAngleDegAxis(random.nextInt(4) * 90, 0, 1, 0));
 		corridor.randomize();
 		activeBranches.add(corridor);
 		final int size = random.nextInt(MAX_SIZE_RAND + 1) + MAX_SIZE_BASE;

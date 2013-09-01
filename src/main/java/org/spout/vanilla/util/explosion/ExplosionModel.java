@@ -38,10 +38,10 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-import org.spout.api.math.GenericMath;
-import org.spout.api.math.Vector3;
 import org.spout.api.util.BlockIterator;
 
+import org.spout.math.GenericMath;
+import org.spout.math.vector.Vector3;
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.component.entity.substance.Item;

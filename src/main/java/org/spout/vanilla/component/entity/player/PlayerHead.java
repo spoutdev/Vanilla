@@ -28,39 +28,38 @@ package org.spout.vanilla.component.entity.player;
 
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
-import org.spout.api.math.Matrix;
-import org.spout.api.math.MatrixMath;
-import org.spout.api.math.Vector3;
 import org.spout.api.render.Camera;
 import org.spout.api.render.ViewFrustum;
 
+import org.spout.math.matrix.Matrix4;
+import org.spout.math.vector.Vector4;
 import org.spout.vanilla.component.entity.misc.EntityHead;
 
 public class PlayerHead extends EntityHead implements Camera {
-	private Matrix projection;
-	private Matrix view;
+	private Matrix4 projection;
+	private Matrix4 view;
 	private ViewFrustum frustum = new ViewFrustum();
 	private float fieldOfView = 75f;
 
 	public void setScale(float scale) { //1/2
-		projection = MatrixMath.createPerspective(fieldOfView * scale, 4.0f / 3.0f, .001f * scale, 1000f * scale);
+		projection = Matrix4.createPerspective(fieldOfView * scale, 4.0f / 3.0f, .001f * scale, 1000f * scale);
 		updateView();
 	}
 
 	@Override
 	public void onAttached() {
 		// TODO Get FOV
-		projection = MatrixMath.createPerspective(fieldOfView, 4.0f / 3.0f, .001f, 1000f);
+		projection = Matrix4.createPerspective(fieldOfView, 4.0f / 3.0f, .001f, 1000f);
 		updateView();
 	}
 
 	@Override
-	public Matrix getProjection() {
+	public Matrix4 getProjection() {
 		return projection;
 	}
 
 	@Override
-	public Matrix getView() {
+	public Matrix4 getView() {
 		return view;
 	}
 
@@ -68,9 +67,9 @@ public class PlayerHead extends EntityHead implements Camera {
 	public void updateView() {
 		Transform transform = getOwner().getPhysics().getTransform();
 		Point point = transform.getPosition().add(0.0f, getHeight(), 0.0f);
-		Matrix pos = MatrixMath.createTranslated(point.multiply(-1));
-		Matrix rot = getRotation();
-		view = pos.multiply(rot);
+		Matrix4 pos = Matrix4.createTranslation(point.mul(-1));
+		Matrix4 rot = getRotation();
+		view = pos.mul(rot);
 		frustum.update(projection, view, transform.getPosition());
 	}
 
@@ -78,9 +77,9 @@ public class PlayerHead extends EntityHead implements Camera {
 	public void updateReflectedView() {
 		Transform transform = getOwner().getPhysics().getTransform();
 		Point point = transform.getPosition().add(0.0f, getHeight(), 0.0f);
-		Matrix pos = MatrixMath.createTranslated(point.multiply(-1));
-		Matrix rot = getRotation();
-		view = MatrixMath.createScaled(new Vector3(1, -1, 1)).multiply(pos).multiply(rot);
+		Matrix4 pos = Matrix4.createTranslation(point.mul(-1));
+		Matrix4 rot = getRotation();
+		view = Matrix4.createScaling(new Vector4(1, -1, 1, 1)).mul(pos).mul(rot);
 		frustum.update(projection, view, transform.getPosition());
 	}
 
@@ -95,7 +94,7 @@ public class PlayerHead extends EntityHead implements Camera {
 	}
 
 	@Override
-	public Matrix getRotation() {
-		return MatrixMath.createRotated(getOrientation());
+	public Matrix4 getRotation() {
+		return Matrix4.createRotation(getOrientation());
 	}
 }

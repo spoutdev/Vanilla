@@ -28,12 +28,12 @@ package org.spout.vanilla.protocol.handler.player.pos;
 
 import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Transform;
-import org.spout.api.math.QuaternionMath;
 import org.spout.api.protocol.ClientSession;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.ServerSession;
 import org.spout.api.protocol.event.EntityUpdateEvent;
 
+import org.spout.math.imaginary.Quaternion;
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerLookMessage;
 
@@ -51,7 +51,7 @@ public final class PlayerLookHandler extends MessageHandler<PlayerLookMessage> {
 
 		Player holder = session.getPlayer();
 
-		holder.getPhysics().setTransform(new Transform(holder.getPhysics().getPosition(), QuaternionMath.rotation(message.getPitch(), message.getYaw(), 0), holder.getPhysics().getScale()), false);
+		holder.getPhysics().setTransform(new Transform(holder.getPhysics().getPosition(), Quaternion.fromAxesAnglesDeg(message.getPitch(), message.getYaw(), 0), holder.getPhysics().getScale()), false);
 		Human human = holder.get(Human.class);
 		if (human != null) {
 			human.setOnGround(message.isOnGround());
@@ -63,7 +63,7 @@ public final class PlayerLookHandler extends MessageHandler<PlayerLookMessage> {
 	public void handleClient(ClientSession session, PlayerLookMessage message) {
 		Player holder = session.getPlayer();
 
-		holder.getPhysics().setRotation(QuaternionMath.rotation(message.getPitch(), message.getYaw(), 0));
+		holder.getPhysics().setRotation(Quaternion.fromAxesAnglesDeg(message.getPitch(), message.getYaw(), 0));
 		Human human = holder.get(Human.class);
 		if (human != null) {
 			human.setOnGround(message.isOnGround());

@@ -35,13 +35,13 @@ import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.math.GenericMath;
+
+import org.spout.math.GenericMath;
 import org.spout.nbt.CompoundMap;
 import org.spout.nbt.CompoundTag;
 import org.spout.nbt.ListTag;
 import org.spout.nbt.ShortTag;
 import org.spout.nbt.Tag;
-
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 import org.spout.vanilla.util.MathHelper;

@@ -30,8 +30,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import org.spout.api.math.GenericMath;
-
+import org.spout.math.GenericMath;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;

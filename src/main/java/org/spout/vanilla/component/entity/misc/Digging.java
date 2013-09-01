@@ -28,8 +28,8 @@ package org.spout.vanilla.component.entity.misc;
 
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.Material;
-import org.spout.api.math.GenericMath;
 
+import org.spout.math.GenericMath;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.data.Animation;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;

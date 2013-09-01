@@ -30,10 +30,9 @@ import java.util.Random;
 
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.math.TrigMath;
-import org.spout.api.math.Vector2;
-import org.spout.api.math.VectorMath;
 
+import org.spout.math.TrigMath;
+import org.spout.math.vector.Vector2;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.object.RandomObject;
 
@@ -70,7 +69,7 @@ public class OreObject extends RandomObject {
 	public void placeObject(World world, int originX, int originY, int originZ) {
 		final int clusterSize = type.clusterSize;
 		final float angle = random.nextFloat() * (float) Math.PI;
-		final Vector2 offset = VectorMath.getDirection2D(angle).multiply(clusterSize).divide(8);
+		final Vector2 offset = Vector2.createDirection(angle).mul(clusterSize).div(8);
 		final float x1 = ((originX + 8) + offset.getX());
 		final float x2 = ((originX + 8) - offset.getX());
 		final float z1 = ((originZ + 8) + offset.getY());

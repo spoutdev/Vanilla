@@ -34,8 +34,8 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.block.BlockSnapshot;
-import org.spout.api.math.Vector3;
 
+import org.spout.math.vector.Vector3;
 import org.spout.vanilla.component.block.material.chest.AbstractChest;
 import org.spout.vanilla.component.block.material.chest.Chest;
 import org.spout.vanilla.component.entity.substance.Item;

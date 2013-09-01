@@ -31,10 +31,10 @@ import java.util.Random;
 import gnu.trove.iterator.TObjectIntIterator;
 import gnu.trove.map.TObjectIntMap;
 
-import org.spout.api.math.GenericMath;
-import org.spout.api.math.TrigMath;
-import org.spout.api.math.Vector3;
-import org.spout.api.math.VectorMath;
+import org.spout.math.GenericMath;
+import org.spout.math.TrigMath;
+import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector3;
 
 public class MathHelper {
 	/**
@@ -87,7 +87,7 @@ public class MathHelper {
 		Random rand = new Random();
 		float xzLength = maxXZForce * rand.nextFloat();
 		float yLength = maxYForce * (rand.nextFloat() - rand.nextFloat());
-		return VectorMath.getRandomDirection2D(rand).multiply(xzLength).toVector3(yLength);
+		return Vector2.createRandomDirection(rand).mul(xzLength).toVector3(yLength);
 	}
 
 	// TODO: Get these two functions working in the API!

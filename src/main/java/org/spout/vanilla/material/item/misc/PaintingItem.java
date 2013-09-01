@@ -35,8 +35,8 @@ import org.spout.api.event.player.Action;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.GenericMath;
 
+import org.spout.math.GenericMath;
 import org.spout.vanilla.component.entity.substance.Painting;
 import org.spout.vanilla.data.PaintingType;
 import org.spout.vanilla.material.item.VanillaItemMaterial;

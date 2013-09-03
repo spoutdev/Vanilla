@@ -33,7 +33,7 @@ import gnu.trove.list.TFloatList;
 import gnu.trove.list.array.TFloatArrayList;
 
 import org.spout.api.geo.World;
-import org.spout.api.geo.cuboid.ChunkSnapshotModel;
+import org.spout.api.geo.cuboid.ChunkSnapshotGroup;
 import org.spout.api.render.BufferContainer;
 import org.spout.api.render.effect.BufferEffect;
 
@@ -43,7 +43,7 @@ import org.spout.vanilla.world.generator.biome.VanillaBiomes;
 
 public abstract class BiomeColorBufferEffect implements BufferEffect {
 	@Override
-	public void post(ChunkSnapshotModel chunkModel, BufferContainer value) {
+	public void post(ChunkSnapshotGroup chunkModel, BufferContainer value) {
 		final Map<Integer, Object> buffers = value.getBuffers();
 		final TFloatList vertices = (TFloatList) buffers.get(0);
 		final int vertexCount = vertices.size();

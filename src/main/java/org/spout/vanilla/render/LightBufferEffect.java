@@ -30,7 +30,7 @@ import gnu.trove.list.array.TFloatArrayList;
 
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.cuboid.ChunkSnapshot;
-import org.spout.api.geo.cuboid.ChunkSnapshotModel;
+import org.spout.api.geo.cuboid.ChunkSnapshotGroup;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.render.BufferContainer;
 import org.spout.api.render.effect.BufferEffect;
@@ -40,7 +40,7 @@ import org.spout.vanilla.world.lighting.VanillaLighting;
 
 public class LightBufferEffect implements BufferEffect {
 	@Override
-	public void post(ChunkSnapshotModel chunkModel, BufferContainer container) {
+	public void post(ChunkSnapshotGroup chunkModel, BufferContainer container) {
 		TFloatArrayList vertexBuffer = (TFloatArrayList) container.getBuffers().get(0);
 
 		/*
@@ -83,7 +83,7 @@ public class LightBufferEffect implements BufferEffect {
 	/**
 	 * Compute the light for one vertex
 	 */
-	private void generateLightOnVertices(ChunkSnapshotModel chunkModel, float x, float y, float z, TFloatArrayList lightBuffer, TFloatArrayList skylightBuffer) {
+	private void generateLightOnVertices(ChunkSnapshotGroup chunkModel, float x, float y, float z, TFloatArrayList lightBuffer, TFloatArrayList skylightBuffer) {
 		int xi = (int) x;
 		int yi = (int) y;
 		int zi = (int) z;

@@ -56,10 +56,15 @@ public class Hunger extends VanillaEntityComponent {
 	private Slot foodEating;
 	private Human human;
 	private static final float TIMER_START = 4;
-	private float timer = TIMER_START;
+	private float regenTimerStart = 0;
+	private float starveTimerStart = 0;
+	private float regenTimer = TIMER_START;
+	private float starveTimer = TIMER_START;
 	private Point lastPos;
 	private float fx;
 	private float bx;
+	private static final float HUNGER_THRESHOLD = 17;
+	private float hungerThreshold = -1;
 
 	@Override
 	public void onAttached() {
@@ -79,16 +84,16 @@ public class Hunger extends VanillaEntityComponent {
 	public void onTick(float dt) {
 		/*
 		 * The Minecraft hunger system has a few different dynamics:
-		 * 
+		 *
 		 * 1) hunger - the amount of 'shanks' shown on the client. 1 points = 1/2 shank
-		 * 
+		 *
 		 * 2) food saturation - an invisible 'safety net' that is a default 5 points.
-		 * 
+		 *
 		 * 3) the timer - decreases by the delta of a tick every tick if 'hunger' > 17 or if 'food level' <= 0 and heals or deals one point of damage respectively
-		 * 
+		 *
 		 * 4) exhaustion - anywhere in between 0 and 4 and increases with certain actions. When the exhaustion reaches 4, it is reset and subtracts one point from 'food saturation' if 'food
 		 * saturation' > 0 or one point from 'hunger' if 'food saturation' <= 0 and 'hunger' > 0.
-		 * 
+		 *
 		 * Exhaustion actions: Walking and sneaking (per block) - 0.01 Sprinting (per block) - 0.1 Swimming (per block) - 0.015 Jumping (per block) - 0.2 Sprint jump (per block) - 0.8 Digging - 0.025
 		 * Attacking or being attacked - 0.3 Food poisoning - 15 total over entire duration
 		 */
@@ -119,21 +124,21 @@ public class Hunger extends VanillaEntityComponent {
 				}
 
 				// Regenerate health
-				if (health < 20 && hunger > 17) {
-					timer -= dt;
-					if (timer <= 0) {
+				if (health < human.getHealth().getMaxHealth() && hunger > getHungerThreshold()) {
+					regenTimer -= dt;
+					if (regenTimer <= 0) {
 						healthComponent.heal(1.0f, HealCause.REGENERATION);
-						timer = TIMER_START;
+						regenTimer = getRegenerationTimerStart();
 					}
 				}
 
 				// Damage health
 
 				if (hunger <= 0) {
-					timer -= dt;
-					if (timer <= 0) {
+					starveTimer -= dt;
+					if (starveTimer <= 0) {
 						healthComponent.damage(1.0f, new NullDamageCause(DamageType.STARVATION));
-						timer = TIMER_START;
+						starveTimer = getStarvationTimerStart();
 					}
 				}
 
@@ -232,7 +237,7 @@ public class Hunger extends VanillaEntityComponent {
 	 * @param hunger The hunger level of the entity
 	 */
 	public void setHunger(int hunger) {
-		getData().put(VanillaData.HUNGER, Math.min(hunger, 20));
+		getData().put(VanillaData.HUNGER, Math.min(hunger, getMaxHunger()));
 		reload();
 		if (getOwner().getEngine() instanceof Client) {
 			//render(52, 16);
@@ -322,6 +327,7 @@ public class Hunger extends VanillaEntityComponent {
 	 */
 	public void reset() {
 		setHunger(VanillaData.HUNGER.getDefaultValue());
+		setMaxHunger(VanillaData.MAX_HUNGER.getDefaultValue());
 		setFoodSaturation(VanillaData.FOOD_SATURATION.getDefaultValue());
 		setExhaustion(VanillaData.EXHAUSTION.getDefaultValue());
 		setPoisoned(VanillaData.POISONED.getDefaultValue());
@@ -340,5 +346,97 @@ public class Hunger extends VanillaEntityComponent {
 		} else {
 			eatingTimer = 0f;
 		}
+	}
+
+	/**
+	 * Gets the start value for the Health Regeneration Start Timer length.
+	 * The Default Start Timer is 4 seconds.
+	 *
+	 * @return Health Regeneration Start Timer length.
+	 */
+	public float getRegenerationTimerStart() {
+		return regenTimerStart > 0 ? regenTimerStart : TIMER_START;
+	}
+
+	/**
+	 * Sets the start value for the Health Regeneration Start Timer length.
+	 * The Default Start Timer is 4 seconds. The value cannot be at or below
+	 * 0.
+	 *
+	 * @param time The time in seconds between each Regeneration.
+	 */
+	public void setRegenerationTimerStart(float time) {
+		this.regenTimerStart = time <= 0 ? TIMER_START : time;
+	}
+
+	/**
+	 * Gets the start value for the Starvation Start Timer length. The
+	 * Default Start Timer is 4 seconds.
+	 *
+	 * @return Starvation Start Timer length.
+	 */
+	public float getStarvationTimerStart() {
+		return starveTimerStart > 0 ? starveTimerStart : TIMER_START;
+	}
+
+	/**
+	 * Sets the start value for the Starvation Start Timer length. The
+	 * Default Start Timer is 4 seconds. The value cannot be at or below 0.
+	 *
+	 * @param time The time in seconds between each Starvation damage.
+	 */
+	public void setStarvationTimerStart(float time) {
+		this.starveTimerStart = time <= 0 ? TIMER_START : time;
+	}
+
+	/**
+	 * Gets the value for the Hunger Threshold. The Hunger Threshold is the
+	 * point in which when below the threshold, the player does not
+	 * regenerate health. When above the Threshold, the player will
+	 * regenerate health.
+	 *
+	 * @return Hunger Threshold.
+	 */
+	public float getHungerThreshold() {
+		return hungerThreshold >= 0 ? hungerThreshold : HUNGER_THRESHOLD;
+	}
+
+	/**
+	 * Sets the value for the Hunger Threshold. The Hunger Threshold is the
+	 * point in which when below the threshold, the player does not
+	 * regenerate health. When above the Threshold, the player will
+	 * regenerate health.
+	 *
+	 * @param threshold Hunger Threshold value to set.
+	 */
+	public void setHungerThreshold(float threshold) {
+		if (threshold >= 0 && threshold <= getMaxHunger()) {
+			hungerThreshold = threshold;
+		}
+	}
+
+	/**
+	 * Sets the Maximum value that Hunger can be.  The Default is 20 and
+	 * this must be a positive Integer.
+	 *
+	 * @param maxHunger
+	 */
+	public void setMaxHunger(int maxHunger) {
+		if (maxHunger > 0) {
+			getData().put(VanillaData.MAX_HUNGER, maxHunger);
+			if (getHunger() > maxHunger) {
+				getData().put(VanillaData.HUNGER, maxHunger);
+			}
+			reload();
+		}
+	}
+
+	/**
+	 * Gets the Maximum value that Hunger can be.
+	 *
+	 * @return
+	 */
+	public int getMaxHunger() {
+		return getData().get(VanillaData.MAX_HUNGER);
 	}
 }

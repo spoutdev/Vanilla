@@ -78,6 +78,7 @@ public class VanillaData {
 	public static final DefaultedKey<Integer> INTERACT_REACH = new DefaultedKeyImpl<Integer>("interact_reach", 5);
 	public static final DefaultedKey<Vector3> VELOCITY = new DefaultedKeyImpl<Vector3>("velocity", Vector3.ZERO);
 	public static final DefaultedKey<Integer> HUNGER = new DefaultedKeyImpl<Integer>("hunger", 20);
+	public static final DefaultedKey<Integer> MAX_HUNGER = new DefaultedKeyImpl<Integer>("max_hunger", 20);
 	public static final DefaultedKey<Float> FOOD_SATURATION = new DefaultedKeyImpl<Float>("food_saturation", 5f);
 	public static final DefaultedKey<Float> EXHAUSTION = new DefaultedKeyImpl<Float>("exhaustion", 0f);
 	public static final DefaultedKey<Boolean> POISONED = new DefaultedKeyImpl<Boolean>("poisoned", false);

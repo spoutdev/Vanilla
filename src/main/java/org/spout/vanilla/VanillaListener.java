@@ -78,12 +78,10 @@ import org.spout.vanilla.component.world.sky.Sky;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
-import org.spout.vanilla.data.configuration.WorldConfiguration;
 import org.spout.vanilla.data.configuration.WorldConfigurationNode;
 import org.spout.vanilla.event.entity.EntityDeathEvent;
 import org.spout.vanilla.event.material.RedstoneChangeEvent;
 import org.spout.vanilla.event.player.PlayerDeathEvent;
-import org.spout.vanilla.input.VanillaInputExecutor;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.protocol.ClientAuthentification;
 import org.spout.vanilla.protocol.PasteExceptionHandler;
@@ -145,7 +143,8 @@ public class VanillaListener implements Listener {
 		HUD.setupHUD();
 		HUD.openHUD();
 
-		((Client) player.getEngine()).getInputManager().addInputExecutor(new VanillaInputExecutor(player));
+		// TODO remove comments when Spout only uses fallback
+		//player.add(PlayerMovementExecutor.class);
 
 		// Remove Head and default Camera
 		player.detach(EntityHead.class);

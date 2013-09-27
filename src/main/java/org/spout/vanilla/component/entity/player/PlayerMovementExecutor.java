@@ -24,28 +24,31 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.input;
+package org.spout.vanilla.component.entity.player;
 
+import org.spout.api.component.entity.EntityComponent;
 import org.spout.api.component.entity.PhysicsComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.entity.state.PlayerInputState;
 import org.spout.api.geo.discrete.Transform;
-import org.spout.api.input.InputExecutor;
-
 import org.spout.math.imaginary.Quaternion;
 import org.spout.math.vector.Vector3;
 import org.spout.vanilla.component.entity.misc.EntityHead;
 
-public class VanillaInputExecutor implements InputExecutor {
-	private final Player player;
+public class PlayerMovementExecutor extends EntityComponent {
 
-	public VanillaInputExecutor(Player player) {
-		this.player = player;
+	@Override
+	public void onAttached() {
+		if (!(getOwner() instanceof Player)) {
+			throw new UnsupportedOperationException("PlayerMovementExecutor can only be attached to players!");
+		}
 	}
 
 	// TODO: vanilla input
 	@Override
-	public void execute(float dt, Transform ts) {
+	public void onTick(float dt) {
+		Player player = (Player) getOwner();
+		Transform ts = player.getPhysics().getTransform();
 		PlayerInputState inputState = player.input();
 		PhysicsComponent sc = player.getPhysics();
 
@@ -71,7 +74,7 @@ public class VanillaInputExecutor implements InputExecutor {
 		}
 
 		player.get(EntityHead.class).setOrientation(Quaternion.fromAxesAnglesDeg(inputState.pitch(), inputState.yaw(), ts.getRotation().getAxesAngleDeg().getZ()));
-		ts.translateAndSetRotation(offset, Quaternion.fromAxesAnglesDeg(inputState.pitch(), inputState.yaw(), ts.getRotation().getAxesAngleDeg().getZ()));
-		sc.setTransform(ts);
+		player.getPhysics().translate(offset);
+		player.getPhysics().setRotation(Quaternion.fromAxesAnglesDeg(inputState.pitch(), inputState.yaw(), ts.getRotation().getAxesAngleDeg().getZ()));
 	}
 }

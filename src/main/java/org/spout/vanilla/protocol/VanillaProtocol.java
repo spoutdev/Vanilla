@@ -428,14 +428,14 @@ public class VanillaProtocol extends Protocol {
 	}
 
 	@Override
-	public Message getCommandMessage(Command command, CommandArguments args) {
+	public Message getCommandMessage(String command, CommandArguments args) {
 		try {
-			if (command.getName().equals("kick")) {
+			if (command.equals("kick")) {
 				return getKickMessage(args.popRemainingStrings("message"));
-			} else if (command.getName().equals("say")) {
+			} else if (command.equals("say")) {
 				return new PlayerChatMessage(args.popRemainingStrings("message") + "\u00a7r"); // The reset text is a workaround for a change in 1.3 -- Remove if fixed
 			} else {
-				return new PlayerChatMessage('/' + command.getName() + ' ' + args.popRemainingStrings("message"));
+				return new PlayerChatMessage('/' + command + ' ' + args.popRemainingStrings("message"));
 			}
 		} catch (ArgumentParseException ex) {
 			return new PlayerChatMessage(ChatStyle.RED + ex.getMessage());

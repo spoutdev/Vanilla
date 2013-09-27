@@ -38,6 +38,7 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.MessageCodec;
 
 import org.spout.vanilla.EngineFaker;
+import org.spout.vanilla.VanillaPlugin;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -54,6 +55,12 @@ public abstract class BaseProtocolTest {
 		this.testMessages = testMessages;
 	}
 
+	@Test
+	public void testProtocolVersion() {
+		String val = System.getProperty("protocol");
+		Integer i = Integer.valueOf(val);
+		assertEquals("Protocol Version in pom does not match version in Source: ", i.longValue(), VanillaPlugin.MINECRAFT_PROTOCOL_ID);
+	}
 	@Test
 	public void testMessageCodecLookup() {
 		for (Message message : testMessages) {

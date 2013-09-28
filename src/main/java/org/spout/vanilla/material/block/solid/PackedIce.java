@@ -24,15 +24,15 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.item.food;
+package org.spout.vanilla.material.block.solid;
 
-public enum FoodEffects {
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
+import org.spout.vanilla.material.block.Solid;
 
-	POISON,
-	POISON_IV,
-	HUNGER_INCREASE,
-	HUNGER_POISON_III,
-	SATURATION,
-	NAUSEA_II,
-	HEALTH_REGENERATION
+public class PackedIce extends Solid {
+	public PackedIce(String name, int id) {
+		super(name, id, VanillaMaterialModels.PACKED_ICE);
+		this.setHardness(0.5F).setResistance(2.5F);
+		this.getDrops().clear();
+	}
 }

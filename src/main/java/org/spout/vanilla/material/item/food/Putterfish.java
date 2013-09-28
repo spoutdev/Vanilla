@@ -26,13 +26,11 @@
  */
 package org.spout.vanilla.material.item.food;
 
-public enum FoodEffects {
+import org.spout.vanilla.material.item.Food;
 
-	POISON,
-	POISON_IV,
-	HUNGER_INCREASE,
-	HUNGER_POISON_III,
-	SATURATION,
-	NAUSEA_II,
-	HEALTH_REGENERATION
+//TODO: Is also a brewing ingredient
+public class Putterfish extends Food {
+	public Putterfish(String name, short data, RawFish parent, FoodEffect... effects) {
+		super(name, parent.getId(), data, parent, null, effects);
+	}
 }

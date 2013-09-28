@@ -29,7 +29,7 @@ package org.spout.vanilla.material.item;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
-
+import org.spout.api.material.Material;
 import org.spout.math.GenericMath;
 import org.spout.math.vector.Vector2;
 import org.spout.vanilla.component.entity.living.Living;
@@ -50,6 +50,16 @@ public class Food extends VanillaItemMaterial {
 		this.effects = effects;
 	}
 
+	public Food(String name, int id, int data, Material parent, Vector2 pos, FoodEffect... effects) {
+		super(name, id, data, parent, pos);
+		this.effects = effects;
+	}
+
+	public Food(short mask, String name, int id, Vector2 pos, FoodEffect... effects) {
+		super(mask, name, id, pos);
+		this.effects = effects;
+	}
+
 	public FoodEffect[] getEffectType() {
 		return effects;
 	}
@@ -63,13 +73,22 @@ public class Food extends VanillaItemMaterial {
 					case HEALTH_REGENERATION:
 						entity.add(Effects.class).add(new EntityEffect(EntityEffectType.REGENERATION, effect.getChange()));
 						break;
-					case HUNGER:
+					case HUNGER_INCREASE:
 						hunger.setHunger((int) (hunger.getHunger() + effect.getChange()));
+						break;
+					case HUNGER_POISON_III:
+						entity.add(Effects.class).add(new EntityEffect(EntityEffectType.HUNGER, 3, effect.getChange()));
 						break;
 					case POISON:
 						if (GenericMath.getRandom().nextInt(101) < effect.getChange()) {
 							entity.add(Effects.class).add(new EntityEffect(EntityEffectType.HUNGER, 30));
 						}
+						break;
+					case POISON_IV:
+						entity.add(Effects.class).add(new EntityEffect(EntityEffectType.POISON, 4, effect.getChange()));
+						break;
+					case NAUSEA_II:
+						entity.add(Effects.class).add(new EntityEffect(EntityEffectType.NAUSEA, 2, effect.getChange()));
 						break;
 					case SATURATION:
 						hunger.setFoodSaturation(hunger.getFoodSaturation() + effect.getChange());

@@ -86,6 +86,7 @@ public class VanillaMaterialModels {
 	public static final String CLAY_BLOCK = "model://Vanilla/materials/block/solid/clayblock/clayblock.spm";
 	public static final String COBBLESTONE = "model://Vanilla/materials/block/solid/cobblestone/cobblestone.spm";
 	public static final String DIRT = "model://Vanilla/materials/block/solid/dirt/dirt.spm";
+	public static final String PODZOL = null;
 	public static final String ENDSTONE = "model://Vanilla/materials/block/solid/endstone/endstone.spm";
 	public static final String GLASS = "model://Vanilla/materials/block/solid/glass/glass.spm";
 	public static final String GRASS = "model://Vanilla/materials/block/solid/grass/grass.spm";
@@ -104,6 +105,7 @@ public class VanillaMaterialModels {
 	public static final String REDSTONE_LAMP_ON = "model://Vanilla/materials/block/solid/redstonelampon/redstonelampon.spm";
 	public static final String REDSTONE_LAMP_OFF = "model://Vanilla/materials/block/solid/redstonelampoff/redstonelampoff.spm";
 	public static final String SAND = "model://Vanilla/materials/block/solid/sand/sand.spm";
+	public static final String RED_SAND = null;
 	public static final String SOUL_SAND = "model://Vanilla/materials/block/solid/soulsand/soulsand.spm";
 	public static final String SPONGE = "model://Vanilla/materials/block/solid/sponge/sponge.spm";
 	public static final String STONE = "model://Vanilla/materials/block/solid/stone/stone.spm";
@@ -254,4 +256,5 @@ public class VanillaMaterialModels {
 	public static final String STAINED_CLAY_GREEN = null;
 	public static final String STAINED_CLAY_RED = null;
 	public static final String STAINED_CLAY_BLACK = null;
+	public static final String PACKED_ICE = null;
 }

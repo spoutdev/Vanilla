@@ -50,6 +50,10 @@ public class SolidMoving extends Solid {
 		super(name, id, model);
 	}
 
+	public SolidMoving(short mask, String name, int id, String model) {
+		super(mask, name, id, model);
+	}
+
 	@Override
 	public boolean hasPhysics() {
 		return true;

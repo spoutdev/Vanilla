@@ -32,6 +32,7 @@ import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
+import org.spout.vanilla.data.tool.ToolLevel;
 import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -39,12 +40,20 @@ import org.spout.vanilla.material.block.SolidMoving;
 import org.spout.vanilla.material.block.component.FurnaceBlock;
 
 public class Sand extends SolidMoving implements TimedCraftable {
-	public Sand(String name, int id) {
-		super(name, id, VanillaMaterialModels.SAND);
+	public static final Sand SAND = new Sand("Sand");
+	public static final Sand RED_SAND = new Sand("Red Sand", 1, SAND, VanillaMaterialModels.RED_SAND);
+
+	public Sand(String name) {
+		super((short) 0x0001, name, 12, VanillaMaterialModels.SAND);
 		this.setHardness(0.5F).setResistance(2.5F).setStepSound(SoundEffects.STEP_SAND);
 		this.addMiningType(ToolType.SPADE);
 	}
 
+	private Sand(String name, int data, Sand parent, String model) {
+		super(name, 12, data, parent, model);
+		this.setHardness(0.5F).setResistance(2.5F).setStepSound(SoundEffects.STEP_SAND);
+		this.addMiningType(ToolType.SPADE);
+	}
 	@Override
 	public ItemStack getResult() {
 		return new ItemStack(VanillaMaterials.GLASS, 1);

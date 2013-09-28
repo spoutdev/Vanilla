@@ -94,7 +94,7 @@ import org.spout.vanilla.world.generator.theend.TheEndGenerator;
 import org.spout.vanilla.world.lighting.VanillaLighting;
 
 public class VanillaPlugin extends Plugin {
-	public static final int MINECRAFT_PROTOCOL_ID = 78;
+	public static final int MINECRAFT_PROTOCOL_ID = 80;
 	public static final int VANILLA_PROTOCOL_ID = PlayerNetworkComponent.getProtocolId("org.spout.vanilla.plugin.protocol");
 	protected static VanillaPlugin instance;
 	protected VanillaConfiguration config;

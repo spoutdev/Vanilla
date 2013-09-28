@@ -35,16 +35,32 @@ import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.block.Solid;
 
 public class Dirt extends Solid {
-	private static final EffectRange SPREADING_RANGE = new CubicEffectRange(2);
+	private static final EffectRange SPREADING_RANGE = new CubicEffectRange(2); // Note this must be initialized prior to Material definitions otherwise
 
-	public Dirt(String name, int id) {
-		super(name, id, VanillaMaterialModels.DIRT);
+	public static final Dirt DIRT = new Dirt("Dirt");
+	public static final Dirt GRASSLESS_DIRT = new Dirt("Grassless Dirt", (short) 1, DIRT, VanillaMaterialModels.DIRT);
+	public static final Dirt PODZOL = new Dirt("Podzol", (short) 2, DIRT, VanillaMaterialModels.PODZOL);
+
+
+
+	public Dirt(String name) {
+		super((short) 0x003, name, 3, VanillaMaterialModels.DIRT);
 		this.setHardness(0.5F).setResistance(2.5F).setStepSound(SoundEffects.STEP_GRAVEL);
 		this.addMiningType(ToolType.SPADE);
 	}
 
+	public Dirt(String name, short data, Dirt parent, String model) {
+		super(name, 3, data, parent, model);
+		this.setHardness(0.5F).setResistance(2.5F).setStepSound(SoundEffects.STEP_GRAVEL);
+		this.addMiningType(ToolType.SPADE);
+	}
 	@Override
 	public EffectRange getPhysicsRange(short data) {
 		return SPREADING_RANGE;
+	}
+
+	@Override
+	public boolean hasPhysics() {
+		return this.getData() == 0;
 	}
 }

@@ -173,6 +173,7 @@ import org.spout.vanilla.material.block.solid.Mycelium;
 import org.spout.vanilla.material.block.solid.NetherBrick;
 import org.spout.vanilla.material.block.solid.NetherRack;
 import org.spout.vanilla.material.block.solid.Obsidian;
+import org.spout.vanilla.material.block.solid.PackedIce;
 import org.spout.vanilla.material.block.solid.Plank;
 import org.spout.vanilla.material.block.solid.Pumpkin;
 import org.spout.vanilla.material.block.solid.RedstoneLamp;
@@ -230,6 +231,7 @@ import org.spout.vanilla.material.item.bucket.LavaBucket;
 import org.spout.vanilla.material.item.food.FoodEffect;
 import org.spout.vanilla.material.item.food.FoodEffects;
 import org.spout.vanilla.material.item.food.Potato;
+import org.spout.vanilla.material.item.food.Putterfish;
 import org.spout.vanilla.material.item.food.RawBeef;
 import org.spout.vanilla.material.item.food.RawChicken;
 import org.spout.vanilla.material.item.food.RawFish;
@@ -281,11 +283,11 @@ public final class VanillaMaterials {
 	public static final BlockMaterial AIR = BlockMaterial.AIR;
 	public static final Stone STONE = new Stone("Stone", 1);
 	public static final Grass GRASS = new Grass("Grass", 2);
-	public static final Dirt DIRT = new Dirt("Dirt", 3);
+	public static final Dirt DIRT = Dirt.DIRT;
 	public static final Cobblestone COBBLESTONE = new Cobblestone("Cobblestone", 4);
 	public static final Plank PLANK = Plank.PLANK;
 	public static final Bedrock BEDROCK = new Bedrock("Bedrock", 7);
-	public static final Sand SAND = new Sand("Sand", 12);
+	public static final Sand SAND = Sand.SAND;
 	public static final Gravel GRAVEL = new Gravel("Gravel", 13);
 	public static final Log LOG = Log.DEFAULT;
 	public static final Leaves LEAVES = Leaves.DEFAULT;
@@ -453,6 +455,7 @@ public final class VanillaMaterials {
 	public static final RotationalSolid HAY_BALE = new RotationalSolid("Hay Bale", 170, VanillaMaterialModels.HAY_BALE);
 	public static final Carpet CARPET = Carpet.WHITE_CARPET;
 	public static final HardenedClay HARDENED_CLAY = new HardenedClay("Hardened Clay", 172);
+	public static final PackedIce PACKED_ICE = new PackedIce("Packed Ice", 174);
 	/*
 	 * Items
 	 */
@@ -584,28 +587,31 @@ public final class VanillaMaterials {
 	public static final ItemFrameItem ITEM_FRAME = new ItemFrameItem("Item Frame", 389, null);
 	public static final Skull SKELETON_SKULL = Skull.SKELETON_SKULL;
 	// == Food ==
-	public static final RawFish RAW_FISH = new RawFish("Raw Fish", 349, new FoodEffect(FoodEffects.HUNGER, 2), new FoodEffect(FoodEffects.SATURATION, 1.2f));
-	public static final Food COOKED_FISH = new Food("Cooked Fish", 350, null, new FoodEffect(FoodEffects.HUNGER, 5), new FoodEffect(FoodEffects.SATURATION, 6));
-	public static final Food RED_APPLE = new Food("Apple", 260, null, new FoodEffect(FoodEffects.HUNGER, 4), new FoodEffect(FoodEffects.SATURATION, 2.4f));
-	public static final Food MUSHROOM_STEW = new Food("Mushroom Stew", 282, null, new FoodEffect(FoodEffects.HUNGER, 6), new FoodEffect(FoodEffects.SATURATION, 7.2f));
-	public static final Food BREAD = new Food("Bread", 297, null, new FoodEffect(FoodEffects.HUNGER, 5), new FoodEffect(FoodEffects.SATURATION, 6));
-	public static final RawPorkchop RAW_PORKCHOP = new RawPorkchop("Raw Porkchop", 319, new FoodEffect(FoodEffects.HUNGER, 3), new FoodEffect(FoodEffects.SATURATION, 1.8f));
-	public static final Food COOKED_PORKCHOP = new Food("Cooked Porkchop", 320, null, new FoodEffect(FoodEffects.HUNGER, 8), new FoodEffect(FoodEffects.SATURATION, 12.8f));
+	public static final RawFish RAW_FISH = RawFish.RAW_FISH;
+	public static final Food CLOWN_FISH = new Food("Clownfish", 349, 2, RawFish.RAW_FISH, null, new FoodEffect(FoodEffects.HUNGER_INCREASE, 1));
+	public static final Putterfish PUTTERFISH = new Putterfish("Putterfish", (short) 3, RawFish.RAW_FISH, new FoodEffect(FoodEffects.HUNGER_INCREASE, 1), new FoodEffect(FoodEffects.HUNGER_POISON_III, 15), new FoodEffect(FoodEffects.NAUSEA_II, 15), new FoodEffect(FoodEffects.POISON_IV, 60));
+	public static final Food COOKED_FISH = new Food((short) 0x1, "Cooked Fish", 350, null, new FoodEffect(FoodEffects.HUNGER_INCREASE, 5), new FoodEffect(FoodEffects.SATURATION, 6));
+	public static final Food COOKED_SALMON = new Food("Cooked Salmon", 350, 1, VanillaMaterials.COOKED_FISH, null, new FoodEffect(FoodEffects.HUNGER_INCREASE, 6));
+	public static final Food RED_APPLE = new Food("Apple", 260, null, new FoodEffect(FoodEffects.HUNGER_INCREASE, 4), new FoodEffect(FoodEffects.SATURATION, 2.4f));
+	public static final Food MUSHROOM_STEW = new Food("Mushroom Stew", 282, null, new FoodEffect(FoodEffects.HUNGER_INCREASE, 6), new FoodEffect(FoodEffects.SATURATION, 7.2f));
+	public static final Food BREAD = new Food("Bread", 297, null, new FoodEffect(FoodEffects.HUNGER_INCREASE, 5), new FoodEffect(FoodEffects.SATURATION, 6));
+	public static final RawPorkchop RAW_PORKCHOP = new RawPorkchop("Raw Porkchop", 319, new FoodEffect(FoodEffects.HUNGER_INCREASE, 3), new FoodEffect(FoodEffects.SATURATION, 1.8f));
+	public static final Food COOKED_PORKCHOP = new Food("Cooked Porkchop", 320, null, new FoodEffect(FoodEffects.HUNGER_INCREASE, 8), new FoodEffect(FoodEffects.SATURATION, 12.8f));
 	//	// TODO : Regen health for 4 secs
-	public static final Food GOLDEN_APPLE = new Food("Golden Apple", 322, null, new FoodEffect(FoodEffects.HUNGER, 4), new FoodEffect(FoodEffects.SATURATION, 9.6f), new FoodEffect(FoodEffects.HEALTH_REGENERATION, 4));
-	public static final Food MELON_SLICE = new Food("MelonBlock Slice", 360, null, new FoodEffect(FoodEffects.HUNGER, 2), new FoodEffect(FoodEffects.SATURATION, 1.2f));
-	public static final Food COOKIE = new Food("Cookie", 357, null, new FoodEffect(FoodEffects.HUNGER, 2), new FoodEffect(FoodEffects.SATURATION, 0.4f));
-	public static final RawBeef RAW_BEEF = new RawBeef("Raw Beef", 363, new FoodEffect(FoodEffects.HUNGER, 3), new FoodEffect(FoodEffects.SATURATION, 1.8f));
-	public static final Food STEAK = new Food("Steak", 364, null, new FoodEffect(FoodEffects.HUNGER, 8), new FoodEffect(FoodEffects.SATURATION, 12.8f));
-	public static final RawChicken RAW_CHICKEN = new RawChicken("Raw Chicken", 365, new FoodEffect(FoodEffects.HUNGER, 2), new FoodEffect(FoodEffects.SATURATION, 1.2f), new FoodEffect(FoodEffects.POISON, 30));
-	public static final Food COOKED_CHICKEN = new Food("Cooked Chicken", 366, null, new FoodEffect(FoodEffects.HUNGER, 6), new FoodEffect(FoodEffects.SATURATION, 7.2f));
-	public static final Food ROTTEN_FLESH = new Food("Rotten Flesh", 367, null, new FoodEffect(FoodEffects.HUNGER, 4), new FoodEffect(FoodEffects.SATURATION, 0.8f), new FoodEffect(FoodEffects.POISON, 80));
-	public static final Food CARROT = new Food("Carrot", 391, null, new FoodEffect(FoodEffects.HUNGER, 4), new FoodEffect(FoodEffects.SATURATION, 4.8f));
-	public static final Potato POTATO = new Potato("Potato", 392, new FoodEffect(FoodEffects.HUNGER, 1), new FoodEffect(FoodEffects.SATURATION, 0.6f));
-	public static final Food BAKED_POTATO = new Food("Baked Potato", 393, null, new FoodEffect(FoodEffects.HUNGER, 6), new FoodEffect(FoodEffects.SATURATION, 7.2f));
-	public static final Food POISONOUS_POTATO = new Food("Poisonous Potato", 394, null, new FoodEffect(FoodEffects.HUNGER, 1), new FoodEffect(FoodEffects.SATURATION, 0.6f), new FoodEffect(FoodEffects.POISON, 100));
-	public static final Food GOLDEN_CARROT = new Food("Golden Carrot", 396, null, new FoodEffect(FoodEffects.HUNGER, 6), new FoodEffect(FoodEffects.SATURATION, 14.4f));
-	public static final Food PUMPKIN_PIE = new Food("Pumpkin Pie", 400, null, new FoodEffect(FoodEffects.HUNGER, 8), new FoodEffect(FoodEffects.SATURATION, 4.8f));
+	public static final Food GOLDEN_APPLE = new Food("Golden Apple", 322, null, new FoodEffect(FoodEffects.HUNGER_INCREASE, 4), new FoodEffect(FoodEffects.SATURATION, 9.6f), new FoodEffect(FoodEffects.HEALTH_REGENERATION, 4));
+	public static final Food MELON_SLICE = new Food("MelonBlock Slice", 360, null, new FoodEffect(FoodEffects.HUNGER_INCREASE, 2), new FoodEffect(FoodEffects.SATURATION, 1.2f));
+	public static final Food COOKIE = new Food("Cookie", 357, null, new FoodEffect(FoodEffects.HUNGER_INCREASE, 2), new FoodEffect(FoodEffects.SATURATION, 0.4f));
+	public static final RawBeef RAW_BEEF = new RawBeef("Raw Beef", 363, new FoodEffect(FoodEffects.HUNGER_INCREASE, 3), new FoodEffect(FoodEffects.SATURATION, 1.8f));
+	public static final Food STEAK = new Food("Steak", 364, null, new FoodEffect(FoodEffects.HUNGER_INCREASE, 8), new FoodEffect(FoodEffects.SATURATION, 12.8f));
+	public static final RawChicken RAW_CHICKEN = new RawChicken("Raw Chicken", 365, new FoodEffect(FoodEffects.HUNGER_INCREASE, 2), new FoodEffect(FoodEffects.SATURATION, 1.2f), new FoodEffect(FoodEffects.POISON, 30));
+	public static final Food COOKED_CHICKEN = new Food("Cooked Chicken", 366, null, new FoodEffect(FoodEffects.HUNGER_INCREASE, 6), new FoodEffect(FoodEffects.SATURATION, 7.2f));
+	public static final Food ROTTEN_FLESH = new Food("Rotten Flesh", 367, null, new FoodEffect(FoodEffects.HUNGER_INCREASE, 4), new FoodEffect(FoodEffects.SATURATION, 0.8f), new FoodEffect(FoodEffects.POISON, 80));
+	public static final Food CARROT = new Food("Carrot", 391, null, new FoodEffect(FoodEffects.HUNGER_INCREASE, 4), new FoodEffect(FoodEffects.SATURATION, 4.8f));
+	public static final Potato POTATO = new Potato("Potato", 392, new FoodEffect(FoodEffects.HUNGER_INCREASE, 1), new FoodEffect(FoodEffects.SATURATION, 0.6f));
+	public static final Food BAKED_POTATO = new Food("Baked Potato", 393, null, new FoodEffect(FoodEffects.HUNGER_INCREASE, 6), new FoodEffect(FoodEffects.SATURATION, 7.2f));
+	public static final Food POISONOUS_POTATO = new Food("Poisonous Potato", 394, null, new FoodEffect(FoodEffects.HUNGER_INCREASE, 1), new FoodEffect(FoodEffects.SATURATION, 0.6f), new FoodEffect(FoodEffects.POISON, 100));
+	public static final Food GOLDEN_CARROT = new Food("Golden Carrot", 396, null, new FoodEffect(FoodEffects.HUNGER_INCREASE, 6), new FoodEffect(FoodEffects.SATURATION, 14.4f));
+	public static final Food PUMPKIN_PIE = new Food("Pumpkin Pie", 400, null, new FoodEffect(FoodEffects.HUNGER_INCREASE, 8), new FoodEffect(FoodEffects.SATURATION, 4.8f));
 	// == Music Discs ==
 	public static final MusicDisc MUSIC_DISK_13 = new MusicDisc("Music Disc - 13", 2256).setMusic(Music.THIRTEEN);
 	public static final MusicDisc MUSIC_DISK_CAT = new MusicDisc("Music Disc - cat", 2257).setMusic(Music.CAT);

@@ -34,13 +34,27 @@ import org.spout.vanilla.material.block.component.FurnaceBlock;
 import org.spout.vanilla.material.item.Food;
 
 public class RawFish extends Food implements TimedCraftable {
-	public RawFish(String name, int id, FoodEffect... type) {
-		super(name, id, null, type);
+	public static final RawFish RAW_FISH = new RawFish("Raw Fish", new FoodEffect(FoodEffects.HUNGER_INCREASE, 2), new FoodEffect(FoodEffects.SATURATION, 1.2f));
+	public static final RawFish RAW_SALMON = new RawFish("Raw Salmon", (short) 1, RAW_FISH,  new FoodEffect(FoodEffects.HUNGER_INCREASE, 2));
+
+	public RawFish(String name, FoodEffect... effects) {
+		super((short) 0x03, name, 349, null, effects);
+	}
+
+	public RawFish(String name, short data, RawFish parent, FoodEffect... effects) {
+		super(name, 349, data, parent, null, effects);
 	}
 
 	@Override
 	public ItemStack getResult() {
-		return new ItemStack(VanillaMaterials.COOKED_FISH, 1);
+		switch (this.getData()) {
+			case 0:
+				return new ItemStack(VanillaMaterials.COOKED_FISH, 1);
+			case 1:
+				return new ItemStack(VanillaMaterials.COOKED_SALMON, 1);
+			default:
+				return null;
+		}
 	}
 
 	@Override

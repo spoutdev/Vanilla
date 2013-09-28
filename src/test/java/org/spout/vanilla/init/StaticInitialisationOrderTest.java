@@ -24,13 +24,15 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla;
+package org.spout.vanilla.init;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 import org.junit.Test;
 
+import org.spout.vanilla.EngineFaker;
+import org.spout.vanilla.TestVanilla;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -68,17 +70,19 @@ public class StaticInitialisationOrderTest {
 			}
 		} catch (NoClassDefFoundError t) {
 			staticInitFail(t);
+		} catch (ExceptionInInitializerError e) {
+			// This catches initialization failures properly.  but will cause all subsequent tests to Error.
+			staticInitFail(e.getCause());
 		}
 	}
 
 	public static void staticInitFail(Throwable t) {
 		String s = "";
 		while (t != null) {
-			System.err.print(t);
 			s += t.getMessage() + "\n";
 			t.printStackTrace();
 			t = t.getCause();
 		}
-		fail(s + ": Static initialisation of VanillaMaterials failed.");//Exception type does not matter! Static initialisation failure loses the exception data, turns into ClassLoader fail. :(
+		fail(s + ": Static initialisation of VanillaMaterials failed.");
 	}
 }

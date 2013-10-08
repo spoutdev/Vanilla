@@ -182,8 +182,12 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 				// Destroy the old block
 				if (mat instanceof TntBlock) {
 					((TntBlock) mat).onIgnite(sBlock, toCause(b)); // Ignite TntBlock
+				} else if (mat instanceof VanillaBlockMaterial) {
+					VanillaBlockMaterial sVanillaBlock = (VanillaBlockMaterial) mat; // Destroy vanilla blocks without drops
+					sVanillaBlock.getDrops().clear();
+					sVanillaBlock.destroy(sBlock, toCause(b));
 				} else {
-					sBlock.setMaterial(VanillaMaterials.AIR); // prevent drops
+					sBlock.setMaterial(VanillaMaterials.AIR); // Set non vanilla blocks to air
 				}
 				// Put fire in it's place?
 				if (rand.nextInt(blockData + 10) < 5 && hasBurningSource(sBlock) && !VanillaBlockMaterial.isRaining(sBlock)) {

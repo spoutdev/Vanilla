@@ -26,13 +26,16 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.Burnable;
-import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.solid.Wool.WoolColor;
 
-public class Carpet extends Solid implements Burnable {
+public class Carpet extends GroundAttachable implements Burnable {
 	public static final Carpet WHITE_CARPET = new Carpet("White Carpet", VanillaMaterialModels.CARPET);
 	public static final Carpet ORANGE_CARPET = new Carpet("Orange Carpet", WoolColor.ORANGE, WHITE_CARPET, VanillaMaterialModels.CARPET_ORANGE);
 	public static final Carpet MAGENTA_CARPET = new Carpet("Magenta Carpet", WoolColor.MAGENTA, WHITE_CARPET, VanillaMaterialModels.CARPET_MAGENTA);
@@ -52,13 +55,13 @@ public class Carpet extends Solid implements Burnable {
 	private final WoolColor color;
 
 	private Carpet(String name, String model) {
-		super((short) 0x000F, name, 171, model);
+		super((short) 0x000F, name, 171, model, null);
 		this.color = WoolColor.WHITE;
 		this.setHardness(0.8F).setResistance(1.3F).setStepSound(SoundEffects.STEP_CLOTH);
 	}
 
 	private Carpet(String name, WoolColor color, Carpet parent, String model) {
-		super(name, 171, color.getData(), parent, model);
+		super(name, 171, color.getData(), parent, model, null);
 		this.color = color;
 		this.setHardness(0.8F).setResistance(4.0F).setStepSound(SoundEffects.STEP_CLOTH);
 	}
@@ -75,5 +78,16 @@ public class Carpet extends Solid implements Burnable {
 
 	public WoolColor getColor() {
 		return color;
+	}
+
+	@Override
+	public boolean canSupport(BlockMaterial material, BlockFace face) {
+		// Carpet can only support carpet on top
+		if (material.isMaterial(VanillaMaterials.CARPET)) {
+			return face == BlockFace.TOP;
+		}
+
+		// Anything else is not supported
+		return false;
 	}
 }

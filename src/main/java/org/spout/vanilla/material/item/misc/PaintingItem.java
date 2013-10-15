@@ -30,44 +30,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.entity.Player;
-import org.spout.api.event.player.Action;
+import org.spout.api.event.Cause;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.Placeable;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.math.GenericMath;
+import org.spout.math.vector.Vector3;
 import org.spout.vanilla.component.entity.substance.Painting;
 import org.spout.vanilla.data.PaintingType;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 
-public class PaintingItem extends VanillaItemMaterial {
+public class PaintingItem extends VanillaItemMaterial implements Placeable {
 	public PaintingItem(String name, int id) {
 		super(name, id, null);
 	}
 
 	@Override
-	public void onInteract(Entity entity, Block block, Action type, BlockFace face) {
-		if (!(entity instanceof Player) || type != Action.RIGHT_CLICK) {
-			return;
-		}
-		if (!BlockFace.TOP.equals(face) && !BlockFace.BOTTOM.equals(face)) {
-			List<PaintingType> list = new ArrayList<PaintingType>();
+	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+		return !BlockFace.TOP.equals(against) && !BlockFace.BOTTOM.equals(against) && block.translate(against.getOpposite()).isMaterial(VanillaMaterials.AIR);
+	}
 
-			World world = block.getWorld();
-			BlockFace direction = face.getOpposite();
-			for (PaintingType paintingType : PaintingType.values()) {
-				if (paintingType.canBePlaced(block, direction)) {
-					list.add(paintingType);
-				}
+	@Override
+	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+		List<PaintingType> list = new ArrayList<PaintingType>();
+
+		World world = block.getWorld();
+		for (PaintingType paintingType : PaintingType.values()) {
+			if (paintingType.canBePlaced(block, against)) {
+				list.add(paintingType);
 			}
-			PaintingType paintingType = list.get(GenericMath.getRandom().nextInt(list.size() - 1));
-
-			Entity e = world.createEntity(paintingType.getCenter(direction, block.getPosition()), Painting.class);
-			Painting painting = e.add(Painting.class);
-			painting.setType(paintingType);
-			painting.setFace(direction);
-			world.spawnEntity(e);
 		}
+		PaintingType paintingType = list.get(GenericMath.getRandom().nextInt(list.size() - 1));
+
+		Entity e = world.createEntity(paintingType.getCenter(against, block.getPosition()), Painting.class);
+		Painting painting = e.add(Painting.class);
+		painting.setType(paintingType);
+		painting.setFace(against);
+		world.spawnEntity(e);
 	}
 }

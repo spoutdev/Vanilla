@@ -26,9 +26,13 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.Burnable;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.solid.Wool.WoolColor;
 
@@ -75,5 +79,13 @@ public class Carpet extends Solid implements Burnable {
 
 	public WoolColor getColor() {
 		return color;
+	}
+
+	@Override
+	public void onUpdate(BlockMaterial oldMaterial, Block block) {
+		super.onUpdate(oldMaterial, block);
+		if (block.translate(BlockFace.BOTTOM).isMaterial(VanillaMaterials.AIR)) {
+			this.destroy(block, toCause(block));
+		}
 	}
 }

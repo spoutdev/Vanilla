@@ -33,7 +33,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.protocol.ClientSession;
 import org.spout.api.protocol.MessageHandler;
 
-import org.spout.math.imaginary.Quaternion;
+import org.spout.math.imaginary.Quaternionf;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityTeleportMessage;
 
 public class EntityTeleportHandler extends MessageHandler<EntityTeleportMessage> {
@@ -43,6 +43,6 @@ public class EntityTeleportHandler extends MessageHandler<EntityTeleportMessage>
 		World world = player.getWorld();
 		Entity entity = session.getPlayer();//world.getEntity(message.getEntityId());
 		entity.getPhysics().setPosition(new Point(world, message.getX(), message.getY(), message.getZ()));
-		entity.getPhysics().rotate(Quaternion.fromAxesAnglesDeg(message.getPitch(), message.getRotation(), 0));
+		entity.getPhysics().rotate(Quaternionf.fromAxesAnglesDeg(message.getPitch(), message.getRotation(), 0));
 	}
 }

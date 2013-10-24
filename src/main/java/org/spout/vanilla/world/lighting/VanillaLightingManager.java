@@ -51,7 +51,7 @@ import org.spout.api.util.list.IntVector3FIFO;
 import org.spout.api.util.list.IntVector4ExpandableFIFO;
 import org.spout.api.util.set.TInt10TripleSet;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 
 public abstract class VanillaLightingManager extends LightingManager<VanillaCuboidLightBuffer> {
 	private static final BlockFace[] allFaces = BlockFaces.NESWBT.toArray();
@@ -130,12 +130,12 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 			}
 		}
 
-		Vector3 base = material.getBase();
+		Vector3f base = material.getBase();
 		int baseX = base.getFloorX();
 		int baseY = base.getFloorY();
 		int baseZ = base.getFloorZ();
 
-		Vector3 top = material.getTop();
+		Vector3f top = material.getTop();
 		int topX = top.getFloorX();
 		int topY = top.getFloorY();
 		int topZ = top.getFloorZ();
@@ -221,12 +221,12 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 			}
 		}
 
-		Vector3 base = material.getBase();
+		Vector3f base = material.getBase();
 		int baseX = base.getFloorX();
 		int baseY = base.getFloorY();
 		int baseZ = base.getFloorZ();
 
-		Vector3 top = material.getTop();
+		Vector3f top = material.getTop();
 		int topX = top.getFloorX();
 		int topY = top.getFloorY();
 		int topZ = top.getFloorZ();
@@ -706,19 +706,19 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 
 	@Override
 	public VanillaCuboidLightBuffer[][][] bulkInitialize(ImmutableCuboidBlockMaterialBuffer buffer, int[][] height) {
-		Vector3 size = buffer.getSize();
+		Vector3f size = buffer.getSize();
 
 		final int sizeX = size.getFloorX();
 		final int sizeY = size.getFloorY();
 		final int sizeZ = size.getFloorZ();
 
-		Vector3 base = buffer.getBase();
+		Vector3f base = buffer.getBase();
 
 		final int baseX = base.getFloorX();
 		final int baseY = base.getFloorY();
 		final int baseZ = base.getFloorZ();
 
-		Vector3 top = buffer.getTop();
+		Vector3f top = buffer.getTop();
 
 		final int topX = top.getFloorX();
 		final int topY = top.getFloorY();
@@ -824,7 +824,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 
 					VanillaCuboidLightBuffer light = newLightBuffer(null, baseX + (cx << shift), baseY + (cy << shift), baseZ + (cz << shift), chunkSize, chunkSize, chunkSize);
 
-					Vector3 lightBase = light.getBase();
+					Vector3f lightBase = light.getBase();
 
 					int lightBaseX = lightBase.getFloorX();
 					int lightBaseY = lightBase.getFloorY();

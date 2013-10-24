@@ -35,8 +35,8 @@ import org.spout.api.map.DefaultedKeyFactory;
 import org.spout.api.map.DefaultedKeyImpl;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.math.imaginary.Quaternion;
-import org.spout.math.vector.Vector3;
+import org.spout.math.imaginary.Quaternionf;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.ChatStyle;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.data.effect.EntityEffectType;
@@ -73,10 +73,10 @@ public class VanillaData {
 	public static final DefaultedKey<Long> GROWTH_TICKS = new DefaultedKeyImpl<Long>("growth_ticks", Long.valueOf(0));
 	public static final DefaultedKey<Float> HEALTH = new DefaultedKeyImpl<Float>("health", 1.0f);
 	public static final DefaultedKey<Float> MAX_HEALTH = new DefaultedKeyImpl<Float>("max_health", 1.0f);
-	public static final DefaultedKey<Vector3> MAX_SPEED = new DefaultedKeyImpl<Vector3>("max_speed", Vector3.ZERO);
-	public static final DefaultedKey<Vector3> MOVEMENT_SPEED = new DefaultedKeyImpl<Vector3>("movement_speed", Vector3.ZERO);
+	public static final DefaultedKey<Vector3f> MAX_SPEED = new DefaultedKeyImpl<Vector3f>("max_speed", Vector3f.ZERO);
+	public static final DefaultedKey<Vector3f> MOVEMENT_SPEED = new DefaultedKeyImpl<Vector3f>("movement_speed", Vector3f.ZERO);
 	public static final DefaultedKey<Integer> INTERACT_REACH = new DefaultedKeyImpl<Integer>("interact_reach", 5);
-	public static final DefaultedKey<Vector3> VELOCITY = new DefaultedKeyImpl<Vector3>("velocity", Vector3.ZERO);
+	public static final DefaultedKey<Vector3f> VELOCITY = new DefaultedKeyImpl<Vector3f>("velocity", Vector3f.ZERO);
 	public static final DefaultedKey<Integer> HUNGER = new DefaultedKeyImpl<Integer>("hunger", 20);
 	public static final DefaultedKey<Integer> MAX_HUNGER = new DefaultedKeyImpl<Integer>("max_hunger", 20);
 	public static final DefaultedKey<Float> FOOD_SATURATION = new DefaultedKeyImpl<Float>("food_saturation", 5f);
@@ -144,7 +144,7 @@ public class VanillaData {
 	public static final DefaultedKey<Boolean> CRITICAL = new DefaultedKeyImpl<Boolean>("critical", false);
 	//Head-specific
 	public static final DefaultedKey<Float> HEAD_HEIGHT = new DefaultedKeyImpl<Float>("head_height_v2", 1.62f);
-	public static final DefaultedKey<Quaternion> HEAD_ROTATION = new DefaultedKeyImpl<Quaternion>("head_rotation", Quaternion.IDENTITY);
+	public static final DefaultedKey<Quaternionf> HEAD_ROTATION = new DefaultedKeyImpl<Quaternionf>("head_rotation", Quaternionf.IDENTITY);
 	//XPOrb-specific
 	public static final DefaultedKey<Long> TIME_DISPERSED = new DefaultedKeyImpl<Long>("time_dispersed", Long.valueOf(0));
 	//Slime-specific

@@ -32,7 +32,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.component.entity.living.hostile.Blaze;
 import org.spout.vanilla.component.entity.living.hostile.CaveSpider;
@@ -103,7 +103,7 @@ public class SpawnEgg extends EntitySpawnItem<VanillaEntityComponent> {
 		if (type != Action.RIGHT_CLICK) {
 			return;
 		}
-		spawnEntity(block.translate(clickedface), Vector3.ZERO);
+		spawnEntity(block.translate(clickedface), Vector3f.ZERO);
 		handleSelectionRemove(entity);
 	}
 }

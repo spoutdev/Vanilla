@@ -32,7 +32,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.util.bytebit.ByteBitSet;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.util.PlayerUtil;
 
@@ -80,7 +80,7 @@ public abstract class Stairs extends VanillaBlockMaterial implements Directional
 	}
 
 	@Override
-	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+	public void onPlacement(Block block, short data, BlockFace against, Vector3f clickedPos, boolean isClickedBlock, Cause<?> cause) {
 		super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause);
 		this.setFacing(block, PlayerUtil.getFacing(cause).getOpposite());
 		this.setUpsideDown(block, against == BlockFace.TOP || (BlockFaces.NESW.contains(against) && clickedPos.getY() > 0.5f));

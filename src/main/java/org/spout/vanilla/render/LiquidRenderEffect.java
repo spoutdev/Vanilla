@@ -31,7 +31,7 @@ import org.spout.api.render.effect.SnapshotRender;
 
 import org.spout.math.GenericMath;
 import org.spout.math.TrigMath;
-import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector2f;
 
 public class LiquidRenderEffect implements RenderEffect {
 	private static final float size = 1.0f / 16.0f;
@@ -46,7 +46,7 @@ public class LiquidRenderEffect implements RenderEffect {
 		x = amplX * (TrigMath.sin(x) + 1.0f);
 		float y = (float) (GenericMath.mod(TrigMath.TWO_PI * freqY / 1000.0 * System.currentTimeMillis(), TrigMath.TWO_PI) - TrigMath.PI);
 		y = amplY * (TrigMath.sin(y) + 1.0f);
-		snapshotRender.getMaterial().getShader().setUniform("animation", new Vector2(x * size, y * size));
+		snapshotRender.getMaterial().getShader().setUniform("animation", new Vector2f(x * size, y * size));
 	}
 
 	@Override

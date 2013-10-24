@@ -46,7 +46,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.Parameter;
 
 import org.spout.math.GenericMath;
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.component.entity.inventory.EntityInventory;
 import org.spout.vanilla.component.entity.living.hostile.EnderDragon;
@@ -273,7 +273,7 @@ public class Health extends VanillaEntityComponent {
 			org.spout.api.geo.discrete.Point entityPosition = owner.getPhysics().getPosition();
 			for (ItemStack stack : drops) {
 				if (stack != null) {
-					Item.drop(entityPosition, stack, Vector3.ZERO);
+					Item.drop(entityPosition, stack, Vector3f.ZERO);
 				}
 			}
 			if (dropComponent.getXpDrop() > 0 && VanillaConfiguration.PLAYER_SURVIVAL_ENABLE_XP.getBoolean()) {

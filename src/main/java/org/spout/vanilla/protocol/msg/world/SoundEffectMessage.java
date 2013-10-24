@@ -31,14 +31,14 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
 public class SoundEffectMessage extends VanillaMainChannelMessage {
 	private final float x, y, z, volume, pitch;
 	private final String soundName;
 
-	public SoundEffectMessage(String soundName, Vector3 position, float volume, float pitch, RepositionManager rm) {
+	public SoundEffectMessage(String soundName, Vector3f position, float volume, float pitch, RepositionManager rm) {
 		this(soundName, position.getX(), position.getY(), position.getZ(), volume, pitch, rm);
 	}
 

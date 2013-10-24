@@ -26,11 +26,11 @@
  */
 package org.spout.vanilla.material.item.armor.iron;
 
-import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector2f;
 import org.spout.vanilla.material.item.armor.Armor;
 
 public abstract class IronArmor extends Armor {
-	protected IronArmor(String name, int id, short durability, Vector2 pos) {
+	protected IronArmor(String name, int id, short durability, Vector2f pos) {
 		super(name, id, durability, pos);
 		setEnchantability(9);
 	}

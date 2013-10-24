@@ -37,7 +37,7 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.Parameter;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.component.entity.misc.EntityHead;
 import org.spout.vanilla.component.entity.misc.MetadataComponent;
 import org.spout.vanilla.protocol.EntityProtocol;
@@ -101,14 +101,14 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 		final int lastX = protocolifyPosition(prevTransform.getPosition().getX());
 		final int lastY = protocolifyPosition(prevTransform.getPosition().getY());
 		final int lastZ = protocolifyPosition(prevTransform.getPosition().getZ());
-		final Vector3 lastAxesAngles = prevTransform.getRotation().getAxesAngleDeg();
+		final Vector3f lastAxesAngles = prevTransform.getRotation().getAxesAngleDeg();
 		final int lastYaw = protocolifyYaw(lastAxesAngles.getY());
 		final int lastPitch = protocolifyPitch(lastAxesAngles.getX());
 
 		final int newX = protocolifyPosition(newTransform.getPosition().getX());
 		final int newY = protocolifyPosition(newTransform.getPosition().getY());
 		final int newZ = protocolifyPosition(newTransform.getPosition().getZ());
-		final Vector3 newAxesAngles = newTransform.getRotation().getAxesAngleDeg();
+		final Vector3f newAxesAngles = newTransform.getRotation().getAxesAngleDeg();
 		final int newYaw = protocolifyYaw(newAxesAngles.getY());
 		final int newPitch = protocolifyPitch(newAxesAngles.getX());
 
@@ -159,10 +159,10 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 		return messages;
 	}
 
-	public static Vector3 getProtocolVelocity(Vector3 velocity) {
+	public static Vector3f getProtocolVelocity(Vector3f velocity) {
 		final float x = velocity.getX() * 32000;
 		final float y = velocity.getY() * 32000;
 		final float z = velocity.getZ() * 32000;
-		return new Vector3(x, y, z);
+		return new Vector3f(x, y, z);
 	}
 }

@@ -68,8 +68,8 @@ import org.spout.api.util.map.concurrent.TSyncIntPairObjectHashMap;
 import org.spout.api.util.set.concurrent.TSyncIntHashSet;
 import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
 
-import org.spout.math.imaginary.Quaternion;
-import org.spout.math.vector.Vector3;
+import org.spout.math.imaginary.Quaternionf;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.block.material.Sign;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
@@ -461,8 +461,8 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 			first = false;
 		}
 		Point p = event.getTransform().getPosition();
-		Quaternion rot = event.getTransform().getRotation();
-		final Vector3 axesAngles = rot.getAxesAngleDeg();
+		Quaternionf rot = event.getTransform().getRotation();
+		final Vector3f axesAngles = rot.getAxesAngleDeg();
 		PlayerPositionLookMessage PPLMsg = new PlayerPositionLookMessage(p.getX(), p.getY() + STANCE, p.getZ(), p.getY(), axesAngles.getY(), axesAngles.getX(), true, VanillaBlockDataChannelMessage.CHANNEL_ID, getRepositionManager());
 		event.getMessages().add(PPLMsg);
 	}
@@ -713,7 +713,7 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 				final int chunkZ = c.getZ();
 				final int height = WORLD_HEIGHT >> Chunk.BLOCKS.BITS;
 				List<Chunk> chunks = new ArrayList<Chunk>(height);
-				List<Vector3> ungenerated = new ArrayList<Vector3>(height);
+				List<Vector3f> ungenerated = new ArrayList<Vector3f>(height);
 				for (int y = 0; y < height; y++) {
 					int chunkY = vpm.convertChunkY(y);
 					Chunk cc = c.getWorld().getChunk(chunkX, chunkY, chunkZ, LoadOption.LOAD_ONLY);
@@ -726,7 +726,7 @@ public class VanillaPlayerNetworkComponent extends PlayerNetworkComponent implem
 								}
 							}
 						});
-						ungenerated.add(new Vector3(chunkX, chunkY, chunkZ));
+						ungenerated.add(new Vector3f(chunkX, chunkY, chunkZ));
 					} else {
 						chunks.add(cc);
 					}

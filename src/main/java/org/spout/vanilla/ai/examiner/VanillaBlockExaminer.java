@@ -36,7 +36,7 @@ import org.spout.api.ai.pathfinder.PathPoint;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.plant.TallGrass;
 
@@ -62,7 +62,7 @@ public class VanillaBlockExaminer implements BlockExaminer {
 
 	@Override
 	public float getCost(BlockSource source, PathPoint point) {
-		Vector3 pos = point.getVector();
+		Vector3f pos = point.getVector();
 		Material above = source.getMaterialAt(pos.add(UP));
 		Material below = source.getMaterialAt(pos.add(DOWN));
 		Material in = source.getMaterialAt(pos);
@@ -84,7 +84,7 @@ public class VanillaBlockExaminer implements BlockExaminer {
 
 	@Override
 	public boolean isPassable(BlockSource source, PathPoint point) {
-		Vector3 pos = point.getVector();
+		Vector3f pos = point.getVector();
 		Material above = source.getMaterialAt(pos.add(UP));
 		Material below = source.getMaterialAt(pos.add(DOWN));
 		Material in = source.getMaterialAt(pos);
@@ -94,7 +94,7 @@ public class VanillaBlockExaminer implements BlockExaminer {
 		return !(!canStandIn(above) || !canStandIn(in));
 	}
 
-	private static final Vector3 DOWN = new Vector3(0, -1, 0);
+	private static final Vector3f DOWN = new Vector3f(0, -1, 0);
 	private static final Set<Material> PASSABLE = Sets.newHashSet(VanillaMaterials.AIR, VanillaMaterials.DEAD_BUSH, VanillaMaterials.RAIL_DETECTOR, VanillaMaterials.REDSTONE_REPEATER,
 			VanillaMaterials.REDSTONE_REPEATER_OFF, VanillaMaterials.REDSTONE_REPEATER_ON, VanillaMaterials.FENCE_GATE, VanillaMaterials.ITEM_FRAME, VanillaMaterials.LADDER, VanillaMaterials.LEVER,
 			TallGrass.TALL_GRASS, VanillaMaterials.MELON_STEM, VanillaMaterials.NETHER_BRICK_FENCE, VanillaMaterials.PUMPKIN_STEM, VanillaMaterials.RAIL_POWERED, VanillaMaterials.RAIL,
@@ -103,5 +103,5 @@ public class VanillaBlockExaminer implements BlockExaminer {
 			VanillaMaterials.SUGAR_CANE_BLOCK, VanillaMaterials.TRIPWIRE, VanillaMaterials.VINES, VanillaMaterials.WALL_SIGN, VanillaMaterials.WHEAT, VanillaMaterials.WATER, VanillaMaterials.WEB,
 			VanillaMaterials.WOOD_BUTTON, VanillaMaterials.WOODEN_DOOR, VanillaMaterials.STATIONARY_WATER);
 	private static final Set<Material> UNWALKABLE = Sets.union(Sets.newHashSet(VanillaMaterials.AIR, VanillaMaterials.LAVA, VanillaMaterials.STATIONARY_LAVA, VanillaMaterials.CACTUS), PASSABLE);
-	private static final Vector3 UP = new Vector3(0, 1, 0);
+	private static final Vector3f UP = new Vector3f(0, 1, 0);
 }

@@ -32,7 +32,7 @@ import java.util.List;
 import org.spout.api.event.ProtocolEvent;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector2f;
 import org.spout.vanilla.event.material.network.MapItemUpdateEvent;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 
@@ -42,7 +42,7 @@ public class Map extends VanillaItemMaterial {
 	private final int id;
 	private boolean changed = false;
 
-	public Map(String name, int id, int width, int height, Vector2 pos) {
+	public Map(String name, int id, int width, int height, Vector2f pos) {
 		super(name, id, null);
 		this.width = (short) width;
 		this.height = (short) height;

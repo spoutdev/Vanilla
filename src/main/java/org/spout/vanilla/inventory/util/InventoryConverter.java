@@ -32,7 +32,7 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.Slot;
 import org.spout.api.util.StringUtil;
 
-import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector2f;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.inventory.window.gui.RenderSlot;
 
@@ -45,7 +45,7 @@ public class InventoryConverter {
 	protected final Widget[] widgets;
 	protected final int offset;
 
-	public InventoryConverter(Inventory inventory, int[] slots, Vector2[] positions, int offset) {
+	public InventoryConverter(Inventory inventory, int[] slots, Vector2f[] positions, int offset) {
 		this.inventory = inventory;
 		this.slots = slots;
 		this.offset = offset;
@@ -63,15 +63,15 @@ public class InventoryConverter {
 		}
 	}
 
-	public InventoryConverter(Inventory inventory, int[] slots, Vector2[] positions) {
+	public InventoryConverter(Inventory inventory, int[] slots, Vector2f[] positions) {
 		this(inventory, slots, positions, 0);
 	}
 
-	public InventoryConverter(Inventory inventory, String elements, Vector2[] positions, int offset) {
+	public InventoryConverter(Inventory inventory, String elements, Vector2f[] positions, int offset) {
 		this(inventory, StringUtil.getIntArray(elements), positions, offset);
 	}
 
-	public InventoryConverter(Inventory inventory, String elements, Vector2[] positions) {
+	public InventoryConverter(Inventory inventory, String elements, Vector2f[] positions) {
 		this(inventory, elements, positions, 0);
 	}
 

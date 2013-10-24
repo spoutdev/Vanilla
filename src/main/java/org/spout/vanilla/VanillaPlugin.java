@@ -58,8 +58,8 @@ import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.plugin.services.ServiceManager;
 import org.spout.api.util.FlatIterator;
 
-import org.spout.math.imaginary.Quaternion;
-import org.spout.math.vector.Vector3;
+import org.spout.math.imaginary.Quaternionf;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.command.AdministrationCommands.TPSMonitor;
 import org.spout.vanilla.command.InputCommands;
@@ -262,7 +262,7 @@ public class VanillaPlugin extends Plugin {
 				// Grab safe spawn if newly created world and generator is vanilla generator, else get old one.
 				if (newWorld && generator instanceof VanillaGenerator) {
 					spawn = ((VanillaGenerator) generator).getSafeSpawn(world);
-					world.setSpawnPoint(new Transform(spawn, Quaternion.IDENTITY, Vector3.ONE));
+					world.setSpawnPoint(new Transform(spawn, Quaternionf.IDENTITY, Vector3f.ONE));
 				} else {
 					spawn = world.getSpawnPoint().getPosition();
 				}

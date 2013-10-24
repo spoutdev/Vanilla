@@ -28,7 +28,7 @@ package org.spout.vanilla.material;
 
 import org.spout.api.render.RenderMaterial;
 
-import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector2f;
 
 public interface VanillaMaterial {
 	/**
@@ -63,5 +63,5 @@ public interface VanillaMaterial {
 
 	public RenderMaterial getRenderMaterial();
 
-	public Vector2 getSpritePosition();
+	public Vector2f getSpritePosition();
 }

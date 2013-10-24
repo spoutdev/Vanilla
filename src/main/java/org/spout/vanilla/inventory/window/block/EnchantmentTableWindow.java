@@ -31,7 +31,7 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.math.GenericMath;
-import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector2f;
 import org.spout.vanilla.component.block.material.EnchantmentTable;
 import org.spout.vanilla.inventory.block.EnchantmentTableInventory;
 import org.spout.vanilla.inventory.util.InventoryConverter;
@@ -49,7 +49,7 @@ public class EnchantmentTableWindow extends Window {
 	public EnchantmentTableWindow(Player owner, EnchantmentTable enchantmentTable, EnchantmentTableInventory inventory, String title) {
 		super(owner, WindowType.ENCHANTMENT_TABLE, title, 1);
 		this.inventory = inventory;
-		addInventoryConverter(new InventoryConverter(inventory, "0", new Vector2[0]));
+		addInventoryConverter(new InventoryConverter(inventory, "0", new Vector2f[0]));
 		this.enchantmentTable = enchantmentTable;
 	}
 

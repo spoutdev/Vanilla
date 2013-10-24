@@ -28,13 +28,13 @@ package org.spout.vanilla.material.block.redstone;
 
 import org.spout.api.material.BlockMaterial;
 
-import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector2f;
 import org.spout.vanilla.material.PotionReagent;
 import org.spout.vanilla.material.item.BlockItem;
 import org.spout.vanilla.material.item.potion.PotionItem;
 
 public class RedstoneDust extends BlockItem implements PotionReagent {
-	public RedstoneDust(String name, int id, BlockMaterial place, Vector2 pos) {
+	public RedstoneDust(String name, int id, BlockMaterial place, Vector2f pos) {
 		super(name, id, place, pos);
 	}
 

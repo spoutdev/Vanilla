@@ -36,9 +36,9 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
-import org.spout.math.imaginary.Quaternion;
-import org.spout.math.matrix.Matrix3;
-import org.spout.math.vector.Vector3;
+import org.spout.math.imaginary.Quaternionf;
+import org.spout.math.matrix.Matrix3f;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.DoorBlock;
@@ -48,8 +48,8 @@ import org.spout.vanilla.material.block.attachable.Attachable;
 public abstract class StructurePiece {
 	protected final Structure parent;
 	protected Point position = Point.invalid;
-	protected Quaternion rotation = Quaternion.IDENTITY;
-	protected Vector3 rotationPoint = Vector3.ZERO;
+	protected Quaternionf rotation = Quaternionf.IDENTITY;
+	protected Vector3f rotationPoint = Vector3f.ZERO;
 
 	public StructurePiece(Structure parent) {
 		this.parent = parent;
@@ -68,7 +68,7 @@ public abstract class StructurePiece {
 	}
 
 	public BlockMaterial getBlockMaterial(int xx, int yy, int zz) {
-		final Vector3 transformed = transform(xx, yy, zz);
+		final Vector3f transformed = transform(xx, yy, zz);
 		return position.getWorld().getBlockMaterial(transformed.getFloorX(), transformed.getFloorY(), transformed.getFloorZ());
 	}
 
@@ -77,7 +77,7 @@ public abstract class StructurePiece {
 	}
 
 	public void setBlockMaterial(int xx, int yy, int zz, BlockMaterial material, short data) {
-		final Vector3 transformed = transform(xx, yy, zz);
+		final Vector3f transformed = transform(xx, yy, zz);
 		position.getWorld().setBlockMaterial(transformed.getFloorX(), transformed.getFloorY(), transformed.getFloorZ(),
 				material, data, null);
 		if (material instanceof Directional) {
@@ -141,7 +141,7 @@ public abstract class StructurePiece {
 	}
 
 	public void placeObject(int xx, int yy, int zz, WorldGeneratorObject object) {
-		final Vector3 transformed = transform(xx, yy, zz);
+		final Vector3f transformed = transform(xx, yy, zz);
 		if (object.canPlaceObject(position.getWorld(), transformed.getFloorX(), transformed.getFloorY(), transformed.getFloorZ())) {
 			object.placeObject(position.getWorld(), transformed.getFloorX(), transformed.getFloorY(), transformed.getFloorZ());
 		}
@@ -153,12 +153,12 @@ public abstract class StructurePiece {
 				BlockFace.fromYaw(facing.getDirection().getAxesAngleDeg().getY() + rotation.getAxesAngleDeg().getY()), false, false);
 	}
 
-	protected Vector3 transform(int x, int y, int z) {
+	protected Vector3f transform(int x, int y, int z) {
 		return rotate(x, y, z).add(position).round();
 	}
 
-	protected Vector3 rotate(int x, int y, int z) {
-		return Matrix3.createRotation(rotation).transform(new Vector3(x, y, z).sub(rotationPoint)).add(rotationPoint);
+	protected Vector3f rotate(int x, int y, int z) {
+		return Matrix3f.createRotation(rotation).transform(new Vector3f(x, y, z).sub(rotationPoint)).add(rotationPoint);
 	}
 
 	public Point getPosition() {
@@ -173,23 +173,23 @@ public abstract class StructurePiece {
 		position = position.add(x, y, z);
 	}
 
-	public void offsetPosition(Vector3 offset) {
+	public void offsetPosition(Vector3f offset) {
 		offsetPosition(offset.getFloorX(), offset.getFloorY(), offset.getFloorZ());
 	}
 
-	public Quaternion getRotation() {
+	public Quaternionf getRotation() {
 		return rotation;
 	}
 
-	public void setRotation(Quaternion rotation) {
+	public void setRotation(Quaternionf rotation) {
 		this.rotation = rotation;
 	}
 
-	public Vector3 getRotationPoint() {
+	public Vector3f getRotationPoint() {
 		return rotationPoint;
 	}
 
-	public void setRotationPoint(Vector3 rotationPoint) {
+	public void setRotationPoint(Vector3f rotationPoint) {
 		this.rotationPoint = rotationPoint;
 	}
 
@@ -204,28 +204,28 @@ public abstract class StructurePiece {
 	public abstract BoundingBox getBoundingBox();
 
 	public static class BoundingBox {
-		private final Vector3 min;
-		private final Vector3 max;
+		private final Vector3f min;
+		private final Vector3f max;
 
 		public BoundingBox(float xA, float yA, float zA,
 						   float xB, float yB, float zB) {
-			this(new Vector3(xA, yA, zA), new Vector3(xB, yB, zB));
+			this(new Vector3f(xA, yA, zA), new Vector3f(xB, yB, zB));
 		}
 
-		public BoundingBox(Vector3 cornerA, Vector3 cornerB) {
+		public BoundingBox(Vector3f cornerA, Vector3f cornerB) {
 			this.min = cornerA.min(cornerB);
 			this.max = cornerA.max(cornerB);
 		}
 
-		public Vector3 getMax() {
+		public Vector3f getMax() {
 			return max;
 		}
 
-		public Vector3 getMin() {
+		public Vector3f getMin() {
 			return min;
 		}
 
-		public Vector3 getSize() {
+		public Vector3f getSize() {
 			return max.sub(min);
 		}
 
@@ -242,13 +242,13 @@ public abstract class StructurePiece {
 		}
 
 		public boolean intersects(BoundingBox box) {
-			final Vector3 rMax = box.getMax();
+			final Vector3f rMax = box.getMax();
 			if (rMax.getX() < min.getX()
 					|| rMax.getY() < min.getY()
 					|| rMax.getZ() < min.getZ()) {
 				return false;
 			}
-			final Vector3 rMin = box.getMin();
+			final Vector3f rMin = box.getMin();
 			return !(rMin.getX() > max.getX()
 					|| rMin.getY() > max.getY()
 					|| rMin.getZ() > max.getZ());

@@ -26,11 +26,11 @@
  */
 package org.spout.vanilla.material.item.armor.gold;
 
-import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector2f;
 import org.spout.vanilla.material.item.armor.Armor;
 
 public abstract class GoldArmor extends Armor {
-	protected GoldArmor(String name, int id, short durability, Vector2 pos) {
+	protected GoldArmor(String name, int id, short durability, Vector2f pos) {
 		super(name, id, durability, pos);
 		setEnchantability(25);
 	}

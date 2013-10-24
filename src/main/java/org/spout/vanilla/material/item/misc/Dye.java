@@ -34,7 +34,7 @@ import org.spout.api.inventory.Slot;
 import org.spout.api.material.Placeable;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.component.entity.living.passive.Sheep;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.solid.Wool;
@@ -99,12 +99,12 @@ public class Dye extends VanillaItemMaterial implements Placeable {
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+	public boolean canPlace(Block block, short data, BlockFace against, Vector3f clickedPos, boolean isClickedBlock, Cause<?> cause) {
 		return this == COCOA_BEANS && VanillaMaterials.COCOA_PLANT.canPlace(block, data, against, clickedPos, isClickedBlock, cause);
 	}
 
 	@Override
-	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+	public void onPlacement(Block block, short data, BlockFace against, Vector3f clickedPos, boolean isClickedBlock, Cause<?> cause) {
 		if (this == COCOA_BEANS) {
 			VanillaMaterials.COCOA_PLANT.onPlacement(block, data, against, clickedPos, isClickedBlock, cause);
 		}

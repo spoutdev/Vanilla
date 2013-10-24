@@ -32,7 +32,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.physics.collision.shape.BoxShape;
 import org.spout.vanilla.component.entity.minecart.MinecartType;
 import org.spout.vanilla.component.entity.minecart.type.RideableMinecartType;
@@ -125,7 +125,7 @@ public class Minecart extends VehicleSubstance {
 			setShakingForce(shakeForce - 1);
 		}
 
-		getOwner().getPhysics().setMovementVelocity(new Vector3(0.2, 0.0, 0.0));
+		getOwner().getPhysics().setMovementVelocity(new Vector3f(0.2, 0.0, 0.0));
 	}
 
 	@Override

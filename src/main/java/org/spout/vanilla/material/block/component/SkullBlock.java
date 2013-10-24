@@ -32,7 +32,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.component.block.material.Skull;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.VanillaBlockMaterial;
@@ -105,7 +105,7 @@ public class SkullBlock extends VanillaBlockMaterial implements Attachable {
 	}
 
 	@Override
-	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+	public void onPlacement(Block block, short data, BlockFace against, Vector3f clickedPos, boolean isClickedBlock, Cause<?> cause) {
 		super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause);
 		this.setAttachedFace(block, against, cause);
 		if (against == BlockFace.BOTTOM || against == BlockFace.TOP) {

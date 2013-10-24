@@ -30,7 +30,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.math.GenericMath;
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.ai.action.FollowMaterialHolderAction;
 import org.spout.vanilla.ai.goal.FollowMaterialHolderGoal;
 import org.spout.vanilla.ai.sensor.NearbyMaterialHolderSensor;
@@ -84,7 +84,7 @@ public class Chicken extends Animal implements Passive {
 
 	private void layEgg() {
 		Point position = getOwner().getPhysics().getPosition();
-		Item.drop(position, new ItemStack(VanillaMaterials.EGG, 1), Vector3.ZERO);
+		Item.drop(position, new ItemStack(VanillaMaterials.EGG, 1), Vector3f.ZERO);
 		Float nextEgg = (float) (GenericMath.getRandom().nextInt(MINIMUM_EGG_BREEDING_TIME) + MINIMUM_EGG_BREEDING_TIME);
 		getOwner().getData().put(VanillaData.TIME_TILL_EGG, nextEgg);
 	}

@@ -37,7 +37,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.object.RandomObject;
 import org.spout.vanilla.world.generator.object.RandomizableObject;
@@ -70,7 +70,7 @@ public class GlowstonePatchObject extends RandomObject implements RandomizableOb
 
 	@Override
 	public void placeObject(World w, int x, int y, int z) {
-		final Vector3 seed = new Vector3(x, y, z);
+		final Vector3f seed = new Vector3f(x, y, z);
 		final List<Growth> growths = new ArrayList<Growth>();
 		growths.add(new Growth(w.getBlock(seed)));
 		byte count = 0;
@@ -85,8 +85,8 @@ public class GlowstonePatchObject extends RandomObject implements RandomizableOb
 		}
 	}
 
-	private boolean isInBounds(Vector3 seed, Vector3 target) {
-		final Vector3 diff = target.sub(seed);
+	private boolean isInBounds(Vector3f seed, Vector3f target) {
+		final Vector3f diff = target.sub(seed);
 		return Math.abs(diff.getFloorX()) < maxXRadius && Math.abs(diff.getFloorZ()) < maxZRadius
 				&& diff.getFloorY() > -maxYDepth;
 	}

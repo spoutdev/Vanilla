@@ -26,11 +26,11 @@
  */
 package org.spout.vanilla.material.item.misc;
 
-import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector2f;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public class Book extends VanillaItemMaterial {
-	public Book(String name, int id, Vector2 pos) {
+	public Book(String name, int id, Vector2f pos) {
 		super(name, id, pos);
 		setEnchantability(1);
 	}

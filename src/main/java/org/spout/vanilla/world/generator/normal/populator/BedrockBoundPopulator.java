@@ -36,7 +36,7 @@ import org.spout.api.generator.GeneratorPopulator;
 import org.spout.api.generator.biome.BiomeManager;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.MathHelper;
 
@@ -45,7 +45,7 @@ public class BedrockBoundPopulator implements GeneratorPopulator {
 
 	@Override
 	public void populate(CuboidBlockMaterialBuffer blockData, int x, int y, int z, BiomeManager biomes, long seed) {
-		final Vector3 size = blockData.getSize();
+		final Vector3f size = blockData.getSize();
 		final int sizeX = size.getFloorX();
 		final int sizeY = size.getFloorY();
 		final int sizeZ = size.getFloorZ();

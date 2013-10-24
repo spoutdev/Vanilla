@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.spout.math.GenericMath;
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 
 public class ExplosionLayer {
 	public ExplosionLayer(final ExplosionModelSpherical model) {
@@ -72,7 +72,7 @@ public class ExplosionLayer {
 
 	private final int index;
 	public ExplosionSlot[] slots;
-	private final Map<Vector3, ExplosionSlot> tmpSlotMap = new HashMap<Vector3, ExplosionSlot>();
+	private final Map<Vector3f, ExplosionSlot> tmpSlotMap = new HashMap<Vector3f, ExplosionSlot>();
 	private final ExplosionModelSpherical model;
 
 	/**
@@ -94,7 +94,7 @@ public class ExplosionLayer {
 		int x = GenericMath.floor(dx * this.index + 0.5);
 		int y = GenericMath.floor(dy * this.index + 0.5);
 		int z = GenericMath.floor(dz * this.index + 0.5);
-		Vector3 pos = new Vector3(x, y, z);
+		Vector3f pos = new Vector3f(x, y, z);
 		ExplosionSlot slot = this.tmpSlotMap.get(pos);
 		if (slot == null) {
 			slot = new ExplosionSlot(this.model.getBlock(pos));

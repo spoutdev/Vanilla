@@ -30,13 +30,13 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.protocol.msg.entity.EntityMessage;
 
 public final class EntityRelativePositionMessage extends EntityMessage {
 	private final int deltaX, deltaY, deltaZ;
 
-	public EntityRelativePositionMessage(int id, Vector3 deltaPosition) {
+	public EntityRelativePositionMessage(int id, Vector3f deltaPosition) {
 		this(id, (int) deltaPosition.getX(), (int) deltaPosition.getY(), (int) deltaPosition.getZ());
 	}
 

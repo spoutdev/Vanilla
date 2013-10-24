@@ -26,11 +26,11 @@
  */
 package org.spout.vanilla.material.item.armor.chain;
 
-import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector2f;
 import org.spout.vanilla.material.item.armor.Armor;
 
 public abstract class ChainArmor extends Armor {
-	protected ChainArmor(String name, int id, short durability, Vector2 pos) {
+	protected ChainArmor(String name, int id, short durability, Vector2f pos) {
 		super(name, id, durability, pos);
 		setEnchantability(12);
 	}

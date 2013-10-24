@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.spout.math.imaginary.Quaternion;
+import org.spout.math.imaginary.Quaternionf;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.structure.stronghold.StrongholdDoor.EmptyDoorway;
 import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
@@ -103,14 +103,14 @@ public class StrongholdIntersection extends WeightedNextStructurePiece {
 		if (nextComponentRight) {
 			final StructurePiece next = getNextPiece();
 			next.setPosition(position.add(rotate(-1, 0, 1)));
-			next.setRotation(Quaternion.fromAngleDegAxis(-90, 0, 1, 0).mul(rotation));
+			next.setRotation(Quaternionf.fromAngleDegAxis(-90, 0, 1, 0).mul(rotation));
 			next.randomize();
 			pieces.add(next);
 		}
 		if (nextComponentLeft) {
 			final StructurePiece next = getNextPiece();
 			next.setPosition(position.add(rotate(5, 0, 5)));
-			next.setRotation(Quaternion.fromAngleDegAxis(90, 0, 1, 0).mul(rotation));
+			next.setRotation(Quaternionf.fromAngleDegAxis(90, 0, 1, 0).mul(rotation));
 			next.randomize();
 			pieces.add(next);
 		}

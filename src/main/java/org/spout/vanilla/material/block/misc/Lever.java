@@ -35,7 +35,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.block.BlockSnapshot;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.RedstonePowerMode;
 import org.spout.vanilla.data.VanillaData;
@@ -103,7 +103,7 @@ public class Lever extends AttachedRedstoneSource implements Toggleable {
 			// Add +1 to change direction
 			if (cause instanceof EntityCause) {
 				// set data using direction
-				Vector3 direction = block.getPosition().sub((((EntityCause) cause).getSource()).getPhysics().getPosition());
+				Vector3f direction = block.getPosition().sub((((EntityCause) cause).getSource()).getPhysics().getPosition());
 				direction = direction.abs();
 				if (direction.getX() > direction.getZ()) {
 					data++;

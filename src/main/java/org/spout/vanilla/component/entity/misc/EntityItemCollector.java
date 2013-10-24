@@ -32,7 +32,7 @@ import java.util.List;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.component.entity.inventory.EntityInventory;
 import org.spout.vanilla.component.entity.substance.Item;
@@ -88,7 +88,7 @@ public class EntityItemCollector extends VanillaEntityComponent {
 						if (slot == null || (slot.getMaterial() instanceof Armor && ((Armor) slot.getMaterial()).getBaseProtection() < armor.getBaseProtection())) {
 							getOwner().getNetwork().callProtocolEvent(new EntityCollectItemEvent(getOwner(), entity));
 							if (slot != null) {
-								Item.drop(getOwner().getPhysics().getPosition(), slot, Vector3.ZERO);
+								Item.drop(getOwner().getPhysics().getPosition(), slot, Vector3f.ZERO);
 							}
 							armorInv.set(i, item.getItemStack(), true);
 							entity.remove();
@@ -115,7 +115,7 @@ public class EntityItemCollector extends VanillaEntityComponent {
 				if (equip) {
 					getOwner().getNetwork().callProtocolEvent(new EntityCollectItemEvent(getOwner(), entity));
 					if (inv.getHeldItem() != null) {
-						Item.drop(getOwner().getPhysics().getPosition(), inv.getHeldItem(), Vector3.ZERO);
+						Item.drop(getOwner().getPhysics().getPosition(), inv.getHeldItem(), Vector3f.ZERO);
 					}
 					inv.getQuickbar().set(EntityQuickbarInventory.HELD_SLOT, item.getItemStack(), true);
 					entity.remove();

@@ -35,7 +35,7 @@ import org.spout.api.inventory.Slot;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.liquid.Water;
 import org.spout.vanilla.material.item.BlockItem;
@@ -59,7 +59,7 @@ public class FullBucket extends BlockItem {
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+	public boolean canPlace(Block block, short data, BlockFace against, Vector3f clickedPos, boolean isClickedBlock, Cause<?> cause) {
 		boolean success = super.canPlace(block, data, against, clickedPos, isClickedBlock, cause);
 		if (success) {
 			if (VanillaGenerators.NETHER.equals(block.getWorld().getGenerator()) && getPlacedMaterial() instanceof Water) {

@@ -33,8 +33,8 @@ import org.spout.api.material.Material;
 import org.spout.api.material.Placeable;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.math.vector.Vector2;
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector2f;
+import org.spout.math.vector.Vector3f;
 
 /**
  * A simplistic class which redirects placement requests to another (official) block material<br> Can be used to store multi-block creations
@@ -42,28 +42,28 @@ import org.spout.math.vector.Vector3;
 public class BlockItem extends VanillaItemMaterial implements Placeable {
 	private final BlockMaterial place;
 
-	public BlockItem(String name, int id, int data, Material parent, BlockMaterial place, Vector2 pos) {
+	public BlockItem(String name, int id, int data, Material parent, BlockMaterial place, Vector2f pos) {
 		super(name, id, data, parent, pos);
 		this.place = place;
 	}
 
-	public BlockItem(String name, int id, BlockMaterial place, Vector2 pos) {
+	public BlockItem(String name, int id, BlockMaterial place, Vector2f pos) {
 		super(name, id, pos);
 		this.place = place;
 	}
 
-	public BlockItem(short dataMask, String name, int id, BlockMaterial place, Vector2 pos) {
+	public BlockItem(short dataMask, String name, int id, BlockMaterial place, Vector2f pos) {
 		super(dataMask, name, id, pos);
 		this.place = place;
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+	public boolean canPlace(Block block, short data, BlockFace against, Vector3f clickedPos, boolean isClickedBlock, Cause<?> cause) {
 		return place.canPlace(block, place.getData(), against, clickedPos, isClickedBlock, cause);
 	}
 
 	@Override
-	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+	public void onPlacement(Block block, short data, BlockFace against, Vector3f clickedPos, boolean isClickedBlock, Cause<?> cause) {
 		place.onPlacement(block, place.getData(), against, clickedPos, isClickedBlock, cause);
 	}
 

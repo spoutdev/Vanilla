@@ -33,7 +33,7 @@ import org.spout.api.generator.biome.BiomeManager;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 
 public abstract class OverlapingPopulator implements GeneratorPopulator {
 	protected static final byte OVERLAP = 8;
@@ -42,7 +42,7 @@ public abstract class OverlapingPopulator implements GeneratorPopulator {
 	public void populate(CuboidBlockMaterialBuffer blockData, int x, int y, int z, BiomeManager biomes, long seed) {
 		final int cx = x >> Chunk.BLOCKS.BITS;
 		final int cz = z >> Chunk.BLOCKS.BITS;
-		final Vector3 size = blockData.getSize();
+		final Vector3f size = blockData.getSize();
 		final int sizeX = size.getFloorX() >> Chunk.BLOCKS.BITS;
 		final int sizeZ = size.getFloorZ() >> Chunk.BLOCKS.BITS;
 		final Random worldRandom = new Random(seed);
@@ -57,8 +57,8 @@ public abstract class OverlapingPopulator implements GeneratorPopulator {
 						int dcxx = dcx + cxxx;
 						int dczz = dcz + czzz;
 						populate(blockData,
-								new Vector3(dcxx << Chunk.BLOCKS.BITS, y, dczz << Chunk.BLOCKS.BITS),
-								new Vector3(dcx << Chunk.BLOCKS.BITS, y, dcz << Chunk.BLOCKS.BITS),
+								new Vector3f(dcxx << Chunk.BLOCKS.BITS, y, dczz << Chunk.BLOCKS.BITS),
+								new Vector3f(dcx << Chunk.BLOCKS.BITS, y, dcz << Chunk.BLOCKS.BITS),
 								new Random((dcxx * firstSeed) ^ (dczz * secondSeed) ^ seed));
 					}
 				}
@@ -66,5 +66,5 @@ public abstract class OverlapingPopulator implements GeneratorPopulator {
 		}
 	}
 
-	protected abstract void populate(CuboidBlockMaterialBuffer blockData, Vector3 chunk, Vector3 originChunk, Random random);
+	protected abstract void populate(CuboidBlockMaterialBuffer blockData, Vector3f chunk, Vector3f originChunk, Random random);
 }

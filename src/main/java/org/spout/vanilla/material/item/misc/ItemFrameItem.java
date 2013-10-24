@@ -34,12 +34,12 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector2f;
 import org.spout.vanilla.component.entity.substance.ItemFrame;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public class ItemFrameItem extends VanillaItemMaterial {
-	public ItemFrameItem(String name, int id, Vector2 pos) {
+	public ItemFrameItem(String name, int id, Vector2f pos) {
 		super(name, id, pos);
 	}
 

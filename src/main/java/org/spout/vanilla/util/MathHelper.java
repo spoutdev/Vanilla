@@ -33,8 +33,8 @@ import gnu.trove.map.TObjectIntMap;
 
 import org.spout.math.GenericMath;
 import org.spout.math.TrigMath;
-import org.spout.math.vector.Vector2;
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector2f;
+import org.spout.math.vector.Vector3f;
 
 public class MathHelper {
 	/**
@@ -83,15 +83,15 @@ public class MathHelper {
 	 * @param maxYForce of the direction
 	 * @return a random Vector3 direction
 	 */
-	public static Vector3 getRandomDirection(float maxXZForce, float maxYForce) {
+	public static Vector3f getRandomDirection(float maxXZForce, float maxYForce) {
 		Random rand = new Random();
 		float xzLength = maxXZForce * rand.nextFloat();
 		float yLength = maxYForce * (rand.nextFloat() - rand.nextFloat());
-		return Vector2.createRandomDirection(rand).mul(xzLength).toVector3(yLength);
+		return Vector2f.createRandomDirection(rand).mul(xzLength).toVector3(yLength);
 	}
 
 	// TODO: Get these two functions working in the API!
-	public static float getLookAtYaw(Vector3 offset) {
+	public static float getLookAtYaw(Vector3f offset) {
 		float yaw = 0;
 		// Set yaw
 		if (offset.getX() != 0) {
@@ -108,7 +108,7 @@ public class MathHelper {
 		return yaw;
 	}
 
-	public static float getLookAtPitch(Vector3 offset) {
+	public static float getLookAtPitch(Vector3f offset) {
 		return (float) -Math.toDegrees(TrigMath.atan(offset.getY() / GenericMath.length(offset.getX(), offset.getZ())));
 	}
 

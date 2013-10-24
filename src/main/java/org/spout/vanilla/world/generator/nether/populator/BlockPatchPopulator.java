@@ -37,7 +37,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
 import org.spout.math.GenericMath;
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.SolidMoving;
 import org.spout.vanilla.util.MathHelper;
@@ -77,7 +77,7 @@ public class BlockPatchPopulator implements GeneratorPopulator {
 		elevation.setSeed((int) (seed * 101));
 		shapeBase.setSeed((int) (seed * 313));
 		shape.setSeed((int) (seed * 661));
-		final Vector3 size = blockData.getSize();
+		final Vector3f size = blockData.getSize();
 		final int sizeX = size.getFloorX();
 		final int sizeY = GenericMath.clamp(size.getFloorY(), 0, NetherGenerator.HEIGHT);
 		final int sizeZ = size.getFloorZ();

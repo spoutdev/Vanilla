@@ -40,7 +40,7 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.component.entity.player.VanillaPlayerNetworkComponent;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
@@ -108,7 +108,7 @@ public class NetherGenerator extends VanillaSingleBiomeGenerator {
 	@Override
 	protected void generateTerrain(CuboidBlockMaterialBuffer blockData, int x, int y, int z, BiomeManager biomeManager, long seed) {
 		PERLIN.setSeed((int) seed * 17);
-		final Vector3 size = blockData.getSize();
+		final Vector3f size = blockData.getSize();
 		final int sizeX = size.getFloorX();
 		final int sizeY = Math.min(size.getFloorY(), HEIGHT);
 		final int sizeZ = size.getFloorZ();

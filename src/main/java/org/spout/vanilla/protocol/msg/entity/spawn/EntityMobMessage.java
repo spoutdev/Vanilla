@@ -34,7 +34,7 @@ import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.Parameter;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.protocol.msg.entity.EntityMessage;
 
 public final class EntityMobMessage extends EntityMessage {
@@ -42,7 +42,7 @@ public final class EntityMobMessage extends EntityMessage {
 	private final short velocityZ, velocityX, velocityY;
 	private final List<Parameter<?>> parameters;
 
-	public EntityMobMessage(int id, int type, Vector3 pos, int yaw, int pitch, int headYaw, short velocityZ, short velocityX, short velocityY, List<Parameter<?>> parameters, RepositionManager rm) {
+	public EntityMobMessage(int id, int type, Vector3f pos, int yaw, int pitch, int headYaw, short velocityZ, short velocityX, short velocityY, List<Parameter<?>> parameters, RepositionManager rm) {
 		this(id, type, (int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), yaw, pitch, headYaw, velocityZ, velocityX, velocityY, parameters, rm);
 	}
 

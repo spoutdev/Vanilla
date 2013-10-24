@@ -31,7 +31,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.physics.collision.shape.BoxShape;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.VanillaBlockMaterial;
@@ -55,7 +55,7 @@ public class PistonExtension extends VanillaBlockMaterial implements Directional
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace facing, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+	public boolean canPlace(Block block, short data, BlockFace facing, Vector3f clickedPos, boolean isClickedBlock, Cause<?> cause) {
 		return false;
 	}
 

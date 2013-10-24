@@ -32,7 +32,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector2f;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.event.cause.DamageCause;
 import org.spout.vanilla.event.cause.DamageCause.DamageType;
@@ -44,7 +44,7 @@ public abstract class Armor extends VanillaItemMaterial {
 	private int protection;
 	private short durability;
 
-	protected Armor(String name, int id, short durability, Vector2 pos) {
+	protected Armor(String name, int id, short durability, Vector2f pos) {
 		super(name, id, pos);
 		this.durability = durability;
 		this.setMaxStackSize(1);

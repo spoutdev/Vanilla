@@ -32,7 +32,7 @@ import org.spout.api.geo.World;
 import org.spout.api.protocol.ClientSession;
 import org.spout.api.protocol.MessageHandler;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityRelativePositionMessage;
 
 public class EntityRelativePositionHandler extends MessageHandler<EntityRelativePositionMessage> {
@@ -41,6 +41,6 @@ public class EntityRelativePositionHandler extends MessageHandler<EntityRelative
 		Player player = session.getPlayer();
 		World world = player.getWorld();
 		Entity entity = world.getEntity(message.getEntityId());
-		entity.getPhysics().translate(new Vector3(message.getDeltaX(), message.getDeltaY(), message.getDeltaZ()));
+		entity.getPhysics().translate(new Vector3f(message.getDeltaX(), message.getDeltaY(), message.getDeltaZ()));
 	}
 }

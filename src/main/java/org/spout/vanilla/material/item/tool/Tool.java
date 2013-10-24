@@ -37,7 +37,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.util.flag.Flag;
 
 import org.spout.math.GenericMath;
-import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector2f;
 import org.spout.vanilla.component.entity.living.hostile.Silverfish;
 import org.spout.vanilla.component.entity.living.hostile.Skeleton;
 import org.spout.vanilla.component.entity.living.hostile.Spider;
@@ -53,7 +53,7 @@ public abstract class Tool extends VanillaItemMaterial {
 	private final Map<BlockMaterial, Float> strengthModifiers = new HashMap<BlockMaterial, Float>();
 	private final ToolType toolType;
 
-	public Tool(String name, int id, short durability, ToolType toolType, Vector2 pos) {
+	public Tool(String name, int id, short durability, ToolType toolType, Vector2f pos) {
 		super(name, id, pos);
 		this.durability = durability;
 		this.toolType = toolType;

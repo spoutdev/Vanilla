@@ -30,13 +30,13 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.protocol.msg.entity.EntityMessage;
 
 public final class EntityVelocityMessage extends EntityMessage {
 	private final int velocityX, velocityY, velocityZ;
 
-	public EntityVelocityMessage(int id, Vector3 velocity) {
+	public EntityVelocityMessage(int id, Vector3f velocity) {
 		this(id, (int) velocity.getX(), (int) velocity.getY(), (int) velocity.getZ());
 	}
 

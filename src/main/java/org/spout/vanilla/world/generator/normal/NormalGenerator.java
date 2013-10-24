@@ -50,7 +50,7 @@ import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 import org.spout.api.util.map.TIntPairObjectHashMap;
 
 import org.spout.math.GenericMath;
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.data.Climate;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
@@ -178,7 +178,7 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 	@Override
 	protected void generateTerrain(CuboidBlockMaterialBuffer blockData, int x, int y, int z, BiomeManager biomes, long seed) {
 		PERLIN.setSeed((int) seed);
-		final Vector3 size = blockData.getSize();
+		final Vector3f size = blockData.getSize();
 		final int sizeX = size.getFloorX();
 		final int sizeY = size.getFloorY();
 		final int sizeZ = size.getFloorZ();

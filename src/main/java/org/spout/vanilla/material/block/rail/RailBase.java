@@ -31,7 +31,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.physics.collision.shape.BoxShape;
 import org.spout.vanilla.data.RailsState;
 import org.spout.vanilla.material.VanillaBlockMaterial;
@@ -158,7 +158,7 @@ public abstract class RailBase extends GroundAttachable {
 	}
 
 	@Override
-	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+	public void onPlacement(Block block, short data, BlockFace against, Vector3f clickedPos, boolean isClickedBlock, Cause<?> cause) {
 		super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause);
 		this.doTrackLogic(block);
 	}

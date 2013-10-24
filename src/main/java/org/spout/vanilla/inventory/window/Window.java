@@ -45,7 +45,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
 import org.spout.api.math.Rectangle;
 
-import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector2f;
 import org.spout.vanilla.ChatStyle;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
@@ -80,15 +80,15 @@ public abstract class Window extends AbstractWindow {
 	// Background
 	public static final float WIDTH = 0.6875f;
 	public static final float HEIGHT = 0.6484375f;
-	public static final Vector2 BACKGROUND_EXTENTS = new Vector2(WIDTH, HEIGHT);
+	public static final Vector2f BACKGROUND_EXTENTS = new Vector2f(WIDTH, HEIGHT);
 	// Quickbar
 	public static final float QUICKBAR_X = -0.475f;
 	public static final float QUICKBAR_Y = -0.63f;
-	public static final Vector2 QUICKBAR_POSITION = new Vector2(QUICKBAR_X, QUICKBAR_Y);
+	public static final Vector2f QUICKBAR_POSITION = new Vector2f(QUICKBAR_X, QUICKBAR_Y);
 	// Main
 	public static final float MAIN_X = QUICKBAR_X;
 	public static final float MAIN_Y = QUICKBAR_Y + 0.17f;
-	public static final Vector2 MAIN_POSITION = new Vector2(MAIN_X, MAIN_Y);
+	public static final Vector2f MAIN_POSITION = new Vector2f(MAIN_X, MAIN_Y);
 	private static final float SCALE = 0.75f;
 
 	public Window(Player owner, WindowType type, String title, int offset) {

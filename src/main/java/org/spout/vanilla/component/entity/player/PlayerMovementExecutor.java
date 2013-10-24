@@ -31,8 +31,8 @@ import org.spout.api.component.entity.PhysicsComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.entity.state.PlayerInputState;
 import org.spout.api.geo.discrete.Transform;
-import org.spout.math.imaginary.Quaternion;
-import org.spout.math.vector.Vector3;
+import org.spout.math.imaginary.Quaternionf;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.component.entity.misc.EntityHead;
 
 public class PlayerMovementExecutor extends EntityComponent {
@@ -52,7 +52,7 @@ public class PlayerMovementExecutor extends EntityComponent {
 		PlayerInputState inputState = player.input();
 		PhysicsComponent sc = player.getPhysics();
 
-		Vector3 offset = Vector3.ZERO;
+		Vector3f offset = Vector3f.ZERO;
 		float speed = 50;
 		if (inputState.getForward()) {
 			offset = offset.sub(ts.forwardVector().mul(speed * dt));
@@ -73,8 +73,8 @@ public class PlayerMovementExecutor extends EntityComponent {
 			offset = offset.sub(ts.upVector().mul(speed * dt));
 		}
 
-		player.get(EntityHead.class).setOrientation(Quaternion.fromAxesAnglesDeg(inputState.pitch(), inputState.yaw(), ts.getRotation().getAxesAngleDeg().getZ()));
+		player.get(EntityHead.class).setOrientation(Quaternionf.fromAxesAnglesDeg(inputState.pitch(), inputState.yaw(), ts.getRotation().getAxesAngleDeg().getZ()));
 		player.getPhysics().translate(offset);
-		player.getPhysics().setRotation(Quaternion.fromAxesAnglesDeg(inputState.pitch(), inputState.yaw(), ts.getRotation().getAxesAngleDeg().getZ()));
+		player.getPhysics().setRotation(Quaternionf.fromAxesAnglesDeg(inputState.pitch(), inputState.yaw(), ts.getRotation().getAxesAngleDeg().getZ()));
 	}
 }

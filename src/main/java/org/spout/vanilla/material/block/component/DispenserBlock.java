@@ -44,7 +44,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
 import org.spout.math.GenericMath;
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.physics.collision.shape.BoxShape;
 import org.spout.vanilla.component.block.material.Dispenser;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
@@ -132,7 +132,7 @@ public class DispenserBlock extends VanillaBlockMaterial implements Directional,
 			if (facingBlock.getMaterial().getShape() != null) {
 				World world = facingBlock.getWorld();
 				Tnt tnt = world.createEntity(facingBlock.getPosition(), Tnt.class).add(Tnt.class);
-				tnt.getOwner().getPhysics().force(new Vector3(0.5D, 0.5D, 0.5D));
+				tnt.getOwner().getPhysics().force(new Vector3f(0.5D, 0.5D, 0.5D));
 				world.spawnEntity(tnt.getOwner());
 				slot.addAmount(-1);
 				return true;
@@ -140,7 +140,7 @@ public class DispenserBlock extends VanillaBlockMaterial implements Directional,
 		} else if (item.getMaterial() instanceof SpawnEgg) {
 			if (facingBlock.getMaterial().getShape() != null) {
 				Entity entity = facingBlock.getWorld().createEntity(facingBlock.getPosition(), ((SpawnEgg) item.getMaterial()).getSpawnedComponent());
-				entity.getPhysics().translate(new Vector3(0.5D, 0.5D, 0.5D));
+				entity.getPhysics().translate(new Vector3f(0.5D, 0.5D, 0.5D));
 				facingBlock.getWorld().spawnEntity(entity);
 				slot.addAmount(-1);
 				return true;
@@ -203,7 +203,7 @@ public class DispenserBlock extends VanillaBlockMaterial implements Directional,
 		} else if (item.getMaterial() instanceof MinecartItem) {
 			if (facingBlock.getMaterial() instanceof RailBase) {
 				MinecartItem<?> mineItem = (MinecartItem<?>) item.getMaterial();
-				mineItem.spawnEntity(facingBlock, Vector3.ZERO);
+				mineItem.spawnEntity(facingBlock, Vector3f.ZERO);
 				slot.addAmount(-1);
 				return true;
 			}
@@ -223,14 +223,14 @@ public class DispenserBlock extends VanillaBlockMaterial implements Directional,
 		} else {
 			// Try to shoot the item selected if we can't do anything else with it
 			final Random rand = GenericMath.getRandom();
-			Vector3 direction = this.getFacing(block).getOffset();
+			Vector3f direction = this.getFacing(block).getOffset();
 
 			// Calculate position to shoot from
 			Point position = block.getPosition().add(direction.mul(0.6));
 			VanillaEntityComponent toLaunch = null;
 
 			// Calculate shooting velocity using facing direction
-			Vector3 velocity = direction.mul(rand.nextDouble() * 0.1 + 0.2);
+			Vector3f velocity = direction.mul(rand.nextDouble() * 0.1 + 0.2);
 			// Set velocity y to above (0.2)
 			velocity = velocity.mul(1.0, 0.0, 1.0).add(0.0, 0.2, 0.0);
 			velocity = velocity.add(0.045 * rand.nextGaussian(), 0.045 * rand.nextGaussian(), 0.045 * rand.nextGaussian());
@@ -288,7 +288,7 @@ public class DispenserBlock extends VanillaBlockMaterial implements Directional,
 	}
 
 	@Override
-	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+	public void onPlacement(Block block, short data, BlockFace against, Vector3f clickedPos, boolean isClickedBlock, Cause<?> cause) {
 		super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause);
 		this.setFacing(block, PlayerUtil.getFacing(cause).getOpposite());
 	}

@@ -38,8 +38,8 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
 
 import org.spout.math.GenericMath;
-import org.spout.math.vector.Vector2;
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector2f;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.misc.Digging;
 import org.spout.vanilla.component.entity.misc.EntityHead;
@@ -78,7 +78,7 @@ public class Human extends Living {
 		TextModelComponent textModel = getOwner().get(TextModelComponent.class);
 		if (textModel != null) {
 			textModel.setSize(0.5f);
-			textModel.setTranslation(new Vector3(0, 3f, 0));
+			textModel.setTranslation(new Vector3f(0, 3f, 0));
 		}
 		//holder.getPhysics().activate(1, new BoxShape(1f, 2.3f, 1f), false, true);
 
@@ -201,13 +201,13 @@ public class Human extends Living {
 		final float maxYForce = 0.1f;
 
 		// Create a velocity vector using the transform, apply (random) force
-		Vector3 impulse = dropFrom.getRotation().getDirection().mul(impulseForce);
+		Vector3f impulse = dropFrom.getRotation().getDirection().mul(impulseForce);
 
 		// Random rotational offset to avoid dropping at the same position
 		Random rand = GenericMath.getRandom();
 		float xzLength = maxXZForce * rand.nextFloat();
 		float yLength = maxYForce * (rand.nextFloat() - rand.nextFloat());
-		impulse = impulse.add(Vector2.createRandomDirection(rand).mul(xzLength).toVector3(yLength));
+		impulse = impulse.add(Vector2f.createRandomDirection(rand).mul(xzLength).toVector3(yLength));
 
 		// Slightly dropping upwards
 		impulse = impulse.add(0.0, 0.1, 0.0);

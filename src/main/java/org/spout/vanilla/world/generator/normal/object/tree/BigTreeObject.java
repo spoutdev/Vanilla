@@ -36,9 +36,9 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.BlockIterator;
 
-import org.spout.math.imaginary.Quaternion;
-import org.spout.math.vector.Vector2;
-import org.spout.math.vector.Vector3;
+import org.spout.math.imaginary.Quaternionf;
+import org.spout.math.vector.Vector2f;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.liquid.Water;
 import org.spout.vanilla.material.block.plant.Sapling;
@@ -121,7 +121,7 @@ public class BigTreeObject extends TreeObject {
 
 			for (byte count = 0; count < groupsPerLayer; count++) {
 				final float scale = widthScale * layerSize * (random.nextFloat() + 0.328f);
-				Vector2 randomOffset = Vector2.createRandomDirection(random).mul(scale);
+				Vector2f randomOffset = Vector2f.createRandomDirection(random).mul(scale);
 				final int groupX = (int) (randomOffset.getX() + x + 0.5);
 				final int groupZ = (int) (randomOffset.getY() + z + 0.5);
 				final Point group = new Point(world, groupX, groupY, groupZ);
@@ -187,7 +187,7 @@ public class BigTreeObject extends TreeObject {
 			final int baseY = group.getBase();
 			if (baseY - y >= totalHeight * 0.2) {
 				final Point base = new Point(world, x, baseY, z);
-				final Vector3 angles = Quaternion.fromRotationTo(Vector3.FORWARD, group.sub(base)).getAxesAngleDeg();
+				final Vector3f angles = Quaternionf.fromRotationTo(Vector3f.FORWARD, group.sub(base)).getAxesAngleDeg();
 				final BlockFace facing;
 				if (angles.getX() < 135) {
 					facing = BlockFace.fromYaw(angles.getY());

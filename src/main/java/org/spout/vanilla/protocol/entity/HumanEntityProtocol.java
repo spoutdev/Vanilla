@@ -35,7 +35,7 @@ import org.spout.api.inventory.Slot;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.RepositionManager;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.component.entity.inventory.EntityInventory;
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.inventory.entity.ArmorInventory;
@@ -56,7 +56,7 @@ public class HumanEntityProtocol extends VanillaEntityProtocol {
 		int x = VanillaByteBufUtils.protocolifyPosition(rm.convertX(entity.getPhysics().getPosition().getX()));
 		int y = VanillaByteBufUtils.protocolifyPosition(rm.convertY(entity.getPhysics().getPosition().getY()));
 		int z = VanillaByteBufUtils.protocolifyPosition(rm.convertZ(entity.getPhysics().getPosition().getZ()));
-		final Vector3 axesAngles = entity.getPhysics().getRotation().getAxesAngleDeg();
+		final Vector3f axesAngles = entity.getPhysics().getRotation().getAxesAngleDeg();
 		int r = VanillaByteBufUtils.protocolifyYaw(axesAngles.getY());
 		int p = VanillaByteBufUtils.protocolifyPitch(axesAngles.getX());
 

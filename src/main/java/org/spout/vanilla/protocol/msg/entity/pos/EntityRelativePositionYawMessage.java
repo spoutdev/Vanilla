@@ -30,13 +30,13 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.protocol.msg.entity.EntityMessage;
 
 public final class EntityRelativePositionYawMessage extends EntityMessage {
 	private final int deltaX, deltaY, deltaZ, rotation, pitch;
 
-	public EntityRelativePositionYawMessage(int id, Vector3 deltaPosition, int rotation, int pitch) {
+	public EntityRelativePositionYawMessage(int id, Vector3f deltaPosition, int rotation, int pitch) {
 		this(id, (int) deltaPosition.getX(), (int) deltaPosition.getY(), (int) deltaPosition.getZ(), rotation, pitch);
 	}
 

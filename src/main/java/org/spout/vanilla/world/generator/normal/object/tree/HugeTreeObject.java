@@ -33,8 +33,8 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.math.vector.Vector2;
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector2f;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.material.block.Solid;
@@ -91,7 +91,7 @@ public class HugeTreeObject extends TreeObject {
 		generateLeaves(w, x, y + totalHeight, z, (byte) 2);
 		final byte leavesEnd = (byte) (totalHeight - 2 - random.nextInt(4));
 		for (byte yy = (byte) (totalHeight / 2); yy < leavesEnd; yy += random.nextInt(4) + 2) {
-			final Vector2 randomOffset = Vector2.createRandomDirection(random);
+			final Vector2f randomOffset = Vector2f.createRandomDirection(random);
 			generateLeaves(w, (int) (x + (randomOffset.getX() * 4f + 0.5f)), y + yy, (int) (z + (randomOffset.getY() * 4f + 0.5f)), (byte) 0);
 			for (byte branchLengthCount = 0; branchLengthCount < branchLength; branchLengthCount++) {
 				final int bx = (int) (randomOffset.getX() * branchLengthCount + 1.5f);
@@ -100,7 +100,7 @@ public class HugeTreeObject extends TreeObject {
 				final Block block = w.getBlock(x + bx, y + yy + by, z + bz);
 				block.setMaterial(VanillaMaterials.LOG);
 				block.setData(logMetadata);
-				VanillaMaterials.LOG.setFacing(block, BlockFace.fromYaw(MathHelper.getLookAtYaw(new Vector3(bx, by, bz))));
+				VanillaMaterials.LOG.setFacing(block, BlockFace.fromYaw(MathHelper.getLookAtYaw(new Vector3f(bx, by, bz))));
 			}
 		}
 		for (byte yy = -1; yy < totalHeight - 1; yy++) {

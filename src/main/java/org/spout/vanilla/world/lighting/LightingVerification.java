@@ -41,7 +41,7 @@ import org.spout.api.math.IntVector3;
 import org.spout.api.util.bytebit.ByteBitSet;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 
 public class LightingVerification {
 	private static final BlockFace[] allFaces = BlockFaces.NESWBT.toArray();
@@ -302,7 +302,7 @@ public class LightingVerification {
 		if (buffers[xi][yi][zi] == null) {
 			return null;
 		}
-		Vector3 base = b.getBase();
+		Vector3f base = b.getBase();
 		return b.get(x + base.getFloorX(), y + base.getFloorY(), z + base.getFloorZ());
 	}
 
@@ -358,7 +358,7 @@ public class LightingVerification {
 	}
 
 	private static void log(String message, int x, int y, int z, CuboidBlockMaterialBuffer[][][] material, VanillaCuboidLightBuffer[][][] light, BlockMaterial[][][] localMaterials, int[][][] localLight) {
-		Vector3 base = material[1][1][1].getBase();
+		Vector3f base = material[1][1][1].getBase();
 		x += base.getFloorX();
 		y += base.getFloorY();
 		z += base.getFloorZ();

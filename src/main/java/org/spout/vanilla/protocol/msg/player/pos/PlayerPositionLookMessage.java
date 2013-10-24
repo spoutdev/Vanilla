@@ -33,7 +33,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.math.imaginary.Quaternion;
+import org.spout.math.imaginary.Quaternionf;
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
 public final class PlayerPositionLookMessage extends VanillaMainChannelMessage {
@@ -75,7 +75,7 @@ public final class PlayerPositionLookMessage extends VanillaMainChannelMessage {
 		return position.getStance();
 	}
 
-	public Quaternion getRotation() {
+	public Quaternionf getRotation() {
 		return rotation.getRotation();
 	}
 

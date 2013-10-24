@@ -31,7 +31,7 @@ import java.util.Random;
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 
@@ -39,11 +39,11 @@ import org.spout.vanilla.material.VanillaMaterials;
  * This is a permanent block slot whose information is loaded from a world dynamically It is used to load block information all at once
  */
 public class ExplosionBlockSlot {
-	public ExplosionBlockSlot(final Vector3 offset) {
+	public ExplosionBlockSlot(final Vector3f offset) {
 		this.offset = offset;
 	}
 
-	public final Vector3 offset;
+	public final Vector3f offset;
 	public boolean isSet = false; //whether the information has been loaded
 	public boolean destroy = false; //whether the block got destroyed
 	public BlockMaterial material = VanillaMaterials.AIR; //the mat loaded from the world

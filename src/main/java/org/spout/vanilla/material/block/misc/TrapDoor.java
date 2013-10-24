@@ -35,7 +35,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.Fuel;
@@ -92,7 +92,7 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Openable, Reds
 	}
 
 	@Override
-	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+	public void onPlacement(Block block, short data, BlockFace against, Vector3f clickedPos, boolean isClickedBlock, Cause<?> cause) {
 		super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause);
 		this.setTopAligned(block, clickedPos.getY() > 0.5f);
 	}

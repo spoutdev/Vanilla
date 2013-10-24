@@ -32,7 +32,7 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.shape.Grid;
 
-import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector2f;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.inventory.block.DispenserInventory;
 import org.spout.vanilla.inventory.entity.QuickbarInventory;
@@ -49,7 +49,7 @@ public class DispenserWindow extends Window {
 
 	public DispenserWindow(Player owner, DispenserInventory inventory, String title) {
 		super(owner, WindowType.DISPENSER, title, 9);
-		addInventoryConverter(new GridInventoryConverter(inventory, 3, Vector2.ZERO));
+		addInventoryConverter(new GridInventoryConverter(inventory, 3, Vector2f.ZERO));
 	}
 
 	@Override

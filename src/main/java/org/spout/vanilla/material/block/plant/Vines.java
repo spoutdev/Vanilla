@@ -43,7 +43,7 @@ import org.spout.api.math.IntVector3;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.math.GenericMath;
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.misc.EntityHead;
 import org.spout.vanilla.component.entity.player.VanillaPlayerNetworkComponent;
@@ -193,7 +193,7 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace face, Vector3 clickedPos, boolean isClicked, Cause<?> cause) {
+	public boolean canPlace(Block block, short data, BlockFace face, Vector3f clickedPos, boolean isClicked, Cause<?> cause) {
 		if (block.getMaterial().equals(VanillaMaterials.VINES)) {
 			if (isClicked) {
 				face = getTracedFace(block, cause);
@@ -219,7 +219,7 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 	}
 
 	@Override
-	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+	public void onPlacement(Block block, short data, BlockFace against, Vector3f clickedPos, boolean isClickedBlock, Cause<?> cause) {
 		super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause);
 		BlockFace attached = against;
 		if (block.getMaterial().equals(VanillaMaterials.VINES)) {

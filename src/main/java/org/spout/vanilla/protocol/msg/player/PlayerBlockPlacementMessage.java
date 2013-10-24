@@ -33,20 +33,20 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
 public final class PlayerBlockPlacementMessage extends VanillaMainChannelMessage {
 	private final int x, y, z;
-	private final Vector3 face;
+	private final Vector3f face;
 	private final BlockFace direction;
 	private final ItemStack heldItem;
 
-	public PlayerBlockPlacementMessage(int x, int y, int z, BlockFace direction, Vector3 face, RepositionManager rm) {
+	public PlayerBlockPlacementMessage(int x, int y, int z, BlockFace direction, Vector3f face, RepositionManager rm) {
 		this(x, y, z, direction, face, null, rm);
 	}
 
-	public PlayerBlockPlacementMessage(int x, int y, int z, BlockFace direction, Vector3 face, ItemStack heldItem, RepositionManager rm) {
+	public PlayerBlockPlacementMessage(int x, int y, int z, BlockFace direction, Vector3f face, ItemStack heldItem, RepositionManager rm) {
 		this.x = rm.convertX(x);
 		this.y = rm.convertY(y);
 		this.z = rm.convertZ(z);
@@ -75,7 +75,7 @@ public final class PlayerBlockPlacementMessage extends VanillaMainChannelMessage
 		return direction;
 	}
 
-	public Vector3 getFace() {
+	public Vector3f getFace() {
 		return this.face;
 	}
 

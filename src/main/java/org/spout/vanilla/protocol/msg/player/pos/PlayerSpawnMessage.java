@@ -33,7 +33,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.util.Parameter;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.protocol.msg.entity.EntityMessage;
 
 public final class PlayerSpawnMessage extends EntityMessage {
@@ -41,7 +41,7 @@ public final class PlayerSpawnMessage extends EntityMessage {
 	private final String name;
 	private final List<Parameter<?>> parameters;
 
-	public PlayerSpawnMessage(int id, String name, Vector3 position, int yaw, int pitch, int item, List<Parameter<?>> parameters) {
+	public PlayerSpawnMessage(int id, String name, Vector3f position, int yaw, int pitch, int item, List<Parameter<?>> parameters) {
 		this(id, name, (int) position.getX(), (int) position.getY(), (int) position.getZ(), yaw, pitch, item, parameters);
 	}
 

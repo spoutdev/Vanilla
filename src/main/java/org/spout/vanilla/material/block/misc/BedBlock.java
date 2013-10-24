@@ -36,7 +36,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.ChatStyle;
 import org.spout.vanilla.component.entity.living.Hostile;
 import org.spout.vanilla.component.entity.living.Living;
@@ -175,7 +175,7 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+	public boolean canPlace(Block block, short data, BlockFace against, Vector3f clickedPos, boolean isClickedBlock, Cause<?> cause) {
 		if (against == BlockFace.BOTTOM && super.canPlace(block, data, against, clickedPos, isClickedBlock, cause)) {
 			Block below = block.translate(BlockFace.BOTTOM);
 			BlockMaterial material = below.getMaterial();
@@ -191,7 +191,7 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 	}
 
 	@Override
-	public void onPlacement(Block block, short data, BlockFace face, Vector3 clickedPos, boolean isClicked, Cause<?> cause) {
+	public void onPlacement(Block block, short data, BlockFace face, Vector3f clickedPos, boolean isClicked, Cause<?> cause) {
 		create(block, PlayerUtil.getFacing(cause));
 	}
 

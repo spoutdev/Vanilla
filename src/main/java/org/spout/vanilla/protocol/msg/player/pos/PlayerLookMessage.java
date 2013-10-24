@@ -32,7 +32,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.math.imaginary.Quaternion;
+import org.spout.math.imaginary.Quaternionf;
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
 public final class PlayerLookMessage extends VanillaMainChannelMessage {
@@ -46,8 +46,8 @@ public final class PlayerLookMessage extends VanillaMainChannelMessage {
 		this.onGround = onGround;
 	}
 
-	public Quaternion getRotation() {
-		return Quaternion.fromAxesAnglesDeg(this.pitch, this.yaw, this.roll);
+	public Quaternionf getRotation() {
+		return Quaternionf.fromAxesAnglesDeg(this.pitch, this.yaw, this.roll);
 	}
 
 	public float getYaw() {

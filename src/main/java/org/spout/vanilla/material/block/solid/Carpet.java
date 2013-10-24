@@ -30,8 +30,7 @@ import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.math.vector.Vector3;
-import org.spout.vanilla.data.configuration.VanillaConfiguration;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.Burnable;
@@ -90,7 +89,7 @@ public class Carpet extends Solid implements Burnable {
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+	public boolean canPlace(Block block, short data, BlockFace against, Vector3f clickedPos, boolean isClickedBlock, Cause<?> cause) {
 		return super.canPlace(block, data, against, clickedPos, isClickedBlock, cause) && against.equals(BlockFace.BOTTOM);
 	}
 

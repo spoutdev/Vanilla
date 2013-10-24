@@ -41,7 +41,7 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.math.GenericMath;
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.component.entity.substance.Item;
@@ -51,10 +51,10 @@ import org.spout.vanilla.material.VanillaMaterials;
 
 public abstract class ExplosionModel {
 	private final List<ExplosionBlockSlot> blockList = new ArrayList<ExplosionBlockSlot>();
-	private final Map<Vector3, ExplosionBlockSlot> blocks = new HashMap<Vector3, ExplosionBlockSlot>();
+	private final Map<Vector3f, ExplosionBlockSlot> blocks = new HashMap<Vector3f, ExplosionBlockSlot>();
 	public final List<Block> blocksToDestroy = new ArrayList<Block>(100);
 
-	public synchronized ExplosionBlockSlot getBlock(Vector3 position) {
+	public synchronized ExplosionBlockSlot getBlock(Vector3f position) {
 		ExplosionBlockSlot block = this.blocks.get(position);
 		if (block == null) {
 			block = new ExplosionBlockSlot(position);

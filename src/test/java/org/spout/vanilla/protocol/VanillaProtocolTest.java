@@ -36,7 +36,7 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.NullRepositionManager;
 import org.spout.api.util.Parameter;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.nbt.CompoundMap;
 import org.spout.vanilla.data.Animation;
 import org.spout.vanilla.data.GameMode;
@@ -154,7 +154,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new PlayerLookMessage(1F, 2F, false),
 			new PlayerPositionLookMessage(1, 2, 5, 3.62, 4.0979004f, 2.9992678f, false, NullRepositionManager.getInstance()),
 			new PlayerDiggingMessage(PlayerDiggingMessage.STATE_START_DIGGING, 1, 2, 3, BlockFace.NORTH, NullRepositionManager.getInstance()),
-			new PlayerBlockPlacementMessage(1, 2, 3, BlockFace.NORTH, new Vector3(0.1875F, 0.5F, 0.0F), NullRepositionManager.getInstance()),
+			new PlayerBlockPlacementMessage(1, 2, 3, BlockFace.NORTH, new Vector3f(0.1875F, 0.5F, 0.0F), NullRepositionManager.getInstance()),
 			new PlayerHeldItemChangeMessage(4),
 			new PlayerLocaleViewDistanceMessage("en_GB", PlayerLocaleViewDistanceMessage.VIEW_NORMAL, (byte) 0, (byte) 0, true),
 			new PlayerTabCompleteMessage("behindcursor"),

@@ -34,7 +34,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.util.bytebit.ByteBitSet;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.physics.collision.shape.CollisionShape;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 
@@ -159,7 +159,7 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+	public boolean canPlace(Block block, short data, BlockFace against, Vector3f clickedPos, boolean isClickedBlock, Cause<?> cause) {
 		if (!super.canPlace(block, data, against, clickedPos, isClickedBlock, cause)) {
 			return false;
 		}
@@ -188,7 +188,7 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 	}
 
 	@Override
-	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+	public void onPlacement(Block block, short data, BlockFace against, Vector3f clickedPos, boolean isClickedBlock, Cause<?> cause) {
 		if (!this.canAttachTo(block.translate(against), against.getOpposite())) {
 			against = this.findAttachedFace(block);
 		}

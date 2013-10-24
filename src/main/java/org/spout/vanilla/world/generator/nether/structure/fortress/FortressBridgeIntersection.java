@@ -29,7 +29,7 @@ package org.spout.vanilla.world.generator.nether.structure.fortress;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.spout.math.imaginary.Quaternion;
+import org.spout.math.imaginary.Quaternionf;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
@@ -120,12 +120,12 @@ public class FortressBridgeIntersection extends WeightedNextStructurePiece {
 		pieces.add(front);
 		final StructurePiece right = getNextPiece();
 		right.setPosition(position.add(rotate(-8, 0, 7)));
-		right.setRotation(Quaternion.fromAngleDegAxis(-90, 0, 1, 0).mul(rotation));
+		right.setRotation(Quaternionf.fromAngleDegAxis(-90, 0, 1, 0).mul(rotation));
 		right.randomize();
 		pieces.add(right);
 		final StructurePiece left = getNextPiece();
 		left.setPosition(position.add(rotate(12, 0, 11)));
-		left.setRotation(Quaternion.fromAngleDegAxis(90, 0, 1, 0).mul(rotation));
+		left.setRotation(Quaternionf.fromAngleDegAxis(90, 0, 1, 0).mul(rotation));
 		left.randomize();
 		pieces.add(left);
 		return pieces;

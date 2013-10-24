@@ -65,8 +65,8 @@ import org.spout.api.protocol.event.ChunkSendEvent;
 import org.spout.api.protocol.event.EntityUpdateEvent;
 import org.spout.api.util.BlockIterator;
 
-import org.spout.math.imaginary.Quaternion;
-import org.spout.math.vector.Vector3;
+import org.spout.math.imaginary.Quaternionf;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.ChatStyle;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.block.material.chest.Chest;
@@ -247,7 +247,7 @@ public class TestCommands {
 
 		BigTreeObject tree = new BigTreeObject();
 		tree.placeObject(pos.getWorld(), pos.getBlockX(), pos.getBlockY(), pos.getBlockZ());
-		player.getPhysics().setPosition(pos.add(new Vector3(0, 50, 0)));
+		player.getPhysics().setPosition(pos.add(new Vector3f(0, 50, 0)));
 	}
 
 	// TODO - There needs to be a method that guarantees unique data values on a per-server basis
@@ -339,7 +339,7 @@ public class TestCommands {
 	@CommandDescription (aliases = "sun", usage = "<x> <y> <z>", desc = "Sets the sun direction.")
 	@Permissible ("vanilla.command.debug")
 	public void setSunDirection(CommandSource source, CommandArguments args) throws CommandException {
-		Vector3 dir = args.popVector3("dir", null);
+		Vector3f dir = args.popVector3("dir", null);
 		args.assertCompletelyParsed();
 		LightRenderEffect.setSun(dir);
 		SkyRenderEffect.setSun(dir);
@@ -388,7 +388,7 @@ public class TestCommands {
 	@Filter (PlayerFilter.class)
 	public void resetPosition(Player player, CommandArguments args) throws CommandException {
 		args.assertCompletelyParsed();
-		player.getNetwork().callProtocolEvent(new EntityUpdateEvent(player, new Transform(player.getPhysics().getPosition(), player.getPhysics().getRotation(), Vector3.ONE), EntityUpdateEvent.UpdateAction.TRANSFORM, player.getNetwork().getRepositionManager()), player);
+		player.getNetwork().callProtocolEvent(new EntityUpdateEvent(player, new Transform(player.getPhysics().getPosition(), player.getPhysics().getRotation(), Vector3f.ONE), EntityUpdateEvent.UpdateAction.TRANSFORM, player.getNetwork().getRepositionManager()), player);
 	}
 
 	@CommandDescription (aliases = "torch", desc = "Place a torch.")
@@ -548,14 +548,14 @@ public class TestCommands {
 		args.assertCompletelyParsed();
 
 		if (action.contains("look")) {
-			Quaternion rotation = player.getData().get(VanillaData.HEAD_ROTATION);
+			Quaternionf rotation = player.getData().get(VanillaData.HEAD_ROTATION);
 			Point startPosition = player.getPhysics().getPosition();
-			Vector3 offset = rotation.getDirection().mul(0.1);
+			Vector3f offset = rotation.getDirection().mul(0.1);
 			for (int i = 0; i < 100; i++) {
 				startPosition = startPosition.add(offset);
 				GeneralEffects.NOTE_PARTICLE.playGlobal(startPosition);
 			}
-			final Vector3 axesAngles = rotation.getAxesAngleDeg();
+			final Vector3f axesAngles = rotation.getAxesAngleDeg();
 			player.sendMessage("Yaw = " + axesAngles.getY());
 			player.sendMessage("Pitch = " + axesAngles.getX());
 		} else if (action.contains("packets")) {
@@ -592,7 +592,7 @@ public class TestCommands {
 		double lastDistanceToEntity = 5.0;
 		Point point = player.getPhysics().getPosition();
 		Human human = player.get(Human.class);
-		Vector3 direction;
+		Vector3f direction;
 		if (human == null) {
 			direction = player.getPhysics().getRotation().getDirection();
 		} else {

@@ -29,7 +29,7 @@ package org.spout.vanilla.data.effect.type;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.data.effect.GeneralEffect;
 
 public class SmokeEffect extends GeneralEffect {
@@ -53,8 +53,8 @@ public class SmokeEffect extends GeneralEffect {
 	 * @param direction the smoke goes
 	 * @return the data of that direction
 	 */
-	private static int getSmokeDirection(Vector3 direction) {
-		if (direction.equals(Vector3.ZERO)) {
+	private static int getSmokeDirection(Vector3f direction) {
+		if (direction.equals(Vector3f.ZERO)) {
 			return SMOKE_MIDDLE;
 		}
 		float dx = direction.getX();
@@ -90,11 +90,11 @@ public class SmokeEffect extends GeneralEffect {
 		}
 	}
 
-	public void play(Player player, Point position, Vector3 direction) {
+	public void play(Player player, Point position, Vector3f direction) {
 		this.play(player, position, getSmokeDirection(direction));
 	}
 
-	public void playGlobal(Point position, Vector3 direction) {
+	public void playGlobal(Point position, Vector3f direction) {
 		this.playGlobal(position, getSmokeDirection(direction));
 	}
 }

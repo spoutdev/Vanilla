@@ -29,7 +29,7 @@ package org.spout.vanilla.world.generator.normal.structure.stronghold;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.spout.math.imaginary.Quaternion;
+import org.spout.math.imaginary.Quaternionf;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.Structure;
@@ -94,7 +94,7 @@ public class StrongholdCorridor extends WeightedNextStructurePiece {
 		if (startOfStronghold) {
 			final StructurePiece piece = new StrongholdPortalRoom(parent);
 			piece.setPosition(position.add(rotate(4, 0, -1)));
-			piece.setRotation(Quaternion.fromAngleDegAxis(180, 0, 1, 0).mul(rotation));
+			piece.setRotation(Quaternionf.fromAngleDegAxis(180, 0, 1, 0).mul(rotation));
 			piece.randomize();
 			pieces.add(piece);
 		}

@@ -28,7 +28,7 @@ package org.spout.vanilla.inventory.window.block;
 
 import org.spout.api.entity.Player;
 
-import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector2f;
 import org.spout.vanilla.inventory.block.HopperInventory;
 import org.spout.vanilla.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.inventory.window.Window;
@@ -41,6 +41,6 @@ public class HopperWindow extends Window {
 
 	public HopperWindow(Player owner, HopperInventory inventory, String title) {
 		super(owner, WindowType.HOPPER, title, 5);
-		addInventoryConverter(new GridInventoryConverter(inventory, 5, Vector2.ZERO));
+		addInventoryConverter(new GridInventoryConverter(inventory, 5, Vector2f.ZERO));
 	}
 }

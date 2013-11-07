@@ -31,7 +31,7 @@ import org.spout.api.inventory.Slot;
 import org.spout.api.material.Material;
 import org.spout.api.render.RenderMaterial;
 
-import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector2f;
 import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.util.PlayerUtil;
@@ -39,22 +39,22 @@ import org.spout.vanilla.util.PlayerUtil;
 public class VanillaItemMaterial extends Material implements VanillaMaterial {
 	private final int minecraftId;
 	private int meleeDamage = 1;
-	private final Vector2 pos;
+	private final Vector2f pos;
 	private int enchantability;
 
-	public VanillaItemMaterial(String name, int id, Vector2 pos) {
+	public VanillaItemMaterial(String name, int id, Vector2f pos) {
 		super(name);
 		this.minecraftId = id;
 		this.pos = pos;
 	}
 
-	public VanillaItemMaterial(short dataMask, String name, int id, Vector2 pos) {
+	public VanillaItemMaterial(short dataMask, String name, int id, Vector2f pos) {
 		super(dataMask, name);
 		this.minecraftId = id;
 		this.pos = pos;
 	}
 
-	public VanillaItemMaterial(String name, int id, int data, Material parent, Vector2 pos) {
+	public VanillaItemMaterial(String name, int id, int data, Material parent, Vector2f pos) {
 		super(name, data, parent);
 		this.minecraftId = id;
 		this.pos = pos;
@@ -103,7 +103,7 @@ public class VanillaItemMaterial extends Material implements VanillaMaterial {
 	}
 
 	@Override
-	public Vector2 getSpritePosition() {
+	public Vector2f getSpritePosition() {
 		return pos;
 	}
 

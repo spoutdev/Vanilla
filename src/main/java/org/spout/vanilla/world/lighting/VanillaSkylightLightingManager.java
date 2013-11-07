@@ -35,7 +35,7 @@ import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;
 import org.spout.api.util.cuboid.ImmutableHeightMapBuffer;
 import org.spout.api.util.cuboid.procedure.CuboidBlockMaterialProcedure;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 
 public class VanillaSkylightLightingManager extends VanillaBlocklightLightingManager {
 	public VanillaSkylightLightingManager(String name) {
@@ -76,13 +76,13 @@ public class VanillaSkylightLightingManager extends VanillaBlocklightLightingMan
 	@Override
 	public void bulkEmittingInitialize(ImmutableCuboidBlockMaterialBuffer buffer, int[][][] light, int[][] genHeight) {
 
-		Vector3 size = buffer.getSize();
+		Vector3f size = buffer.getSize();
 
 		final int sizeX = size.getFloorX();
 		final int sizeY = size.getFloorY();
 		final int sizeZ = size.getFloorZ();
 
-		Vector3 base = buffer.getBase();
+		Vector3f base = buffer.getBase();
 
 		final int baseX = base.getFloorX();
 		final int baseY = base.getFloorY();

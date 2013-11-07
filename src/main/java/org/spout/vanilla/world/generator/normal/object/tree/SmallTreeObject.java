@@ -34,7 +34,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.material.block.Solid;
@@ -122,7 +122,7 @@ public class SmallTreeObject extends TreeObject {
 			if (totalHeight >= 6 && random.nextInt(5) == 0) {
 				for (byte yy = 0; yy < 2; yy++) {
 					final byte odd = (byte) (4 - yy);
-					final Vector3 position = new Vector3(x, y + yy + totalHeight - 5, z);
+					final Vector3f position = new Vector3f(x, y + yy + totalHeight - 5, z);
 					for (BlockFace face : BlockFaces.NSEW) {
 						if (random.nextInt(odd) != 0) {
 							continue;

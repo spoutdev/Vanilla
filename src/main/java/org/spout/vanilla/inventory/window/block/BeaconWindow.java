@@ -29,7 +29,7 @@ package org.spout.vanilla.inventory.window.block;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector2f;
 import org.spout.vanilla.component.block.material.Beacon;
 import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.inventory.block.BeaconInventory;
@@ -44,7 +44,7 @@ public class BeaconWindow extends Window {
 
 	public BeaconWindow(Player owner, BeaconInventory inventory) {
 		super(owner, WindowType.BEACON, "Beacon", 1);
-		addInventoryConverter(new InventoryConverter(inventory, "0", new Vector2[0]));
+		addInventoryConverter(new InventoryConverter(inventory, "0", new Vector2f[0]));
 		this.inventory = inventory;
 	}
 

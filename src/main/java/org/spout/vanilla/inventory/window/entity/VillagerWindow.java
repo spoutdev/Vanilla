@@ -28,7 +28,7 @@ package org.spout.vanilla.inventory.window.entity;
 
 import org.spout.api.entity.Player;
 
-import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector2f;
 import org.spout.vanilla.inventory.entity.VillagerInventory;
 import org.spout.vanilla.inventory.util.InventoryConverter;
 import org.spout.vanilla.inventory.window.Window;
@@ -37,7 +37,7 @@ import org.spout.vanilla.inventory.window.WindowType;
 public class VillagerWindow extends Window {
 	public VillagerWindow(Player owner, VillagerInventory inventory, String title) {
 		super(owner, WindowType.VILLAGER, title, 3);
-		addInventoryConverter(new InventoryConverter(inventory, "0-2", new Vector2[0]));
+		addInventoryConverter(new InventoryConverter(inventory, "0-2", new Vector2f[0]));
 	}
 
 	public VillagerWindow(Player owner, VillagerInventory inventory) {

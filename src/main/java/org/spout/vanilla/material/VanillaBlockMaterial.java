@@ -57,7 +57,7 @@ import org.spout.api.util.flag.Flag;
 import org.spout.api.util.flag.FlagBundle;
 
 import org.spout.math.GenericMath;
-import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector2f;
 import org.spout.physics.collision.shape.CollisionShape;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.substance.Item;
@@ -90,7 +90,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	private final BlockDrops drops = new BlockDrops();
 	private final Set<ToolType> miningTypes = new HashSet<ToolType>();
 	private ToolLevel miningLevel = ToolLevel.NONE;
-	private final Vector2 pos = null; // TODO: Block item rendering
+	private final Vector2f pos = null; // TODO: Block item rendering
 
 	public VanillaBlockMaterial(String name, int id, String model, CollisionShape shape, Class<? extends BlockComponent>... components) {
 		this((short) 0, name, id, model, shape, components);
@@ -152,7 +152,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	}
 
 	@Override
-	public Vector2 getSpritePosition() {
+	public Vector2f getSpritePosition() {
 		return pos;
 	}
 

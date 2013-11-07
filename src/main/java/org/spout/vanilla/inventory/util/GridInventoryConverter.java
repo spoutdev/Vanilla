@@ -32,7 +32,7 @@ import org.spout.api.inventory.Slot;
 import org.spout.api.inventory.shape.Grid;
 import org.spout.api.inventory.util.GridIterator;
 
-import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector2f;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.inventory.window.gui.RenderSlot;
 
@@ -43,10 +43,10 @@ public class GridInventoryConverter extends InventoryConverter {
 	public static final float SLOT_WIDTH = 0.1f;
 	public static final float SLOT_HEIGHT = 0.14f;
 	private final Grid grid;
-	private final Vector2 pos;
+	private final Vector2f pos;
 
-	public GridInventoryConverter(Inventory inventory, int length, int offset, Vector2 pos) {
-		super(inventory, new int[inventory.size()], new Vector2[inventory.size()], offset);
+	public GridInventoryConverter(Inventory inventory, int length, int offset, Vector2f pos) {
+		super(inventory, new int[inventory.size()], new Vector2f[inventory.size()], offset);
 		this.grid = inventory.grid(length);
 		this.pos = pos;
 		GridIterator iter = grid.iterator();
@@ -61,7 +61,7 @@ public class GridInventoryConverter extends InventoryConverter {
 		}
 	}
 
-	public GridInventoryConverter(Inventory inventory, int length, Vector2 pos) {
+	public GridInventoryConverter(Inventory inventory, int length, Vector2f pos) {
 		this(inventory, length, 0, pos);
 	}
 

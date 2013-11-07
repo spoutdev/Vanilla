@@ -42,14 +42,14 @@ import org.spout.api.math.IntVector2;
 import org.spout.api.math.Rectangle;
 import org.spout.api.render.SpoutRenderMaterials;
 
-import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector2f;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.inventory.window.AbstractWindow;
 
 public class RenderSlot extends ControlComponent {
-	private Vector2 pos = Vector2.ZERO;
+	private Vector2f pos = Vector2f.ZERO;
 	private Slot slot;
 	private boolean hovered;
 
@@ -61,12 +61,12 @@ public class RenderSlot extends ControlComponent {
 		return slot;
 	}
 
-	public void setPosition(Vector2 pos) {
+	public void setPosition(Vector2f pos) {
 		this.pos = pos;
 		getOwner().setBounds(new Rectangle(pos, RenderItemStack.SPRITE_EXTENTS));
 	}
 
-	public Vector2 getPosition() {
+	public Vector2f getPosition() {
 		return pos;
 	}
 

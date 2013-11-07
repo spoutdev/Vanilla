@@ -32,15 +32,15 @@ import org.spout.api.event.player.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.math.vector.Vector2;
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector2f;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.component.entity.misc.EntityHead;
 import org.spout.vanilla.component.entity.substance.vehicle.Boat;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.EntitySpawnItem;
 
 public class BoatItem extends EntitySpawnItem<Boat> {
-	public BoatItem(String name, int id, Vector2 pos) {
+	public BoatItem(String name, int id, Vector2f pos) {
 		super(name, id, pos);
 		this.setSpawnedComponent(Boat.class);
 	}
@@ -56,7 +56,7 @@ public class BoatItem extends EntitySpawnItem<Boat> {
 		if (!b.isMaterial(VanillaMaterials.WATER)) {
 			return;
 		}
-		this.spawnEntity(b, new Vector3(0.0, 0.25, 0.0));
+		this.spawnEntity(b, new Vector3f(0.0, 0.25, 0.0));
 	}
 
 	@Override

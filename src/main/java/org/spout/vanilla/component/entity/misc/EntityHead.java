@@ -30,8 +30,8 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.util.BlockIterator;
 
-import org.spout.math.imaginary.Quaternion;
-import org.spout.math.vector.Vector3;
+import org.spout.math.imaginary.Quaternionf;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.data.VanillaData;
 
@@ -39,7 +39,7 @@ import org.spout.vanilla.data.VanillaData;
  * Component that controls the rotation of a head on Vanilla resources.entities.
  */
 public class EntityHead extends VanillaEntityComponent {
-	private Quaternion lastRotation = Quaternion.IDENTITY;
+	private Quaternionf lastRotation = Quaternionf.IDENTITY;
 
 	@Override
 	public void onAttached() {
@@ -58,18 +58,18 @@ public class EntityHead extends VanillaEntityComponent {
 	/**
 	 * Sets the rotation of the head to look into a certain direction
 	 *
-	 * @param lookingAt {@link org.spout.math.vector.Vector3} to look at
+	 * @param lookingAt {@link org.spout.math.vector.Vector3f} to look at
 	 */
-	public void setLooking(Vector3 lookingAt) {
-		setOrientation(Quaternion.fromRotationTo(Vector3.FORWARD, lookingAt));
+	public void setLooking(Vector3f lookingAt) {
+		setOrientation(Quaternionf.fromRotationTo(Vector3f.FORWARD, lookingAt));
 	}
 
 	/**
-	 * Gets the {@link Vector3} the head is currently looking at.
+	 * Gets the {@link org.spout.math.vector.Vector3f} the head is currently looking at.
 	 *
 	 * @return Head direction vector
 	 */
-	public Vector3 getLookingAt() {
+	public Vector3f getLookingAt() {
 		return getOrientation().getDirection();
 	}
 
@@ -78,7 +78,7 @@ public class EntityHead extends VanillaEntityComponent {
 	 *
 	 * @param rotation to set to
 	 */
-	public void setOrientation(Quaternion rotation) {
+	public void setOrientation(Quaternionf rotation) {
 		lastRotation = getOrientation();
 		getData().put(VanillaData.HEAD_ROTATION, rotation);
 	}
@@ -88,7 +88,7 @@ public class EntityHead extends VanillaEntityComponent {
 	 *
 	 * @return Head rotation
 	 */
-	public Quaternion getOrientation() {
+	public Quaternionf getOrientation() {
 		return getData().get(VanillaData.HEAD_ROTATION);
 	}
 

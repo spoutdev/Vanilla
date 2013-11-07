@@ -39,7 +39,7 @@ import net.royawesome.jlibnoise.module.source.Perlin;
 import org.spout.api.generator.biome.selector.BiomeSelectorLayer;
 import org.spout.api.generator.biome.selector.LayeredBiomeSelectorElement;
 
-import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector2f;
 
 public class WhittakerLayer implements BiomeSelectorLayer {
 	private final Perlin temperaturePerlin = new Perlin();
@@ -82,7 +82,7 @@ public class WhittakerLayer implements BiomeSelectorLayer {
 	}
 
 	private LayeredBiomeSelectorElement findClosest(double temperature, double humidity) {
-		final Vector2 position = new Vector2(temperature, humidity);
+		final Vector2f position = new Vector2f(temperature, humidity);
 		WhittakerElement closestElement = null;
 		float smallestDistance = 0;
 		for (WhittakerElement element : elements) {
@@ -215,8 +215,8 @@ public class WhittakerLayer implements BiomeSelectorLayer {
 			return humidity;
 		}
 
-		public Vector2 getPosition() {
-			return new Vector2(temperature, humidity);
+		public Vector2f getPosition() {
+			return new Vector2f(temperature, humidity);
 		}
 	}
 }

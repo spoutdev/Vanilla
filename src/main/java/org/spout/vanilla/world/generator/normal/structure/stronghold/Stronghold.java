@@ -39,7 +39,7 @@ import java.util.Set;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 
-import org.spout.math.imaginary.Quaternion;
+import org.spout.math.imaginary.Quaternionf;
 import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructurePiece;
 import org.spout.vanilla.world.generator.structure.StructurePiece.BoundingBox;
@@ -68,7 +68,7 @@ public class Stronghold extends Structure {
 		final StrongholdCorridor corridor = new StrongholdCorridor(this);
 		corridor.setStartOfStronghold(true);
 		corridor.setPosition(new Point(w, x, y, z));
-		corridor.setRotation(Quaternion.fromAngleDegAxis(random.nextInt(4) * 90, 0, 1, 0));
+		corridor.setRotation(Quaternionf.fromAngleDegAxis(random.nextInt(4) * 90, 0, 1, 0));
 		corridor.randomize();
 		activeBranches.add(corridor);
 		final int size = random.nextInt(MAX_SIZE_RAND + 1) + MAX_SIZE_BASE;

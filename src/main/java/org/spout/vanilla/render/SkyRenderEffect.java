@@ -31,17 +31,17 @@ import org.spout.api.render.effect.SnapshotRender;
 import org.spout.api.render.shader.Shader;
 
 import org.spout.math.TrigMath;
-import org.spout.math.vector.Vector3;
-import org.spout.math.vector.Vector4;
+import org.spout.math.vector.Vector3f;
+import org.spout.math.vector.Vector4f;
 
 public class SkyRenderEffect implements RenderEffect {
 	private static final float size = 256f;
 	private static final float lat = (float) (25.0 * TrigMath.DEG_TO_RAD);
 	private static final float sunSize = 0.2f;
 	private static final float ambient = 0.33f;
-	private static final Vector4 nightColor = new Vector4(1.0f, 1.0f, 1.0f, 0f);
-	private static final Vector4 dayColor = new Vector4(135 / 255f, 206 / 255f, 235 / 255f, 1.0f);
-	private static final Vector4 dawnColor = new Vector4(1f, 0.5f, 0.5f, 0.7f);
+	private static final Vector4f nightColor = new Vector4f(1.0f, 1.0f, 1.0f, 0f);
+	private static final Vector4f dayColor = new Vector4f(135 / 255f, 206 / 255f, 235 / 255f, 1.0f);
+	private static final Vector4f dawnColor = new Vector4f(1f, 0.5f, 0.5f, 0.7f);
 	private static final float cY = (float) Math.cos(lat);
 	private static final float cZ = (float) Math.sin(lat);
 	private static volatile boolean force = false;
@@ -49,7 +49,7 @@ public class SkyRenderEffect implements RenderEffect {
 	private static volatile float yForce = 0;
 	private static volatile float zForce = 0;
 
-	public static void setSun(Vector3 pos) {
+	public static void setSun(Vector3f pos) {
 		if (pos == null) {
 			force = false;
 		} else {

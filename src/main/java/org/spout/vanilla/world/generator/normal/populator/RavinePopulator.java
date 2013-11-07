@@ -33,13 +33,13 @@ import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
 import org.spout.math.GenericMath;
 import org.spout.math.TrigMath;
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.liquid.Water;
 
 public class RavinePopulator extends OverlapingPopulator {
 	@Override
-	protected void populate(CuboidBlockMaterialBuffer blockData, Vector3 chunk, Vector3 originChunk, Random random) {
+	protected void populate(CuboidBlockMaterialBuffer blockData, Vector3f chunk, Vector3f originChunk, Random random) {
 		if (chunk.getFloorY() < 0 || chunk.getFloorY() >= 120) {
 			return;
 		}
@@ -48,7 +48,7 @@ public class RavinePopulator extends OverlapingPopulator {
 			return;
 		}
 
-		final Vector3 target = new Vector3(chunk.getX() + random.nextInt(16),
+		final Vector3f target = new Vector3f(chunk.getX() + random.nextInt(16),
 				random.nextInt(random.nextInt(40) + 8) + 20, chunk.getZ() + random.nextInt(16));
 		final double randomHorizontalAngle = random.nextDouble() * Math.PI * 2;
 		final double randomVerticalAngle = ((random.nextDouble() - 0.5) * 2) / 8;
@@ -56,10 +56,10 @@ public class RavinePopulator extends OverlapingPopulator {
 		generateRavineNodes(blockData, originChunk, target, horizontalScale, 3, randomHorizontalAngle, randomVerticalAngle, 0, 0, random);
 	}
 
-	private void generateRavineNodes(CuboidBlockMaterialBuffer blockData, Vector3 chunk, Vector3 target, double horizontalScale, double verticalScale,
+	private void generateRavineNodes(CuboidBlockMaterialBuffer blockData, Vector3f chunk, Vector3f target, double horizontalScale, double verticalScale,
 									 double horizontalAngle, double verticalAngle, int startingNode, int nodeAmount, Random random) {
 
-		final Vector3 middle = new Vector3(chunk.getX() + 8, 0, chunk.getZ() + 8);
+		final Vector3f middle = new Vector3f(chunk.getX() + 8, 0, chunk.getZ() + 8);
 		double horizontalOffset = 0;
 		double verticalOffset = 0;
 
@@ -87,7 +87,7 @@ public class RavinePopulator extends OverlapingPopulator {
 		for (; startingNode < nodeAmount; startingNode++) {
 			double horizontalSize = 1.5 + TrigMath.sin((float) (startingNode * Math.PI / nodeAmount)) * horizontalScale;
 			double verticalSize = horizontalSize * verticalScale;
-			target = target.add(Vector3.createDirection((float) horizontalAngle, (float) verticalAngle));
+			target = target.add(Vector3f.createDirection((float) horizontalAngle, (float) verticalAngle));
 
 			horizontalSize *= random.nextDouble() * 0.25 + 0.75;
 			verticalSize *= random.nextDouble() * 0.25 + 0.75;
@@ -120,9 +120,9 @@ public class RavinePopulator extends OverlapingPopulator {
 				continue;
 			}
 
-			final Vector3 start = new Vector3(GenericMath.floor(target.getX() - horizontalSize) - chunk.getFloorX() - 1,
+			final Vector3f start = new Vector3f(GenericMath.floor(target.getX() - horizontalSize) - chunk.getFloorX() - 1,
 					GenericMath.floor(target.getY() - verticalSize) - 1, GenericMath.floor(target.getZ() - horizontalSize) - chunk.getFloorZ() - 1);
-			final Vector3 end = new Vector3(GenericMath.floor(target.getX() + horizontalSize) - chunk.getFloorX() + 1,
+			final Vector3f end = new Vector3f(GenericMath.floor(target.getX() + horizontalSize) - chunk.getFloorX() + 1,
 					GenericMath.floor(target.getY() + verticalSize) + 1, GenericMath.floor(target.getZ() + horizontalSize) - chunk.getFloorZ() + 1);
 			final RavineNode node = new RavineNode(blockData, chunk, start, end, target, verticalSize, horizontalSize, horizontalScales);
 
@@ -138,15 +138,15 @@ public class RavinePopulator extends OverlapingPopulator {
 
 	private static class RavineNode {
 		private final CuboidBlockMaterialBuffer blockData;
-		private final Vector3 chunk;
-		private final Vector3 start;
-		private final Vector3 end;
-		private final Vector3 target;
+		private final Vector3f chunk;
+		private final Vector3f start;
+		private final Vector3f end;
+		private final Vector3f target;
 		private final double verticalSize;
 		private final double horizontalSize;
 		private final double[] horizontalScales;
 
-		private RavineNode(CuboidBlockMaterialBuffer blockData, Vector3 chunk, Vector3 start, Vector3 end, Vector3 target,
+		private RavineNode(CuboidBlockMaterialBuffer blockData, Vector3f chunk, Vector3f start, Vector3f end, Vector3f target,
 						   double verticalSize, double horizontalSize, double[] horizontalScales) {
 			this.blockData = blockData;
 			this.chunk = chunk;
@@ -207,8 +207,8 @@ public class RavinePopulator extends OverlapingPopulator {
 			}
 		}
 
-		private static Vector3 clamp(Vector3 point) {
-			return new Vector3(
+		private static Vector3f clamp(Vector3f point) {
+			return new Vector3f(
 					GenericMath.clamp(point.getFloorX(), 0, 16),
 					GenericMath.clamp(point.getFloorY(), 1, 120),
 					GenericMath.clamp(point.getFloorZ(), 0, 16));

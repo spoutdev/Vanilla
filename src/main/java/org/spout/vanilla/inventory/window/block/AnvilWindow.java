@@ -30,7 +30,7 @@ import org.spout.api.entity.Player;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector2f;
 import org.spout.vanilla.event.inventory.AnvilCloseEvent;
 import org.spout.vanilla.inventory.block.AnvilInventory;
 import org.spout.vanilla.inventory.util.InventoryConverter;
@@ -45,7 +45,7 @@ public class AnvilWindow extends Window {
 		super(owner, WindowType.ANVIL, "Anvil", 3);
 		this.inventory = inventory;
 		this.block = block;
-		addInventoryConverter(new InventoryConverter(inventory, "0-3", new Vector2[0]));
+		addInventoryConverter(new InventoryConverter(inventory, "0-3", new Vector2f[0]));
 	}
 
 	@Override

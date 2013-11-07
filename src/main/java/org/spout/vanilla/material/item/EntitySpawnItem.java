@@ -32,8 +32,8 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.Material;
 
-import org.spout.math.vector.Vector2;
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector2f;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
 
 /**
@@ -42,15 +42,15 @@ import org.spout.vanilla.component.entity.VanillaEntityComponent;
 public class EntitySpawnItem<T extends VanillaEntityComponent> extends VanillaItemMaterial {
 	private Class<? extends T> spawnedComponent;
 
-	public EntitySpawnItem(short dataMask, String name, int id, Vector2 pos) {
+	public EntitySpawnItem(short dataMask, String name, int id, Vector2f pos) {
 		super(dataMask, name, id, pos);
 	}
 
-	public EntitySpawnItem(String name, int id, int data, Material parent, Vector2 pos) {
+	public EntitySpawnItem(String name, int id, int data, Material parent, Vector2f pos) {
 		super(name, id, data, parent, pos);
 	}
 
-	public EntitySpawnItem(String name, int id, Vector2 pos) {
+	public EntitySpawnItem(String name, int id, Vector2f pos) {
 		super(name, id, pos);
 	}
 
@@ -61,7 +61,7 @@ public class EntitySpawnItem<T extends VanillaEntityComponent> extends VanillaIt
 	 * @param offset to spawn away from the Block
 	 * @return an instance of the spawned component, stored by the spawned entity
 	 */
-	public T spawnEntity(Block at, Vector3 offset) {
+	public T spawnEntity(Block at, Vector3f offset) {
 		return spawnEntity(at.getPosition().add(offset));
 	}
 
@@ -72,7 +72,7 @@ public class EntitySpawnItem<T extends VanillaEntityComponent> extends VanillaIt
 	 * @param offset to spawn away from the Entity
 	 * @return an instance of the spawned component, stored by the spawned entity
 	 */
-	public T spawnEntity(Entity by, Vector3 offset) {
+	public T spawnEntity(Entity by, Vector3f offset) {
 		return spawnEntity(by.getPhysics().getPosition().add(offset));
 	}
 

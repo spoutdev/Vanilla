@@ -35,7 +35,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.VanillaData;
@@ -116,7 +116,7 @@ public class FenceGate extends VanillaBlockMaterial implements Openable, Redston
 	}
 
 	@Override
-	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+	public void onPlacement(Block block, short data, BlockFace against, Vector3f clickedPos, boolean isClickedBlock, Cause<?> cause) {
 		block.setMaterial(this, cause);
 		this.setFacing(block, PlayerUtil.getFacing(cause));
 	}

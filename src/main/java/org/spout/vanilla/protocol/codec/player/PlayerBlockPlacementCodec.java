@@ -37,7 +37,7 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.reposition.NullRepositionManager;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.player.PlayerBlockPlacementMessage;
 
@@ -59,7 +59,7 @@ public final class PlayerBlockPlacementCodec extends MessageCodec<PlayerBlockPla
 		float dy = ((float) (buffer.readByte() & 0xFF)) / 16.0F;
 		float dz = ((float) (buffer.readByte() & 0xFF)) / 16.0F;
 
-		return new PlayerBlockPlacementMessage(x, y, z, direction, new Vector3(dx, dy, dz), heldItem, NullRepositionManager.getInstance());
+		return new PlayerBlockPlacementMessage(x, y, z, direction, new Vector3f(dx, dy, dz), heldItem, NullRepositionManager.getInstance());
 	}
 
 	@Override

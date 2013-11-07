@@ -31,7 +31,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
 public final class PlayerPositionMessage extends VanillaMainChannelMessage {
@@ -59,8 +59,8 @@ public final class PlayerPositionMessage extends VanillaMainChannelMessage {
 		return z;
 	}
 
-	public Vector3 getPosition() {
-		return new Vector3(x, y, z);
+	public Vector3f getPosition() {
+		return new Vector3f(x, y, z);
 	}
 
 	public double getStance() {

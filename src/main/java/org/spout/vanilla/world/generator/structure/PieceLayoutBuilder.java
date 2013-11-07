@@ -29,16 +29,16 @@ package org.spout.vanilla.world.generator.structure;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.IntVector3;
 
-import org.spout.math.imaginary.Quaternion;
-import org.spout.math.matrix.Matrix3;
-import org.spout.math.vector.Vector3;
+import org.spout.math.imaginary.Quaternionf;
+import org.spout.math.matrix.Matrix3f;
+import org.spout.math.vector.Vector3f;
 
 /**
  * Draws a plane with the defined block material layout
  */
 public class PieceLayoutBuilder extends PieceBuilder {
 	private final IntVector3 position = new IntVector3(0, 0, 0);
-	private Quaternion rotation = Quaternion.IDENTITY;
+	private Quaternionf rotation = Quaternionf.IDENTITY;
 	private final IntVector3 rotationPoint = new IntVector3(0, 0, 0);
 	private BlockMaterialLayout layout = new BlockMaterialLayout("");
 
@@ -71,7 +71,7 @@ public class PieceLayoutBuilder extends PieceBuilder {
 		return this;
 	}
 
-	public PieceLayoutBuilder setRotation(Quaternion rotation) {
+	public PieceLayoutBuilder setRotation(Quaternionf rotation) {
 		this.rotation = rotation;
 		return this;
 	}
@@ -109,13 +109,13 @@ public class PieceLayoutBuilder extends PieceBuilder {
 	}
 
 	private void setBlockMaterial(int xx, int zz, BlockMaterial material) {
-		final Vector3 transformed = transform(xx, zz);
+		final Vector3f transformed = transform(xx, zz);
 		parent.setBlockMaterial(transformed.getFloorX(), transformed.getFloorY(), transformed.getFloorZ(), material);
 	}
 
-	private Vector3 transform(int x, int z) {
-		final Vector3 rotPoint = new Vector3(rotationPoint.getX(), rotationPoint.getY(), rotationPoint.getZ());
-		return Matrix3.createRotation(rotation).transform(new Vector3(x, 0, z).sub(rotPoint)).
+	private Vector3f transform(int x, int z) {
+		final Vector3f rotPoint = new Vector3f(rotationPoint.getX(), rotationPoint.getY(), rotationPoint.getZ());
+		return Matrix3f.createRotation(rotation).transform(new Vector3f(x, 0, z).sub(rotPoint)).
 				add(rotPoint).add(position.getX(), position.getY(), position.getZ()).round();
 	}
 }

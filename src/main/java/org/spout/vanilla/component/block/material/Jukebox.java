@@ -32,7 +32,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
 import org.spout.api.material.Material;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.component.block.VanillaBlockComponent;
 import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.data.Music;
@@ -83,7 +83,7 @@ public class Jukebox extends VanillaBlockComponent {
 		ItemStack old = getData().put(VanillaData.JUKEBOX_ITEM, item);
 		if (old != null) {
 			// Drop the old item
-			Item.drop(getPoint(), old, Vector3.UP.mul(0.5));
+			Item.drop(getPoint(), old, Vector3f.UP.mul(0.5));
 		}
 		setPlaying(item != null);
 	}

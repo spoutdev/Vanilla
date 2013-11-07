@@ -34,7 +34,7 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.material.range.PlusEffectRange;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.physics.collision.shape.BoxShape;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
@@ -262,7 +262,7 @@ public class PistonBlock extends VanillaBlockMaterial implements Directional, Re
 	}
 
 	@Override
-	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+	public void onPlacement(Block block, short data, BlockFace against, Vector3f clickedPos, boolean isClickedBlock, Cause<?> cause) {
 		super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause);
 		this.setFacing(block, PlayerUtil.getBlockFacing(block, cause));
 	}

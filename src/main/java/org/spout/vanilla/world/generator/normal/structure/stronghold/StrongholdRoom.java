@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.spout.math.imaginary.Quaternion;
+import org.spout.math.imaginary.Quaternionf;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.object.LootChestObject;
 import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
@@ -193,12 +193,12 @@ public class StrongholdRoom extends WeightedNextStructurePiece {
 		pieces.add(nextFront);
 		final StructurePiece nextRight = getNextPiece();
 		nextRight.setPosition(position.add(rotate(-4, 0, 3)));
-		nextRight.setRotation(Quaternion.fromAngleDegAxis(-90, 0, 1, 0).mul(rotation));
+		nextRight.setRotation(Quaternionf.fromAngleDegAxis(-90, 0, 1, 0).mul(rotation));
 		nextRight.randomize();
 		pieces.add(nextRight);
 		final StructurePiece nextLeft = getNextPiece();
 		nextLeft.setPosition(position.add(rotate(8, 0, 7)));
-		nextLeft.setRotation(Quaternion.fromAngleDegAxis(90, 0, 1, 0).mul(rotation));
+		nextLeft.setRotation(Quaternionf.fromAngleDegAxis(90, 0, 1, 0).mul(rotation));
 		nextLeft.randomize();
 		pieces.add(nextLeft);
 		return pieces;

@@ -29,7 +29,7 @@ package org.spout.vanilla.inventory.window.block.chest;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
 
-import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector2f;
 import org.spout.vanilla.component.block.material.chest.EnderChest;
 import org.spout.vanilla.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.inventory.window.WindowType;
@@ -37,6 +37,6 @@ import org.spout.vanilla.inventory.window.WindowType;
 public class EnderChestWindow extends AbstractChestWindow {
 	public EnderChestWindow(Player owner, EnderChest chest, Inventory inventory) {
 		super(owner, chest, WindowType.CHEST, "Ender chest", inventory.size());
-		addInventoryConverter(new GridInventoryConverter(inventory, 9, Vector2.ZERO));
+		addInventoryConverter(new GridInventoryConverter(inventory, 9, Vector2f.ZERO));
 	}
 }

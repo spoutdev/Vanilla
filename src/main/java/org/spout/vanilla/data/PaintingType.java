@@ -34,7 +34,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 
 public enum PaintingType {
 	KEBAB("Kebab", 16, 16),
@@ -176,7 +176,7 @@ public enum PaintingType {
 		int blockWidth = getWidth() / 16 - 1;
 		for (int height = 0; height <= blockHeight && good; height++) {
 			for (int width = 0; width <= blockWidth && good; width++) {
-				Vector3 vector = Vector3.ZERO;
+				Vector3f vector = Vector3f.ZERO;
 				switch (direction) {
 					case NORTH:
 					case SOUTH:

@@ -33,7 +33,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.component.entity.minecart.MinecartType;
 import org.spout.vanilla.component.entity.substance.vehicle.Minecart;
 import org.spout.vanilla.material.block.rail.RailBase;
@@ -70,7 +70,7 @@ public class MinecartItem<T extends MinecartType> extends EntitySpawnItem<Mineca
 		if (type == Action.RIGHT_CLICK && block.getMaterial() instanceof RailBase) {
 			// Spawn the Minecart on the rail
 			//TODO: Spawn position adjustment based on rail type
-			this.spawnEntity(block, Vector3.ZERO);
+			this.spawnEntity(block, Vector3f.ZERO);
 			this.handleSelectionRemove(entity);
 		}
 	}

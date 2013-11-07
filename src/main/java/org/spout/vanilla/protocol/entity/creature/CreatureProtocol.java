@@ -35,7 +35,7 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.Parameter;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.component.entity.inventory.EntityInventory;
 import org.spout.vanilla.protocol.entity.BasicEntityProtocol;
 import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
@@ -51,8 +51,8 @@ public class CreatureProtocol extends BasicEntityProtocol {
 		List<Message> messages = new ArrayList<Message>(6);
 
 		int entityId = entity.getId();
-		Vector3 position = entity.getPhysics().getPosition().mul(32).floor();
-		final Vector3 axesAngles = entity.getPhysics().getRotation().getAxesAngleDeg();
+		Vector3f position = entity.getPhysics().getPosition().mul(32).floor();
+		final Vector3f axesAngles = entity.getPhysics().getRotation().getAxesAngleDeg();
 		int yaw = (int) (axesAngles.getY() * 32);
 		int pitch = (int) (axesAngles.getX() * 32);
 		List<Parameter<?>> parameters = this.getSpawnParameters(entity);

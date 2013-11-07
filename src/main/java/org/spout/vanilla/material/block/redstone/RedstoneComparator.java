@@ -47,7 +47,7 @@ import org.spout.api.material.block.BlockSnapshot;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.material.range.ListEffectRange;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.data.RedstonePowerMode;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaBlockMaterial;
@@ -98,7 +98,7 @@ public class RedstoneComparator extends GroundAttachable implements Directional,
 	}
 
 	@Override
-	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+	public void onPlacement(Block block, short data, BlockFace against, Vector3f clickedPos, boolean isClickedBlock, Cause<?> cause) {
 		super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause);
 		this.setFacing(block, PlayerUtil.getFacing(cause));
 		Block input = block.translate(this.getFacing(block).getOpposite());

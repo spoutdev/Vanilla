@@ -30,7 +30,7 @@ import org.spout.api.entity.Player;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.util.GridIterator;
 
-import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector2f;
 import org.spout.vanilla.inventory.block.CraftingTableInventory;
 import org.spout.vanilla.inventory.util.InventoryConverter;
 import org.spout.vanilla.inventory.window.ClickArguments;
@@ -46,7 +46,7 @@ public class CraftingTableWindow extends Window {
 
 	public CraftingTableWindow(Player owner, String title) {
 		super(owner, WindowType.CRAFTING_TABLE, title, 10);
-		addInventoryConverter(new InventoryConverter(inventory, "7-9, 4-6, 1-3, 0", new Vector2[0]));
+		addInventoryConverter(new InventoryConverter(inventory, "7-9, 4-6, 1-3, 0", new Vector2f[0]));
 	}
 
 	@Override

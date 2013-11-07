@@ -30,7 +30,7 @@ import org.spout.api.component.entity.PhysicsComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.Action;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.physics.collision.shape.SphereShape;
 import org.spout.vanilla.component.entity.substance.Substance;
 import org.spout.vanilla.component.entity.substance.projectile.Projectile;
@@ -83,7 +83,7 @@ public abstract class ThrownItem extends EntitySpawnItem<Substance> {
 	public void onInteract(Entity entity, Action type, float mass) {
 		super.onInteract(entity, type);
 		if (type == Action.RIGHT_CLICK) {
-			Substance item = this.spawnEntity(entity, new Vector3(0, 1.6f, 0));
+			Substance item = this.spawnEntity(entity, new Vector3f(0, 1.6f, 0));
 			PhysicsComponent physics = item.getOwner().getPhysics();
 			physics.activate(mass, new SphereShape(1f), false, true);
 			if (item instanceof Projectile) {

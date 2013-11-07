@@ -30,7 +30,7 @@ import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 
-import org.spout.math.imaginary.Quaternion;
+import org.spout.math.imaginary.Quaternionf;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.biome.VanillaBiomes;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
@@ -53,7 +53,7 @@ public class Temple extends Structure {
 		final BoundingBox boundingBox = temple.getBoundingBox();
 		y = getAverageHeight(w, x, z, (int) boundingBox.getXSize(), (int) boundingBox.getZSize());
 		temple.setPosition(new Point(w, x, y, z));
-		temple.setRotation(Quaternion.fromAngleDegAxis(random.nextInt(4) * 90, 0, 1, 0));
+		temple.setRotation(Quaternionf.fromAngleDegAxis(random.nextInt(4) * 90, 0, 1, 0));
 		if (temple.canPlace()) {
 			temple.place();
 		}

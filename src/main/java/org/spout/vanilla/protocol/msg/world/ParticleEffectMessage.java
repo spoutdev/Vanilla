@@ -31,7 +31,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
 public class ParticleEffectMessage extends VanillaMainChannelMessage {
@@ -52,7 +52,7 @@ public class ParticleEffectMessage extends VanillaMainChannelMessage {
 		this.zOffset = zOffset;
 	}
 
-	public ParticleEffectMessage(String name, Vector3 position, Vector3 offset, float velocity, int amount, RepositionManager rm) {
+	public ParticleEffectMessage(String name, Vector3f position, Vector3f offset, float velocity, int amount, RepositionManager rm) {
 		this(name, position.getX(), position.getY(), position.getZ(), offset.getX(), offset.getY(), offset.getZ(), velocity, amount, rm);
 	}
 

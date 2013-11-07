@@ -31,7 +31,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
 
 import org.spout.math.GenericMath;
-import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector2f;
 import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.misc.Effects;
 import org.spout.vanilla.component.entity.misc.Hunger;
@@ -45,7 +45,7 @@ import org.spout.vanilla.material.item.food.FoodEffect;
 public class Food extends VanillaItemMaterial {
 	private final FoodEffect[] effects;
 
-	public Food(String name, int id, Vector2 pos, FoodEffect... effects) {
+	public Food(String name, int id, Vector2f pos, FoodEffect... effects) {
 		super(name, id, pos);
 		this.effects = effects;
 	}

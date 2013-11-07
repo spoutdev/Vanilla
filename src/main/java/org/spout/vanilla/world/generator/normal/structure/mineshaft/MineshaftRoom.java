@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.spout.math.GenericMath;
-import org.spout.math.imaginary.Quaternion;
+import org.spout.math.imaginary.Quaternionf;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
@@ -98,14 +98,14 @@ public class MineshaftRoom extends WeightedNextStructurePiece {
 		if (random.nextBoolean()) {
 			final StructurePiece right = getNextPiece();
 			right.setPosition(position.add(rotate(xStart, 0, depth / 2)));
-			right.setRotation(Quaternion.fromAngleDegAxis(-90, 0, 1, 0).mul(rotation));
+			right.setRotation(Quaternionf.fromAngleDegAxis(-90, 0, 1, 0).mul(rotation));
 			right.randomize();
 			pieces.add(right);
 		}
 		if (random.nextBoolean()) {
 			final StructurePiece left = getNextPiece();
 			left.setPosition(position.add(rotate(xEnd, 0, depth / 2)));
-			left.setRotation(Quaternion.fromAngleDegAxis(90, 0, 1, 0).mul(rotation));
+			left.setRotation(Quaternionf.fromAngleDegAxis(90, 0, 1, 0).mul(rotation));
 			left.randomize();
 			pieces.add(left);
 		}

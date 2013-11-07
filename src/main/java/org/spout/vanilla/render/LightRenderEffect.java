@@ -30,17 +30,17 @@ import org.spout.api.render.effect.RenderEffect;
 import org.spout.api.render.effect.SnapshotRender;
 
 import org.spout.math.TrigMath;
-import org.spout.math.vector.Vector3;
-import org.spout.math.vector.Vector4;
+import org.spout.math.vector.Vector3f;
+import org.spout.math.vector.Vector4f;
 
 public class LightRenderEffect implements RenderEffect {
 	private static final float size = 256f;
 	private static final float lat = (float) ((25.0 / 180.0) * TrigMath.PI);
 	private static final float sunSize = 0.2f;
 	private static final float ambient = 0.33f;
-	private static final Vector4 moonColor = new Vector4(0.33f, 0.33f, 0.50f, 1.0f);
-	private static final Vector4 sunColor = new Vector4(1f, 1f, 1f, 1.0f);
-	private static final Vector4 dawnColor = new Vector4(1f, 0.5f, 0.5f, 1.0f);
+	private static final Vector4f moonColor = new Vector4f(0.33f, 0.33f, 0.50f, 1.0f);
+	private static final Vector4f sunColor = new Vector4f(1f, 1f, 1f, 1.0f);
+	private static final Vector4f dawnColor = new Vector4f(1f, 0.5f, 0.5f, 1.0f);
 	private static final float cY = (float) Math.cos(lat);
 	private static final float cZ = (float) Math.sin(lat);
 	private static volatile boolean force = false;
@@ -48,7 +48,7 @@ public class LightRenderEffect implements RenderEffect {
 	private static volatile float yForce = 0;
 	private static volatile float zForce = 0;
 
-	public static void setSun(Vector3 pos) {
+	public static void setSun(Vector3f pos) {
 		if (pos == null) {
 			force = false;
 		} else {
@@ -81,12 +81,12 @@ public class LightRenderEffect implements RenderEffect {
 		}
 
 		float sunWeight;
-		Vector4 skyColor;
+		Vector4f skyColor;
 
 		float yAbs = Math.abs(y);
 		if (yAbs < sunSize) {
 			sunWeight = (y + sunSize) / sunSize / 2.0f;
-			Vector4 weightedSun;
+			Vector4f weightedSun;
 			if (y < 0) {
 				weightedSun = dawnColor;
 			} else {
@@ -109,7 +109,7 @@ public class LightRenderEffect implements RenderEffect {
 		snapshotRender.getMaterial().getShader().setUniform("sunColor", sunColor.mul(sunWeight));
 		snapshotRender.getMaterial().getShader().setUniform("moonColor", moonColor.mul(1 - sunWeight));
 
-		Vector4 sunDir = new Vector4(x * size, y * size, z * size, 1.0f);
+		Vector4f sunDir = new Vector4f(x * size, y * size, z * size, 1.0f);
 
 		//Spout.getLogger().info("f = " + f + " rads = " + rads + " vector " + sunDir);
 

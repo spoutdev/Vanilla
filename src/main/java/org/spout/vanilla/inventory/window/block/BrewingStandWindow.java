@@ -31,7 +31,7 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 
-import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector2f;
 import org.spout.vanilla.component.block.material.BrewingStand;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
 import org.spout.vanilla.inventory.util.InventoryConverter;
@@ -45,7 +45,7 @@ public class BrewingStandWindow extends Window {
 
 	public BrewingStandWindow(Player owner, BrewingStandInventory inventory, String title) {
 		super(owner, WindowType.BREWING_STAND, title, 4);
-		addInventoryConverter(new InventoryConverter(inventory, new int[] {0, 1, 2, 3}, new Vector2[0]));
+		addInventoryConverter(new InventoryConverter(inventory, new int[] {0, 1, 2, 3}, new Vector2f[0]));
 	}
 
 	public BrewingStandWindow(Player owner, BrewingStand brewingStand, BrewingStandInventory inventory) {

@@ -31,7 +31,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
 public final class ExplosionMessage extends VanillaMainChannelMessage {
@@ -39,7 +39,7 @@ public final class ExplosionMessage extends VanillaMainChannelMessage {
 	private final float radius;
 	private final byte[] coordinates;
 
-	public ExplosionMessage(Vector3 position, float radius, byte[] coordinates, RepositionManager rm) {
+	public ExplosionMessage(Vector3f position, float radius, byte[] coordinates, RepositionManager rm) {
 		this(position.getX(), position.getY(), position.getZ(), radius, coordinates, rm);
 	}
 

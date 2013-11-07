@@ -34,7 +34,7 @@ import org.spout.api.geo.discrete.Transform;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.protocol.VanillaByteBufUtils;
 import org.spout.vanilla.protocol.msg.entity.EntityMessage;
 
@@ -57,13 +57,13 @@ public final class EntityObjectMessage extends EntityMessage {
 		z = rm.convertZ((int) Math.floor(pos.getZ() * p));
 
 		double v = 3.9d;
-		Vector3 factor = new Vector3(v, v, v);
+		Vector3f factor = new Vector3f(v, v, v);
 
-		Vector3 velocity;
+		Vector3f velocity;
 		if (entity.getPhysics().isActivated()) {
 			velocity = entity.getPhysics().getMovementVelocity(); //TODO: Check if it's alright.
 		} else {
-			velocity = Vector3.ZERO;
+			velocity = Vector3f.ZERO;
 		}
 
 		velocity = velocity.max(factor.mul(-1)).min(factor);
@@ -73,7 +73,7 @@ public final class EntityObjectMessage extends EntityMessage {
 		speedY = (short) (velocity.getY() * s);
 		speedZ = (short) (velocity.getZ() * s);
 
-		final Vector3 axesAngles = transform.getRotation().getAxesAngleDeg();
+		final Vector3f axesAngles = transform.getRotation().getAxesAngleDeg();
 		pitch = (byte) VanillaByteBufUtils.protocolifyPitch(axesAngles.getX());
 		yaw = (byte) VanillaByteBufUtils.protocolifyYaw(axesAngles.getY());
 	}

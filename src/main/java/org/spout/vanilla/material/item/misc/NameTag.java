@@ -29,11 +29,11 @@ package org.spout.vanilla.material.item.misc;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.Action;
 
-import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector2f;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public class NameTag extends VanillaItemMaterial {
-	public NameTag(String name, int id, Vector2 pos) {
+	public NameTag(String name, int id, Vector2f pos) {
 		super(name, id, pos);
 	}
 

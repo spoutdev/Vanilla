@@ -33,7 +33,7 @@ import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.physics.collision.shape.BoxShape;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.component.entity.misc.MetadataComponent;
@@ -116,7 +116,7 @@ public class Item extends Substance {
 	 * @return the Item entity
 	 */
 	public static Item dropNaturally(Point position, ItemStack itemStack) {
-		Vector3 velocity = new Vector3(Math.random() * 2, 0.3, Math.random() * 2);
+		Vector3f velocity = new Vector3f(Math.random() * 2, 0.3, Math.random() * 2);
 		return drop(position, itemStack, velocity);
 	}
 
@@ -128,7 +128,7 @@ public class Item extends Substance {
 	 * @param velocity to drop at
 	 * @return the Item entity
 	 */
-	public static Item drop(Point position, ItemStack itemStack, Vector3 velocity) {
+	public static Item drop(Point position, ItemStack itemStack, Vector3f velocity) {
 		if (itemStack == null || itemStack.getMaterial() == VanillaMaterials.AIR) {
 			throw new IllegalArgumentException("The dropped item can not be null or air!");
 		}

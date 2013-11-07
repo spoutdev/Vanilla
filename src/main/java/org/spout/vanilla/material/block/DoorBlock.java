@@ -32,7 +32,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.physics.collision.shape.BoxShape;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -171,12 +171,12 @@ public abstract class DoorBlock extends GroundAttachable implements Directional,
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+	public boolean canPlace(Block block, short data, BlockFace against, Vector3f clickedPos, boolean isClickedBlock, Cause<?> cause) {
 		return super.canPlace(block, data, against, clickedPos, isClickedBlock, cause) && !block.isMaterial(VanillaMaterials.SNOW);
 	}
 
 	@Override
-	public void onPlacement(Block block, short data, BlockFace face, Vector3 clickedPos, boolean isClicked, Cause<?> cause) {
+	public void onPlacement(Block block, short data, BlockFace face, Vector3f clickedPos, boolean isClicked, Cause<?> cause) {
 		BlockFace facing = PlayerUtil.getFacing(cause).getOpposite();
 		Block above = block.translate(BlockFace.TOP);
 		Block left = block.translate(BlockFaces.NESW.previous(facing));

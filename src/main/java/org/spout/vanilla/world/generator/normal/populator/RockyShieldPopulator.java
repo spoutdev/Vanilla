@@ -37,7 +37,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
 import org.spout.math.GenericMath;
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
 
@@ -61,7 +61,7 @@ public class RockyShieldPopulator implements GeneratorPopulator {
 		if (y < 0 || y >= NormalGenerator.HEIGHT) {
 			return;
 		}
-		final Vector3 size = blockData.getSize();
+		final Vector3f size = blockData.getSize();
 		final int sizeX = size.getFloorX();
 		final int sizeY = GenericMath.clamp(size.getFloorY(), 0, NormalGenerator.HEIGHT);
 		final int sizeZ = size.getFloorZ();

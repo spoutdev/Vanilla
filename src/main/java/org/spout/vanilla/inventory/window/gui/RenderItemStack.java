@@ -30,17 +30,17 @@ import org.spout.api.gui.render.RenderPart;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Rectangle;
 
-import org.spout.math.vector.Vector2;
+import org.spout.math.vector.Vector2f;
 import org.spout.vanilla.material.VanillaMaterial;
 
 public class RenderItemStack extends RenderPart {
 	private static final float SCALE = 0.75f;
 	public static final float WIDTH = 0.0625f;
 	public static final float HEIGHT = WIDTH;
-	public static final Vector2 SOURCE_EXTENTS = new Vector2(WIDTH, HEIGHT);
-	public static final Vector2 SPRITE_EXTENTS = new Vector2(HEIGHT * 2 * SCALE, HEIGHT * 2);
+	public static final Vector2f SOURCE_EXTENTS = new Vector2f(WIDTH, HEIGHT);
+	public static final Vector2f SPRITE_EXTENTS = new Vector2f(HEIGHT * 2 * SCALE, HEIGHT * 2);
 	private final ItemStack item;
-	private Vector2 pos = Vector2.ZERO;
+	private Vector2f pos = Vector2f.ZERO;
 
 	public RenderItemStack(ItemStack item) {
 		if (!(item.getMaterial() instanceof VanillaMaterial)) {
@@ -54,11 +54,11 @@ public class RenderItemStack extends RenderPart {
 		return item;
 	}
 
-	public Vector2 getPosition() {
+	public Vector2f getPosition() {
 		return pos;
 	}
 
-	public void setPosition(Vector2 pos) {
+	public void setPosition(Vector2f pos) {
 		setSprite(new Rectangle(pos, SPRITE_EXTENTS));
 		this.pos = pos;
 	}

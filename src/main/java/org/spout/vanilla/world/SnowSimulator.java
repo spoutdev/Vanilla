@@ -39,7 +39,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.scheduler.TaskPriority;
 
 import org.spout.math.GenericMath;
-import org.spout.math.vector.Vector3;
+import org.spout.math.vector.Vector3f;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -77,7 +77,7 @@ public class SnowSimulator extends Component {
 		}
 	}
 
-	private static final Vector3[] JUMP_TABLE = new Vector3[3];
+	private static final Vector3f[] JUMP_TABLE = new Vector3f[3];
 
 	static {
 		for (int i = 0; i < JUMP_TABLE.length; i++) {
@@ -85,25 +85,25 @@ public class SnowSimulator extends Component {
 		}
 	}
 
-	private static Vector3 countToOffset(int count) {
+	private static Vector3f countToOffset(int count) {
 		switch (count) {
 			case 0:
-				return Vector3.ZERO;
+				return Vector3f.ZERO;
 			case 1:
-				return new Vector3(0, 16, 0);
+				return new Vector3f(0, 16, 0);
 			case 2:
-				return new Vector3(0, -16, 0);
+				return new Vector3f(0, -16, 0);
 			default:
-				return Vector3.ZERO;
+				return Vector3f.ZERO;
 		}
 	}
 
 	private class SnowfallTask implements Runnable {
 		private final Player player;
 		private final Region region;
-		private final Vector3 offset;
+		private final Vector3f offset;
 
-		private SnowfallTask(Player player, Region region, Vector3 offset) {
+		private SnowfallTask(Player player, Region region, Vector3f offset) {
 			this.player = player;
 			this.region = region;
 			this.offset = offset;

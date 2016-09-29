@@ -390,4 +390,23 @@ public class AdministrationCommands {
 
 		public float getAvgTPS();
 	}
+        
+        @Command(aliases = {"help"}, usage = "", desc = "List of commands", min = 0, max = 0)
+        @CommandPermissions("vanilla.command.help")
+        public void help(CommandContext args, CommandSource source) throws  CommandException {
+                if(!(source instanceof Player)) {
+                        throw new CommandException("Only a player may call this command.");
+                }
+                Player player = (Player)source;
+                player.sendMessage("/TP [Player] [Player]");
+                player.sendMessage("/Give [Player] [Block] <Amount>");
+                player.sendMessage("/DeOp [Player]");
+                player.sendMessage("/Op [Player]");
+                player.sendMessage("/Time [Add|Set] [0-24000|day|night|dawn|dusk] <World>");
+                player.sendMessage("/GameMode [Player] [0|1] ");
+                player.sendMessage("/XP [Player] <Amount>");
+                player.sendMessage("/Weather [0|1|2] <World>");
+                player.sendMessage("/Kill <Player>");
+                player.sendMessage("/Version");
+        }
 }

@@ -34,7 +34,7 @@ import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.event.player.network.PingEvent;
 
 /**
- * Component that pings periodically the client to see if it's still connected.
+ * Component that periodically pings the client to see if it's still connected.
  */
 public class Ping extends VanillaEntityComponent {
 	private Player player;

@@ -1,6 +1,6 @@
 Name: "Creeper"
 Components:
-    - org.spout.engine.entity.component.EntityRendererComponent
+    - org.spout.engine.component.entity.SpoutModelComponent
     - org.spout.vanilla.component.entity.living.hostile.Creeper
 Data:
     Health: 20

@@ -1,6 +1,6 @@
 Name: "Pig Zombie"
 Components:
-    - org.spout.engine.entity.component.EntityRendererComponent
+    - org.spout.engine.component.entity.SpoutModelComponent
     - org.spout.vanilla.component.entity.living.neutral.PigZombie
 Data:
     Health: 20
